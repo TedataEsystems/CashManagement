@@ -1,0 +1,134 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(#333, #000);
+  transform: translateY(-45px);
+}
+.Big{
+    position:fixed;
+    z-index: 999999;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    background-color:rgb(214 215 215 / 91%);
+          
+  }
+
+.loader {
+  display: inline-flex;
+  flex-wrap: wrap;
+  width: 200px;
+  height: 200px;
+  margin:17% auto;
+  transform-style: preserve-3d;
+  transform: rotateX(45deg) rotate(45deg);
+}
+
+.box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  background: #e76262;
+  box-shadow: 112.5px 112.5px 20px #000;
+  -webkit-animation: move 2s ease-in-out infinite both;
+          animation: move 2s ease-in-out infinite both;
+  transform-style: preserve-3d;
+}
+.box:nth-child(1) {
+  -webkit-animation-delay: -1s;
+          animation-delay: -1s;
+}
+.box:nth-child(2) {
+  -webkit-animation-delay: -2s;
+          animation-delay: -2s;
+}
+.box:nth-child(3) {
+  -webkit-animation-delay: -3s;
+          animation-delay: -3s;
+}
+.box:before, .box:after {
+  display: block;
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 30px;
+}
+.box:before {
+  top: 100%;
+  left: 0;
+  background: #c82a49;
+  transform-origin: center top;
+  transform: rotateX(-90deg);
+}
+.box:after {
+  top: 0;
+  left: 100%;
+  background: var(--main-color);
+  transform-origin: center left;
+  transform: rotateY(90deg);
+}
+
+@-webkit-keyframes move {
+  0%, 100% {
+    transform: none;
+  }
+  12.5% {
+    transform: translate(30px, 0);
+  }
+  25% {
+    transform: translate(60px, 0);
+  }
+  37.5% {
+    transform: translate(60px, 30px);
+  }
+  50% {
+    transform: translate(60px, 60px);
+  }
+  62.5% {
+    transform: translate(30px, 60px);
+  }
+  75% {
+    transform: translate(0, 60px);
+  }
+  87.5% {
+    transform: translate(0, 30px);
+  }
+}
+
+@keyframes move {
+  0%, 100% {
+    transform: none;
+  }
+  12.5% {
+    transform: translate(30px, 0);
+  }
+  25% {
+    transform: translate(60px, 0);
+  }
+  37.5% {
+    transform: translate(60px, 30px);
+  }
+  50% {
+    transform: translate(60px, 60px);
+  }
+  62.5% {
+    transform: translate(30px, 60px);
+  }
+  75% {
+    transform: translate(0, 60px);
+  }
+  87.5% {
+    transform: translate(0, 30px);
+  }
+}

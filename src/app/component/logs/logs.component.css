@@ -1,0 +1,13 @@
+
+.student-element-detail{
+  width: 100%;
+}
+.student-detail-row {
+  min-height: 0;
+}
+.student-detail-row mat-cell
+{
+  background: var(--body-color);
+    box-shadow: inset 3px 0px 5px var(--third-color),inset -3px 0px 5px var(--third-color);
+
+}

@@ -1,0 +1,103 @@
+
+
+<mat-card class="example-card">
+
+  <div class="caption"><span>History</span></div>
+
+  <div class="search-div mt-5" fxLayout="row">
+      <mat-form-field class="search-form-field" floatLabel="never">
+          <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+         <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+              <mat-icon>close</mat-icon>
+          </button>
+      </mat-form-field>
+      <!-- <button mat-button class="new" (click)="onCreate()">
+          <mat-icon>add</mat-icon>Create
+      </button> -->
+  </div>
+
+  <div class="spinner" *ngIf="dataSource==null;else table">
+      <mat-spinner></mat-spinner>
+    </div>
+
+  <ng-template #table>
+      <div class="example-container mat-elevation-z8">
+
+  <mat-table [dataSource]="dataSource"  matSort  multiTemplateDataRows>
+    <ng-container matColumnDef="Id">
+      <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> الرقم</mat-header-cell>
+      <mat-cell *matCellDef="let element" data-label="CustName"> {{element.CustName}} </mat-cell>
+  </ng-container>
+
+      <ng-container matColumnDef="User">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>اسم المستخدم</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.CallDate}} </mat-cell>
+      </ng-container>
+
+
+      <ng-container matColumnDef="Creationdate">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> تاريخ الانشاء </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.User}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> الاجراء</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.Serial}} </mat-cell>
+      </ng-container>
+
+
+      <ng-container matColumnDef="Details">
+          <mat-header-cell mat-header-cell *matHeaderCellDef> التفاصيل</mat-header-cell>
+          <mat-cell *matCellDef="let row" >
+              <button mat-button class="text-success" matTooltip="اظهار التفاصيل" (click)="row.isExpanded = !row.isExpanded">
+                  <!-- <img src="../../../assets/image/view_small_icon.png">
+                  View -->
+                  <mat-icon>content_paste_search</mat-icon>
+              </button>
+
+          </mat-cell>
+
+      </ng-container>
+      <ng-container matColumnDef="expandedDetail">
+        <mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+
+          <div class="row student-element-detail" [@detailExpand]="element.isExpanded ? 'expanded' : 'collapsed'">
+            <mat-list>
+
+              <mat-list-item >
+               some text ............
+
+              </mat-list-item>
+            </mat-list>
+        </div>
+
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="noData">
+          <mat-footer-cell *matFooterCellDef colspan="6">
+            لايوجد بيانات .....
+          </mat-footer-cell>
+
+      </ng-container>
+
+
+
+      <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource.data.length==0 && dataSource !=null)}"></mat-footer-row>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <!-- <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
+       <!-- <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
+    <mat-row *matRowDef="let row; columns: displayedColumns;" class="student-element-row"
+    [class.student-expanded-row]="row.isExpanded"></mat-row>
+     <!-- Extra row to show detail content column -->
+    <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="student-detail-row"></mat-row>
+
+
+  </mat-table>
+  <!-- end test -->
+  </div>
+
+  </ng-template>
+
+  <mat-paginator [pageSizeOptions]="[5,20, 50, 100]"   [pageSize]="5"   showFirstLastButtons></mat-paginator>
+
+  </mat-card>

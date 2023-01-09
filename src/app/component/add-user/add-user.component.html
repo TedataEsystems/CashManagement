@@ -1,0 +1,80 @@
+<mat-toolbar class="top" dir="rtl">
+  <span class="fill-remaining-space">اضافة مستخدم</span>
+  <div class="w-100">
+    <button
+      class="btn-dialog-close"
+      mat-button
+      tabIndex="-1"
+      (click)="onClose()"
+    >
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+<form
+  [formGroup]="form"
+  class="normal-form mx-0"
+  (submit)="onSubmit()"
+  dir="rtl"
+>
+<mat-grid-list cols="2" rowHeight="300" class="mx-3" >
+  <mat-grid-tile colspan="1">
+    <div class="controles-container">
+
+      <mat-form-field>
+        <input formControlName="Id" matInput placeholder=" الرقم الوظيفي" />
+        <mat-error>مطلوب</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input formControlName="Name" matInput placeholder="اسم الموظف" />
+        <mat-error>مطلوب</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select
+          formControlName="Staffdegree"
+          placeholder="الدرجة الوظيفية "
+        >
+          <mat-option>-- اختر --</mat-option>
+          <mat-option [value]="">
+            <!-- {{item.name}} -->
+          </mat-option>
+        </mat-select>
+        <mat-error>مطلوب</mat-error>
+      </mat-form-field>
+
+
+    </div>
+  </mat-grid-tile>
+
+      <mat-grid-tile colspan="1">
+        <div class="controles-container">
+
+          <mat-form-field>
+            <input formControlName="Team" matInput placeholder="المجموعة" />
+            <mat-error>مطلوب</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="User" matInput placeholder="اسم المستخدم" />
+            <mat-error>مطلوب</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="Role" matInput placeholder=" الصلاحية" />
+            <mat-error>مطلوب</mat-error>
+          </mat-form-field>
+
+          </div>
+          </mat-grid-tile>
+
+
+</mat-grid-list>
+<mat-toolbar class="bottom">
+  <div class="button-row w-100 text-center">
+    <button mat-raised-button class="btn-success w-50" type="submit">
+      ارسال
+    </button>
+  </div>
+</mat-toolbar>
+</form>
+<ngx-spinner type="timer">
+  <h5>Loading</h5>
+</ngx-spinner>

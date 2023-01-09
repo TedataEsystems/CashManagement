@@ -1,0 +1,95 @@
+
+
+<!--  ------main----------------- -->
+<mat-card class="example-card">
+
+    <div class="caption"><span>Result</span></div>
+
+    <div class="search-div mt-5" fxLayout="row">
+        <mat-form-field class="search-form-field" floatLabel="never">
+            <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+           <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <!-- <button mat-button class="new" (click)="onCreate()">
+            <mat-icon>add</mat-icon>Create
+        </button> -->
+    </div>
+
+    <div class="spinner" *ngIf="dataSource==null;else table">
+        <mat-spinner></mat-spinner>
+      </div>
+
+    <ng-template #table>
+        <div class="example-container mat-elevation-z8">
+
+    <mat-table [dataSource]="dataSource"  matSort >
+
+        <ng-container matColumnDef="CallDate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>CallDate</mat-header-cell>
+            <mat-cell *matCellDef="let element" data-label="CallDate"> {{element.CallDate}} </mat-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="CustName">
+            <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> CustName</mat-header-cell>
+            <mat-cell *matCellDef="let element" data-label="CustName"> {{element.CustName}} </mat-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="User">
+            <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> User </mat-header-cell>
+            <mat-cell *matCellDef="let element" data-label="User"> {{element.User}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Serial">
+            <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Serial</mat-header-cell>
+            <mat-cell *matCellDef="let element" data-label="Serial"> {{element.Serial}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="MonitorName">
+            <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> MonitorName</mat-header-cell>
+            <mat-cell *matCellDef="let element" data-label="MonitorName"> {{element.MonitorName}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Status">
+            <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Status</mat-header-cell>
+            <mat-cell *matCellDef="let element" data-label="Status"> {{element.Status}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Action">
+            <mat-header-cell mat-header-cell *matHeaderCellDef> Action</mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="Action">
+
+                <button mat-button   class="btn-success mx-1"  matTooltip="Edit" (click)="onEdit(row)">
+                  <mat-icon>edit</mat-icon>
+              </button>
+
+              <button mat-button   class="btn-danger"  matTooltip="Delete" (click)="onDelete()">
+                  <mat-icon>delete_forever</mat-icon>
+              </button>
+            </mat-cell>
+
+        </ng-container>
+        <ng-container matColumnDef="noData">
+            <mat-footer-cell *matFooterCellDef colspan="6">
+               No Data ...
+            </mat-footer-cell>
+
+        </ng-container>
+
+
+
+        <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource.data.length==0 && dataSource !=null)}"></mat-footer-row>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+
+    </mat-table>
+    <!-- end test -->
+    </div>
+
+    </ng-template>
+
+    <mat-paginator [pageSizeOptions]="[5,20, 50, 100]"   [pageSize]="5"   showFirstLastButtons></mat-paginator>
+
+    </mat-card>
