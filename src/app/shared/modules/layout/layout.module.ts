@@ -18,7 +18,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { DeleteMsgComponent } from '../../component/delete-msg/delete-msg.component';
 import { EditComponent } from 'src/app/component/edit/edit.component';
-import { ResultComponent } from 'src/app/component/result/result.component';
 import { ChartsModule } from 'ng2-charts';
 import { LoaderComponent } from '../../component/loader/loader.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -43,7 +42,6 @@ import { AddUserComponent } from '../../../component/add-user/add-user.component
     SidebarComponent,
     DeleteMsgComponent,
     EditComponent,
-    ResultComponent,
     LoaderComponent,
     ErrorPageComponent,
     LogsComponent,

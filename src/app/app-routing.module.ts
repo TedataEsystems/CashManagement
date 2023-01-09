@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { LogsComponent } from './component/logs/logs.component';
-import { ResultComponent } from './component/result/result.component';
 import { UserComponent } from './component/settings/user/user.component';
 import { SummaryComponent } from './component/summary/summary.component';
 import { ErrorPageComponent } from './shared/component/error-page/error-page.component';
@@ -25,11 +24,7 @@ const routes: Routes = [
       component: DashboardComponent,
 
     },
-    {
-      path:'result',
-      component: ResultComponent,
 
-    },
     {
       path:'summary',
       component: SummaryComponent,
