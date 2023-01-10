@@ -8,8 +8,8 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteService } from 'src/app/shared/service/delete.service';
-import { AddMissionComponent } from '../add-mission/add-mission.component';
-import { EditComponent } from '../edit/edit.component';
+import { AddMissionComponent } from '../Forms/add-mission/add-mission.component';
+import { EditComponent } from '../Forms/edit/edit.component';
 
 @Component({
   selector: 'app-summary',
@@ -24,9 +24,9 @@ export class SummaryComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
-  displayedColumns: string[] = ['Id', 'Name','Team','Staffdegree','Costcenter','CompanyType','Location','Durationofstay','NightsNum','stay',
-                                 'Meals','transition','Durationofmission','Missionpurpose','Permission','Durationofpermission',
-                                 'Approvalmail', 'action'];
+  displayedColumns: string[] = ['all','Num','Id', 'Name','Team','Staffdegree','Costcenter','CompanyType','Location','DurationofstayFrom','DurationofstayTo','NightsNum','stay',
+                                 'Meals','transition','DurationofmissionFrom','DurationofmissionTo','Missionpurpose','Permission','Durationofpermission',
+                                 'action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource();
   settingtype = ''
@@ -95,7 +95,16 @@ export class SummaryComponent implements OnInit {
 
   onDelete(r:any) {
 
-            this.toastr.success(':: successfully Deleted');
+           // if (localStorage.getItem("usernam") == "" || localStorage.getItem("usernam") == undefined || localStorage.getItem("usernam") == null) {
+    //   this.router.navigateByUrl('/login');
+    // }
+    // else {
+      this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
+
+        this.toastr.success(':: successfully Deleted');
+      })
+
+      //}
 
   }
 

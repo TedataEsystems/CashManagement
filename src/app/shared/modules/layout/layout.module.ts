@@ -17,7 +17,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { DeleteMsgComponent } from '../../component/delete-msg/delete-msg.component';
-import { EditComponent } from 'src/app/component/edit/edit.component';
+import { EditComponent } from 'src/app/component/Forms/edit/edit.component';
 import { ChartsModule } from 'ng2-charts';
 import { LoaderComponent } from '../../component/loader/loader.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -27,9 +27,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorPageComponent } from '../../component/error-page/error-page.component';
 import { LogsComponent } from 'src/app/component/logs/logs.component';
 import { SummaryComponent } from 'src/app/component/summary/summary.component';
-import { UserComponent } from 'src/app/component/settings/user/user.component';
-import { AddMissionComponent } from '../../../component/add-mission/add-mission.component';
-import { AddUserComponent } from '../../../component/add-user/add-user.component';
+import { UserComponent } from 'src/app/component/user/user.component';
+import { AddMissionComponent } from '../../../component/Forms/add-mission/add-mission.component';
+import { AddUserComponent } from '../../../component/Forms/add-user/add-user.component';
+import { JobDegreeComponent } from '../../../component/settings/job-degree/job-degree.component';
+import { RoleComponent } from '../../../component/settings/role/role.component';
+import { MissionTypeComponent } from '../../../component/settings/mission-type/mission-type.component';
+import { ApproveStatusComponent } from '../../../component/settings/approve-status/approve-status.component';
+import { AddJobComponent } from '../../../component/settings/Forms/add-job/add-job.component';
+import { AddRoleComponent } from '../../../component/settings/Forms/add-role/add-role.component';
+import { AddMissonTypeComponent } from '../../../component/settings/Forms/add-misson-type/add-misson-type.component';
+import { AddApproveStatusComponent } from '../../../component/settings/Forms/add-approve-status/add-approve-status.component';
 
 
 
@@ -48,7 +56,15 @@ import { AddUserComponent } from '../../../component/add-user/add-user.component
     SummaryComponent,
     UserComponent,
     AddMissionComponent,
-    AddUserComponent
+    AddUserComponent,
+    JobDegreeComponent,
+    RoleComponent,
+    MissionTypeComponent,
+    ApproveStatusComponent,
+    AddJobComponent,
+    AddRoleComponent,
+    AddMissonTypeComponent,
+    AddApproveStatusComponent
 
   ],
   imports: [

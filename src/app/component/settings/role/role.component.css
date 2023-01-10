@@ -1,0 +1,13 @@
+form{
+  position: absolute !important;
+  left: 12px !important;
+
+}
+form mat-form-field{
+text-align: right;
+}
+.mat-error {
+  display: block;
+  position: absolute;
+  bottom: 0;
+}

@@ -1,0 +1,47 @@
+<mat-toolbar class="top" dir="rtl">
+  <span class="fill-remaining-space">اضافة</span>
+  <div class="w-100">
+    <button
+      class="btn-dialog-close"
+      mat-button
+      tabIndex="-1"
+      (click)="onClose()"
+    >
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+<form
+  [formGroup]="form"
+  class="normal-form mx-0"
+  (submit)="onSubmit()"
+  dir="rtl"
+>
+<mat-grid-list cols="1" rowHeight="150" class="mx-3" >
+  <mat-grid-tile colspan="1">
+    <div class="controles-container">
+
+
+
+      <mat-form-field>
+        <input formControlName="Name" matInput placeholder=" نوع المأمورية" />
+        <mat-error>مطلوب</mat-error>
+      </mat-form-field>
+    </div>
+  </mat-grid-tile>
+
+
+
+
+</mat-grid-list>
+<mat-toolbar class="bottom">
+  <div class="button-row w-100 text-center">
+    <button mat-raised-button class="btn-success w-50" type="submit">
+      ارسال
+    </button>
+  </div>
+</mat-toolbar>
+</form>
+<ngx-spinner type="timer">
+  <h5>Loading</h5>
+</ngx-spinner>

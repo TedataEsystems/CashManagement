@@ -1238,3 +1238,9 @@ mat-footer-cell:first-of-type {
   display: none !important;
   height: 0 !important;
 }
+.opt{
+  background-color: var(--body-color);
+
+  border-radius: 0 !important;
+  width: 160px;
+ }

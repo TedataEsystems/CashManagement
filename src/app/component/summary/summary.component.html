@@ -9,7 +9,7 @@
       </button>
       <button mat-button class="opt  mx-1">
         <mat-icon class="" >download</mat-icon>
-     <span class="txt mr-1">  تنزيل ملف اكسل </span>
+     <span class="txt mr-1">  تنزيل ملف  </span>
     </button>
   </mat-card-header>
   <mat-divider></mat-divider>
@@ -27,20 +27,33 @@
    </mat-form-field>
   </div>
 
-  <!-- <div class="spinner" *ngIf="dataSource==null || loader ;else table">
-    <span>Loading Data ...</span>
-    <mat-progress-bar class="example-margin"  mode="buffer" value="50">
-  </mat-progress-bar>
 
-  </div> -->
-<!--
-
-  <ng-template #table> -->
     <div class="example-container mat-elevation-z8" >
 
     <mat-table [dataSource]="dataSource"  #table  matSort matSortActive="Name" matSortDirection="asc" matSortDisableClear >
 
-
+      <ng-container matColumnDef="all">
+        <mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                        [aria-label]="checkboxLabel()">
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)"
+                        [aria-label]="checkboxLabel(row)">
+          </mat-checkbox>
+          </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Num">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> # </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+           {{element.num}}
+          </mat-cell>
+      </ng-container>
   <ng-container matColumnDef="Id">
     <mat-header-cell *matHeaderCellDef mat-sort-header> الرقم الوظيفي</mat-header-cell>
     <mat-cell *matCellDef="let element">
@@ -80,10 +93,17 @@
   <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> المكان</mat-header-cell>
   <mat-cell *matCellDef="let element"> {{element.updatedBy}} </mat-cell>
 </ng-container>
-<ng-container matColumnDef="Durationofstay">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> مدة الاقامة</mat-header-cell>
+
+<ng-container matColumnDef="DurationofstayFrom">
+  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> مدة الاقامة من</mat-header-cell>
   <mat-cell *matCellDef="let element"> {{element.updatedBy}} </mat-cell>
 </ng-container>
+<ng-container matColumnDef="DurationofstayTo">
+
+  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> مدة الاقامة الى </mat-header-cell>
+  <mat-cell *matCellDef="let element"> {{element.updatedBy}} </mat-cell>
+</ng-container>
+
 <ng-container matColumnDef="NightsNum">
   <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> عدد الليالي</mat-header-cell>
   <mat-cell *matCellDef="let element"> {{element.updatedBy}} </mat-cell>
@@ -100,10 +120,16 @@
   <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> الانتقالات</mat-header-cell>
   <mat-cell *matCellDef="let element"> {{element.updatedBy}} </mat-cell>
 </ng-container>
-<ng-container matColumnDef="Durationofmission">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> مدة المأمورية</mat-header-cell>
+
+<ng-container matColumnDef="DurationofmissionFrom">
+  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> مدة المأمورية من </mat-header-cell>
   <mat-cell *matCellDef="let element"> {{element.updatedBy}} </mat-cell>
 </ng-container>
+<ng-container matColumnDef="DurationofmissionTo">
+  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> مدة المأمورية الى </mat-header-cell>
+  <mat-cell *matCellDef="let element"> {{element.updatedBy}} </mat-cell>
+</ng-container>
+
 <ng-container matColumnDef="Missionpurpose">
   <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> غرض المأمورية</mat-header-cell>
   <mat-cell *matCellDef="let element"> {{element.updatedBy}} </mat-cell>
@@ -116,13 +142,13 @@
   <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>مدة الاذن </mat-header-cell>
   <mat-cell *matCellDef="let element"> {{element.updatedBy}} </mat-cell>
 </ng-container>
-<ng-container matColumnDef="Approvalmail">
+<!-- <ng-container matColumnDef="Approvalmail">
   <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> الموافقة</mat-header-cell>
   <mat-cell *matCellDef="let element"> {{element.updatedBy}} </mat-cell>
-</ng-container>
+</ng-container> -->
 
 
- <ng-container matColumnDef="action">
+ <ng-container matColumnDef="action" sticky>
     <mat-header-cell *matHeaderCellDef> الاجراء </mat-header-cell>
     <mat-cell *matCellDef="let row" data-label="action">
     <ng-container>
@@ -159,6 +185,7 @@
 
 
   <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource.data.length==0 && dataSource !=null)}"></mat-footer-row>
+  
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
