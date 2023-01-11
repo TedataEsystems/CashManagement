@@ -7,7 +7,7 @@ export const environment = {
   apiUrl: 'https://localhost:44382/api/'
   //comment
   //comment 2 
-  
+  //knn
   
 };
 
