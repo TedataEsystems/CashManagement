@@ -7,7 +7,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { MissionList } from 'src/app/model/mission-list';
 import { DeleteService } from 'src/app/shared/service/delete.service';
+import { MissionService } from 'src/app/shared/service/mission.service';
 import { AddMissionComponent } from '../Forms/add-mission/add-mission.component';
 import { EditComponent } from '../Forms/edit/edit.component';
 
@@ -21,12 +23,22 @@ export class SummaryComponent implements OnInit {
   searchKey: string = '';
 
   loading: boolean = true;
+  /////////////////
+  missions:MissionList[]=[];
+  ////////////////pagenation variables////////
+  pageNumber = 1;
+  pageSize = 100;
+  sortColumnDef: string = "Id";
+  SortDirDef: string = 'asc';
+  loader: boolean = false;
+  
+  ///////////////
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
-  displayedColumns: string[] = ['all','Num','Id', 'Name','Team','Staffdegree','Costcenter','CompanyType','Location','DurationofstayFrom','DurationofstayTo','NightsNum','stay',
-                                 'Meals','transition','DurationofmissionFrom','DurationofmissionTo','Missionpurpose','Permission','Durationofpermission',
-                                 'action'];
+  displayedColumns: string[] = ['all','id','jobNumber','jobDegree','user','missionPurpose','centerOfCost','companyType','missionPlace','startDateMission','endDateMission','noOfNights','stay',
+                                 'mealsAndIncidentals','startDateStay','endDateStay','missionTypeCost','permissionRequest','permissionDuration','comment','createdBy',
+                                 'updateBy','creationDate','updateDate','status','missionType','action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource();
   settingtype = ''
@@ -34,21 +46,34 @@ export class SummaryComponent implements OnInit {
   editUsr: any;
   editdisabled: boolean = false;
   constructor(private titleService: Title,private toastr:ToastrService,private dialog:MatDialog ,
-              private router: Router, private route: ActivatedRoute, private dailogService: DeleteService
+              private router: Router, private route: ActivatedRoute, private dailogService: DeleteService,private missionService:MissionService
   ) {
     this.titleService.setTitle('المأموريات');
 
   }
+getMisssions(pageNum:number,pagesize:number,searchValue:string,sortColumn:string,sortDir:string)
+{
+this.loader=true;
+this.missionService.getAllMissions(pageNum,pagesize,searchValue,sortColumn,sortDir).subscribe(respose=>
+  {
+   this.missions=respose?.data;
+  // this.missions.length=respose?.pagenation.totalCount;
+   this.dataSource=new MatTableDataSource<any>(this.missions);
+   this.dataSource._updateChangeSubscription();
+   this.dataSource.paginator=this.paginator as MatPaginator;
+  })//end of subscribe
+  setTimeout(() => {
+    this.loader=false
+  }, (2000));
 
+}//end of getallmission
 
 
 
   ngOnInit(): void {
-    // if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    // {
-    //   this.router.navigateByUrl('/login');
-    // }
-
+   
+this.getMisssions(1,100,'',this.sortColumnDef,this.SortDirDef);
+console.log(this.missions);
   }
 
 
@@ -99,10 +124,10 @@ export class SummaryComponent implements OnInit {
     //   this.router.navigateByUrl('/login');
     // }
     // else {
-      this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
+      // this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
 
-        this.toastr.success(':: successfully Deleted');
-      })
+      //   this.toastr.success(':: successfully Deleted');
+      // })
 
       //}
 
@@ -110,7 +135,7 @@ export class SummaryComponent implements OnInit {
 
 
 
-  onselectcheckall(e:Event){}
+  // onselectcheckall(e:Event){}
 
 
   selection = new SelectionModel<any>(true, []);

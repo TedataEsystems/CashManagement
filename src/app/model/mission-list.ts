@@ -23,7 +23,10 @@ export interface MissionList {
     updateDate?:Date,
     updateBy:string,
     statusId:number,
+    status:string,
     missionTypeId:number,
-    userId:number
+    missionType:string,
+    userId:number,
+    user:string
 
 }
