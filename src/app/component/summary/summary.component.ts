@@ -24,57 +24,74 @@ export class SummaryComponent implements OnInit {
 
   loading: boolean = true;
   /////////////////
-  missions:MissionList[]=[];
-  ////////////////pagenation variables////////
-  pageNumber = 1;
-  pageSize = 100;
-  sortColumnDef: string = "Id";
-  SortDirDef: string = 'asc';
-  loader: boolean = false;
-  
-  ///////////////
-
+  missions: MissionList[] = [];
+ 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
-  displayedColumns: string[] = ['all','id','jobNumber','jobDegree','user','missionPurpose','centerOfCost','companyType','missionPlace','startDateMission','endDateMission','noOfNights','stay',
-                                 'mealsAndIncidentals','startDateStay','endDateStay','missionTypeCost','permissionRequest','permissionDuration','comment','createdBy',
-                                 'updateBy','creationDate','updateDate','status','missionType','action'];
+  displayedColumns: string[] = ['all', 'id', 'jobNumber', 'jobDegree', 'user', 'missionPurpose', 'centerOfCost', 'companyType', 'missionPlace', 'startDateMission', 'endDateMission', 'noOfNights', 'stay',
+    'mealsAndIncidentals', 'startDateStay', 'endDateStay', 'missionTypeCost', 'permissionRequest', 'permissionDuration', 'comment', 'createdBy',
+    'updateBy', 'creationDate', 'updateDate', 'status', 'missionType', 'action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource();
   settingtype = ''
 
   editUsr: any;
   editdisabled: boolean = false;
-  constructor(private titleService: Title,private toastr:ToastrService,private dialog:MatDialog ,
-              private router: Router, private route: ActivatedRoute, private dailogService: DeleteService,private missionService:MissionService
+  constructor(private titleService: Title, private toastr: ToastrService, private dialog: MatDialog,
+    private router: Router, private route: ActivatedRoute, private dailogService: DeleteService, private missionService: MissionService
   ) {
     this.titleService.setTitle('المأموريات');
 
   }
-getMisssions(pageNum:number,pagesize:number,searchValue:string,sortColumn:string,sortDir:string)
-{
-this.loader=true;
-this.missionService.getAllMissions(pageNum,pagesize,searchValue,sortColumn,sortDir).subscribe(respose=>
-  {
-   this.missions=respose?.data;
-  // this.missions.length=respose?.pagenation.totalCount;
-   this.dataSource=new MatTableDataSource<any>(this.missions);
-   this.dataSource._updateChangeSubscription();
-   this.dataSource.paginator=this.paginator as MatPaginator;
-  })//end of subscribe
-  setTimeout(() => {
-    this.loader=false
-  }, (2000));
-
-}//end of getallmission
+ ////////////////pagenation variables////////
+ pageNumber = 1;
+ pageSize = 100;
+ sortColumnDef: string = "Id";
+ SortDirDef: string = 'asc';
+ loader: boolean = false;
+//  pageIn = 0;
+//  previousSizedef = 100;
+//  pagesizedef: number = 100;
+//  public pIn: number = 0;
+lastcol: string = 'Id';
+lastdir: string = 'asc';
 
 
+ ///////////////
 
-  ngOnInit(): void {
-   
-this.getMisssions(1,100,'',this.sortColumnDef,this.SortDirDef);
-console.log(this.missions);
-  }
+  getMisssions(pageNum: number, pagesize: number, searchValue: string, sortColumn: string, sortDir: string) {
+    this.loader = true;
+    this.missionService.getAllMissions(pageNum, pagesize, searchValue, sortColumn, sortDir).subscribe(respose => {
+      this.missions = respose?.data;
+      // this.missions.length=respose?.pagenation.totalCount;
+      this.dataSource = new MatTableDataSource<any>(this.missions);
+      this.dataSource._updateChangeSubscription();
+      this.dataSource.paginator = this.paginator as MatPaginator;
+    })//end of subscribe
+    setTimeout(() => {
+      this.loader = false
+    }, (2000));
+
+  }//end of getallmission
+ //sort
+sortData(sort: any) {
+
+    if (this.lastcol == sort.active && this.lastdir == sort.direction) {
+      if (this.lastdir == 'asc'){
+        sort.direction = 'desc';}
+      else{
+        sort.direction = 'asc';}
+        console.log(sort.active, this.lastdir,'if');
+    }
+    this.lastcol = sort.active; 
+    // if (this.lastdir == 'asc'){
+    //   sort.direction = 'desc';}
+    // else{
+    //   sort.direction = 'asc';}
+    this.lastdir = sort.direction;
+    console.log(sort.active, this.lastdir,'kk');
+    this.getMisssions(1, 100, '', sort.active, this.lastdir);
+}
 
 
   ngAfterViewInit() {
@@ -82,54 +99,56 @@ console.log(this.missions);
     this.dataSource.paginator = this.paginator as MatPaginator;
   }
 
+  ngOnInit(): void {
+    this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
+  }
+
+
+
+//when empty search input
   onSearchClear() {
-    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    {
-      this.router.navigateByUrl('/login');
-    }
-    else{
-    this.searchKey = '';
-    this.applyFilter();}
+      this.searchKey = '';
+      this.applyFilter();
   }
 
-
+// when add search value and key up
   applyFilter() {
-    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    {
-      this.router.navigateByUrl('/login');
-    }
-    else{
-    let searchData = this.searchKey.trim().toLowerCase();
+    // if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
+    //   this.router.navigateByUrl('/login');
+    // }
+  //  else {
+      let searchData = this.searchKey.trim().toLowerCase();
+      this.getMisssions(1,100,searchData,this.sortColumnDef,"asc");
 
-  }
+   // }
 
-  }
+  }//applyfilter
 
-  onEdit(row:any){
+  onEdit(row: any) {
     const dialogGonfig = new MatDialogConfig();
-    dialogGonfig.data= {dialogTitle: " تعديل"};
+    dialogGonfig.data = { dialogTitle: " تعديل" };
     dialogGonfig.disableClose = true;
     dialogGonfig.autoFocus = true;
     dialogGonfig.width = "50%";
     dialogGonfig.panelClass = 'modals-dialog';
-     this.dialog.open(EditComponent,{panelClass:'modals-dialog',disableClose:true,autoFocus:true, width:"50%",data:row})
+    this.dialog.open(EditComponent, { panelClass: 'modals-dialog', disableClose: true, autoFocus: true, width: "50%", data: row })
 
   }
 
 
 
-  onDelete(r:any) {
+  onDelete(r: any) {
 
-           // if (localStorage.getItem("usernam") == "" || localStorage.getItem("usernam") == undefined || localStorage.getItem("usernam") == null) {
+    // if (localStorage.getItem("usernam") == "" || localStorage.getItem("usernam") == undefined || localStorage.getItem("usernam") == null) {
     //   this.router.navigateByUrl('/login');
     // }
     // else {
-      // this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
+    // this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
 
-      //   this.toastr.success(':: successfully Deleted');
-      // })
+    //   this.toastr.success(':: successfully Deleted');
+    // })
 
-      //}
+    //}
 
   }
 
@@ -164,14 +183,14 @@ console.log(this.missions);
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
-  addMission(){
+  addMission() {
     const dialogGonfig = new MatDialogConfig();
-    dialogGonfig.data= {dialogTitle: "اضافة مأمورية"};
+    dialogGonfig.data = { dialogTitle: "اضافة مأمورية" };
     dialogGonfig.disableClose = true;
     dialogGonfig.autoFocus = true;
     dialogGonfig.width = "50%";
     dialogGonfig.panelClass = 'modals-dialog';
-     this.dialog.open(AddMissionComponent,dialogGonfig)
+    this.dialog.open(AddMissionComponent, dialogGonfig)
   }
 
 }

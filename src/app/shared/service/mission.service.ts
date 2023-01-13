@@ -13,10 +13,10 @@ private url:string=`${environment.apiUrl}Mission`;
   getAllMissions(PageNumber :number , PageSize :number , searchValue:string ,sortcolumn:string,sortcolumndir:string)
   {
     let params= new HttpParams();
-    console.log(PageNumber.toString(),PageSize.toString(),searchValue.toString(),sortcolumn.toString(),sortcolumndir.toString());
+  //  console.log(PageNumber.toString(),PageSize.toString(),searchValue.toString(),sortcolumn.toString(),sortcolumndir.toString());
     if(PageNumber!==null&& PageSize!==null)
     {
-      
+       params =params.append('pageNumber',PageNumber.toString());
        params=params.append('pageSize',PageSize.toString());
        params=params.append('searchValue',searchValue.toString());
        params=params.append('sortcolumn',sortcolumn.toString());
@@ -25,7 +25,7 @@ private url:string=`${environment.apiUrl}Mission`;
     
     return this.httpClient.get<any>(`${this.url}/GetMissions`,{observe:'response' , params}).pipe(
       map(response=>
-        {console.log(response.body);
+        {
           return response.body;
         })
     )

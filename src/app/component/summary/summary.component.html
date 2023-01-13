@@ -30,7 +30,7 @@
 
     <div class="example-container mat-elevation-z8" >
 
-    <mat-table [dataSource]="dataSource"  #table  matSort matSortActive="Name" matSortDirection="asc" matSortDisableClear >
+    <mat-table [dataSource]="dataSource"  #table  matSort (matSortChange)="sortData($event)" matSortActive="Name" matSortDirection="asc" matSortDisableClear >
 
       <ng-container matColumnDef="all">
         <mat-header-cell *matHeaderCellDef>
@@ -62,9 +62,6 @@
        {{element.jobNumber}}
       </mat-cell>
   </ng-container>
-
- 
-
 
   <ng-container matColumnDef="user">
     <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> اسم الموظف  </mat-header-cell>
