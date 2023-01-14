@@ -37,18 +37,18 @@
   <ng-template #table> -->
     <div class="example-container mat-elevation-z8" >
 
-    <mat-table [dataSource]="dataSource"  #table  matSort matSortActive="Name" matSortDirection="asc" matSortDisableClear >
-      <ng-container matColumnDef="Num">
+    <mat-table [dataSource]="dataSource"  #table  matSort matSortActive="id" matSortDirection="asc" matSortDisableClear >
+      <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef mat-sort-header> # </mat-header-cell>
         <mat-cell *matCellDef="let element">
-           {{element.num}}
+           {{element.id}}
           </mat-cell>
       </ng-container>
 
-  <ng-container matColumnDef="Id">
+  <ng-container matColumnDef="jobNumber">
     <mat-header-cell *matHeaderCellDef mat-sort-header> الرقم الوظيفي</mat-header-cell>
     <mat-cell *matCellDef="let element">
-       {{element.id}}
+       {{element.jobNumber}}
       </mat-cell>
   </ng-container>
 
@@ -65,49 +65,61 @@
 </ng-container>
 <ng-container matColumnDef="Team">
   <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> المجموعة</mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.creationDate|date : 'yyyy-MM-dd'}} </mat-cell>
+  <mat-cell *matCellDef="let element">
+    <ng-container>
+      {{element.Team}}
+     </ng-container>
+   </mat-cell>
 </ng-container>
-<ng-container matColumnDef="User">
+<!-- <ng-container matColumnDef="User">
   <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> اسم المستخدم</mat-header-cell>
   <mat-cell *matCellDef="let element"> {{element.createdBy}} </mat-cell>
+</ng-container> -->
+<ng-container matColumnDef="jobDegree">
+  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>الدرجه الوظيفيه </mat-header-cell>
+  <mat-cell *matCellDef="let element">
+    <ng-container>
+      {{element.jobDegree}}
+     </ng-container>
+   </mat-cell>
 </ng-container>
-<ng-container matColumnDef="Staffdegree">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> الدرجة الوظيفية</mat-header-cell>
-  <mat-cell *matCellDef="let element" data-label="تاريخ العديل"> {{element.updateDate|date : 'yyyy-MM-dd'}} </mat-cell>
-</ng-container>
-<ng-container matColumnDef="Role">
+
+<!-- <ng-container matColumnDef="Role">
   <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> الصلاحية</mat-header-cell>
   <mat-cell *matCellDef="let element" data-label=" المستخدم"> {{element.updatedBy}} </mat-cell>
+</ng-container> -->
+ <ng-container matColumnDef="createdBy">
+  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> اسم المنشئ</mat-header-cell>
+  <mat-cell *matCellDef="let element"> {{element.createdBy}} </mat-cell>
 </ng-container>
+<ng-container matColumnDef="creationDate">
+  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> تاريخ الانشاء</mat-header-cell>
+  <mat-cell *matCellDef="let element"> {{element.creationDate|date : 'yyyy-MM-dd'}} </mat-cell>
+</ng-container>
+<ng-container matColumnDef="updateBy">
+  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>اسم المعدل</mat-header-cell>
+  <mat-cell *matCellDef="let element"> {{element.updateBy}} </mat-cell>
+</ng-container>
+<ng-container matColumnDef="updateDate">
+  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> تاريخ التعديل</mat-header-cell>
+  <mat-cell *matCellDef="let element"> {{element.updateDate|date : 'yyyy-MM-dd'}} </mat-cell>
+</ng-container> 
+<ng-container matColumnDef="action">
+  <mat-header-cell *matHeaderCellDef> الاجراء </mat-header-cell>
+  <mat-cell *matCellDef="let row" data-label="action">
+  <ng-container>
 
- <ng-container matColumnDef="action">
-    <mat-header-cell *matHeaderCellDef> الاجراء </mat-header-cell>
-    <mat-cell *matCellDef="let row" data-label="action">
-    <ng-container>
+    <button mat-button class="btn-success ml-1 font-weight-bolder" matTooltip="Edit"   (click)="onEdit(row)">
+      <mat-icon>edit</mat-icon>
+    </button>
 
-      <button mat-button class="btn-success ml-1 font-weight-bolder" matTooltip="Edit"   (click)="onEdit(row)">
-        <mat-icon>edit</mat-icon>
-      </button>
+    <button mat-button class="btn-danger" matTooltip="Delete"  (click)="onDelete(row)">
+      <mat-icon>delete_forever</mat-icon>
 
-      <button mat-button class="btn-danger" matTooltip="Delete"  (click)="onDelete(row)">
-        <mat-icon>delete_forever</mat-icon>
-
-      </button>
-    </ng-container>
-
-
-
-
-
-
-
-
-
-
-
-  </mat-cell>
+    </button>
   </ng-container>
-
+</mat-cell>
+</ng-container>
 <ng-container matColumnDef="noData">
   <mat-footer-cell *matFooterCellDef colspan="6">
   لا يوجد بيانات...
