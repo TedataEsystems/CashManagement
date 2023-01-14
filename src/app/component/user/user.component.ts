@@ -62,7 +62,9 @@ export class UserComponent implements OnInit {
     this.loader = true;
     this.userService.getUsers(pageNum, pagesize, searchValue, sortColumn, sortDir).subscribe(respose => {
       this.users = respose?.data;
-      // this.missions.length=respose?.pagenation.totalCount;
+     
+      console.log(this.users );
+      console.log(respose);
       this.dataSource = new MatTableDataSource<any>(this.users);
       this.dataSource._updateChangeSubscription();
       this.dataSource.paginator = this.paginator as MatPaginator;

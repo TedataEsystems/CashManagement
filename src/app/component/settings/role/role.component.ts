@@ -7,7 +7,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { UserolesList } from 'src/app/model/useroles-list';
 import { DeleteService } from 'src/app/shared/service/delete.service';
+import { UserRoleService } from 'src/app/shared/service/user-role.service';
 import { AddRoleComponent } from '../Forms/add-role/add-role.component';
 
 @Component({
@@ -29,12 +31,14 @@ export class RoleComponent implements OnInit {
   displayedColumns: string[] = ['Id','role', 'action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource();
-
+  sortColumnDef: string = "Id";
+  SortDirDef: string = 'asc';
+  userRoles:UserolesList[]=[];
 
   editUsr: any;
   editdisabled: boolean = false;
   constructor(private titleService: Title,private toastr:ToastrService, private router: Router,
-    private route: ActivatedRoute, private dailogService: DeleteService, private dialog:MatDialog
+    private route: ActivatedRoute, private dailogService: DeleteService, private dialog:MatDialog,private userRoleService:UserRoleService
   ) {
     this.titleService.setTitle('الصلاحيات');
 
@@ -54,6 +58,23 @@ export class RoleComponent implements OnInit {
     // {
     //   this.router.navigateByUrl('/login');
     // }
+    this.getUserRoles(1, 100, '', this.sortColumnDef, this.SortDirDef);
+
+  }
+  getUserRoles(pageNum: number, pagesize: number, searchValue: string, sortColumn: string, sortDir: string) {
+    this.loader = true;
+    this.userRoleService.getAllUserRoles(pageNum, pagesize, searchValue, sortColumn, sortDir).subscribe(respose => {
+      this.userRoles = respose?.data;
+     
+      console.log(this.userRoles );
+      console.log(respose);
+      this.dataSource = new MatTableDataSource<any>(this.userRoles);
+      this.dataSource._updateChangeSubscription();
+      this.dataSource.paginator = this.paginator as MatPaginator;
+    })//end of subscribe
+    setTimeout(() => {
+      this.loader = false
+    }, (2000));
 
   }
 
