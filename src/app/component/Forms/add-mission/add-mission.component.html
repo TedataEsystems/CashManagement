@@ -18,105 +18,131 @@
   (submit)="onSubmit()"
   dir="rtl"
 >
-  <mat-grid-list cols="4" rowHeight="400" class="mx-3">
+  <mat-grid-list cols="4" rowHeight="600" class="mx-3">
     <mat-grid-tile colspan="1">
       <div class="controles-container">
-        <!-- <input type="hidden" formControlName="Id"> -->
-        <input type="hidden" formControlName="CreationDate" />
-        <input type="hidden" formControlName="CreatedBy" />
-        <input type="hidden" formControlName="UpdateDate" />
-        <input type="hidden" formControlName="UpdatedBy" />
+        <input type="hidden" formControlName="id">
+        <input type="hidden" formControlName="creationDate" />
+        <input type="hidden" formControlName="createdBy" />
+        <input type="hidden" formControlName="updateDate" />
+        <input type="hidden" formControlName="updateBy" />
 
         <mat-form-field>
-          <input formControlName="Id" matInput placeholder=" الرقم الوظيفي" />
-          <mat-error>مطلوب</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <input formControlName="Name" matInput placeholder="اسم الموظف " />
+          <input formControlName="jobNumber" matInput placeholder=" الرقم الوظيفي" />
           <mat-error>مطلوب</mat-error>
         </mat-form-field>
 
-        <mat-form-field>
-          <input formControlName="Staffdegree" matInput placeholder="الدرجة الوظيفية " />
-          <mat-error>مطلوب</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <input
-            formControlName="Location"
-            matInput
-            placeholder="مكان المأمورية "
-          />
-          <mat-error>مطلوب</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-select formControlName="CompanyType" placeholder="نوع الشركة ">
-            <!-- <mat-option>-- اختر --</mat-option> -->
-            <mat-option value="Tedata staff">
-              Tedata Staff
-              </mat-option>
-              <mat-option value="Outsource">
-                Outsource
-            </mat-option>
+        
+        <!-- <mat-form-field>
+          <mat-select formControlName="jobDegree" placeholder=" *الدرجه الوظيفيه (--اختار--) " >
+            <mat-option>-- Please select --</mat-option>
+            <mat-option>x</mat-option>
+            <mat-option>y</mat-option>
+            <mat-option>z</mat-option>
           </mat-select>
           <mat-error>مطلوب</mat-error>
+        </mat-form-field>  -->
+
+        <mat-form-field>
+          <input formControlName="missionPurpose" matInput placeholder="غرض المهمه"/>
+          <mat-error>مطلوب</mat-error>
         </mat-form-field>
 
+        <mat-form-field>
+          <mat-select formControlName="companyType"  placeholder=" *نوع الشركه (--اختار--) " >
+            <mat-option>-- Please select --</mat-option>
+            <mat-option value="Tedate Staff">Tedate Staff</mat-option>
+            <mat-option value="Outsource">Outsource</mat-option>
+          </mat-select>
+          <mat-error>مطلوب</mat-error>
+        </mat-form-field> 
+
+
+
+        <mat-form-field>
+        <mat-select formControlName="statusId" placeholder=" *الحاله (--اختار--) " >
+          <mat-option>-- Please select --</mat-option>
+          <mat-option  *ngFor="let status of statusList"   [value]="status.id">
+            {{status.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error>مطلوب</mat-error>
+      </mat-form-field> 
+
+      <mat-form-field>
+        <mat-select formControlName="userId" placeholder="الموظف (--اختار--) "  >
+          <mat-option>-- Please select --</mat-option>
+          <mat-option  *ngFor="let userr of userList"   [value]="userr.id">
+            {{userr.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error>مطلوب</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select formControlName="missionTypeId" placeholder=" *نوع المهمه (--اختار--) "  >
+          <mat-option>-- Please select --</mat-option>
+          <mat-option  *ngFor="let missionType of missionTypeList"   [value]="missionType.id">
+           {{missionType.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error>مطلوب</mat-error>
+      </mat-form-field>
+
       </div>
+      
     </mat-grid-tile>
     <mat-grid-tile colspan="2">
       <div class="controles-container">
 
 <div class="d-flex w-100" >
 
-  <mat-form-field class="w-50 ">
-    <mat-label>مدة الاقامة</mat-label>
-    <input
-      [ngxMatDatetimePicker]="DurationofstayFrom"
-      formControlName="DurationofstayFrom"
-      matInput
-      placeholder=" من "
-      readonly
-    />
-    <mat-datepicker-toggle
-      matSuffix
-      [for]="$any(DurationofstayFrom)"
-    ></mat-datepicker-toggle>
-    <ngx-mat-datetime-picker #DurationofstayFrom>
-    </ngx-mat-datetime-picker>
-    <mat-error>مطلوب</mat-error>
-  </mat-form-field>
-  <mat-form-field class="w-50 " style="border-right:5px solid #fff">
-    <input
-      [ngxMatDatetimePicker]="DurationofstayTo"
-      formControlName="DurationofstayTo"
-      matInput
-      placeholder="الى"
-      readonly
-    />
-    <mat-datepicker-toggle
-      matSuffix
-      [for]="$any(DurationofstayTo)"
-    ></mat-datepicker-toggle>
-    <ngx-mat-datetime-picker #DurationofstayTo> </ngx-mat-datetime-picker>
-    <mat-error>مطلوب</mat-error>
-  </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>تاريخ بدء الاقامه</mat-label>
+        <input matInput formControlName="startDateStay" [matDatepicker]="picker1" >
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker1">
+          <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+         <mat-error>This field is mandatory.</mat-error> 
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill">
+        <mat-label>تاريخ انتهاء الاقامه</mat-label>
+        <input matInput formControlName="endDateStay"  [matDatepicker]="picker2" [min]="service.form.controls.startDateStay?.value"  >
+
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker2">
+          <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+         <mat-error>This field is mandatory.</mat-error>  
+      </mat-form-field>
+
 </div>
 
 <div class="d-flex w-100" >
 
   <mat-form-field class="w-50  ">
     <input
-      formControlName="NightsNum"
+      formControlName="centerOfCost"
       type="number"
       min="0"
       matInput
-      placeholder="عدد الليالي"
+      placeholder="مركز التكلفه"
     />
+    <mat-error>مطلوب</mat-error>
+  </mat-form-field>
+  
+  <mat-form-field>
+    <input formControlName="missionPlace" matInput placeholder="مكان المهمه"/>
     <mat-error>مطلوب</mat-error>
   </mat-form-field>
   <mat-form-field class="w-50  " style="border-right:5px solid #fff">
     <input
-      formControlName="Meals"
+      formControlName="mealsAndIncidentals"
       type="number"
       min="0"
       matInput
@@ -126,18 +152,6 @@
 
   </div>
   <div class="d-flex w-100" >
-    <mat-form-field class="w-50  ">
-      <mat-select
-        formControlName="MissionType"
-        placeholder="نوع المأمورية "
-      >
-        <mat-option>-- اختر --</mat-option>
-        <mat-option [value]="">
-          <!-- {{item.name}} -->
-        </mat-option>
-      </mat-select>
-      <mat-error>مطلوب</mat-error>
-    </mat-form-field>
     <mat-form-field class="w-50  " style="border-right:5px solid #fff">
       <input
         formControlName="stay"
@@ -151,7 +165,33 @@
 
 
     <div class="d-flex w-100" >
-      <mat-form-field class="w-50  ">
+
+      <mat-form-field appearance="fill">
+        <mat-label>تاريخ بدء المهمه </mat-label>
+        <input matInput formControlName="startDateMission" [matDatepicker]="picker3" >
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker3">
+          <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker3></mat-datepicker>
+         <mat-error>This field is mandatory.</mat-error> 
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill">
+        <mat-label>تاريخ انتهاء المهمه</mat-label>
+        <input matInput formControlName="endDateMission"  [matDatepicker]="picker4" [min]="service.form.controls.startDateMission?.value"  >
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker4">
+          <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker4></mat-datepicker>
+         <mat-error>This field is mandatory.</mat-error>  
+      </mat-form-field>
+
+
+
+
+      <!-- <mat-form-field class="w-50  ">
         <mat-label>مدة المأمورية</mat-label>
         <input
           [ngxMatDatetimePicker]="DurationofmissionFrom"
@@ -167,9 +207,9 @@
         <ngx-mat-datetime-picker #DurationofmissionFrom>
         </ngx-mat-datetime-picker>
         <mat-error>مطلوب</mat-error>
-      </mat-form-field>
+      </mat-form-field> -->
 
-      <mat-form-field class="w-50  " style="border-right:5px solid #fff">
+      <!-- <mat-form-field class="w-50  " style="border-right:5px solid #fff">
         <input
           [ngxMatDatetimePicker]="DurationofmissionTo"
           formControlName="DurationofmissionTo"
@@ -184,12 +224,13 @@
         <ngx-mat-datetime-picker #DurationofmissionTo>
         </ngx-mat-datetime-picker>
         <mat-error>مطلوب</mat-error>
-      </mat-form-field>
-
+      </mat-form-field> -->
+     
+      
       </div>
       <div class="w-100" >
         <mat-form-field class="w-100  ">
-          <textarea formControlName="Comment" matInput placeholder="ملاحظات" >
+          <textarea formControlName="comment" matInput placeholder="ملاحظات" >
             </textarea>
         </mat-form-field>
         </div>
@@ -199,55 +240,39 @@
         <mat-grid-tile colspan="1">
           <div class="controles-container">
 
-            <mat-form-field>
+            <mat-form-field class="w-50  " style="border-right:5px solid #fff">
               <input
-                formControlName="Missionpurpose"
+                formControlName="noOfNights"
+                type="number"
+                min="0"
                 matInput
-                placeholder="غرض المأمورية "
-              />
-              <mat-error>مطلوب</mat-error>
-            </mat-form-field>
-            <mat-form-field>
-              <input
-                formControlName="Costcenter"
-                matInput
-                placeholder="مركز التكلفة"
+                placeholder="عدد الليالى"
               />
             </mat-form-field>
-
             <mat-form-field>
-              <input formControlName="Permission" matInput placeholder="طلب اذن" />
+              <input formControlName="permissionRequest" matInput placeholder="غرض الاذن"/>
             </mat-form-field>
             <mat-form-field>
               <input
-                formControlName="Durationofpermission"
+                formControlName="permissionDuration"
                 matInput
                 placeholder="مدة الاذن"
               />
             </mat-form-field>
+
             <mat-form-field>
-<!-- --------------------------------------------- -->
-
-
-<button type="button" mat-icon-button matPrefix (click)="f_input.click()">
-  <mat-icon>attach_file</mat-icon>
-</button>
-<input type="text" readonly matInput formControlName="Approvalmail"   placeholder="بريد الموافقة"/>
-<input
-  type="file"
-  multiple
-  hidden
-  #f_input
-  (change)="handleFileInputChange(f_input.files)"
-/>
-
-
-              <!--------------------------------------  -->
-              <mat-error>مطلوب</mat-error>
+              <input
+                formControlName="missionTypeCost"
+                type="number"
+                min="0"
+                matInput
+                placeholder="تكلفه نوع المهمه"
+              />
             </mat-form-field>
-
-
-            </div>
+           
+          </div>
+           
+            <!-- </div> -->
             </mat-grid-tile>
 
 

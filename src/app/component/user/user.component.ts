@@ -81,26 +81,14 @@ export class UserComponent implements OnInit {
   }
 
   onSearchClear() {
-    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    {
-      this.router.navigateByUrl('/login');
-    }
-    else{
     this.searchKey = '';
-    this.applyFilter();}
+    this.applyFilter();
   }
 
 
   applyFilter() {
-    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    {
-      this.router.navigateByUrl('/login');
-    }
-    else{
     let searchData = this.searchKey.trim().toLowerCase();
-
-  }
-
+    this.getUsers(1,100,searchData,this.sortColumnDef,this.SortDirDef)
   }
 
   onEdit(row:any){

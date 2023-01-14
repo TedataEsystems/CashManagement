@@ -25,7 +25,7 @@ export class SummaryComponent implements OnInit {
   loading: boolean = true;
   /////////////////
   missions: MissionList[] = [];
- 
+
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
   displayedColumns: string[] = ['all', 'id', 'jobNumber', 'jobDegree', 'user', 'missionPurpose', 'centerOfCost', 'companyType', 'missionPlace', 'startDateMission', 'endDateMission', 'noOfNights', 'stay',
@@ -43,22 +43,16 @@ export class SummaryComponent implements OnInit {
     this.titleService.setTitle('المأموريات');
 
   }
- ////////////////pagenation variables////////
- pageNumber = 1;
- pageSize = 100;
- sortColumnDef: string = "Id";
- SortDirDef: string = 'asc';
- loader: boolean = false;
-//  pageIn = 0;
-//  previousSizedef = 100;
-//  pagesizedef: number = 100;
-//  public pIn: number = 0;
-lastcol: string = 'Id';
-lastdir: string = 'asc';
-
-
- ///////////////
-
+  ////////////////pagenation variables/////////////////////////
+  pageNumber = 1;
+  pageSize = 100;
+  sortColumnDef: string = "Id";
+  SortDirDef: string = 'asc';
+  loader: boolean = false;
+  lastcol: string = 'Id';
+  lastdir: string = 'asc';
+  ///////////////
+  /////pagenation////////
   getMisssions(pageNum: number, pagesize: number, searchValue: string, sortColumn: string, sortDir: string) {
     this.loader = true;
     this.missionService.getAllMissions(pageNum, pagesize, searchValue, sortColumn, sortDir).subscribe(respose => {
@@ -73,56 +67,70 @@ lastdir: string = 'asc';
     }, (2000));
 
   }//end of getallmission
- //sort
-sortData(sort: any) {
-
+  //sort
+  sortData(sort: any) {
     if (this.lastcol == sort.active && this.lastdir == sort.direction) {
-      if (this.lastdir == 'asc'){
-        sort.direction = 'desc';}
-      else{
-        sort.direction = 'asc';}
-        console.log(sort.active, this.lastdir,'if');
+      if (this.lastdir == 'asc') {
+        sort.direction = 'desc';
+      }
+      else {
+        sort.direction = 'asc';
+      }
+      console.log(sort.active, this.lastdir, 'if');
     }
-    this.lastcol = sort.active; 
+    this.lastcol = sort.active;
     // if (this.lastdir == 'asc'){
     //   sort.direction = 'desc';}
     // else{
     //   sort.direction = 'asc';}
     this.lastdir = sort.direction;
-    console.log(sort.active, this.lastdir,'kk');
+    console.log(sort.active, this.lastdir, 'kk');
     this.getMisssions(1, 100, '', sort.active, this.lastdir);
-}
+  }
+  //when empty search input
+  onSearchClear() {
+    this.searchKey = '';
+    this.applyFilter();
+  }
+  // when add search value and key up
+  applyFilter() {
+    let searchData = this.searchKey.trim().toLowerCase();
+    this.getMisssions(1, 100, searchData, this.sortColumnDef, "asc");
+  }//applyfilter
 
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort as MatSort;
     this.dataSource.paginator = this.paginator as MatPaginator;
   }
-
+  ////////end of pagenation//////
   ngOnInit(): void {
     this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
   }
-
-
-
-//when empty search input
-  onSearchClear() {
-      this.searchKey = '';
-      this.applyFilter();
+  //////add (open add component as dialog)
+  addMission() {
+    const dialogGonfig = new MatDialogConfig();
+    dialogGonfig.data = { dialogTitle: "اضافة مأمورية" };
+    dialogGonfig.disableClose = true;
+    dialogGonfig.autoFocus = true;
+    dialogGonfig.width = "80%";
+    dialogGonfig.panelClass = 'modals-dialog';
+    this.dialog.open(AddMissionComponent, dialogGonfig)
   }
+  /////////////////delete
+  onDelete(r: any) {
+    this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
+      if (res) {
+        this.missionService.deleteMission(r.id).subscribe(res => {
+            this.toastr.success(": deleted successfully");
+            this.getMisssions(1,100,'',this.sortColumnDef,this.SortDirDef);
+        },error => {  this.toastr.warning(": failed "); }
+        )//deletemission
+      }//end of if
+    })//end of subscribe
+  }//delete
 
-// when add search value and key up
-  applyFilter() {
-    // if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
-    //   this.router.navigateByUrl('/login');
-    // }
-  //  else {
-      let searchData = this.searchKey.trim().toLowerCase();
-      this.getMisssions(1,100,searchData,this.sortColumnDef,"asc");
 
-   // }
-
-  }//applyfilter
 
   onEdit(row: any) {
     const dialogGonfig = new MatDialogConfig();
@@ -137,20 +145,7 @@ sortData(sort: any) {
 
 
 
-  onDelete(r: any) {
 
-    // if (localStorage.getItem("usernam") == "" || localStorage.getItem("usernam") == undefined || localStorage.getItem("usernam") == null) {
-    //   this.router.navigateByUrl('/login');
-    // }
-    // else {
-    // this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
-
-    //   this.toastr.success(':: successfully Deleted');
-    // })
-
-    //}
-
-  }
 
 
 
@@ -183,14 +178,6 @@ sortData(sort: any) {
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
-  addMission() {
-    const dialogGonfig = new MatDialogConfig();
-    dialogGonfig.data = { dialogTitle: "اضافة مأمورية" };
-    dialogGonfig.disableClose = true;
-    dialogGonfig.autoFocus = true;
-    dialogGonfig.width = "50%";
-    dialogGonfig.panelClass = 'modals-dialog';
-    this.dialog.open(AddMissionComponent, dialogGonfig)
-  }
+
 
 }

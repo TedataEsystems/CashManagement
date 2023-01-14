@@ -12,7 +12,7 @@ private url:string=`${environment.apiUrl}MissionType`;
   constructor(private httpClient:HttpClient) { }
   getAllMissionType(PageNumber :number , PageSize :number , searchValue:string ,sortcolumn:string,sortcolumndir:string)
   {
-   let params: HttpParams;
+   let params=new HttpParams();
    if(PageNumber!==null && PageSize!==null)
    {
     params=params.append('pageNumber',PageNumber.toString());
@@ -39,5 +39,9 @@ private url:string=`${environment.apiUrl}MissionType`;
   deleteMissionType(id:number):Observable<any>
   {
      return this.httpClient.delete<any>(`${this.url}/DeleteMissionType/`+id);
+  }
+  MissionTypeIsAlreadySigned(name:string,id:number):Observable<any>
+  {
+return this.httpClient.get<any>(`${this.url}/MissionTypeIsAlreadySigned/`+name+`/`+id);
   }
 }//end of service

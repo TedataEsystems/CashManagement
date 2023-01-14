@@ -42,5 +42,9 @@ private url:string=`${environment.apiUrl}Mission`;
   {
      return this.httpClient.delete<any>(`${this.url}/DeleteMission/`+id);
   }
+  getLists():Observable<any>
+  {
+return this.httpClient.get<any>(`${this.url}/GetLists`);
+  }
 }//end of service
 

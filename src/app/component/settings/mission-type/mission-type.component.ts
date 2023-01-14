@@ -7,7 +7,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { MissionType } from 'src/app/model/mission-type';
 import { DeleteService } from 'src/app/shared/service/delete.service';
+import { MissionTypeService } from 'src/app/shared/service/mission-type.service';
 import { AddMissonTypeComponent } from '../Forms/add-misson-type/add-misson-type.component';
 
 @Component({
@@ -27,121 +29,233 @@ export class MissionTypeComponent implements OnInit {
   editdisabled: boolean = false;
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
-  displayedColumns: string[] = ['Id','type', 'action'];
+  displayedColumns: string[] = ['id', 'name', 'creationDate', 'createdBy', 'updateDate', 'updatedBy', 'action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource();
 
 
 
-  constructor(private titleService: Title,private toastr:ToastrService, private router: Router,
-    private route: ActivatedRoute, private dailogService: DeleteService, private dialog:MatDialog
+  constructor(private titleService: Title, private toastr: ToastrService, private router: Router,
+    private route: ActivatedRoute, private dailogService: DeleteService, private dialog: MatDialog, private missionTypeService: MissionTypeService
   ) {
     this.titleService.setTitle('نوع المأموريات');
 
   }
 
- // show: boolean = false;
+  // show: boolean = false;
   loader: boolean = false;
+  missionTypeList: MissionType[] = [];
   form: FormGroup = new FormGroup({
-    Id: new FormControl(0),
-    Name: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
+    id: new FormControl(0),
+    name: new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
 
   })
-
-
-  ngOnInit(): void {
-    // if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    // {
-    //   this.router.navigateByUrl('/login');
-    // }
-
+  isDisable = false;
+  missionType = {
+    id: 0,
+    name: '',
+    createdBy: ''
   }
-
+  //////pagenation
+  isDisabled = false;
+  pageNumber = 1;
+  pageSize = 100;
+  sortColumnDef: string = "Id";
+  SortDirDef: string = 'asc';
+  public colname: string = 'Id';
+  public coldir: string = 'asc';
+  getMissionTypes(pageNum: number, pageSize: number, search: string, sortColumn: string, sortDir: string) {
+    this.loader = true;
+    this.missionTypeService.getAllMissionType(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
+      this.missionTypeList = response?.data;
+      this.dataSource = new MatTableDataSource<any>(this.missionTypeList);
+      this.dataSource._updateChangeSubscription();
+      this.dataSource.paginator = this.paginator as MatPaginator;
+    })//end of sunscribe
+    setTimeout(() => {
+      this.loader = false;
+    }, 2000);
+  }//end getMissionTypes
+  //sort
+  sortData(sort: any) {
+    if (this.colname == sort.active && this.coldir == sort.direction) {
+      if (this.coldir == 'asc')
+        sort.direction == 'desc';
+      else
+        sort.direction == 'asc';
+    }
+    this.coldir = sort.direction;
+    this.colname = sort.active;
+    this.getMissionTypes(1, 100, '', this.colname, this.coldir);
+  }
+  //empty search input
+  onSearchClear() {
+    this.searchKey = '';
+    this.applyFilter();
+  }
+  //search
+  applyFilter() {
+    let searchData = this.searchKey.trim().toLowerCase();
+    this.getMissionTypes(1, 100, searchData, this.sortColumnDef, 'asc');
+  }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort as MatSort;
     this.dataSource.paginator = this.paginator as MatPaginator;
   }
+  ////////////////////////end of pagenation
+  ngOnInit(): void {
+    this.getMissionTypes(1, 100, '', this.sortColumnDef, this.SortDirDef);
 
-  onSearchClear() {
-    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
+  }
+///////////////add crud operation/////////
+//show and hide form to add 
+addType() {
+  this.isShowDiv = !this.isShowDiv;
+}
+//when add mission type name check if this name alredy exsit or not
+onChecknameIsalreadysign()
+{
+  this.missionType.id=this.form.value.id;
+  this.missionType.name=this.form.value.name;
+  this.missionTypeService.MissionTypeIsAlreadySigned(this.missionType.name,this.missionType.id).subscribe(res=>
     {
-      this.router.navigateByUrl('/login');
-    }
-    else{
-    this.searchKey = '';
-    this.applyFilter();}
-  }
-
-
-  applyFilter() {
-    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
+      //not asign before
+      if(res.status==true)
+      {
+        this.isDisabled = false;
+        this.isNameRepeated = false;
+      }
+      //already exsit
+      else
+      {
+        this.isDisabled = true;
+        this.isNameRepeated = true;
+      }
+    })
+}
+//submit add
+  onCreateUpdate() {
+    this.isDisable = true;
+    this.missionType.id = this.form.value.id;
+    this.missionType.name = this.form.value.name;
+    this.missionType.createdBy = localStorage.getItem('usernam') || '';
+    if (this.form.invalid || this.form.value.name == '') {
+      if (this.form.value.name == ' ')
+        this.setReactValue(Number(0), "");
+      this.isDisable = false;
+      return;
+    }//end of if
+    else 
     {
-      this.router.navigateByUrl('/login');
-    }
-    else{
-    let searchData = this.searchKey.trim().toLowerCase();
+  //add
+  if(this.form.value.id==0)
+  {
+    this.isDisable=true;
+    this.missionTypeService.addMissionType(this.missionType).subscribe(res=>
+      {
+        setTimeout(() => {
+          this.loader = false;
+        }, 1500)//end of settime out
+        this.toastr.success('::add successfully');
+        this.form['controls']['name'].setValue('');
+        this.form['controls']['id'].setValue(0);
+        this.getMissionTypes(1,100,'',this.sortColumnDef,this.SortDirDef);
+      },error=>{this.toastr.warning('::failed');})//end of subscribe
+  }
+    }//end of else
+
+    this.isShowDiv = false;
+  }//end of submit
+  setReactValue(id: number, val: any) {
+    this.form.patchValue({
+      id: id,
+      name: val
+
+    });
 
   }
 
-  }
+//////end of add///////////////
 
+///delete
+onDelete(r: any) {
+
+  this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
+    if (res) {
+      this.missionTypeService.deleteMissionType(r.id).subscribe(res => {
+        this.toastr.success(':: successfully Deleted');
+        this.getMissionTypes(1, 100, '', this.sortColumnDef, this.SortDirDef);
+      }, error => { this.toastr.warning('::failed'); }
+      )//end of subscribe
+    }//end of if
+  })//end of first subscriob
+}//end of on delete
+/////////////////end of delete
+
+////////edit crud///////
+//when in table click in  row make this row editable 
   editROw(r: any) {
-
     this.editUsr = r.id;
     this.editdisabled = true;
   }
 
 
-
+//after make table editable we want to cancel the edit without doing any thing
   cancelEdit() {
-
     this.editdisabled = false;
     this.isNameUpdatedRepeated = false;
-
   }
   updateEdit(row: any) {
 
-
-
-        this.toastr.success(":: update successfully");
-
-        // this.form['controls']['status'].setValue('');
-        // this.form['controls']['id'].setValue(0);
-        //   this.form.reset();
-        this.cancelEdit();
+  let missionTypeEdit:MissionType={
+    id:row.id,
+    name:row.name,
+    createdBy:row.name,
+    creationDate:row.creationDate,
+    updatedBy:localStorage.getItem('usernam') || ''
+  }
+this.missionTypeService.updateMissionType(missionTypeEdit).subscribe(res=>
+  {this.loader = true;
+      if(res.status==true)
+      {
+        this.toastr.success("::updated successfully");
+        this.getMissionTypes(1,100,'',this.sortColumnDef,this.SortDirDef);
+        this.form['controls']['name'].setValue('');
+        this.form['controls']['id'].setValue(0);
+        
+      }
+      else
+      this.toastr.warning("::failed");
+  })//end of subscribe
+    this.cancelEdit();
 
   }
 
-
-  onDelete(r:any) {
- // if (localStorage.getItem("usernam") == "" || localStorage.getItem("usernam") == undefined || localStorage.getItem("usernam") == null) {
-    //   this.router.navigateByUrl('/login');
-    // }
-    // else {
-      this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
-
-        this.toastr.success(':: successfully Deleted');
-      })
-
-      //}
-
+   
+  onChecknameIsalreadysignWhenUpdate(element:any)
+  {
+   this.missionTypeService.MissionTypeIsAlreadySigned(element.name,element.id).subscribe(res=>
+    {
+      if(res.status==true)
+      {
+        this.isDisabled=false;
+        this.isNameUpdatedRepeated=false;
+      }
+      else
+      {
+        this.isDisabled=true;
+        this.isNameUpdatedRepeated=true;
+      }
+    }//,error=>{this.toastr.warning("::faild");}
+    )
   }
-  onCreateUpdate() {
+ 
+  /////////////
 
-    this.isShowDiv = false;
-  }//end of submit
 
-  addType(){
-    // const dialogGonfig = new MatDialogConfig();
-    // dialogGonfig.data= {dialogTitle: " "};
-    // dialogGonfig.disableClose = true;
-    // dialogGonfig.autoFocus = true;
-    // dialogGonfig.width = "50%";
-    // dialogGonfig.panelClass = 'modals-dialog';
-    //  this.dialog.open(AddMissonTypeComponent,dialogGonfig)
-    this.isShowDiv = !this.isShowDiv;
-  }
+
+ 
 
 
 }
