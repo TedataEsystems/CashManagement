@@ -7,7 +7,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { UserList } from 'src/app/model/user-list';
 import { DeleteService } from 'src/app/shared/service/delete.service';
+import { UserService } from 'src/app/shared/service/user.service';
 import { AddUserComponent } from '../Forms/add-user/add-user.component';
 
 @Component({
@@ -20,10 +22,16 @@ export class UserComponent implements OnInit {
   searchKey: string = '';
   listName: string = '';
   loading: boolean = true;
+  sortColumnDef: string = "Id";
+  SortDirDef: string = 'asc';
+  loader: boolean = false;
+  users:UserList[]=[];
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
-  displayedColumns: string[] = ['Num','Id', 'Name','Team','User','Staffdegree','Role', 'action'];
+  // displayedColumns: string[] = ['Num','Id', 'Name','Team','User','Staffdegree','Role', 'action'];
+  displayedColumns: string[] = ['id','jobNumber', 'Name','Team','jobDegree','createdBy','creationDate', 
+  'updateBy', 'updateDate','action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource();
   settingtype = ''
@@ -31,14 +39,14 @@ export class UserComponent implements OnInit {
   editUsr: any;
   editdisabled: boolean = false;
   constructor(private titleService: Title,private toastr:ToastrService, private router: Router,
-    private route: ActivatedRoute, private dailogService: DeleteService, private dialog:MatDialog
+    private route: ActivatedRoute, private dailogService: DeleteService, private dialog:MatDialog,private userService:UserService
   ) {
     this.titleService.setTitle('المستخدمين');
 
   }
 
  // show: boolean = false;
-  loader: boolean = false;
+  
 
 
 
@@ -47,9 +55,23 @@ export class UserComponent implements OnInit {
     // {
     //   this.router.navigateByUrl('/login');
     // }
+    this.getUsers(1, 100, '', this.sortColumnDef, this.SortDirDef);
 
   }
+  getUsers(pageNum: number, pagesize: number, searchValue: string, sortColumn: string, sortDir: string) {
+    this.loader = true;
+    this.userService.getUsers(pageNum, pagesize, searchValue, sortColumn, sortDir).subscribe(respose => {
+      this.users = respose?.data;
+      // this.missions.length=respose?.pagenation.totalCount;
+      this.dataSource = new MatTableDataSource<any>(this.users);
+      this.dataSource._updateChangeSubscription();
+      this.dataSource.paginator = this.paginator as MatPaginator;
+    })//end of subscribe
+    setTimeout(() => {
+      this.loader = false
+    }, (2000));
 
+  }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort as MatSort;
