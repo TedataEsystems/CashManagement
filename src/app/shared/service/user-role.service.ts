@@ -12,9 +12,10 @@ export class UserRoleService {
   constructor(private httpClient:HttpClient) {}
   getAllUserRoles(PageNumber :number , PageSize :number , searchValue:string ,sortcolumn:string,sortcolumndir:string)
   {
-   let params: HttpParams;
+   let params= new HttpParams();
    if(PageNumber!==null && PageSize!==null)
    {
+   console.log("hi");
     params=params.append('pageNumber',PageNumber.toString());
     params=params.append('pageSize',PageSize.toString());
     params=params.append('searchValue',searchValue.toString());
@@ -32,17 +33,21 @@ export class UserRoleService {
   {
      return this.httpClient.get<any>(`${this.url}`+id);
   }
-  addUserRole(missionType:any):Observable<any>
+  addUserRole(userrole:any):Observable<any>
    {
-      return this.httpClient.post<any>(`${this.url}/AddUserRole`,missionType);
+      return this.httpClient.post<any>(`${this.url}/AddUserRole`,userrole);
    }
-  updateUserRole(missionType:any):Observable<any>
+  updateUserRole(userrole:any):Observable<any>
    {
-      return this.httpClient.post<any>(`${this.url}/UpdateUserRole`,missionType);
+      return this.httpClient.post<any>(`${this.url}/UpdateUserRole`,userrole);
   }
   deleteUserRole(id:number):Observable<any>
    {
       return this.httpClient.delete<any>(`${this.url}/DeleteUserRole/`+id);
+   }
+   userRoleIsAlreadySigned(name:string,id:number):Observable<any>
+   {
+ return this.httpClient.get<any>(`${this.url}/UserRoleIsAlreadySigned/`+name+`/`+id);
    }
 
 }

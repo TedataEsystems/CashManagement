@@ -18,8 +18,6 @@ import { AddRoleComponent } from '../Forms/add-role/add-role.component';
   styleUrls: ['./role.component.css']
 })
 export class RoleComponent implements OnInit {
-
-
   isShowDiv = false;
   isNameRepeated: boolean = false;
   searchKey: string = '';
@@ -28,15 +26,21 @@ export class RoleComponent implements OnInit {
   isNameUpdatedRepeated: boolean = false;
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
-  displayedColumns: string[] = ['Id','role', 'action'];
+  displayedColumns: string[] = ['id', 'name','createdBy' ,'creationDate', 'updatedBy','updateDate', 'action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource();
   sortColumnDef: string = "Id";
   SortDirDef: string = 'asc';
   userRoles:UserolesList[]=[];
-
+  public colname: string = 'Id';
+  public coldir: string = 'asc';
   editUsr: any;
   editdisabled: boolean = false;
+  loader: boolean = false;
+  isDisabled = false;
+  isDisable = false;
+  userRole = {id: 0,name:'',createdBy:''}
+  // show: boolean = false;
   constructor(private titleService: Title,private toastr:ToastrService, private router: Router,
     private route: ActivatedRoute, private dailogService: DeleteService, private dialog:MatDialog,private userRoleService:UserRoleService
   ) {
@@ -44,28 +48,22 @@ export class RoleComponent implements OnInit {
 
   }
   form: FormGroup = new FormGroup({
-    Id: new FormControl(0),
-    Name: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
+    id: new FormControl(0),
+    name: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
 
   })
- // show: boolean = false;
-  loader: boolean = false;
-
-
-
   ngOnInit(): void {
     // if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
     // {
     //   this.router.navigateByUrl('/login');
     // }
+    
     this.getUserRoles(1, 100, '', this.sortColumnDef, this.SortDirDef);
-
   }
   getUserRoles(pageNum: number, pagesize: number, searchValue: string, sortColumn: string, sortDir: string) {
     this.loader = true;
     this.userRoleService.getAllUserRoles(pageNum, pagesize, searchValue, sortColumn, sortDir).subscribe(respose => {
       this.userRoles = respose?.data;
-     
       console.log(this.userRoles );
       console.log(respose);
       this.dataSource = new MatTableDataSource<any>(this.userRoles);
@@ -77,44 +75,45 @@ export class RoleComponent implements OnInit {
     }, (2000));
 
   }
-
-
+  sortData(sort: any) {
+    if (this.colname == sort.active && this.coldir == sort.direction) {
+      if (this.coldir == 'asc')
+        sort.direction == 'desc';
+      else
+        sort.direction == 'asc';
+    }
+    this.coldir = sort.direction;
+    this.colname = sort.active;
+    this.getUserRoles(1, 100, '', this.colname, this.coldir);
+  }
   ngAfterViewInit() {
     this.dataSource.sort = this.sort as MatSort;
     this.dataSource.paginator = this.paginator as MatPaginator;
   }
-
   onSearchClear() {
-    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    {
-      this.router.navigateByUrl('/login');
-    }
-    else{
+    // if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
+    // {
+    //   this.router.navigateByUrl('/login');
+    // }
+    // else{
     this.searchKey = '';
-    this.applyFilter();}
+    this.applyFilter();
+
   }
-
-
   applyFilter() {
-    if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    {
-      this.router.navigateByUrl('/login');
-    }
-    else{
+    // if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
+    // {
+    //   this.router.navigateByUrl('/login');
+    // }
+    // else{
     let searchData = this.searchKey.trim().toLowerCase();
-
+    this.getUserRoles(1, 100, searchData, this.sortColumnDef, 'asc');
   }
-
-  }
-
   editROw(r: any) {
 
     this.editUsr = r.id;
     this.editdisabled = true;
   }
-
-
-
   cancelEdit() {
 
     this.editdisabled = false;
@@ -122,15 +121,27 @@ export class RoleComponent implements OnInit {
 
   }
   updateEdit(row: any) {
-
-
-
-        this.toastr.success(":: update successfully");
-
-        // this.form['controls']['status'].setValue('');
-        // this.form['controls']['id'].setValue(0);
-        //   this.form.reset();
-        this.cancelEdit();
+    let userRoleEdit:UserolesList={
+      id:row.id,
+      name:row.name,
+      createdBy:row.name,
+      creationDate:row.creationDate,
+      updatedBy:localStorage.getItem('usernam') || ''
+    }
+  this.userRoleService.updateUserRole(userRoleEdit).subscribe(res=>
+    {this.loader = true;
+        if(res.status==true)
+        {
+          this.toastr.success("::updated successfully");
+          this.getUserRoles(1,100,'',this.sortColumnDef,this.SortDirDef);
+          this.form['controls']['name'].setValue('');
+          this.form['controls']['id'].setValue(0);
+          
+        }
+        else
+        this.toastr.warning("::failed");
+    })//end of subscribe
+      this.cancelEdit();
 
   }
   onDelete(r:any) {
@@ -138,10 +149,16 @@ export class RoleComponent implements OnInit {
     //   this.router.navigateByUrl('/login');
     // }
     // else {
-      this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
-
+    
+  this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
+    if (res) {
+      this.userRoleService.deleteUserRole(r.id).subscribe(res => {
         this.toastr.success(':: successfully Deleted');
-      })
+        this.getUserRoles(1, 100, '', this.sortColumnDef, this.SortDirDef);
+      }, error => { this.toastr.warning('::failed'); }
+      )//end of subscribe
+    }//end of if
+  })//end of first subscriob
 
       //}
 
@@ -157,9 +174,84 @@ export class RoleComponent implements OnInit {
     this.isShowDiv = !this.isShowDiv;
   }
   onCreateUpdate() {
+    this.isDisable = true;
+    this.userRole.id = this.form.value.id;
+    this.userRole.name = this.form.value.name;
+    this.userRole.createdBy = localStorage.getItem('usernam') || '';
+    if (this.form.invalid || this.form.value.name == '') {
+      if (this.form.value.name == ' ')
+        this.setReactValue(Number(0), "");
+      this.isDisable = false;
+      return;
+    }
+    else 
+    {
+  //add
+  if(this.form.value.id==0)
+  {
+    this.isDisable=true;
+    this.userRoleService.addUserRole(this.userRole).subscribe(res=>
+      {
+        setTimeout(() => {
+          this.loader = false;
+        }, 1500)//end of settime out
+        this.toastr.success('::add successfully');
+        this.form['controls']['name'].setValue('');
+        this.form['controls']['id'].setValue(0);
+        this.getUserRoles(1,100,'',this.sortColumnDef,this.SortDirDef);
+      },error=>{this.toastr.warning('::failed');})
+  }
+    }
 
     this.isShowDiv = false;
-  }//end of submit
+  }
+  onChecknameIsalreadysign()
+  {
+    this.userRole.id=this.form.value.id;
+    console.log(this.userRole.id);
+    this.userRole.name=this.form.value.name;
+    this.userRoleService.userRoleIsAlreadySigned(this.userRole.name,this.userRole.id).subscribe(res=>
+      {
+        //not asign before
+        if(res.status==true)
+        {
+          this.isDisabled = false;
+          console.log(this.isDisabled,"true")
+          this.isNameRepeated = false;
+        }
+        //already exsit
+        else
+        {
+          this.isDisabled = true;
+          console.log(this.isDisabled,"false")
+          this.isNameRepeated = true;
+        }
+      })
+  }
+  setReactValue(id: number, val: any) {
+    this.form.patchValue({
+      id: id,
+      name: val
 
+    });
+
+  }
+  onChecknameIsalreadysignWhenUpdate(element:any)
+  {
+   this.userRoleService.userRoleIsAlreadySigned(element.name,element.id).subscribe(res=>
+    {
+      if(res.status==true)
+      {
+        this.isDisabled=false;
+        this.isNameUpdatedRepeated=false;
+      }
+      else
+      {
+        this.isDisabled=true;
+        this.isNameUpdatedRepeated=true;
+      }
+    }//,error=>{this.toastr.warning("::faild");}
+    )
+  }
 
 }
