@@ -11,15 +11,15 @@
   <mat-divider></mat-divider>
 
   <div class="search-div" fxLayout="row">
-    <form *ngIf="isShowDiv"  [formGroup]="form" (ngSubmit)="onCreateUpdate()" class="example-form">
+    <form *ngIf="isShowDiv"  [formGroup]="form" (ngSubmit)="onAddSubmit()" class="example-form">
 
       <mat-form-field class="example-full-width">
         <mat-label> الحالة</mat-label>
-        <input type="text"  matInput formControlName="Name">
+        <input type="text" #statusName  matInput formControlName="Name" (keyup)="IsAddNameRepeated()" >
         <input type="hidden"  formControlName="Id" >
-        <span class="mat-error" *ngIf="isNameRepeated"> مسجلة مسبقاً</span>
+        <span class="mat-error" *ngIf="isNameRepeated&&statusName.value!=''">مسجلة مسبقاً</span>
       </mat-form-field>
-      <button type="submit" mat-raised-button     class="search text-white">اضافة</button>
+      <button type="submit" mat-raised-button [disabled]="isDisabled||statusName.value==''"  class="search text-white">اضافة</button>
    </form>
     <mat-form-field class="search-form-field" floatLabel="never">
       <input matInput [(ngModel)]="searchKey" placeholder="بحث" autocomplete="off" (keyup)="applyFilter()">
@@ -33,7 +33,7 @@
 
     <div class="example-container mat-elevation-z8" >
 
-    <mat-table [dataSource]="dataSource"  #table  matSort matSortActive="Name" matSortDirection="asc" matSortDisableClear >
+    <mat-table [dataSource]="dataSource"  #table  matSort (matSortChange)="sortData($event)" matSortActive="Name" matSortDirection="asc" matSortDisableClear >
 
 
   <ng-container matColumnDef="Id">
@@ -53,7 +53,7 @@
      </ng-container>
      <ng-container *ngIf="editdisabled  && element.id==editUsr">
        <mat-form-field hideRequiredMarker="false" appearance="legacy">
-         <input matInput placeholder="الحالة"  name="name" [(ngModel)]="element.name">
+         <input matInput placeholder="الحالة"  name="name" [(ngModel)]="element.name" (keyup)="IsUpdateNameRepeated(element)" >
          <span class="mat-error" *ngIf="isNameUpdatedRepeated && element.id == editUsr">الحالة مسجلة مسبقاً</span>
        </mat-form-field>
        </ng-container>
@@ -87,7 +87,7 @@
       </button>
     </ng-container>
     <ng-container *ngIf="editdisabled  && row.id==editUsr">
-      <button  class="btn-success btn ml-1"  matTooltip="Update"  (click)="updateEdit(row)">
+      <button  class="btn-success btn ml-1"  matTooltip="Update"  (click)="OnEditSubmit(row)">
        <mat-icon>check</mat-icon>
       </button>
 
@@ -126,7 +126,7 @@
 <!-- end test -->
 </div>
 <!-- </ng-template> -->
-<mat-paginator [pageSizeOptions]="[10,25,50, 100]" [pageSize]="10"  showFirstLastButtons>
+<mat-paginator [pageSizeOptions]="[10,25,50, 100]" [pageSize]="10" showFirstLastButtons>
 </mat-paginator>
 </mat-card>
 

@@ -23,26 +23,31 @@
   <ng-template #table>
       <div class="example-container mat-elevation-z8">
 
-  <mat-table [dataSource]="dataSource"  matSort  multiTemplateDataRows>
+  <mat-table [dataSource]="dataSource"  matSort (matSortChange)="sortData($event)"  matSortActive="name" matSortDirection="asc" matSortDisableClear   multiTemplateDataRows>
     <ng-container matColumnDef="Id">
       <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> الرقم</mat-header-cell>
-      <mat-cell *matCellDef="let element" data-label="CustName"> {{element.CustName}} </mat-cell>
+      <mat-cell *matCellDef="let element" data-label="CustName"> {{element.id}} </mat-cell>
   </ng-container>
 
-      <ng-container matColumnDef="User">
+      <ng-container matColumnDef="userName">
           <mat-header-cell *matHeaderCellDef mat-sort-header>اسم المستخدم</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.CallDate}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.userName}} </mat-cell>
       </ng-container>
 
 
-      <ng-container matColumnDef="Creationdate">
+      <ng-container matColumnDef="creationDate">
           <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> تاريخ الانشاء </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.User}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.creationDate|date : 'yyyy-MM-dd'}} </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="action">
+      <ng-container matColumnDef="parentType">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> الاجراء</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.parentType}} </mat-cell>
+    </ng-container>
+
+      <ng-container matColumnDef="actionType">
           <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> الاجراء</mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.Serial}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.actionType}} </mat-cell>
       </ng-container>
 
 
@@ -65,7 +70,7 @@
             <mat-list>
 
               <mat-list-item >
-               some text ............
+                {{element.descirption}}
 
               </mat-list-item>
             </mat-list>
@@ -98,6 +103,6 @@
 
   </ng-template>
 
-  <mat-paginator [pageSizeOptions]="[5,20, 50, 100]"   [pageSize]="5"   showFirstLastButtons></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[5,20, 50, 100]"   [pageSize]="5" showFirstLastButtons></mat-paginator>
 
   </mat-card>

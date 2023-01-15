@@ -4,6 +4,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
+import { ToastrService } from 'ngx-toastr';
+import { Logs } from 'src/app/model/logs';
+import { LogsService } from 'src/app/shared/service/logs.service';
 
 
 export interface PeriodicElement {
@@ -41,7 +44,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class LogsComponent implements OnInit {
 
   searchKey:string ='' ;
-  constructor(private title:Title){
+  constructor(private title:Title,private toastr:ToastrService,private logsService:LogsService){
 
     this.title.setTitle("History")
 
@@ -49,10 +52,30 @@ export class LogsComponent implements OnInit {
 
   @ViewChild(MatSort) sort?:MatSort ;
   @ViewChild(MatPaginator) paginator?:MatPaginator ;
-  displayedColumns: string[] = ['Id', 'User' ,'Creationdate', 'action' ,'Details'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  displayedColumns: string[] = ['Id', 'userName' ,'creationDate','parentType', 'actionType' ,'Details'];
+  dataSource = new MatTableDataSource();
+  logsList:Logs[]=[]
+  sortColumnDef: string = "Id";
+  SortDirDef: string = 'desc';
+  loader: boolean = false;
 
+
+  getRequestdata(pageNum: number, pageSize: number, search: string, sortColumn: string, sortDir: string) {
+    this.loader = true;
+    this.logsService.getLogs(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {
+      this.logsList = response?.data;
+      this.logsList.length = response?.pagination.totalCount;
+      this.dataSource = new MatTableDataSource<any>(this.logsList);
+      this.dataSource._updateChangeSubscription();
+      this.dataSource.paginator = this.paginator as MatPaginator;
+      this.loader = false;
+
+    })
+    
+  
+  }
   ngOnInit(){
+    this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
 
   }
 
@@ -66,9 +89,36 @@ export class LogsComponent implements OnInit {
       this.applyFilter();
     }
     applyFilter(){
-      this.dataSource.filter=this.searchKey.trim().toLowerCase();
+      let searchData = this.searchKey.trim().toLowerCase();
+      this.getRequestdata(1, 100, searchData, this.sortColumnDef, "desc");
+      // this.dataSource.filter=this.searchKey.trim().toLowerCase();
     }
 
+
+
+    pageIn = 0;
+    public pIn: number = 0;
+    lastcol: string = 'Id';
+    lastdir: string = 'asc';
+   
+  
+    sortData(sort: any) {
+  
+        if (this.pIn != 0)
+          window.location.reload();
+        if (this.lastcol == sort.active && this.lastdir == sort.direction) {
+          if (this.lastdir == 'asc')
+            sort.direction = 'desc';
+          else
+            sort.direction = 'asc';
+        }
+        this.lastcol = sort.active; 
+        this.lastdir = sort.direction;
+        var c = this.pageIn;
+        this.getRequestdata(1, 100, '', sort.active, this.lastdir);
+      
+    }
+   
 
 
 
