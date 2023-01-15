@@ -41,10 +41,9 @@ missionList:MissionList[]=[];
   }
 
   onSubmit() {
-   
-    // if(!this.service.form.valid) { console.log("not vaild");
-    //   return;
-    // }//end of if
+    if(!this.service.form.valid) { console.log("not vaild");
+      return;
+    }//end of if
     console.log("sub");
     let missionn={
       id:this.service.form.value.id,
@@ -74,9 +73,11 @@ missionList:MissionList[]=[];
       missionTypeId:this.service.form.value.missionTypeId,
       userId:this.service.form.value.userId
     }//end of mission
-    console.log(missionn.jobNumber);
+   // console.log(missionn.jobNumber);
+    console.log(missionn);
     this.missionService.addMission(missionn).subscribe(res=>
       {
+        
         if(res.status==true)
         {
           console.log(res.data);
@@ -90,14 +91,21 @@ missionList:MissionList[]=[];
         }
       })
     this.onClose();
+    this.dialogRef.close('save');
 
   }//end of submit
-
+  onClear() {
+    this.service.form.reset();
+    this.service.initializeFormGroup();
+    // this.service.form.reset();
+    // this.service.initializeFormGroup();
+    // this.notificationService.success(':: Submitted successfully');
+  }
 
   onClose() {
     this.service.form.reset();
     this.service.initializeFormGroup();
-    this.dialogRef.close('save');
+    //this.dialogRef.close('save');
   }
   ///////////////////////////////////////
 

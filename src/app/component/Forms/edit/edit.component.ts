@@ -97,9 +97,9 @@ export class EditComponent implements OnInit {
   }
 
   onSubmit() {
-    // if(this.service.form.invalid){
-    //   return;
-    // }
+    if(!this.service.form.valid){
+      return;
+    }
     let mission = {
       id: this.service.form.value.id,
       jobDegree: this.service.form.value.jobDegree,

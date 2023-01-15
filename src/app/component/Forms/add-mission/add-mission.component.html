@@ -32,7 +32,26 @@
           <mat-error>مطلوب</mat-error>
         </mat-form-field>
 
-
+        <mat-form-field>
+          <input formControlName="jobNumber" matInput placeholder=" الرقم الوظيفي" readonly />
+          <!-- <mat-error>مطلوب</mat-error> -->
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="jobDegree" matInput placeholder=" الدرجه الوظيفيه" readonly/>
+          <!-- <mat-error>مطلوب</mat-error> -->
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="userId" matInput placeholder="اسم الموظف"  type="number"/>
+          <!-- <mat-error>مطلوب</mat-error> -->
+        </mat-form-field>
+          <!-- <mat-select formControlName="userId" placeholder="الموظف (--اختار--) "  >
+            <mat-option>-- Please select --</mat-option>
+            <mat-option  *ngFor="let userr of userList"   [value]="userr.id">
+              {{userr.name}}
+            </mat-option>
+          </mat-select>
+          <mat-error>مطلوب</mat-error> -->
+      
         <!-- <mat-form-field>
           <mat-select formControlName="jobDegree" placeholder=" *الدرجه الوظيفيه (--اختار--) " >
             <mat-option>-- Please select --</mat-option>
@@ -69,15 +88,7 @@
         <mat-error>مطلوب</mat-error>
       </mat-form-field>
 
-      <mat-form-field>
-        <mat-select formControlName="userId" placeholder="الموظف (--اختار--) "  >
-          <mat-option>-- Please select --</mat-option>
-          <mat-option  *ngFor="let userr of userList"   [value]="userr.id">
-            {{userr.name}}
-          </mat-option>
-        </mat-select>
-        <mat-error>مطلوب</mat-error>
-      </mat-form-field>
+      
 
 
 
@@ -90,7 +101,42 @@
 <div class="d-flex w-100" >
 
 
-      <mat-form-field class="w-50 ">
+  <mat-form-field class="w-50  ">
+    <mat-label>مده الاقامه</mat-label>
+    <input
+      [ngxMatDatetimePicker]="startDateStay"
+      formControlName="startDateStay"
+      matInput
+      placeholder="من"
+      readonly
+    />
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="$any(startDateStay)"
+    ></mat-datepicker-toggle>
+    <ngx-mat-datetime-picker #startDateStay>
+    </ngx-mat-datetime-picker>
+    <mat-error>مطلوب</mat-error>
+  </mat-form-field> 
+
+  <mat-form-field class="w-50  " style="border-right:5px solid #fff">
+    <input
+      [ngxMatDatetimePicker]="endDateStay"
+      formControlName="endDateStay"
+      matInput
+      placeholder=" الى"
+      readonly
+    />
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="$any(endDateStay)"
+    ></mat-datepicker-toggle>
+    <ngx-mat-datetime-picker #endDateStay>
+    </ngx-mat-datetime-picker>
+    <mat-error>مطلوب</mat-error>
+  </mat-form-field> 
+
+      <!-- <mat-form-field class="w-50 ">
         <mat-label>تاريخ بدء الاقامه</mat-label>
         <input matInput formControlName="startDateStay" [matDatepicker]="picker1" >
         <mat-hint>MM/DD/YYYY</mat-hint>
@@ -99,9 +145,9 @@
         </mat-datepicker-toggle>
         <mat-datepicker #picker1></mat-datepicker>
          <mat-error>This field is mandatory.</mat-error>
-      </mat-form-field>
+      </mat-form-field> -->
 
-      <mat-form-field class="w-50  " style="border-right:5px solid #fff">
+      <!-- <mat-form-field class="w-50  " style="border-right:5px solid #fff">
         <mat-label>تاريخ انتهاء الاقامه</mat-label>
         <input matInput formControlName="endDateStay"  [matDatepicker]="picker2" [min]="service.form.controls.startDateStay?.value"  >
 
@@ -111,7 +157,7 @@
         </mat-datepicker-toggle>
         <mat-datepicker #picker2></mat-datepicker>
          <mat-error>This field is mandatory.</mat-error>
-      </mat-form-field>
+      </mat-form-field> -->
 
 </div>
 
@@ -120,12 +166,10 @@
   <mat-form-field class="w-50  ">
     <input
       formControlName="centerOfCost"
-      type="number"
-      min="0"
       matInput
       placeholder="مركز التكلفه"
+      readonly
     />
-    <mat-error>مطلوب</mat-error>
   </mat-form-field>
 
   <mat-form-field class="w-50  " style="border-right:5px solid #fff">
@@ -139,10 +183,9 @@
     <mat-form-field class="w-50  " >
       <input
         formControlName="stay"
-        type="number"
-        min="0"
         matInput
         placeholder="الاقامة"
+        readonly
       />
     </mat-form-field>
     <mat-form-field class="w-50  " style="border-right:5px solid #fff">
@@ -159,7 +202,7 @@
 
     <div class="d-flex w-100" >
 
-      <mat-form-field class="w-50  " >
+      <!-- <mat-form-field class="w-50  " >
         <mat-label>تاريخ بدء المهمه </mat-label>
         <input matInput formControlName="startDateMission" [matDatepicker]="picker3" >
         <mat-hint>MM/DD/YYYY</mat-hint>
@@ -179,45 +222,52 @@
         </mat-datepicker-toggle>
         <mat-datepicker #picker4></mat-datepicker>
          <mat-error>This field is mandatory.</mat-error>
-      </mat-form-field>
+      </mat-form-field> -->
 
 
 
 
-      <!-- <mat-form-field class="w-50  ">
-        <mat-label>مدة المأمورية</mat-label>
+
+
+
+
+
+
+
+       <mat-form-field class="w-50  ">
+        <mat-label>مده الماموريه</mat-label>
         <input
-          [ngxMatDatetimePicker]="DurationofmissionFrom"
-          formControlName="DurationofmissionFrom"
+          [ngxMatDatetimePicker]="startDateMission"
+          formControlName="startDateMission"
           matInput
           placeholder="من"
           readonly
         />
         <mat-datepicker-toggle
           matSuffix
-          [for]="$any(DurationofmissionFrom)"
+          [for]="$any(startDateMission)"
         ></mat-datepicker-toggle>
-        <ngx-mat-datetime-picker #DurationofmissionFrom>
+        <ngx-mat-datetime-picker #startDateMission>
         </ngx-mat-datetime-picker>
         <mat-error>مطلوب</mat-error>
-      </mat-form-field> -->
+      </mat-form-field> 
 
-      <!-- <mat-form-field class="w-50  " style="border-right:5px solid #fff">
+      <mat-form-field class="w-50  " style="border-right:5px solid #fff">
         <input
-          [ngxMatDatetimePicker]="DurationofmissionTo"
-          formControlName="DurationofmissionTo"
+          [ngxMatDatetimePicker]="endDateMission"
+          formControlName="endDateMission"
           matInput
           placeholder=" الى"
           readonly
         />
         <mat-datepicker-toggle
           matSuffix
-          [for]="$any(DurationofmissionTo)"
+          [for]="$any(endDateMission)"
         ></mat-datepicker-toggle>
-        <ngx-mat-datetime-picker #DurationofmissionTo>
+        <ngx-mat-datetime-picker #endDateMission>
         </ngx-mat-datetime-picker>
         <mat-error>مطلوب</mat-error>
-      </mat-form-field> -->
+      </mat-form-field> 
 
 
       </div>

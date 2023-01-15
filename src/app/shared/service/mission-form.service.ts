@@ -10,36 +10,31 @@ export class MissionFormService {
 
   form: FormGroup = new FormGroup({
     id: new FormControl(0),
-    jobDegree: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
+    jobDegree: new FormControl(''),
     missionPurpose: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     centerOfCost: new FormControl(2455),
     companyType: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     missionPlace : new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
-
     startDateMission: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     endDateMission: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     startDateStay: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     endDateStay: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
-
     noOfNights: new FormControl(0,[Validators.required,Validators.min(0),Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     stay: new FormControl(0),
     mealsAndIncidentals: new FormControl(0),
     jobNumber: new FormControl(0),
     missionTypeCost: new FormControl(0),
-    // Missionpurpose: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
-    // MissionType: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     permissionRequest: new FormControl(''),
     permissionDuration: new FormControl(''),
     comment:new FormControl(''),
    // Approvalmail: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     creationDate:new FormControl(null),
     updateDate:new FormControl(null),
-
     createdBy:new FormControl(null),
     updateBy:new FormControl(null),
     statusId: new FormControl(0,[Validators.required]),
     missionTypeId: new FormControl(0,[Validators.required]),
-    userId: new FormControl(0,[Validators.required]),
+    userId: new FormControl(0),
   });
 
 

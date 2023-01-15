@@ -115,7 +115,8 @@ export class SummaryComponent implements OnInit {
     dialogGonfig.width = "80%";
     dialogGonfig.panelClass = 'modals-dialog';
     this.dialog.open(AddMissionComponent, dialogGonfig).afterClosed().subscribe(result => {
-      this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef)
+     // debugger
+      this.getMisssions(1, 100,'', this.sortColumnDef, this.SortDirDef)
     });
   }
   /////////////////delete

@@ -116,8 +116,10 @@ addType() {
 //when add mission type name check if this name alredy exsit or not
 onChecknameIsalreadysign()
 {
+  if(this.form.invalid){return ;}
   this.missionType.id=this.form.value.id;
   this.missionType.name=this.form.value.name;
+
   this.missionTypeService.MissionTypeIsAlreadySigned(this.missionType.name,this.missionType.id).subscribe(res=>
     {
       //not asign before
