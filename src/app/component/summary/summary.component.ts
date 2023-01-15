@@ -34,7 +34,6 @@ export class SummaryComponent implements OnInit {
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource();
   settingtype = ''
-
   editUsr: any;
   editdisabled: boolean = false;
   constructor(private titleService: Title, private toastr: ToastrService, private dialog: MatDialog,
@@ -115,7 +114,9 @@ export class SummaryComponent implements OnInit {
     dialogGonfig.autoFocus = true;
     dialogGonfig.width = "80%";
     dialogGonfig.panelClass = 'modals-dialog';
-    this.dialog.open(AddMissionComponent, dialogGonfig)
+    this.dialog.open(AddMissionComponent, dialogGonfig).afterClosed().subscribe(result => {
+      this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef)
+    });
   }
   /////////////////delete
   onDelete(r: any) {
@@ -139,7 +140,10 @@ export class SummaryComponent implements OnInit {
     dialogGonfig.autoFocus = true;
     dialogGonfig.width = "50%";
     dialogGonfig.panelClass = 'modals-dialog';
-    this.dialog.open(EditComponent, { panelClass: 'modals-dialog', disableClose: true, autoFocus: true, width: "50%", data: row })
+    this.dialog.open(EditComponent, { panelClass: 'modals-dialog', disableClose: true, autoFocus: true, width: "50%", data: row }).afterClosed().subscribe(result => {
+      this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef)
+    });
+
 
   }
 

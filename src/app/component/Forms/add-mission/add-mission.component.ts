@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { MissionList } from 'src/app/model/mission-list';
+import { MissionType } from 'src/app/model/mission-type';
+import { Status } from 'src/app/model/status';
+import { UserList } from 'src/app/model/user-list';
 import { MissionFormService } from 'src/app/shared/service/mission-form.service';
 import { MissionService } from 'src/app/shared/service/mission.service';
 
@@ -15,9 +18,9 @@ export class AddMissionComponent implements OnInit {
 
   file_store: FileList;
   file_list: Array<string> = [];
-  userList: any = [];
-  statusList: any = [];
-  missionTypeList: any = [];
+  userList: UserList[] = [];
+  statusList: Status[] = [];
+  missionTypeList: MissionType[] = [];
 missionList:MissionList[]=[];
   constructor(public dialogRef: MatDialogRef<AddMissionComponent>,
     public service: MissionFormService, public missionService: MissionService, private toastr: ToastrService,) {
@@ -37,38 +40,14 @@ missionList:MissionList[]=[];
     })//end of subscribe
   }
 
-
-
-
-  handleFileInputChange(l: FileList): void {
-    this.file_store = l;
-    if (l.length) {
-      const f = l[0];
-      const count = l.length > 1 ? `(+${l.length - 1} files)` : "";
-      this.service.form.controls['Approvalmail'].patchValue(`${f.name}${count}`);
-    } else {
-      this.service.form.controls['Approvalmail'].patchValue("");
-    }
-  }
-
-  handleSubmit(): void {
-    var fd = new FormData();
-    this.file_list = [];
-    for (let i = 0; i < this.file_store.length; i++) {
-      fd.append("files", this.file_store[i], this.file_store[i].name);
-      this.file_list.push(this.file_store[i].name);
-    }
-
-    // do submit ajax
-  }
   onSubmit() {
    
-    if(!this.service.form.valid) { console.log("not vaild");
-      return;
-    }//end of if
+    // if(!this.service.form.valid) { console.log("not vaild");
+    //   return;
+    // }//end of if
     console.log("sub");
     let missionn={
-     // id:0,
+      id:this.service.form.value.id,
       jobDegree:this.service.form.value.jobDegree,
       missionPurpose: this.service.form.value.missionPurpose,
       centerOfCost:this.service.form.value.centerOfCost,
@@ -95,12 +74,15 @@ missionList:MissionList[]=[];
       missionTypeId:this.service.form.value.missionTypeId,
       userId:this.service.form.value.userId
     }//end of mission
+    console.log(missionn.jobNumber);
     this.missionService.addMission(missionn).subscribe(res=>
       {
         if(res.status==true)
         {
+          console.log(res.data);
           this.toastr.success(":added successfully");
           this.service.form.reset();
+          this.dialogRef.close('save');
         }
         else
         {
@@ -108,16 +90,40 @@ missionList:MissionList[]=[];
         }
       })
     this.onClose();
-    this.dialogRef.close('save');
 
   }//end of submit
 
-  onClose() {
 
+  onClose() {
     this.service.form.reset();
     this.service.initializeFormGroup();
     this.dialogRef.close('save');
-
   }
+  ///////////////////////////////////////
+
+
+  handleFileInputChange(l: FileList): void {
+    this.file_store = l;
+    if (l.length) {
+      const f = l[0];
+      const count = l.length > 1 ? `(+${l.length - 1} files)` : "";
+      this.service.form.controls['Approvalmail'].patchValue(`${f.name}${count}`);
+    } else {
+      this.service.form.controls['Approvalmail'].patchValue("");
+    }
+  }
+
+  handleSubmit(): void {
+    var fd = new FormData();
+    this.file_list = [];
+    for (let i = 0; i < this.file_store.length; i++) {
+      fd.append("files", this.file_store[i], this.file_store[i].name);
+      this.file_list.push(this.file_store[i].name);
+    }
+
+    // do submit ajax
+  }
+ 
+
 
 }

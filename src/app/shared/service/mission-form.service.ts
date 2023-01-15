@@ -57,11 +57,9 @@ export class MissionFormService {
       endDateMission:'',
       startDateStay:'',
       endDateStay: '',
-
       noOfNights: 0,
       stay:0,
       mealsAndIncidentals:0,
-    
       jobNumber: 0,
       missionTypeCost: '',
       permissionRequest:'',

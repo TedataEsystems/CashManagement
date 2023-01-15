@@ -98,17 +98,9 @@ export class UserComponent implements OnInit {
 
 
   onDelete(r:any) {
-    // if (localStorage.getItem("usernam") == "" || localStorage.getItem("usernam") == undefined || localStorage.getItem("usernam") == null) {
-    //   this.router.navigateByUrl('/login');
-    // }
-    // else {
       this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
-
             this.toastr.success(':: successfully Deleted');
           })
-
-          //}
-
   }
   addUser(){
     const dialogGonfig = new MatDialogConfig();
