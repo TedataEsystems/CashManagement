@@ -32,7 +32,7 @@
           <mat-error>مطلوب</mat-error>
         </mat-form-field>
 
-        
+
         <!-- <mat-form-field>
           <mat-select formControlName="jobDegree" placeholder=" *الدرجه الوظيفيه (--اختار--) " >
             <mat-option>-- Please select --</mat-option>
@@ -55,7 +55,7 @@
             <mat-option value="Outsource">Outsource</mat-option>
           </mat-select>
           <mat-error>مطلوب</mat-error>
-        </mat-form-field> 
+        </mat-form-field>
 
 
 
@@ -67,7 +67,7 @@
           </mat-option>
         </mat-select>
         <mat-error>مطلوب</mat-error>
-      </mat-form-field> 
+      </mat-form-field>
 
       <mat-form-field>
         <mat-select formControlName="userId" placeholder="الموظف (--اختار--) "  >
@@ -79,18 +79,10 @@
         <mat-error>مطلوب</mat-error>
       </mat-form-field>
 
-      <mat-form-field>
-        <mat-select formControlName="missionTypeId" placeholder=" *نوع المهمه (--اختار--) "  >
-          <mat-option>-- Please select --</mat-option>
-          <mat-option  *ngFor="let missionType of missionTypeList"   [value]="missionType.id">
-           {{missionType.name}}
-          </mat-option>
-        </mat-select>
-        <mat-error>مطلوب</mat-error>
-      </mat-form-field>
+
 
       </div>
-      
+
     </mat-grid-tile>
     <mat-grid-tile colspan="2">
       <div class="controles-container">
@@ -98,7 +90,7 @@
 <div class="d-flex w-100" >
 
 
-      <mat-form-field appearance="fill">
+      <mat-form-field class="w-50 ">
         <mat-label>تاريخ بدء الاقامه</mat-label>
         <input matInput formControlName="startDateStay" [matDatepicker]="picker1" >
         <mat-hint>MM/DD/YYYY</mat-hint>
@@ -106,10 +98,10 @@
           <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
         </mat-datepicker-toggle>
         <mat-datepicker #picker1></mat-datepicker>
-         <mat-error>This field is mandatory.</mat-error> 
+         <mat-error>This field is mandatory.</mat-error>
       </mat-form-field>
-      
-      <mat-form-field appearance="fill">
+
+      <mat-form-field class="w-50  " style="border-right:5px solid #fff">
         <mat-label>تاريخ انتهاء الاقامه</mat-label>
         <input matInput formControlName="endDateStay"  [matDatepicker]="picker2" [min]="service.form.controls.startDateStay?.value"  >
 
@@ -118,7 +110,7 @@
           <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
         </mat-datepicker-toggle>
         <mat-datepicker #picker2></mat-datepicker>
-         <mat-error>This field is mandatory.</mat-error>  
+         <mat-error>This field is mandatory.</mat-error>
       </mat-form-field>
 
 </div>
@@ -135,24 +127,16 @@
     />
     <mat-error>مطلوب</mat-error>
   </mat-form-field>
-  
-  <mat-form-field>
+
+  <mat-form-field class="w-50  " style="border-right:5px solid #fff">
     <input formControlName="missionPlace" matInput placeholder="مكان المهمه"/>
     <mat-error>مطلوب</mat-error>
   </mat-form-field>
-  <mat-form-field class="w-50  " style="border-right:5px solid #fff">
-    <input
-      formControlName="mealsAndIncidentals"
-      type="number"
-      min="0"
-      matInput
-      placeholder="وجبات ونثريات"
-    />
-  </mat-form-field>
+
 
   </div>
   <div class="d-flex w-100" >
-    <mat-form-field class="w-50  " style="border-right:5px solid #fff">
+    <mat-form-field class="w-50  " >
       <input
         formControlName="stay"
         type="number"
@@ -161,12 +145,21 @@
         placeholder="الاقامة"
       />
     </mat-form-field>
+    <mat-form-field class="w-50  " style="border-right:5px solid #fff">
+      <input
+        formControlName="mealsAndIncidentals"
+        type="number"
+        min="0"
+        matInput
+        placeholder="وجبات ونثريات"
+      />
+    </mat-form-field>
   </div>
 
 
     <div class="d-flex w-100" >
 
-      <mat-form-field appearance="fill">
+      <mat-form-field class="w-50  " >
         <mat-label>تاريخ بدء المهمه </mat-label>
         <input matInput formControlName="startDateMission" [matDatepicker]="picker3" >
         <mat-hint>MM/DD/YYYY</mat-hint>
@@ -174,10 +167,10 @@
           <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
         </mat-datepicker-toggle>
         <mat-datepicker #picker3></mat-datepicker>
-         <mat-error>This field is mandatory.</mat-error> 
+         <mat-error>This field is mandatory.</mat-error>
       </mat-form-field>
-      
-      <mat-form-field appearance="fill">
+
+      <mat-form-field class="w-50  " style="border-right:5px solid #fff">
         <mat-label>تاريخ انتهاء المهمه</mat-label>
         <input matInput formControlName="endDateMission"  [matDatepicker]="picker4" [min]="service.form.controls.startDateMission?.value"  >
         <mat-hint>MM/DD/YYYY</mat-hint>
@@ -185,7 +178,7 @@
           <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
         </mat-datepicker-toggle>
         <mat-datepicker #picker4></mat-datepicker>
-         <mat-error>This field is mandatory.</mat-error>  
+         <mat-error>This field is mandatory.</mat-error>
       </mat-form-field>
 
 
@@ -225,8 +218,8 @@
         </ngx-mat-datetime-picker>
         <mat-error>مطلوب</mat-error>
       </mat-form-field> -->
-     
-      
+
+
       </div>
       <div class="w-100" >
         <mat-form-field class="w-100  ">
@@ -240,7 +233,7 @@
         <mat-grid-tile colspan="1">
           <div class="controles-container">
 
-            <mat-form-field class="w-50  " style="border-right:5px solid #fff">
+            <mat-form-field >
               <input
                 formControlName="noOfNights"
                 type="number"
@@ -248,6 +241,15 @@
                 matInput
                 placeholder="عدد الليالى"
               />
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select formControlName="missionTypeId" placeholder=" *نوع المهمه (--اختار--) "  >
+                <mat-option>-- Please select --</mat-option>
+                <mat-option  *ngFor="let missionType of missionTypeList"   [value]="missionType.id">
+                 {{missionType.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error>مطلوب</mat-error>
             </mat-form-field>
             <mat-form-field>
               <input formControlName="permissionRequest" matInput placeholder="غرض الاذن"/>
@@ -269,9 +271,9 @@
                 placeholder="تكلفه نوع المهمه"
               />
             </mat-form-field>
-           
+
           </div>
-           
+
             <!-- </div> -->
             </mat-grid-tile>
 
