@@ -87,7 +87,7 @@ export class UserComponent implements OnInit {
     this.applyFilter();
   }
 
-
+//this is comment
   applyFilter() {
     let searchData = this.searchKey.trim().toLowerCase();
     this.getUsers(1,100,searchData,this.sortColumnDef,this.SortDirDef)
