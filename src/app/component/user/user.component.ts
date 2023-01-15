@@ -24,6 +24,8 @@ export class UserComponent implements OnInit {
   loading: boolean = true;
   sortColumnDef: string = "Id";
   SortDirDef: string = 'asc';
+  public colname: string = 'Id';
+  public coldir: string = 'asc';
   loader: boolean = false;
   users:UserList[]=[];
 
@@ -103,21 +105,40 @@ export class UserComponent implements OnInit {
     // }
     // else {
       this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
-
+        if (res) {
+          this.userService.deleteUser(r.id).subscribe(res => {
             this.toastr.success(':: successfully Deleted');
-          })
-
+            this.getUsers(1, 100, '', this.sortColumnDef, this.SortDirDef);
+          }, error => { this.toastr.warning('::failed'); }
+          )//end of subscribe
+        }//end of if
+      })//end of first subscriob
+    
           //}
 
   }
   addUser(){
     const dialogGonfig = new MatDialogConfig();
-    dialogGonfig.data= {dialogTitle: " "};
+    dialogGonfig.data= {dialogTitle: " اضافة مستخدم جديد"};
     dialogGonfig.disableClose = true;
     dialogGonfig.autoFocus = true;
     dialogGonfig.width = "50%";
     dialogGonfig.panelClass = 'modals-dialog';
-     this.dialog.open(AddUserComponent,dialogGonfig)
+     this.dialog.open(AddUserComponent,dialogGonfig).afterClosed().subscribe(res=>{
+      this.getUsers(1,10, '', this.sortColumnDef, this.SortDirDef);
+     });
+
+  }
+  sortData(sort: any) {
+    if (this.colname == sort.active && this.coldir == sort.direction) {
+      if (this.coldir == 'asc')
+        sort.direction == 'desc';
+      else
+        sort.direction == 'asc';
+    }
+    this.coldir = sort.direction;
+    this.colname = sort.active;
+    this.getUsers(1, 100, '', this.colname, this.coldir);
   }
 
 
