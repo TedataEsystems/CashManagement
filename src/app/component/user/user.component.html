@@ -37,7 +37,7 @@
   <ng-template #table> -->
   <div class="example-container mat-elevation-z8">
 
-    <mat-table [dataSource]="dataSource" #table matSort matSortActive="id" matSortDirection="asc" matSortDisableClear>
+    <mat-table [dataSource]="dataSource" #table matSort (matSortChange)="sortData($event)" matSortActive="id" matSortDirection="asc" matSortDisableClear>
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef mat-sort-header> # </mat-header-cell>
         <mat-cell *matCellDef="let element">

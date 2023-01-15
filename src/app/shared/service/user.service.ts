@@ -33,9 +33,9 @@ export class UserService {
   {
      return this.httpClient.get<any>(`${this.url}`+id);
   }
-  addUser(mission:any):Observable<any>
+  addUser(user:any):Observable<any>
   {
-     return this.httpClient.post<any>(`${this.url}/AddUser`,mission);
+     return this.httpClient.post<any>(`${this.url}/AddUser`,user);
   }
   updateUser(mission:any):Observable<any>
   {
@@ -45,4 +45,14 @@ export class UserService {
   {
      return this.httpClient.delete<any>(`${this.url}/DeleteUser/`+id);
   }
+  getUserlists():Observable<any>
+  {
+     return this.httpClient.get<any>(`${this.url}/GetLists/`);
+  }
+  jobNumberIsAlreadyExist(name:string):Observable<any>
+   {
+    console.log("this is the service");
+    console.log(name,"in the service");
+    return this.httpClient.get<any>(`${this.url}/JobNumberExist/`+name);
+   }
 }

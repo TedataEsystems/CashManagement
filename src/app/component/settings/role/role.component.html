@@ -29,7 +29,7 @@
     </mat-form-field>
   </div>
   <div class="example-container mat-elevation-z8">
-    <mat-table [dataSource]="dataSource" #table matSort matSortActive="Name" matSortDirection="asc" matSortDisableClear>
+    <mat-table [dataSource]="dataSource" #table matSort (matSortChange)="sortData($event)" matSortActive="Name" matSortDirection="asc" matSortDisableClear>
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef mat-sort-header> الرقم </mat-header-cell>
         <mat-cell *matCellDef="let element">

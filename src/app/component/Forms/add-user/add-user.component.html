@@ -22,22 +22,26 @@
     <div class="controles-container">
 
       <mat-form-field>
-        <input formControlName="Id" matInput placeholder=" الرقم الوظيفي" />
+        <input formControlName="jobNumber"  (keyup)="onCheckJobNumIsalreadysign()" matInput placeholder=" الرقم الوظيفي" />
+        <span class="mat-error" *ngIf="isNameRepeated"> مسجلة مسبقاً</span>
         <mat-error>مطلوب</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input formControlName="Name" matInput placeholder="اسم الموظف" />
+        <input formControlName="name" matInput placeholder="اسم الموظف" />
         <mat-error>مطلوب</mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-select
-          formControlName="Staffdegree"
+          formControlName="jobDegree"
           placeholder="الدرجة الوظيفية "
         >
           <mat-option>-- اختر --</mat-option>
-          <mat-option [value]="">
-            <!-- {{item.name}} -->
-          </mat-option>
+          <!-- <mat-option [value]="">
+             {{item.name}} 
+          </mat-option> -->
+          <ng-container *ngFor="let item of jobDegrees">
+            <mat-option [value]="item.id">{{item.name}}</mat-option>
+          </ng-container>
         </mat-select>
         <mat-error>مطلوب</mat-error>
       </mat-form-field>
@@ -50,23 +54,26 @@
         <div class="controles-container">
 
           <mat-form-field>
-            <input formControlName="Team" matInput placeholder="المجموعة" />
+            <input formControlName="team" matInput placeholder="المجموعة" />
             <mat-error>مطلوب</mat-error>
           </mat-form-field>
-          <mat-form-field>
+          <!-- <mat-form-field>
             <input formControlName="User" matInput placeholder="اسم المستخدم" />
             <mat-error>مطلوب</mat-error>
-          </mat-form-field>
+          </mat-form-field> -->
 
           <mat-form-field>
             <mat-select
-              formControlName="Role"
+              formControlName="userRole"
               placeholder=" الصلاحية "
             >
               <mat-option>-- اختر --</mat-option>
-              <mat-option [value]="">
-                <!-- {{item.name}} -->
-              </mat-option>
+              <!-- <mat-option [value]="">
+                 {{item.name}} 
+              </mat-option> -->
+              <ng-container *ngFor="let item of userRoles">
+                <mat-option [value]="item.id">{{item.name}}</mat-option>
+              </ng-container>
             </mat-select>
             <mat-error>مطلوب</mat-error>
           </mat-form-field>
@@ -77,7 +84,7 @@
 </mat-grid-list>
 <mat-toolbar class="bottom">
   <div class="button-row w-100 text-center">
-    <button mat-raised-button class="btn-success w-50" type="submit">
+    <button mat-raised-button class="btn-success w-50" type="submit" [disabled]="isDisabled">
       ارسال
     </button>
   </div>

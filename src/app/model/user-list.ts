@@ -11,6 +11,6 @@ export interface UserList {
     creationDate?:Date,
     createdBy?:string,
     updateDate?:Date,
-    updateBy:string
+    updatedBy:string
 
 }
