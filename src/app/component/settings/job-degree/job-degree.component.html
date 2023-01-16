@@ -3,7 +3,7 @@
       <mat-card-title>
           الدرجة الوظيفية
       </mat-card-title>
-      <button mat-button class="opt"  (click)=addJob()>
+      <button mat-button class="opt"  (click)=addJobDegree()>
           <mat-icon class="add-new ico">add</mat-icon>
           <span class="txt mr-1">اضافة </span>
       </button>
@@ -12,15 +12,15 @@
 
   <div class="search-div" fxLayout="row">
 
-    <form *ngIf="isShowDiv"  [formGroup]="form" (ngSubmit)="onCreateUpdate()" class="example-form">
+    <form *ngIf="isShowDiv"  [formGroup]="form" (ngSubmit)="onAddSubmit()" class="example-form">
 
       <mat-form-field class="example-full-width">
         <mat-label> الدرجة الوظيفية</mat-label>
-        <input type="text"  matInput formControlName="Name">
+        <input type="text" #JobDegreeName  matInput formControlName="Name"  (keyup)="IsAddNameRepeated()">
         <input type="hidden"  formControlName="Id" >
-        <span class="mat-error" *ngIf="isNameRepeated"> مسجلة مسبقاً</span>
+        <span class="mat-error" *ngIf="isNameRepeated&&JobDegreeName.value!=''"> مسجلة مسبقاً</span>
       </mat-form-field>
-      <button type="submit" mat-raised-button     class="search text-white">اضافة</button>
+      <button type="submit" mat-raised-button [disabled]="isDisabled||JobDegreeName.value=='' "   class="search text-white">اضافة</button>
    </form>
 
     <mat-form-field class="search-form-field" floatLabel="never">
@@ -35,7 +35,7 @@
 
     <div class="example-container mat-elevation-z8" >
 
-    <mat-table [dataSource]="dataSource"  #table  matSort matSortActive="Name" matSortDirection="asc" matSortDisableClear >
+    <mat-table [dataSource]="dataSource"  #table (matSortChange)="sortData($event)"  matSort matSortActive="Name" matSortDirection="asc" matSortDisableClear >
 
 
 
@@ -57,7 +57,7 @@
        </ng-container>
        <ng-container *ngIf="editdisabled  && element.id==editUsr">
          <mat-form-field hideRequiredMarker="false" appearance="legacy">
-           <input matInput placeholder="الدرجة الوظيفية"  name="name" [(ngModel)]="element.name">
+           <input matInput placeholder="الدرجة الوظيفية"  (keyup)="IsUpdateNameRepeated(element)" name="name" [(ngModel)]="element.name">
            <span class="mat-error" *ngIf="isNameUpdatedRepeated && element.id == editUsr"> مسجلة مسبقاً</span>
          </mat-form-field>
          </ng-container>
@@ -94,7 +94,7 @@
       </button>
     </ng-container>
     <ng-container *ngIf="editdisabled  && row.id==editUsr">
-      <button  class="btn-success btn ml-1"  matTooltip="Update"  (click)="updateEdit(row)">
+      <button  class="btn-success btn ml-1"  matTooltip="Update"  (click)="OnEditSubmit(row)">
        <mat-icon>check</mat-icon>
       </button>
 
