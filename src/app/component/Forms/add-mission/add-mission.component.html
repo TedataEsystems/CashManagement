@@ -26,11 +26,11 @@
         <input type="hidden" formControlName="createdBy" />
         <input type="hidden" formControlName="updateDate" />
         <input type="hidden" formControlName="updateBy" />
-
-        <mat-form-field>
+       <input formControlName="statusId" type="hidden"/>
+        <!-- <mat-form-field>
           <input formControlName="jobNumber" matInput placeholder=" الرقم الوظيفي" />
           <mat-error>مطلوب</mat-error>
-        </mat-form-field>
+        </mat-form-field> -->
 
         <mat-form-field>
           <input formControlName="jobNumber" matInput placeholder=" الرقم الوظيفي" readonly />
@@ -38,11 +38,9 @@
         </mat-form-field>
         <mat-form-field>
           <input formControlName="jobDegree" matInput placeholder=" الدرجه الوظيفيه" readonly/>
-          <!-- <mat-error>مطلوب</mat-error> -->
         </mat-form-field>
         <mat-form-field>
           <input formControlName="userId" matInput placeholder="اسم الموظف"  type="number"/>
-          <!-- <mat-error>مطلوب</mat-error> -->
         </mat-form-field>
           <!-- <mat-select formControlName="userId" placeholder="الموظف (--اختار--) "  >
             <mat-option>-- Please select --</mat-option>
@@ -78,7 +76,7 @@
 
 
 
-        <mat-form-field>
+        <!-- <mat-form-field>
         <mat-select formControlName="statusId" placeholder=" *الحاله (--اختار--) " >
           <mat-option>-- Please select --</mat-option>
           <mat-option  *ngFor="let status of statusList"   [value]="status.id">
@@ -88,7 +86,7 @@
         <mat-error>مطلوب</mat-error>
       </mat-form-field>
 
-      
+       -->
 
 
 
@@ -101,7 +99,7 @@
 <div class="d-flex w-100" >
 
 
-  <mat-form-field class="w-50  ">
+  <!-- <mat-form-field class="w-50  ">
     <mat-label>مده الاقامه</mat-label>
     <input
       [ngxMatDatetimePicker]="startDateStay"
@@ -117,9 +115,9 @@
     <ngx-mat-datetime-picker #startDateStay>
     </ngx-mat-datetime-picker>
     <mat-error>مطلوب</mat-error>
-  </mat-form-field> 
+  </mat-form-field>  -->
 
-  <mat-form-field class="w-50  " style="border-right:5px solid #fff">
+  <!-- <mat-form-field class="w-50  " style="border-right:5px solid #fff">
     <input
       [ngxMatDatetimePicker]="endDateStay"
       formControlName="endDateStay"
@@ -134,9 +132,9 @@
     <ngx-mat-datetime-picker #endDateStay>
     </ngx-mat-datetime-picker>
     <mat-error>مطلوب</mat-error>
-  </mat-form-field> 
+  </mat-form-field>  -->
 
-      <!-- <mat-form-field class="w-50 ">
+      <mat-form-field class="w-50 ">
         <mat-label>تاريخ بدء الاقامه</mat-label>
         <input matInput formControlName="startDateStay" [matDatepicker]="picker1" >
         <mat-hint>MM/DD/YYYY</mat-hint>
@@ -145,9 +143,9 @@
         </mat-datepicker-toggle>
         <mat-datepicker #picker1></mat-datepicker>
          <mat-error>This field is mandatory.</mat-error>
-      </mat-form-field> -->
+      </mat-form-field>
 
-      <!-- <mat-form-field class="w-50  " style="border-right:5px solid #fff">
+      <mat-form-field class="w-50  " style="border-right:5px solid #fff">
         <mat-label>تاريخ انتهاء الاقامه</mat-label>
         <input matInput formControlName="endDateStay"  [matDatepicker]="picker2" [min]="service.form.controls.startDateStay?.value"  >
 
@@ -157,7 +155,7 @@
         </mat-datepicker-toggle>
         <mat-datepicker #picker2></mat-datepicker>
          <mat-error>This field is mandatory.</mat-error>
-      </mat-form-field> -->
+      </mat-form-field>
 
 </div>
 
@@ -202,7 +200,7 @@
 
     <div class="d-flex w-100" >
 
-      <!-- <mat-form-field class="w-50  " >
+       <mat-form-field class="w-50  " >
         <mat-label>تاريخ بدء المهمه </mat-label>
         <input matInput formControlName="startDateMission" [matDatepicker]="picker3" >
         <mat-hint>MM/DD/YYYY</mat-hint>
@@ -222,7 +220,7 @@
         </mat-datepicker-toggle>
         <mat-datepicker #picker4></mat-datepicker>
          <mat-error>This field is mandatory.</mat-error>
-      </mat-form-field> -->
+      </mat-form-field> 
 
 
 
@@ -233,7 +231,7 @@
 
 
 
-
+<!-- 
        <mat-form-field class="w-50  ">
         <mat-label>مده الماموريه</mat-label>
         <input
@@ -250,9 +248,9 @@
         <ngx-mat-datetime-picker #startDateMission>
         </ngx-mat-datetime-picker>
         <mat-error>مطلوب</mat-error>
-      </mat-form-field> 
+      </mat-form-field>  -->
 
-      <mat-form-field class="w-50  " style="border-right:5px solid #fff">
+      <!-- <mat-form-field class="w-50  " style="border-right:5px solid #fff">
         <input
           [ngxMatDatetimePicker]="endDateMission"
           formControlName="endDateMission"
@@ -267,7 +265,7 @@
         <ngx-mat-datetime-picker #endDateMission>
         </ngx-mat-datetime-picker>
         <mat-error>مطلوب</mat-error>
-      </mat-form-field> 
+      </mat-form-field>  -->
 
 
       </div>

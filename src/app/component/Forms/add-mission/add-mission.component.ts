@@ -18,8 +18,8 @@ export class AddMissionComponent implements OnInit {
 
   file_store: FileList;
   file_list: Array<string> = [];
-  userList: UserList[] = [];
-  statusList: Status[] = [];
+ // userList: UserList[] = [];
+ // statusList: Status[] = [];
   missionTypeList: MissionType[] = [];
 missionList:MissionList[]=[];
   constructor(public dialogRef: MatDialogRef<AddMissionComponent>,
@@ -30,8 +30,8 @@ missionList:MissionList[]=[];
     this.service.initializeFormGroup();
     this.missionService.getLists().subscribe(res => {
       if (res.status == true) {
-        this.userList = res.usersList;
-        this.statusList = res.statusesList;
+      //  this.userList = res.usersList;
+      //  this.statusList = res.statusesList;
         this.missionTypeList = res.missionTypesList;
       }
       else {
@@ -77,10 +77,9 @@ missionList:MissionList[]=[];
     console.log(missionn);
     this.missionService.addMission(missionn).subscribe(res=>
       {
-        
         if(res.status==true)
         {
-          console.log(res.data);
+         // console.log(res.data);
           this.toastr.success(":added successfully");
           this.service.form.reset();
           this.dialogRef.close('save');
