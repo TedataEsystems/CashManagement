@@ -264,14 +264,14 @@ mat-card-title {
   overflow-y: auto;
   max-width: 50%;
 }
-
-.cdk-global-overlay-wrapper .cdk-overlay-pane.modals-dialog:nth-child(3){
+.cdk-global-overlay-wrapper .cdk-overlay-pane.edit-dialog {
   position: absolute !important;
-  height: 300px !important;
+  height: 350px;
   overflow-y: auto;
-  top:50px !important;
   max-width: 50%;
+  top:110px;
 }
+
 
 .cdk-global-overlay-wrapper .cdk-overlay-pane.confirm{
   position: absolute !important;
