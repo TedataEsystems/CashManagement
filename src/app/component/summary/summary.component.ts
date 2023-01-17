@@ -112,7 +112,7 @@ export class SummaryComponent implements OnInit {
     dialogGonfig.data = { dialogTitle: "اضافة مأمورية" };
     dialogGonfig.disableClose = true;
     dialogGonfig.autoFocus = true;
-    dialogGonfig.width = "80%";
+    dialogGonfig.width = "70%";
     dialogGonfig.panelClass = 'modals-dialog';
     this.dialog.open(AddMissionComponent, dialogGonfig).afterClosed().subscribe(result => {
      // debugger
@@ -140,9 +140,9 @@ export class SummaryComponent implements OnInit {
     dialogGonfig.data = { dialogTitle: " تعديل" };
     dialogGonfig.disableClose = true;
     dialogGonfig.autoFocus = true;
-    dialogGonfig.width = "50%";
+    dialogGonfig.width = "70%";
     dialogGonfig.panelClass = 'modals-dialog';
-    this.dialog.open(EditComponent, { panelClass: 'modals-dialog', disableClose: true, autoFocus: true, width: "50%", data: row }).afterClosed().subscribe(result => {
+    this.dialog.open(EditComponent, { panelClass: 'modals-dialog', disableClose: true, autoFocus: true, width: "70%", data: row }).afterClosed().subscribe(result => {
       this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef)
     });
 
@@ -189,13 +189,14 @@ export class SummaryComponent implements OnInit {
 
 
   exportPdf(){
-    this.router.navigateByUrl['/cover']
+    this.router.navigate(['/cover']);
   }
   exportMissionFormPdf(){
-    this.router.navigateByUrl['/missionform']
+
+this.router.navigate(['/missionform'])
   }
   exportExpensesPdf(){
-    this.router.navigateByUrl['/expenses']
+    this.router.navigate(['/expenses']);
   }
 
 

@@ -102,9 +102,11 @@ missionList:MissionList[]=[];
   }
 
   onClose() {
+
+
     this.service.form.reset();
     this.service.initializeFormGroup();
-    //this.dialogRef.close('save');
+    this.dialogRef.close('save');
   }
   ///////////////////////////////////////
 
@@ -130,7 +132,7 @@ missionList:MissionList[]=[];
 
     // do submit ajax
   }
- 
+
 
 
 }

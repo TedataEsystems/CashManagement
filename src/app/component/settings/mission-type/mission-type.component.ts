@@ -207,6 +207,7 @@ onDelete(r: any) {
   cancelEdit() {
     this.editdisabled = false;
     this.isNameUpdatedRepeated = false;
+    this.getMissionTypes(1, 100, '', this.sortColumnDef, this.SortDirDef);
   }
   updateEdit(row: any) {
 

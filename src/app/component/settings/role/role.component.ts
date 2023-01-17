@@ -57,7 +57,7 @@ export class RoleComponent implements OnInit {
     // {
     //   this.router.navigateByUrl('/login');
     // }
-    
+
     this.getUserRoles(1, 100, '', this.sortColumnDef, this.SortDirDef);
   }
   getUserRoles(pageNum: number, pagesize: number, searchValue: string, sortColumn: string, sortDir: string) {
@@ -118,6 +118,7 @@ export class RoleComponent implements OnInit {
 
     this.editdisabled = false;
     this.isNameUpdatedRepeated = false;
+    this.getUserRoles(1,100,'',this.sortColumnDef,this.SortDirDef);
 
   }
   updateEdit(row: any) {
@@ -136,7 +137,7 @@ export class RoleComponent implements OnInit {
           this.getUserRoles(1,100,'',this.sortColumnDef,this.SortDirDef);
           this.form['controls']['name'].setValue('');
           this.form['controls']['id'].setValue(0);
-          
+
         }
         else
         this.toastr.warning("::failed");
@@ -149,7 +150,7 @@ export class RoleComponent implements OnInit {
     //   this.router.navigateByUrl('/login');
     // }
     // else {
-    
+
   this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
     if (res) {
       this.userRoleService.deleteUserRole(r.id).subscribe(res => {
@@ -184,7 +185,7 @@ export class RoleComponent implements OnInit {
       this.isDisable = false;
       return;
     }
-    else 
+    else
     {
   //add
   if(this.form.value.id==0)

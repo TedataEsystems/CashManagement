@@ -121,7 +121,7 @@ fileuploaded:any;
     dialogGonfig.disableClose = true;
     dialogGonfig.autoFocus = true;
     dialogGonfig.width = "50%";
-    dialogGonfig.panelClass ='modal-dialog';
+    dialogGonfig.panelClass ='modals-dialog';
     this.dialog.open(AddUserComponent,{disableClose: true, autoFocus: true, width: "50%", data: row }).afterClosed().subscribe(result => {
       this.getUsers(1, 100, '', this.sortColumnDef, this.SortDirDef)
     });

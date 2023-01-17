@@ -36,6 +36,9 @@ mat-cell, mat-header-cell,mat-header-cell{
   border-right: 1px solid #c6c9cc42;
     box-shadow: 0px 0px 2px grey;
     justify-content: center;
-
+    flex: 0 0 18%  !important;
+  width: 18%  !important;
+padding-left: 0 !important;
  }
+
 
