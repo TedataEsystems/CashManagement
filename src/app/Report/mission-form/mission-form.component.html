@@ -1,4 +1,4 @@
-<div class="example-container container bg-white py-5 mat-elevation-z8">
+<div class="example-container container bg-white py-5 mat-elevation-z8" id="pdfTable" #pdftable="">
   <div class="row">
     <div class="col-sm-12 text-center">
       <img
@@ -101,5 +101,5 @@
   </div>
 </div>
 <div class="col-sm-12 text-center mt-5">
-  <button mat-raised-button class="text-white w-25">طباعة</button>
+  <button mat-raised-button class="text-white w-25" (click)="exportPDF()">طباعة</button>
 </div>
