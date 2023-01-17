@@ -121,8 +121,8 @@ fileuploaded:any;
     dialogGonfig.disableClose = true;
     dialogGonfig.autoFocus = true;
     dialogGonfig.width = "50%";
-    dialogGonfig.panelClass = 'modals-dialog';
-    this.dialog.open(AddUserComponent,{ disableClose: true, autoFocus: true, width: "50%", data: row }).afterClosed().subscribe(result => {
+    dialogGonfig.panelClass ='modal-dialog';
+    this.dialog.open(AddUserComponent,{disableClose: true, autoFocus: true, width: "50%", data: row }).afterClosed().subscribe(result => {
       this.getUsers(1, 100, '', this.sortColumnDef, this.SortDirDef)
     });
   }
@@ -151,7 +151,7 @@ fileuploaded:any;
     dialogGonfig.width = "50%";
     dialogGonfig.panelClass = 'modals-dialog';
      this.dialog.open(AddUserComponent,dialogGonfig).afterClosed().subscribe(res=>{
-      this.getUsers(1,10, '', this.sortColumnDef, this.SortDirDef);
+      this.getUsers(1,100, '', this.sortColumnDef, this.SortDirDef);
      });
 
   }
