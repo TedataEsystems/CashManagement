@@ -94,7 +94,15 @@ export class UserComponent implements OnInit {
   }
 
   onEdit(row:any){
-
+    const dialogGonfig = new MatDialogConfig();
+    dialogGonfig.data = { dialogTitle: " تعديل" };
+    dialogGonfig.disableClose = true;
+    dialogGonfig.autoFocus = true;
+    dialogGonfig.width = "50%";
+    dialogGonfig.panelClass = 'modals-dialog';
+    this.dialog.open(AddUserComponent,{ disableClose: true, autoFocus: true, width: "50%", data: row }).afterClosed().subscribe(result => {
+      this.getUsers(1, 100, '', this.sortColumnDef, this.SortDirDef)
+    });
   }
 
 
@@ -115,7 +123,7 @@ export class UserComponent implements OnInit {
   }
   addUser(){
     const dialogGonfig = new MatDialogConfig();
-    dialogGonfig.data= {dialogTitle: " اضافة مستخدم جديد"};
+    dialogGonfig.data= {dialogTitle: "اضافة جديد"};
     dialogGonfig.disableClose = true;
     dialogGonfig.autoFocus = true;
     dialogGonfig.width = "50%";
