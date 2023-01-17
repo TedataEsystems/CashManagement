@@ -1244,3 +1244,14 @@ mat-footer-cell:first-of-type {
   border-radius: 0 !important;
   width: 160px;
  }
+ .botttom-dialog-container{
+  position: absolute !important;
+  top: 5px !important;
+  width: 500px;
+  left: 32%;
+  height: 210px;
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 15px !important;
+  border-bottom-right-radius: 15px  !important;
+  }

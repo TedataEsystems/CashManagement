@@ -30,7 +30,7 @@ export class SummaryComponent implements OnInit {
   @ViewChild(MatSort) sort?: MatSort;
   displayedColumns: string[] = ['all', 'id', 'jobNumber', 'jobDegree', 'user', 'missionPurpose', 'centerOfCost', 'companyType', 'missionPlace', 'startDateMission', 'endDateMission', 'noOfNights', 'stay',
     'mealsAndIncidentals', 'startDateStay', 'endDateStay', 'missionTypeCost', 'permissionRequest', 'permissionDuration', 'comment', 'createdBy',
-    'updateBy', 'creationDate', 'updateDate', 'status', 'missionType', 'action'];
+    'updateBy', 'creationDate', 'updateDate', 'status', 'missionType','exportmission', 'action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource();
   settingtype = ''
@@ -184,6 +184,30 @@ export class SummaryComponent implements OnInit {
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
+
+
+
+
+  exportPdf(){
+    this.router.navigateByUrl['/cover']
+  }
+  exportMissionFormPdf(){
+    this.router.navigateByUrl['/missionform']
+  }
+  exportExpensesPdf(){
+    this.router.navigateByUrl['/expenses']
+  }
+
+
+  onDetails(row){
+
+  }
+
+
+
+
+
+
 
 
 }

@@ -11,6 +11,9 @@ import { SummaryComponent } from './component/summary/summary.component';
 import { ErrorPageComponent } from './shared/component/error-page/error-page.component';
 import { LayoutComponent } from './shared/component/layout/layout.component';
 import { LoginComponent } from './shared/component/login/login.component';
+import { CoverLetterComponent } from './Report/cover-letter/cover-letter.component';
+import { MissionFormComponent } from './Report/mission-form/mission-form.component';
+import { ExpensesFormComponent } from './Report/expenses-form/expenses-form.component';
 
 const routes: Routes = [
   {
@@ -63,6 +66,19 @@ const routes: Routes = [
     {
       path:'history',
       component: LogsComponent
+    },
+    {
+      path:'cover',
+      component: CoverLetterComponent
+    },
+    {
+      path:'missionform',
+      component: MissionFormComponent
+
+    },
+    {
+      path:'expenses',
+      component: ExpensesFormComponent
     },
     {
       path:'**',

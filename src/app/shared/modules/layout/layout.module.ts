@@ -38,6 +38,9 @@ import { AddJobComponent } from '../../../component/settings/Forms/add-job/add-j
 import { AddRoleComponent } from '../../../component/settings/Forms/add-role/add-role.component';
 import { AddMissonTypeComponent } from '../../../component/settings/Forms/add-misson-type/add-misson-type.component';
 import { AddApproveStatusComponent } from '../../../component/settings/Forms/add-approve-status/add-approve-status.component';
+import { CoverLetterComponent } from '../../../Report/cover-letter/cover-letter.component';
+import { MissionFormComponent } from '../../../Report/mission-form/mission-form.component';
+import { ExpensesFormComponent } from '../../../Report/expenses-form/expenses-form.component';
 
 
 
@@ -64,7 +67,10 @@ import { AddApproveStatusComponent } from '../../../component/settings/Forms/add
     AddJobComponent,
     AddRoleComponent,
     AddMissonTypeComponent,
-    AddApproveStatusComponent
+    AddApproveStatusComponent,
+    CoverLetterComponent,
+    MissionFormComponent,
+    ExpensesFormComponent
 
   ],
   imports: [
