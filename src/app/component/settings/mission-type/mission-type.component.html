@@ -15,12 +15,15 @@
     <form *ngIf="isShowDiv"  [formGroup]="form" (ngSubmit)="onCreateUpdate()" class="example-form">
 
       <mat-form-field class="example-full-width">
-        <mat-label>  نوع المأمورية </mat-label>
-        <input type="text"  matInput formControlName="name" (keyup)="onChecknameIsalreadysign()">
+        <mat-label> نوع المأمورية </mat-label>
+        <input type="text"  matInput #mission formControlName="name" (keyup)="onChecknameIsalreadysign()">
         <input type="hidden"  formControlName="id" >
-        <span class="mat-error" *ngIf="isNameRepeated"> مسجلة مسبقاً</span>
+        <span class="mat-err" *ngIf="isNameRepeated&& mission.value!=''"> مسجلة مسبقاً <strong>&nbsp;!</strong></span>
+
+        <mat-error>* مطلوب</mat-error>
+
       </mat-form-field>
-      <button type="submit" mat-raised-button     class="search text-white"   [disabled]="!missionType.name.length || isDisabled">اضافة</button>
+      <button type="submit" mat-raised-button     class="search mr-1 text-white"   [disabled]="isDisabled">اضافة</button>
    </form>
 
 
@@ -51,12 +54,14 @@
     <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>نوع المهمه </mat-header-cell>
     <mat-cell *matCellDef="let element" data-label="نوع المهمه">
       <ng-container *ngIf="!editdisabled || element.id!=editUsr">
-        {{element.name}} 
+        {{element.name}}
        </ng-container>
        <ng-container *ngIf="editdisabled  && element.id==editUsr">
          <mat-form-field hideRequiredMarker="false" appearance="legacy">
-           <input matInput placeholder="Name"  name="name" [(ngModel)]="element.name"  (keyup)="onChecknameIsalreadysignWhenUpdate(element)">
-           <span class="mat-error" *ngIf="isNameUpdatedRepeated && element.id == editUsr">الاسم مسجل مسبقاً</span>
+           <input matInput placeholder="Name" #mission  name="name" [(ngModel)]="element.name"  (keyup)="onChecknameIsalreadysignWhenUpdate(element)">
+           <span class="mat-err1" *ngIf="isNameUpdatedRepeated && element.id == editUsr&& mission.value!=''"><strong>!   &nbsp;</strong >الاسم مسجل مسبقاً</span>
+
+           <span class="mat-err1" *ngIf="mission.value==''">* مطلوب</span>
          </mat-form-field>
        </ng-container>
      </mat-cell>
@@ -77,7 +82,7 @@
   <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>  التعديل بواسطة</mat-header-cell>
   <mat-cell *matCellDef="let element" data-label=" المستخدم"> {{element.updatedBy}} </mat-cell>
 </ng-container>
- 
+
 
 
 
@@ -85,7 +90,7 @@
  <ng-container matColumnDef="action">
     <mat-header-cell *matHeaderCellDef> الاجراء </mat-header-cell>
     <mat-cell *matCellDef="let row" data-label="action">
-  
+
 
     <ng-container *ngIf="!editdisabled || row.id != editUsr">
 

@@ -43,7 +43,7 @@ export class ApproveStatusComponent implements OnInit {
   dataSource = new MatTableDataSource();
   settingtype = ''
   // Status = {id: 0,name:'',createdBy:''}
-  
+
   constructor(private statusService:StatusService, private titleService: Title,private toastr:ToastrService, private router: Router,
     private route: ActivatedRoute, private dailogService: DeleteService, private dialog:MatDialog
   ) {
@@ -67,7 +67,7 @@ export class ApproveStatusComponent implements OnInit {
       this.dataSource.paginator = this.paginator as MatPaginator;
     })
     setTimeout(() => this.loader = false, 2000);
-  
+
   }
 
 
@@ -93,7 +93,7 @@ export class ApproveStatusComponent implements OnInit {
       }
     })
 
-    
+
 
   }
 
@@ -166,16 +166,16 @@ onAddSubmit() {
          this.form['controls']['Name'].setValue('');
           this.form['controls']['Id'].setValue(0);
         this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
-  
+
       }
     )
     this.isShowDiv = false;
   }
- 
 
- 
 
-  
+
+
+
 }
 // onAddSubmit() {
 //   // this.isDisabled = true;
@@ -236,7 +236,7 @@ onAddSubmit() {
           this.isNameRepeated = true;
 
         }
-      
+
       });
   }}
 
@@ -259,6 +259,9 @@ onAddSubmit() {
         }
       });
     }
+    else{
+      this.isDisabled=true;
+    }
   }
   pageIn = 0;
   public pIn: number = 0;
@@ -280,7 +283,7 @@ onAddSubmit() {
       this.lastcol = sort.active; this.lastdir = sort.direction;
       var c = this.pageIn;
       this.getRequestdata(1, 100, '', sort.active, this.lastdir);
-    
+
   }
- 
+
 }

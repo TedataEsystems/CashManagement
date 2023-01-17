@@ -27,6 +27,7 @@ export class JobDegreeComponent implements OnInit {
   editUsr: any;
   editdisabled: boolean = false;
   isShowDiv = false;
+  dis=false;
  isDisabled: boolean = false;
   isNameRepeated: boolean = false;
   sortColumnDef: string = "Id";
@@ -64,7 +65,7 @@ export class JobDegreeComponent implements OnInit {
       this.dataSource.paginator = this.paginator as MatPaginator;
     })
     setTimeout(() => this.loader = false, 2000);
-  
+
   }
 
   ngOnInit(): void {
@@ -83,7 +84,7 @@ export class JobDegreeComponent implements OnInit {
     this.searchKey = '';
     this.applyFilter();
   }
-  
+
 
 
   applyFilter() {
@@ -95,7 +96,7 @@ export class JobDegreeComponent implements OnInit {
 
 
 
- 
+
   editROw(r: any) {
 
     this.editUsr = r.id;
@@ -115,7 +116,7 @@ export class JobDegreeComponent implements OnInit {
       id:row.id,
       name:row.name
     };
-    
+
     this.jobDegreeService.updateJobDegree(jobDegree).subscribe(res=>{
       if (res.status) {
         setTimeout(() => {
@@ -128,8 +129,8 @@ export class JobDegreeComponent implements OnInit {
         this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
       }
     })
-  
-  
+
+
   }
   addJobDegree(){
 
@@ -140,9 +141,9 @@ export class JobDegreeComponent implements OnInit {
     // dialogGonfig.width = "50%";
     // dialogGonfig.panelClass = 'modals-dialog';
     //  this.dialog.open(AddApproveStatusComponent,dialogGonfig)
-  
+
     this.isShowDiv = !this.isShowDiv;
-  
+
   }
 
   // onAddSubmit() {
@@ -153,22 +154,22 @@ export class JobDegreeComponent implements OnInit {
   //      if (this.form.value.name == ' ')
   //       //  this.setReactValue(Number(0), "");
   //   //   this.isDisabled = false;
-    
+
   //     return;
   //   }
   //   else{
   //     // this.isDisabled=true;
-  
+
   //   this.jobDegreeService.addJobDegree(this.jobDegree).subscribe(res=>
   //     {
   //        this.form['controls']['Name'].setValue('');
   //         this.form['controls']['Id'].setValue(0);
   //       this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
-  
+
   //     }
   //   )
   //   this.isShowDiv = false;
-  
+
   //   }
   // }
 
@@ -187,11 +188,11 @@ export class JobDegreeComponent implements OnInit {
          this.form['controls']['Name'].setValue('');
           this.form['controls']['Id'].setValue(0);
         this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
-  
+
       }
     )
     this.isShowDiv = false;
-  
+
     }
   }
 
@@ -208,7 +209,7 @@ export class JobDegreeComponent implements OnInit {
       }
     })
 
-    
+
 
   }
 
@@ -231,7 +232,7 @@ export class JobDegreeComponent implements OnInit {
           this.isNameRepeated = true;
 
         }
-      
+
       });
   }}
 
@@ -245,13 +246,16 @@ export class JobDegreeComponent implements OnInit {
     this.jobDegreeService.isNameRepeated(status.name, status.id).subscribe(
       res => {
         if (res.status == true) {
-          this.isDisabled = false;
+          this.dis = false;
           this.isNameUpdatedRepeated = false;
         } else {
-          this.isDisabled = true;
+          this.dis = true;
           this.isNameUpdatedRepeated = true;
         }
       });
+    }
+    else{
+this.dis=true;
     }
   }
 
@@ -274,7 +278,7 @@ export class JobDegreeComponent implements OnInit {
       this.lastdir = sort.direction;
       var c = this.pageIn;
       this.getRequestdata(1, 100, '', sort.active, this.lastdir);
-    
+
   }
 
 }
