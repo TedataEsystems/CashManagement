@@ -11,7 +11,9 @@ import { MissionList } from 'src/app/model/mission-list';
 import { DeleteService } from 'src/app/shared/service/delete.service';
 import { MissionService } from 'src/app/shared/service/mission.service';
 import { AddMissionComponent } from '../Forms/add-mission/add-mission.component';
+import { EditMissionComponent } from '../Forms/edit-mission/edit-mission.component';
 import { EditComponent } from '../Forms/edit/edit.component';
+import { MissionDetailsComponent } from '../Forms/mission-details/mission-details.component';
 
 @Component({
   selector: 'app-summary',
@@ -30,7 +32,7 @@ export class SummaryComponent implements OnInit {
   @ViewChild(MatSort) sort?: MatSort;
   displayedColumns: string[] = ['all', 'id', 'jobNumber', 'jobDegree', 'user', 'missionPurpose', 'centerOfCost', 'companyType', 'missionPlace', 'startDateMission', 'endDateMission', 'noOfNights', 'stay',
     'mealsAndIncidentals', 'startDateStay', 'endDateStay', 'missionTypeCost', 'permissionRequest', 'permissionDuration', 'comment', 'createdBy',
-    'updateBy', 'creationDate', 'updateDate', 'status', 'missionType','exportmission', 'action'];
+    'updateBy', 'creationDate', 'updateDate', 'status', 'missionType','exportexpenses','exportmission', 'action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource();
   settingtype = ''
@@ -201,6 +203,16 @@ this.router.navigate(['/missionform'])
 
 
   onDetails(row){
+
+    this.dialog.open(MissionDetailsComponent, { panelClass: 'modals-dialog', disableClose: true, width: "70%", data: row }).afterClosed().subscribe(result => {
+      this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef)
+    });
+
+  }
+  onEditMission(row){
+    this.dialog.open(EditMissionComponent, { panelClass: 'edit-dialog', disableClose: true, width: "50%", data: row }).afterClosed().subscribe(result => {
+      this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef)
+    });
 
   }
 

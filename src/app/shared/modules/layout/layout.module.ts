@@ -41,6 +41,8 @@ import { AddApproveStatusComponent } from '../../../component/settings/Forms/add
 import { CoverLetterComponent } from '../../../Report/cover-letter/cover-letter.component';
 import { MissionFormComponent } from '../../../Report/mission-form/mission-form.component';
 import { ExpensesFormComponent } from '../../../Report/expenses-form/expenses-form.component';
+import { MissionDetailsComponent } from '../../../component/Forms/mission-details/mission-details.component';
+import { EditMissionComponent } from '../../../component/Forms/edit-mission/edit-mission.component';
 
 
 
@@ -70,7 +72,9 @@ import { ExpensesFormComponent } from '../../../Report/expenses-form/expenses-fo
     AddApproveStatusComponent,
     CoverLetterComponent,
     MissionFormComponent,
-    ExpensesFormComponent
+    ExpensesFormComponent,
+    MissionDetailsComponent,
+    EditMissionComponent
 
   ],
   imports: [

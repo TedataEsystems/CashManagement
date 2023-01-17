@@ -188,13 +188,20 @@
       <mat-icon class="" >download</mat-icon>
    <span class="txt mr-1">  تنزيل ملف  </span>
   </button>
-  <!-- <button mat-mini-fab color="primary"  (click)="exportMissionFormPdf()">
-    <mat-icon>download</mat-icon>
-  </button> -->
+
+
 
   </mat-cell>
 </ng-container>
-
+<ng-container matColumnDef="exportexpenses">
+  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> نموذج المصاريف</mat-header-cell>
+  <mat-cell *matCellDef="let element">
+    <button mat-stroked-button  class="  mx-1" (click)="exportExpensesPdf()">
+      <mat-icon class="" >download</mat-icon>
+   <span class="txt mr-1">  تنزيل ملف  </span>
+  </button>
+</mat-cell>
+</ng-container>
 
  <ng-container matColumnDef="action" sticky>
     <mat-header-cell *matHeaderCellDef> الاجراء </mat-header-cell>
@@ -204,6 +211,9 @@
         <mat-icon>info</mat-icon>
       </button>
       <button mat-button class="btn-success mx-1 font-weight-bolder" matTooltip="تعديل"   (click)="onEdit(row)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-button class="btn-success mx-1 font-weight-bolder" matTooltip="تعديل"   (click)="onEditMission(row)">
         <mat-icon>edit</mat-icon>
       </button>
 

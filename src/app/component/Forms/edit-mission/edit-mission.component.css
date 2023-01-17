@@ -1,0 +1,38 @@
+.submit{
+  color:#fff;
+  width: 100px;
+}
+
+.req {
+  position: absolute;
+ bottom: -18px;
+ right: 0;
+ color: #f44336;
+ font-size: 75%;
+}
+.clr{
+  background-color: var(--fifth-color);
+  color:#fff;
+}
+mat-toolbar.top{
+  background-color: var(--main-color);
+  color:#fff;
+  position: absolute;
+  top: 0;
+  z-index: 2;
+}
+mat-toolbar.bottom{
+  background-color: #c6cacd;
+  color:#fff;
+  position: absolute;
+  bottom: 0;
+  z-index: 2;
+
+}
+mat-form-field{
+  margin-top: 25px !important;
+}
+
+.mat-toolbar-row, .mat-toolbar-single-row{
+  height: 50px;
+}
