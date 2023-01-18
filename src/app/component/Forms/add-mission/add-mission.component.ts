@@ -22,7 +22,7 @@ export class AddMissionComponent implements OnInit {
   missionTypeList: MissionType[] = [];
 missionList:MissionList[]=[];
   constructor(public dialogRef: MatDialogRef<AddMissionComponent>,
-    public service: MissionFormService, public missionService: MissionService, 
+    public service: MissionFormService, public missionService: MissionService,
     private toastr: ToastrService,private _router:Router) {
   }
 
@@ -33,7 +33,7 @@ missionList:MissionList[]=[];
         this.missionTypeList = res.missionTypesList;
       }
       else {
-        this.toastr.warning(':failed');
+        this.toastr.warning('Failed');
       }
     })//end of subscribe
   }
@@ -43,6 +43,7 @@ missionList:MissionList[]=[];
     this.file = event.target.files[0];
 }
   onSubmit() {
+    debugger
     if(!this.service.form.valid) {
       return;
     }//end of if
@@ -75,30 +76,30 @@ missionList:MissionList[]=[];
       missionTypeId:this.service.form.value.missionTypeId,
       userId:this.service.form.value.userId
     }//end of mission
-  
+
     this.missionService.upload(this.file).subscribe(res=>{
       missionn.file=res.uniqueFileName;
       console.log(missionn)
-      debugger
+
       this.missionService.addMission(missionn).subscribe(res=>
         {
           console.log("resss",res);
           if(res.status==true)
           {
-            this.toastr.success(":added successfully");
+            this.toastr.success("Added successfully");
             this.service.form.reset();
             this.dialogRef.close('save');
           }
           else
           {
-            this.toastr.warning(":failed");
+            this.toastr.warning("Failed");
           }
         })
 
     })
     this.onClose();
     this.dialogRef.close('save');
-    this._router.navigate(['/summary'] );
+    //this._router.navigate(['/summary'] );
   }//end of submit
   onClear() {
     this.service.form.reset();

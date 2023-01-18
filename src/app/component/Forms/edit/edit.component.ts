@@ -90,7 +90,7 @@ export class EditComponent implements OnInit {
         this.service.form.controls['createdBy'].setValue(this.data.createdBy);
         this.service.form.controls['updateDate'].setValue(this.data.updateDate);
         this.service.form.controls['updateBy'].setValue(this.data.updateBy);
-      }//end of if data 
+      }//end of if data
     })//end of subscribe
   }
 
@@ -128,12 +128,12 @@ export class EditComponent implements OnInit {
     }//end of object
     this.missionService.updateMission(mission).subscribe(res => {
       if (res.status == true) {
-        this.toastr.success("::updated successfully");
+        this.toastr.success("updated successfully");
         this.service.form.reset();
         this.dialogRef.close('save');
       }
       else {
-        this.toastr.warning("::updated failed");
+        this.toastr.warning("updated failed");
       }
     })
 
@@ -148,7 +148,7 @@ export class EditComponent implements OnInit {
     this.service.initializeFormGroup();
     // this.service.form.reset();
     // this.service.initializeFormGroup();
-    // this.notificationService.success(':: Submitted successfully');
+    // this.notificationService.success(' Submitted successfully');
   }
 
 

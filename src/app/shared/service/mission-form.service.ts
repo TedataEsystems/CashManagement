@@ -56,7 +56,7 @@ export class MissionFormService {
       stay:0,
       mealsAndIncidentals:0,
       jobNumber: 0,
-      missionTypeCost: 0,
+      missionTypeCost:0,
       permissionRequest:'',
       permissionDuration: '',
       comment:'',

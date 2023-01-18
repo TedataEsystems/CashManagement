@@ -116,7 +116,7 @@ export class SummaryComponent implements OnInit {
     dialogGonfig.panelClass = 'modals-dialog';
     this.dialog.open(AddMissionComponent, dialogGonfig).afterClosed().subscribe(result => {
      // debugger
-      this.getMisssions(1, 100,'', this.sortColumnDef, this.SortDirDef)
+      this.getMisssions(1,100,'',this.sortColumnDef,this.SortDirDef)
     });
   }
   /////////////////delete
@@ -124,9 +124,9 @@ export class SummaryComponent implements OnInit {
     this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
       if (res) {
         this.missionService.deleteMission(r.id).subscribe(res => {
-            this.toastr.success(": deleted successfully");
+            this.toastr.success("Deleted Successfully");
             this.getMisssions(1,100,'',this.sortColumnDef,this.SortDirDef);
-        },error => {  this.toastr.warning(": failed "); }
+        },error => {  this.toastr.warning("failed "); }
         )//deletemission
       }//end of if
     })//end of subscribe
@@ -142,7 +142,7 @@ export class SummaryComponent implements OnInit {
     dialogGonfig.width = "70%";
     dialogGonfig.panelClass = 'modals-dialog';
     this.dialog.open(EditComponent, { panelClass: 'modals-dialog', disableClose: true, autoFocus: true, width: "70%", data: row }).afterClosed().subscribe(result => {
-      this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef)
+      this.getMisssions(1,100,'',this.sortColumnDef,this.SortDirDef)
     });
 
 

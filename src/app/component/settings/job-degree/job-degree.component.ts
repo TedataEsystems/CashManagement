@@ -123,7 +123,7 @@ export class JobDegreeComponent implements OnInit {
         setTimeout(() => {
           this.loader = false;
         }, 1500)
-        this.toastr.success(":: update successfully");
+        this.toastr.success(" update successfully");
         this.form['controls']['Name'].setValue('');
         this.form['controls']['Id'].setValue(0);
         this.cancelEdit();
@@ -203,10 +203,10 @@ export class JobDegreeComponent implements OnInit {
       if(res)
       {
         this.jobDegreeService.deleteJobDegree(r.id).subscribe(res=>{
-        this.toastr.success(':: successfully Deleted');
+        this.toastr.success(' successfully Deleted');
         this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
         }),
-        error => { this.toastr.error(':: An Error Occured') }
+        error => { this.toastr.error(' An Error Occured') }
       }
     })
 
