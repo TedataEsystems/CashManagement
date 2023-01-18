@@ -17,9 +17,9 @@ import { MissionService } from 'src/app/shared/service/mission.service';
   styleUrls: ['./add-mission.component.css']
 })
 export class AddMissionComponent implements OnInit {
-  @ViewChild(MatAccordion) accordion: MatAccordion;
+ 
   appear=false;
-  panelOpenState = false;
+
   file_store: FileList;
   file_list: Array<string> = [];
   file: File = null; // Variable to store file
