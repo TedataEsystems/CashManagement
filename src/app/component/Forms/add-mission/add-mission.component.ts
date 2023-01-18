@@ -1,6 +1,7 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatAccordion } from '@angular/material/expansion';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MissionList } from 'src/app/model/mission-list';
@@ -16,9 +17,14 @@ import { MissionService } from 'src/app/shared/service/mission.service';
   styleUrls: ['./add-mission.component.css']
 })
 export class AddMissionComponent implements OnInit {
-
+  @ViewChild(MatAccordion) accordion: MatAccordion;
+  appear=false;
+  panelOpenState = false;
   file_store: FileList;
   file_list: Array<string> = [];
+  file: File = null; // Variable to store file
+  fileName: string;
+
   missionTypeList: MissionType[] = [];
 missionList:MissionList[]=[];
   constructor(public dialogRef: MatDialogRef<AddMissionComponent>,
@@ -37,11 +43,9 @@ missionList:MissionList[]=[];
       }
     })//end of subscribe
   }
-  file: File = null; // Variable to store file
+
    // On file Select
-   onChange(event) {
-    this.file = event.target.files[0];
-}
+
   onSubmit() {
     debugger
     if(!this.service.form.valid) {
@@ -77,6 +81,9 @@ missionList:MissionList[]=[];
       userId:this.service.form.value.userId
     }//end of mission
 
+
+
+
     this.missionService.upload(this.file).subscribe(res=>{
       missionn.file=res.uniqueFileName;
       console.log(missionn)
@@ -111,6 +118,52 @@ missionList:MissionList[]=[];
     this.service.initializeFormGroup();
     this.dialogRef.close('save');
   }
+search(){
+  this.appear =!this.appear
+}
 
+handleFileInputChange(l: FileList): void {
+  this.file_store = l;
+  if (l.length) {
+    const f = l[0];
+    const count = l.length > 1 ? `(+${l.length - 1} files)` : "";
+    this.service.form.controls.attachFile.patchValue(`${f.name}${count}`);
+  } else {
+    this.service.form.controls.attachFile.patchValue("");
+  }
+
+
+  var fd = new FormData();
+  this.file_list = [];
+  for (let i = 0; i < this.file_store.length; i++) {
+    fd.append("files", this.file_store[i], this.file_store[i].name);
+    this.file_list.push(this.file_store[i].name);
+  }
+}
+
+handleSubmit(): void {
+  var fd = new FormData();
+  this.file_list = [];
+  for (let i = 0; i < this.file_store.length; i++) {
+    fd.append("files", this.file_store[i], this.file_store[i].name);
+    this.file_list.push(this.file_store[i].name);
+  }
+}
+
+onChange(event) {
+  this.file = event.target.files[0];
+}
+
+
+// onChange(file) {
+//   this.file = file.files[0];
+//   this.fileName = file.files[0].name;
+// }
+
+removeFile(i) {
+  // this.file = null;
+  // this.fileName = '';
+  this.file_list.splice(i,1);
+}
 
 }

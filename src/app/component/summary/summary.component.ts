@@ -112,7 +112,7 @@ export class SummaryComponent implements OnInit {
     dialogGonfig.data = { dialogTitle: "اضافة مأمورية" };
     dialogGonfig.disableClose = true;
     dialogGonfig.autoFocus = true;
-    dialogGonfig.width = "70%";
+    dialogGonfig.width = "50%";
     dialogGonfig.panelClass = 'modals-dialog';
     this.dialog.open(AddMissionComponent, dialogGonfig).afterClosed().subscribe(result => {
      // debugger
