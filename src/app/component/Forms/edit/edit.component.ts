@@ -25,8 +25,6 @@ export class EditComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.data.id,"data")
-    console.log(this.data,"data")
     this.service.initializeFormGroup();
     this.missionService.getLists().subscribe(res => {
       if (res.status == true) {
@@ -128,8 +126,6 @@ export class EditComponent implements OnInit {
       missionTypeId: this.service.form.value.missionTypeId,
       userId: this.service.form.value.userId
     }//end of object
-    console.log(mission.id);
-    console.log(mission);
     this.missionService.updateMission(mission).subscribe(res => {
       if (res.status == true) {
         this.toastr.success("::updated successfully");

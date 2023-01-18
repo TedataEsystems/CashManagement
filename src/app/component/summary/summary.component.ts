@@ -75,7 +75,6 @@ export class SummaryComponent implements OnInit {
       else {
         sort.direction = 'asc';
       }
-      console.log(sort.active, this.lastdir, 'if');
     }
     this.lastcol = sort.active;
     // if (this.lastdir == 'asc'){
@@ -83,7 +82,6 @@ export class SummaryComponent implements OnInit {
     // else{
     //   sort.direction = 'asc';}
     this.lastdir = sort.direction;
-    console.log(sort.active, this.lastdir, 'kk');
     this.getMisssions(1, 100, '', sort.active, this.lastdir);
   }
   //when empty search input
@@ -116,7 +114,6 @@ export class SummaryComponent implements OnInit {
     dialogGonfig.panelClass = 'modals-dialog';
     this.dialog.open(AddMissionComponent, dialogGonfig).afterClosed().subscribe(result => {
      // debugger
-    // console.log("close");
       this.getMisssions(1, 100,'', this.sortColumnDef, this.SortDirDef)
     });
   }

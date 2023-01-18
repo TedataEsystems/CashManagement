@@ -88,10 +88,7 @@ export class AddUserComponent implements OnInit {
   }
   onCheckJobNumIsalreadysign() {
     this.user.jobNum = this.form.value.jobNumber;
-    console.log("ok i am here before call function")
     this.userService.jobNumberIsAlreadyExist(this.user.jobNum.toString()).subscribe(res => {
-      console.log("ok i am now here inside the function")
-      console.log(this.user.jobNum, "inside subscribe");
       //not asign before
       if (res.status == true) {
         this.isDisabled = false;
