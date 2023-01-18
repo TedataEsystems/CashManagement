@@ -22,18 +22,18 @@ export class AddUserComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<AddUserComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private toastr: ToastrService, private userService: UserService, private _router: Router) {
   }
   newuser1:User=new User();
-  newUser = {
-    id:0,
-    name: "",
-    team: "",
-    jobNumber: 0,
-    jobDegreeid: 0,
-    roleId: 0,
-    createdBy: "",
-    updatedBy: ""
+  // newUser = {
+  //   id:0,
+  //   name: "",
+  //   team: "",
+  //   jobNumber: 0,
+  //   jobDegreeid: 0,
+  //   roleId: 0,
+  //   createdBy: "",
+  //   updatedBy: ""
 
 
-  };
+  // };
   userRoles: UserolesList[] = [];
   jobDegrees: JobDegree[] = [];
   form: FormGroup = new FormGroup({
@@ -43,7 +43,7 @@ export class AddUserComponent implements OnInit {
     team: new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     jobDegree: new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     userRole: new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
-
+    userName: new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
 
 
   })
@@ -69,6 +69,7 @@ export class AddUserComponent implements OnInit {
       this.form.controls['team'].setValue(this.data.team);
       this.form.controls['jobDegree'].setValue(this.data.jobDegreeId);
       this.form.controls['userRole'].setValue(this.data.roleId);
+      this.form.controls['userName'].setValue(this.data.userName);
       //console.log(this.data);
 
 
@@ -85,12 +86,13 @@ export class AddUserComponent implements OnInit {
     }
     if (this.data.dialogTitle == "اضافة جديد") 
     {
-      this.newUser.name = this.form.value.name;
-    this.newUser.team = this.form.value.team;
-    this.newUser.jobNumber = this.form.value.jobNumber;
-    this.newUser.roleId = this.form.value.userRole;
-    this.newUser.jobDegreeid = this.form.value.jobDegree;
-    this.userService.addUser(this.newUser).subscribe();
+      this.newuser1.name = this.form.value.name;
+      this.newuser1.team = this.form.value.team;
+      this.newuser1.jobNumber = this.form.value.jobNumber;
+      this.newuser1.roleId = this.form.value.userRole;
+      this.newuser1.jobDegreeid = this.form.value.jobDegree;
+      this.newuser1.userName = this.form.value.userName;
+      this.userService.addUser(this.newuser1).subscribe();
     }
     else
     {
@@ -108,7 +110,7 @@ export class AddUserComponent implements OnInit {
     this.toastr.success(':: Submitted successfully');
     this.onClose();
     this.dialogRef.close('save');
-    // this._router.navigate(['/user'] );
+    this._router.navigate(['/user'] );
 
   }
 
