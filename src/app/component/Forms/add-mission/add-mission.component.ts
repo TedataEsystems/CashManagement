@@ -75,11 +75,14 @@ missionList:MissionList[]=[];
       missionTypeId:this.service.form.value.missionTypeId,
       userId:this.service.form.value.userId
     }//end of mission
-    
+  
     this.missionService.upload(this.file).subscribe(res=>{
       missionn.file=res.uniqueFileName;
+      console.log(missionn)
+      debugger
       this.missionService.addMission(missionn).subscribe(res=>
         {
+          console.log("resss",res);
           if(res.status==true)
           {
             this.toastr.success(":added successfully");
@@ -103,10 +106,9 @@ missionList:MissionList[]=[];
   }
 
   onClose() {
-
-
     this.service.form.reset();
     this.service.initializeFormGroup();
+    this.dialogRef.close('save');
   }
 
 
