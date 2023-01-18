@@ -18,7 +18,7 @@
   (submit)="onSubmit()"
   dir="rtl"
 >
-  <mat-grid-list cols="4" rowHeight="600" class="mx-3">
+  <mat-grid-list cols="4" rowHeight="400" class="mx-3">
     <mat-grid-tile colspan="1">
       <div class="controles-container">
         <input type="hidden" formControlName="id">
@@ -29,11 +29,12 @@
        <input formControlName="statusId" type="hidden"/>
         <!-- <mat-form-field>
           <input formControlName="jobNumber" matInput placeholder=" الرقم الوظيفي" />
-          <mat-error>مطلوب</mat-error>
+          <mat-error> * مطلوب </mat-error>
         </mat-form-field> -->
 
         <mat-form-field>
           <input formControlName="jobNumber" matInput placeholder=" الرقم الوظيفي" readonly />
+          <!-- <mat-error>مطلوب</mat-error> -->
         </mat-form-field>
         <mat-form-field>
           <input formControlName="jobDegree" matInput placeholder=" الدرجه الوظيفيه" readonly/>
@@ -47,8 +48,8 @@
               {{userr.name}}
             </mat-option>
           </mat-select>
-          <mat-error>مطلوب</mat-error> -->
-      
+          <mat-error> * مطلوب </mat-error> -->
+
         <!-- <mat-form-field>
           <mat-select formControlName="jobDegree" placeholder=" *الدرجه الوظيفيه (--اختار--) " >
             <mat-option>-- Please select --</mat-option>
@@ -56,14 +57,14 @@
             <mat-option>y</mat-option>
             <mat-option>z</mat-option>
           </mat-select>
-          <mat-error>مطلوب</mat-error>
+          <mat-error> * مطلوب </mat-error>
         </mat-form-field>  -->
         <br>
           <input formControlName="attachFile" type="file" placeholder=" ارفاق ملف" (change)="onChange($event)"/>
 
         <mat-form-field>
           <input formControlName="missionPurpose" matInput placeholder="غرض المهمه"/>
-          <mat-error>مطلوب</mat-error>
+          <mat-error> * مطلوب </mat-error>
         </mat-form-field>
 
         <mat-form-field>
@@ -72,7 +73,7 @@
             <mat-option value="Tedate Staff">Tedate Staff</mat-option>
             <mat-option value="Outsource">Outsource</mat-option>
           </mat-select>
-          <mat-error>مطلوب</mat-error>
+          <mat-error> * مطلوب </mat-error>
         </mat-form-field>
 
 
@@ -84,7 +85,7 @@
             {{status.name}}
           </mat-option>
         </mat-select>
-        <mat-error>مطلوب</mat-error>
+        <mat-error> * مطلوب </mat-error>
       </mat-form-field>
 
        -->
@@ -115,7 +116,7 @@
     ></mat-datepicker-toggle>
     <ngx-mat-datetime-picker #startDateStay>
     </ngx-mat-datetime-picker>
-    <mat-error>مطلوب</mat-error>
+    <mat-error> * مطلوب </mat-error>
   </mat-form-field>  -->
 
   <!-- <mat-form-field class="w-50  " style="border-right:5px solid #fff">
@@ -132,7 +133,7 @@
     ></mat-datepicker-toggle>
     <ngx-mat-datetime-picker #endDateStay>
     </ngx-mat-datetime-picker>
-    <mat-error>مطلوب</mat-error>
+    <mat-error> * مطلوب </mat-error>
   </mat-form-field>  -->
 
       <mat-form-field class="w-50 ">
@@ -143,7 +144,7 @@
           <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
         </mat-datepicker-toggle>
         <mat-datepicker #picker1></mat-datepicker>
-         <mat-error>This field is mandatory.</mat-error>
+        <mat-error> * مطلوب </mat-error>
       </mat-form-field>
 
       <mat-form-field class="w-50  " style="border-right:5px solid #fff">
@@ -155,7 +156,7 @@
           <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
         </mat-datepicker-toggle>
         <mat-datepicker #picker2></mat-datepicker>
-         <mat-error>This field is mandatory.</mat-error>
+        <mat-error> * مطلوب </mat-error>
       </mat-form-field>
 
 </div>
@@ -173,7 +174,7 @@
 
   <mat-form-field class="w-50  " style="border-right:5px solid #fff">
     <input formControlName="missionPlace" matInput placeholder="مكان المهمه"/>
-    <mat-error>مطلوب</mat-error>
+    <mat-error> * مطلوب </mat-error>
   </mat-form-field>
 
 
@@ -209,7 +210,7 @@
           <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
         </mat-datepicker-toggle>
         <mat-datepicker #picker3></mat-datepicker>
-         <mat-error>This field is mandatory.</mat-error>
+        <mat-error> * مطلوب </mat-error>
       </mat-form-field>
 
       <mat-form-field class="w-50  " style="border-right:5px solid #fff">
@@ -220,8 +221,8 @@
           <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
         </mat-datepicker-toggle>
         <mat-datepicker #picker4></mat-datepicker>
-         <mat-error>This field is mandatory.</mat-error>
-      </mat-form-field> 
+        <mat-error> * مطلوب </mat-error>
+      </mat-form-field>
 
 
 
@@ -232,7 +233,7 @@
 
 
 
-<!-- 
+<!--
        <mat-form-field class="w-50  ">
         <mat-label>مده الماموريه</mat-label>
         <input
@@ -248,7 +249,7 @@
         ></mat-datepicker-toggle>
         <ngx-mat-datetime-picker #startDateMission>
         </ngx-mat-datetime-picker>
-        <mat-error>مطلوب</mat-error>
+        <mat-error> * مطلوب </mat-error>
       </mat-form-field>  -->
 
       <!-- <mat-form-field class="w-50  " style="border-right:5px solid #fff">
@@ -265,7 +266,7 @@
         ></mat-datepicker-toggle>
         <ngx-mat-datetime-picker #endDateMission>
         </ngx-mat-datetime-picker>
-        <mat-error>مطلوب</mat-error>
+        <mat-error> * مطلوب </mat-error>
       </mat-form-field>  -->
 
 
@@ -298,7 +299,7 @@
                  {{missionType.name}}
                 </mat-option>
               </mat-select>
-              <mat-error>مطلوب</mat-error>
+              <mat-error> * مطلوب </mat-error>
             </mat-form-field>
             <mat-form-field>
               <input formControlName="permissionRequest" matInput placeholder="غرض الاذن"/>

@@ -17,9 +17,11 @@
         <mat-label> الحالة</mat-label>
         <input type="text" #statusName  matInput formControlName="Name" (keyup)="IsAddNameRepeated()" >
         <input type="hidden"  formControlName="Id" >
-        <span class="mat-error" *ngIf="isNameRepeated&&statusName.value!=''">مسجلة مسبقاً</span>
+        <span class="mat-err" *ngIf="isNameRepeated&&statusName.value!=''">مسجلة مسبقاً <strong>&nbsp;!</strong></span>
+
+        <mat-error>* مطلوب</mat-error>
       </mat-form-field>
-      <button type="submit" mat-raised-button [disabled]="isDisabled||statusName.value==''"  class="search text-white">اضافة</button>
+      <button type="submit" mat-raised-button [disabled]="isDisabled"  class="search mr-1 text-white">اضافة</button>
    </form>
     <mat-form-field class="search-form-field" floatLabel="never">
       <input matInput [(ngModel)]="searchKey" placeholder="بحث" autocomplete="off" (keyup)="applyFilter()">
@@ -53,8 +55,10 @@
      </ng-container>
      <ng-container *ngIf="editdisabled  && element.id==editUsr">
        <mat-form-field hideRequiredMarker="false" appearance="legacy">
-         <input matInput placeholder="الحالة"  name="name" [(ngModel)]="element.name" (keyup)="IsUpdateNameRepeated(element)" >
-         <span class="mat-error" *ngIf="isNameUpdatedRepeated && element.id == editUsr">الحالة مسجلة مسبقاً</span>
+         <input matInput placeholder="الحالة" #status name="name" [(ngModel)]="element.name" (keyup)="IsUpdateNameRepeated(element)" >
+         <span class="mat-err1" *ngIf="isNameUpdatedRepeated && element.id == editUsr&& status.value!=''"><strong>!   &nbsp;</strong>مسجلة مسبقاً </span>
+
+           <span class="mat-err1" *ngIf="status.value==''">* مطلوب</span>
        </mat-form-field>
        </ng-container>
      </mat-cell>
@@ -87,7 +91,7 @@
       </button>
     </ng-container>
     <ng-container *ngIf="editdisabled  && row.id==editUsr">
-      <button  class="btn-success btn ml-1"  matTooltip="Update"  (click)="OnEditSubmit(row)">
+      <button  class="btn-success btn ml-1"  matTooltip="Update" [disabled]="isDisabled"  (click)="OnEditSubmit(row)">
        <mat-icon>check</mat-icon>
       </button>
 

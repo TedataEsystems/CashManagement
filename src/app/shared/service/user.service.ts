@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { UserList } from 'src/app/model/user-list';
 import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
@@ -37,9 +38,9 @@ export class UserService {
   {
      return this.httpClient.post<any>(`${this.url}/AddUser`,user);
   }
-  updateUser(mission:any):Observable<any>
+  updateUser(user:any):Observable<any>
   {
-     return this.httpClient.post<any>(`${this.url}/UpdateUser`,mission);
+     return this.httpClient.put<any>(`${this.url}/UpdateUser`,user);
   }
   deleteUser(id:number):Observable<any>
   {

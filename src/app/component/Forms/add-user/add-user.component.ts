@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { JobDegree } from 'src/app/model/job-degree';
-import { UserList } from 'src/app/model/user-list';
+import { User, UserList } from 'src/app/model/user-list';
 import { UserolesList } from 'src/app/model/useroles-list';
 import { UserService } from 'src/app/shared/service/user.service';
 
@@ -18,20 +18,22 @@ import { UserService } from 'src/app/shared/service/user.service';
 export class AddUserComponent implements OnInit {
   isDisabled: boolean;
   isNameRepeated: boolean;
-
-  constructor(public dialogRef: MatDialogRef<AddUserComponent>, private toastr: ToastrService, private userService: UserService,private _router:Router) {
+  dialogTitle: string = "";
+  constructor(public dialogRef: MatDialogRef<AddUserComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private toastr: ToastrService, private userService: UserService, private _router: Router) {
   }
-  newUser = {
-    name: "",
-    team: "",
-    jobNumber: 0,
-    jobDegreeid: 0,
-    roleId: 0,
-    createdBy: "",
-    updatedBy: ""
+  newuser1:User=new User();
+  // newUser = {
+  //   id:0,
+  //   name: "",
+  //   team: "",
+  //   jobNumber: 0,
+  //   jobDegreeid: 0,
+  //   roleId: 0,
+  //   createdBy: "",
+  //   updatedBy: ""
 
 
-  };
+  // };
   userRoles: UserolesList[] = [];
   jobDegrees: JobDegree[] = [];
   form: FormGroup = new FormGroup({
@@ -41,18 +43,37 @@ export class AddUserComponent implements OnInit {
     team: new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     jobDegree: new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     userRole: new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
-
+    userName: new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
 
 
   })
   user = { jobNum: "" }
 
   ngOnInit() {
+    if (this.data.dialogTitle !== "اضافة جديد") {
+      this.dialogTitle = 'تعديل';
+    }
+    else {
+      this.dialogTitle = this.data.dialogTitle;
+    }
     this.form;
     this.userService.getUserlists().subscribe(response => {
       this.jobDegrees = response?.data.jobDegrees;
       this.userRoles = response?.data.userRoles;
     });
+    if (this.data) {
+
+      this.form.controls['Id'].setValue(this.data.id);
+      this.form.controls['jobNumber'].setValue(this.data.jobNumber);
+      this.form.controls['name'].setValue(this.data.name);
+      this.form.controls['team'].setValue(this.data.team);
+      this.form.controls['jobDegree'].setValue(this.data.jobDegreeId);
+      this.form.controls['userRole'].setValue(this.data.roleId);
+      this.form.controls['userName'].setValue(this.data.userName);
+      //console.log(this.data);
+
+
+    }
   }
 
 
@@ -60,22 +81,36 @@ export class AddUserComponent implements OnInit {
 
 
   onSubmit() {
-    if (this.form.invalid) 
-    {
+    if (this.form.invalid) {
       return;
     }
-    this.newUser.name = this.form.value.name;
-    this.newUser.team = this.form.value.team;
-    this.newUser.jobNumber = this.form.value.jobNumber;
-    this.newUser.roleId = this.form.value.userRole;
-    this.newUser.jobDegreeid = this.form.value.jobDegree;
-    this.userService.addUser(this.newUser).subscribe(response => {
-    });
+    if (this.data.dialogTitle == "اضافة جديد") 
+    {
+      this.newuser1.name = this.form.value.name;
+      this.newuser1.team = this.form.value.team;
+      this.newuser1.jobNumber = this.form.value.jobNumber;
+      this.newuser1.roleId = this.form.value.userRole;
+      this.newuser1.jobDegreeid = this.form.value.jobDegree;
+      this.newuser1.userName = this.form.value.userName;
+      this.userService.addUser(this.newuser1).subscribe();
+    }
+    else
+    {
+      console.log(this.form.value,"This is the form ")
+      this.newuser1.id=this.form.value.Id;
+      this.newuser1.name = this.form.value.name;
+      this.newuser1.team = this.form.value.team;
+      this.newuser1.jobNumber = this.form.value.jobNumber;
+      this.newuser1.roleId = this.form.value.userRole;
+      this.newuser1.jobDegreeid = this.form.value.jobDegree;
+      this.userService.updateUser(this.newuser1).subscribe(res=>{console.log(res,"from uodate")});
+    }
+   
 
     this.toastr.success(':: Submitted successfully');
     this.onClose();
     this.dialogRef.close('save');
-    // this._router.navigate(['/user'] );
+    this._router.navigate(['/user'] );
 
   }
 

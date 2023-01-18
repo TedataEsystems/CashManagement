@@ -1,0 +1,31 @@
+span.text
+{
+  font-size: 18px;
+  font-weight: 800;
+}
+th,td{
+  text-align: center;
+}
+
+.table-bordered thead:first-of-type th{
+  border: none !important;
+}
+.table-bordered thead th{
+  font-size: 18px;
+}
+.table-bordered thead
+{
+  border: 1px solid #dee2e6;
+  background-color: #e0e0e0;
+}
+.hd{
+  color: lightgrey;
+}
+.answer
+{
+  color: #545454;
+    margin: 0 5px;
+}
+tbody tr th{
+  width: 50% !important;
+}

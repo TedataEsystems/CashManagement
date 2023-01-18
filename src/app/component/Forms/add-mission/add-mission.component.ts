@@ -103,6 +103,8 @@ missionList:MissionList[]=[];
   }
 
   onClose() {
+
+
     this.service.form.reset();
     this.service.initializeFormGroup();
   }

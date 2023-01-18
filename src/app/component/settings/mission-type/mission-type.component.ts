@@ -109,7 +109,7 @@ export class MissionTypeComponent implements OnInit {
 
   }
 ///////////////add crud operation/////////
-//show and hide form to add 
+//show and hide form to add
 addType() {
   this.isShowDiv = !this.isShowDiv;
 }
@@ -148,7 +148,7 @@ onChecknameIsalreadysign()
       this.isDisable = false;
       return;
     }//end of if
-    else 
+    else
     {
   //add
   if(this.form.value.id==0)
@@ -196,7 +196,7 @@ onDelete(r: any) {
 /////////////////end of delete
 
 ////////edit crud///////
-//when in table click in  row make this row editable 
+//when in table click in  row make this row editable
   editROw(r: any) {
     this.editUsr = r.id;
     this.editdisabled = true;
@@ -207,6 +207,7 @@ onDelete(r: any) {
   cancelEdit() {
     this.editdisabled = false;
     this.isNameUpdatedRepeated = false;
+    this.getMissionTypes(1, 100, '', this.sortColumnDef, this.SortDirDef);
   }
   updateEdit(row: any) {
 
@@ -225,7 +226,7 @@ this.missionTypeService.updateMissionType(missionTypeEdit).subscribe(res=>
         this.getMissionTypes(1,100,'',this.sortColumnDef,this.SortDirDef);
         this.form['controls']['name'].setValue('');
         this.form['controls']['id'].setValue(0);
-        
+
       }
       else
       this.toastr.warning("::failed");
@@ -234,9 +235,10 @@ this.missionTypeService.updateMissionType(missionTypeEdit).subscribe(res=>
 
   }
 
-   
+
   onChecknameIsalreadysignWhenUpdate(element:any)
   {
+    if(element.name.length>0&&element.name!=' '){
    this.missionTypeService.MissionTypeIsAlreadySigned(element.name,element.id).subscribe(res=>
     {
       if(res.status==true)
@@ -252,12 +254,17 @@ this.missionTypeService.updateMissionType(missionTypeEdit).subscribe(res=>
     }//,error=>{this.toastr.warning("::faild");}
     )
   }
- 
+  else{
+    this.isDisabled=true;
+
+  }
+  }
+
   /////////////
 
 
 
- 
+
 
 
 }

@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -31,8 +32,20 @@ export class UserComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
+  @Input() param = 'file';
+
+
+@ViewChild('LIST') template!:TemplateRef<any>;
+ @ViewChild('fileInput') fileInput?: ElementRef;
+
+ @ViewChild('data') data?: ElementRef;
+  fileAttr = 'Choose File';
+  fileAttrF = 'Choose File';
+  htmlToAdd:string="";
+
+fileuploaded:any;
   // displayedColumns: string[] = ['Num','Id', 'Name','Team','User','Staffdegree','Role', 'action'];
-  displayedColumns: string[] = ['id','jobNumber', 'Name','Team','jobDegree','createdBy','creationDate', 
+  displayedColumns: string[] = ['id','jobNumber', 'Name','Team','jobDegree','createdBy','creationDate',
   'updateBy', 'updateDate','action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource();
@@ -40,7 +53,16 @@ export class UserComponent implements OnInit {
 
   editUsr: any;
   editdisabled: boolean = false;
-  constructor(private titleService: Title,private toastr:ToastrService, private router: Router,
+
+
+
+
+
+
+
+
+
+  constructor(private titleService: Title,private toastr:ToastrService, private router: Router,private bottomSheet: MatBottomSheet,
     private route: ActivatedRoute, private dailogService: DeleteService, private dialog:MatDialog,private userService:UserService
   ) {
     this.titleService.setTitle('المستخدمين');
@@ -48,7 +70,7 @@ export class UserComponent implements OnInit {
   }
 
  // show: boolean = false;
-  
+
 
 
 
@@ -64,7 +86,7 @@ export class UserComponent implements OnInit {
     this.loader = true;
     this.userService.getUsers(pageNum, pagesize, searchValue, sortColumn, sortDir).subscribe(respose => {
       this.users = respose?.data;
-     
+
       console.log(this.users );
       console.log(respose);
       this.dataSource = new MatTableDataSource<any>(this.users);
@@ -94,7 +116,15 @@ export class UserComponent implements OnInit {
   }
 
   onEdit(row:any){
-
+    const dialogGonfig = new MatDialogConfig();
+    dialogGonfig.data = { dialogTitle: " تعديل" };
+    dialogGonfig.disableClose = true;
+    dialogGonfig.autoFocus = true;
+    dialogGonfig.width = "50%";
+    dialogGonfig.panelClass ='edit-dialog';
+    this.dialog.open(AddUserComponent,{panelClass:"edit-dialog",disableClose: true, autoFocus: true, width: "50%", data: row }).afterClosed().subscribe(result => {
+      this.getUsers(1, 100, '', this.sortColumnDef, this.SortDirDef)
+    });
   }
 
 
@@ -109,19 +139,19 @@ export class UserComponent implements OnInit {
           )//end of subscribe
         }//end of if
       })//end of first subscriob
-    
+
           //}
 
   }
   addUser(){
     const dialogGonfig = new MatDialogConfig();
-    dialogGonfig.data= {dialogTitle: " اضافة مستخدم جديد"};
+    dialogGonfig.data= {dialogTitle: "اضافة جديد"};
     dialogGonfig.disableClose = true;
     dialogGonfig.autoFocus = true;
     dialogGonfig.width = "50%";
-    dialogGonfig.panelClass = 'modals-dialog';
+    dialogGonfig.panelClass = 'edit-dialog';
      this.dialog.open(AddUserComponent,dialogGonfig).afterClosed().subscribe(res=>{
-      this.getUsers(1,10, '', this.sortColumnDef, this.SortDirDef);
+      this.getUsers(1,100, '', this.sortColumnDef, this.SortDirDef);
      });
 
   }
@@ -136,6 +166,93 @@ export class UserComponent implements OnInit {
     this.colname = sort.active;
     this.getUsers(1, 100, '', this.colname, this.coldir);
   }
+  UploadPdf(){
 
+      this.bottomSheet.open(this.template,{
+          panelClass:'botttom-dialog-container',
+          disableClose: true
+
+
+      });
+
+  }
+
+
+  upLoadF(){
+
+    const fd = new FormData();
+    fd.append(this.param, this.fileuploaded);
+  //   this.userService.addFromFile(fd).subscribe(res=>{
+  //     if(res.status==true)
+  //     {
+  //       this.getUsers(1, 100, '', this.sortColumnDef, this.SortDirDef);
+  //   this.fileAttr = 'Choose File';
+  //   this.resetfile();
+  this.toastr.success("File Uploaded")
+    this.bottomSheet.dismiss();
+
+  //      this.htmlToAdd=res.data
+  //       console.log(res.data)
+  //     }
+  //     else
+  //     {
+
+
+  //      this.htmlToAdd=res.error;
+
+  //     }
+  //   }
+  //   ,err=>{
+  //     this.toastr.error("!! Fail")
+  //     this.resetfile();
+  //  }
+  //   );
+
+
+  }
+
+
+  close(){
+    this.resetfile();
+   this.bottomSheet.dismiss();
+
+   }
+
+
+   resetfile() {
+
+     //(this.fileInput as ElementRef).nativeElement.value = "";
+     this.fileAttr = 'Choose File';
+
+   }
+   uploadFileEvtF(imgFile: any) {
+
+    this.fileuploaded = imgFile.target.files[0];
+
+    console.log(this.fileuploaded);
+
+    if (imgFile.target.files && imgFile.target.files[0]) {
+      this.fileAttr = '';
+      Array.prototype.forEach.call(imgFile.target.files, (file) => {
+        this.fileAttr += file.name + ' - ';
+      });
+
+      // HTML25 FileReader API
+      let reader = new FileReader();
+      reader.onload = (e: any) => {
+        let image = new Image();
+        image.src = e.target.result;
+        image.onload = rs => {
+          let imgBase64Path = e.target.result;
+        };
+      };
+      reader.readAsDataURL(imgFile.target.files[0]);
+
+      // Reset if duplicate image uploaded again
+      (this.fileInput as ElementRef).nativeElement.value = "";
+    } else {
+      this.fileAttr = 'Choose File';
+    }
+  }
 
 }

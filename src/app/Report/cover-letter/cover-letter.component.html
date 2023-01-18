@@ -1,0 +1,106 @@
+<div class="example-container container bg-white py-5 mat-elevation-z8" id="pdfTable" #pdftable="">
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <img
+        src="../../../assets/image/we-Logo/we_Form_Logo.PNG"
+        height="120"
+        width="100"
+      />
+    </div>
+    <div class="col-sm-12 row mt-4 mb-2">
+      <div class="col-sm-6 text-right">
+        <div class="col-12 mb-1">
+          <span class="text">التاريخ&nbsp;: &nbsp;</span>
+          <span></span>
+        </div>
+        <div class="col-12 mb-2">
+          <span class="text">مركز التكلفة (CC) &nbsp;:&nbsp; &nbsp; &nbsp; &nbsp;</span>
+          <span class="text">2455</span>
+        </div>
+        <div class="col-12">
+          <span class="text">   &nbsp; &nbsp; &nbsp; &nbsp; مصروفات السفر عن المأموريات</span>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <span class="text"> &nbsp;:&nbsp; &nbsp;.Serial NO</span>
+        <span></span>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+
+          <thead>
+            <tr>
+              <th>م</th>
+              <th>الرقم</th>
+              <th>مركز التكلفة<br>CC</th>
+              <th>اسم الموظف</th>
+              <th>الدرجة الوظيفية</th>
+              <th>المكان</th>
+              <th colspan="2" class="text-center">
+                مدة الاقامة<br>
+                <span>من</span>
+                <span> &nbsp;  &nbsp; &nbsp;  &nbsp;&nbsp;  &nbsp; &nbsp;  &nbsp;</span>
+                <span>الى</span>
+              </th>
+              <th>عدد الليالي</th>
+              <th>الاقامة</th>
+              <th>وجبات ونثريات</th>
+              <th>الانتقالات</th>
+
+              <th>الاجمالي</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Smith</td>
+              <td>43</td>
+              <td>Jill</td>
+              <td>Smith</td>
+              <td>43</td>
+              <td>Jill</td>
+              <td>Smith</td>
+              <td>43</td>
+              <td>Jill</td>
+              <td>Smith</td>
+              <td>43</td>
+              <td>Jill</td>
+
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th colspan="9" class="text-center">الاجمالي</th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+    <div class="col-sm-12 text-right">
+      <span>ملحوظة  &nbsp;:&nbsp; مرفقة طيه الأوراق التي تثبتها.</span>
+    </div>
+    <div class="col-sm-12 row my-2">
+      <div class="col-sm-3"><span>مدير الادارة</span></div>
+      <div class="col-sm-3"><span>المراجعة </span></div>
+      <div class="col-sm-3"><span>توقيع </span></div>
+      <div class="col-sm-3"><span>توقيع</span></div>
+    </div>
+  </div>
+
+
+
+
+</div>
+<div class="col-sm-12 text-center mt-5">
+  <button mat-raised-button class="text-white w-25" (click)="exportPDF()">طباعة</button>
+  </div>

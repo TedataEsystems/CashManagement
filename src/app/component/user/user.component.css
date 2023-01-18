@@ -1,0 +1,50 @@
+
+#uploadFile {
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 9;
+  opacity: 0;
+  height: 100%;
+  cursor: pointer;
+  position: absolute;
+
+}
+#upload{
+  background-color: transparent;
+  border: 1px dashed var(--cr3-color);
+  position: static;
+  margin: 40px auto 10px auto;
+  width: 140px;
+  color: var(--cr3-color);
+  font-size: 20px;
+  font-weight: 700;
+  box-shadow: 1px 1px 8px #c8c8c8;
+
+}
+.btn-color{
+  color: #fff;
+  background-color: var(--cr3-color);
+  width: 120px;
+  text-align: center;
+ }
+ .field{
+   padding: 10px 15px;
+
+ }
+ .data{
+  border: 1px dashed #3a5a81;
+  padding: 10px 15px;
+  font-size: 13px;
+  margin: 0 20px;
+  font-family: 'ZCOOL XiaoWei', serif;
+ }
+ .sheet{
+   width: 100% !important;
+ }
+ mat-header-row {
+  min-height: 60px !important;
+}
+.mat-toolbar-row, .mat-toolbar-single-row {
+  height: 40px !important;
+}

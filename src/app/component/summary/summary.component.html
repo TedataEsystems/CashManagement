@@ -1,239 +1,467 @@
+<!-- <div class="my-3" dir="rtl">
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> بحث متقدم </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-divider></mat-divider>
+      <form>
+        <mat-grid-list cols="4" rowHeight="300px">
+          <mat-grid-tile>
+            <div class="controles-container">
+              <mat-form-field appearance="fill" class="serch">
+                <mat-label>اسم العميل</mat-label>
+                <input matInput />
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="serch">
+                <mat-label>رقم الدائرة </mat-label>
+                <input matInput type="number" />
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="serch">
+                <mat-select placeholder=" *اسم الشركة (--اختر--) ">
+                  <mat-option>-- Please select --</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="controles-container">
+              <mat-form-field appearance="fill" class="serch">
+                <mat-label>السنترال</mat-label>
+                <input matInput />
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="serch">
+                <mat-label>نوع الجهاز</mat-label>
+                <input matInput />
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="serch">
+                <mat-select placeholder=" *موقف ايصال الاستلام (--اختر--) ">
+                  <mat-option>-- Please select --</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="controles-container">
+              <mat-form-field appearance="fill" class="serch">
+                <mat-label>رقم الاوردر</mat-label>
+                <input matInput type="number" />
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="serch">
+                <mat-label>السيريال نامبر</mat-label>
+                <input matInput />
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="serch">
+                <mat-select placeholder="*حالة الهاردوير(--اختر--)">
+                  <mat-option>-- Please select --</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="controles-container">
+              <mat-form-field appearance="fill" class="serch">
+                <mat-label>اسم الفني</mat-label>
+                <input matInput />
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="serch">
+                <mat-label>العدد</mat-label>
+                <input matInput type="number" />
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="serch">
+                <mat-select placeholder="-- اختر التاريخ --">
+                  <mat-option value="createdDate">تاريخ الاضافة</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <div class="w-100 d-flex justify-content-end btn-group">
+          <input
+            mat-raised-button
+            value="مسح "
+            class="btn-danger text-center mx-1 ser"
+            readonly
+          />
+
+          <button mat-raised-button class="ser" color="warn">بحث</button>
+        </div>
+      </form>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div> -->
+
 <mat-card class="example-card">
   <mat-card-header>
-      <mat-card-title>
-          المأموريات
-      </mat-card-title>
-      <button mat-button class="opt"  (click)=addMission()>
-          <mat-icon class="add-new ico">add</mat-icon>
-          <span class="txt mr-1">اضافة مأمورية</span>
-      </button>
-      <button mat-button class="opt  mx-1">
-        <mat-icon class="" >download</mat-icon>
-     <span class="txt mr-1">  تنزيل ملف  </span>
+    <mat-card-title> المأموريات </mat-card-title>
+    <button mat-button class="opt" (click)="addMission()">
+      <mat-icon class="add-new ico">add</mat-icon>
+      <span class="txt mr-1">اضافة مأمورية</span>
+    </button>
+    <button mat-button class="opt mx-1" (click)="exportPdf()">
+      <mat-icon class="">download</mat-icon>
+      <span class="txt mr-1"> تنزيل ملف </span>
     </button>
   </mat-card-header>
   <mat-divider></mat-divider>
 
   <div class="search-div" fxLayout="row">
-
-
-
     <mat-form-field class="search-form-field" floatLabel="never">
-      <input matInput [(ngModel)]="searchKey" placeholder="بحث" autocomplete="off" (keyup)="applyFilter()">
-      <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
-           <mat-icon>close</mat-icon>
-       </button>
-
-   </mat-form-field>
+      <input
+        matInput
+        [(ngModel)]="searchKey"
+        placeholder="بحث"
+        autocomplete="off"
+        (keyup)="applyFilter()"
+      />
+      <button
+        mat-button
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        *ngIf="searchKey"
+        (click)="onSearchClear()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
   </div>
 
-
-    <div class="example-container mat-elevation-z8" >
-
-    <mat-table [dataSource]="dataSource"  #table  matSort (matSortChange)="sortData($event)" matSortActive="Name" matSortDirection="asc" matSortDisableClear >
-
+  <div class="example-container mat-elevation-z8">
+    <mat-table
+      [dataSource]="dataSource"
+      #table
+      matSort
+      (matSortChange)="sortData($event)"
+      matSortActive="Name"
+      matSortDirection="asc"
+      matSortDisableClear
+    >
       <ng-container matColumnDef="all">
         <mat-header-cell *matHeaderCellDef>
-          <mat-checkbox (change)="$event ? toggleAllRows() : null"
-                        [checked]="selection.hasValue() && isAllSelected()"
-                        [indeterminate]="selection.hasValue() && !isAllSelected()"
-                        [aria-label]="checkboxLabel()">
+          <mat-checkbox
+            (change)="$event ? toggleAllRows() : null"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()"
+            [aria-label]="checkboxLabel()"
+          >
           </mat-checkbox>
         </mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation()"
-                        (change)="$event ? selection.toggle(row) : null"
-                        [checked]="selection.isSelected(row)"
-                        [aria-label]="checkboxLabel(row)">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)"
+            [aria-label]="checkboxLabel(row)"
+          >
           </mat-checkbox>
-          </mat-cell>
+        </mat-cell>
       </ng-container>
-     
-  <ng-container matColumnDef="id">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>الرقم</mat-header-cell>
-    <mat-cell *matCellDef="let element">
-       {{element.id}}
-      </mat-cell>
-  </ng-container>
 
-  <ng-container matColumnDef="jobNumber">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> الرقم الوضيفى</mat-header-cell>
-    <mat-cell *matCellDef="let element">
-       {{element.jobNumber}}
-      </mat-cell>
-  </ng-container>
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >الرقم</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">
+          {{ element.id }}
+        </mat-cell>
+      </ng-container>
 
-  <ng-container matColumnDef="user">
-    <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> اسم الموظف  </mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      <ng-container>
-        {{element.user}}
-       </ng-container>
-     </mat-cell>
-</ng-container>
+      <ng-container matColumnDef="jobNumber">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          الرقم الوضيفى</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">
+          {{ element.jobNumber }}
+        </mat-cell>
+      </ng-container>
 
+      <ng-container matColumnDef="user">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+          اسم الموظف
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <ng-container>
+            {{ element.user }}
+          </ng-container>
+        </mat-cell>
+      </ng-container>
 
-<ng-container matColumnDef="creationDate">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> تاريخ الانشاء</mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.creationDate|date : 'yyyy-MM-dd'}} </mat-cell>
-</ng-container>
+      <ng-container matColumnDef="creationDate">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+          تاريخ الانشاء</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">
+          {{ element.creationDate | date : "yyyy-MM-dd" }}
+        </mat-cell>
+      </ng-container>
 
-<ng-container matColumnDef="updateDate">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> تاريخ التعديل</mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.updateDate|date : 'yyyy-MM-dd'}} </mat-cell>
-</ng-container>
+      <ng-container matColumnDef="updateDate">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+          تاريخ التعديل</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">
+          {{ element.updateDate | date : "yyyy-MM-dd" }}
+        </mat-cell>
+      </ng-container>
 
+      <ng-container matColumnDef="jobDegree">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header
+          >الدرجه الوظيفيه
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <ng-container>
+            {{ element.jobDegree }}
+          </ng-container>
+        </mat-cell>
+      </ng-container>
 
-<ng-container matColumnDef="jobDegree">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>الدرجه الوظيفيه </mat-header-cell>
-  <mat-cell *matCellDef="let element">
-    <ng-container>
-      {{element.jobDegree}}
-     </ng-container>
-   </mat-cell>
-</ng-container>
+      <ng-container matColumnDef="missionPurpose">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+          غرض المهمه</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">
+          {{ element.missionPurpose }}
+        </mat-cell>
+      </ng-container>
 
-<ng-container matColumnDef="missionPurpose">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> غرض المهمه</mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.missionPurpose}} </mat-cell>
-</ng-container>
+      <ng-container matColumnDef="centerOfCost">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+          مركز التكلفة
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.centerOfCost }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="companyType">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+          نوع الشركة</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">
+          {{ element.companyType }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="missionPlace">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+          مكان المهمه</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">
+          {{ element.missionPlace }}
+        </mat-cell>
+      </ng-container>
 
-<ng-container matColumnDef="centerOfCost">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> مركز التكلفة </mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.centerOfCost}} </mat-cell>
-</ng-container>
-<ng-container matColumnDef="companyType">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> نوع الشركة</mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.companyType}} </mat-cell>
-</ng-container>
-<ng-container matColumnDef="missionPlace">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> مكان المهمه</mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.missionPlace}} </mat-cell>
-</ng-container>
+      <ng-container matColumnDef="startDateMission">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header
+          >مده المهمه من</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">
+          {{ element.startDateMission | date : "yyyy-MM-dd" }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="endDateMission">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+          مدة المهمه الى
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.endDateMission | date : "yyyy-MM-dd" }}
+        </mat-cell>
+      </ng-container>
 
-<ng-container matColumnDef="startDateMission">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>مده المهمه من</mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.startDateMission|date : 'yyyy-MM-dd'}} </mat-cell>
-</ng-container>
-<ng-container matColumnDef="endDateMission">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> مدة المهمه الى </mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.endDateMission|date : 'yyyy-MM-dd'}} </mat-cell>
-</ng-container>
+      <ng-container matColumnDef="noOfNights">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+          عدد الليالي</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">
+          {{ element.noOfNights }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="stay">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+          الاقامة</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element"> {{ element.stay }} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="mealsAndIncidentals">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+          الوجبات والنثريات</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">
+          {{ element.mealsAndIncidentals }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="missionTypeCost">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+          تكلفه نوع المهمه</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">
+          {{ element.missionTypeCost }}
+        </mat-cell>
+      </ng-container>
 
-<ng-container matColumnDef="noOfNights">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> عدد الليالي</mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.noOfNights}} </mat-cell>
-</ng-container>
-<ng-container matColumnDef="stay">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> الاقامة</mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.stay}} </mat-cell>
-</ng-container>
-<ng-container matColumnDef="mealsAndIncidentals">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> الوجبات والنثريات</mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.mealsAndIncidentals}} </mat-cell>
-</ng-container>
-<ng-container matColumnDef="missionTypeCost">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> تكلفه نوع المهمه</mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.missionTypeCost}} </mat-cell>
-</ng-container>
+      <ng-container matColumnDef="startDateStay">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+          مدة الاقامه من
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.startDateStay | date : "yyyy-MM-dd" }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="endDateStay">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+          مدة الاقامه الى
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.endDateStay | date : "yyyy-MM-dd" }}
+        </mat-cell>
+      </ng-container>
 
-<ng-container matColumnDef="startDateStay">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> مدة الاقامه من </mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.startDateStay|date : 'yyyy-MM-dd'}} </mat-cell>
-</ng-container>
-<ng-container matColumnDef="endDateStay">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> مدة الاقامه الى </mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.endDateStay|date : 'yyyy-MM-dd'}} </mat-cell>
-</ng-container>
+      <ng-container matColumnDef="permissionRequest">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+          طلب الاذن</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">
+          {{ element.permissionRequest }}
+        </mat-cell>
+      </ng-container>
 
-<ng-container matColumnDef="permissionRequest">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> طلب الاذن</mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.permissionRequest}} </mat-cell>
-</ng-container>
+      <ng-container matColumnDef="permissionDuration">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+          مده الاذن</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">
+          {{ element.permissionDuration }}
+        </mat-cell>
+      </ng-container>
 
-<ng-container matColumnDef="permissionDuration">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> مده الاذن</mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.permissionDuration}} </mat-cell>
-</ng-container>
+      <ng-container matColumnDef="status">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+          الحاله</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element"> {{ element.status }} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="missionType">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+          نوع المهمه</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">
+          {{ element.missionType }}
+        </mat-cell>
+      </ng-container>
 
-<ng-container matColumnDef="status">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> الحاله</mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
-</ng-container>
-<ng-container matColumnDef="missionType">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> نوع المهمه</mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.missionType}} </mat-cell>
-</ng-container>
+      <ng-container matColumnDef="createdBy">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+          اسم المستخدم</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element"> {{ element.createdBy }} </mat-cell>
+      </ng-container>
 
+      <ng-container matColumnDef="updateBy">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header
+          >اسم المعدل</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element"> {{ element.updateBy }} </mat-cell>
+      </ng-container>
 
+      <ng-container matColumnDef="comment">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header
+          >التعليق</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element"> {{ element.comment }} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="exportmission">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+          نموذج المأمورية</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">
+          <button
+            mat-stroked-button
+            class="mx-1"
+            (click)="exportMissionFormPdf()"
+          >
+            <mat-icon class="">download</mat-icon>
+            <span class="txt mr-1"> تنزيل ملف </span>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="exportexpenses">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+          نموذج المصاريف</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">
+          <button mat-stroked-button class="mx-1" (click)="exportExpensesPdf()">
+            <mat-icon class="">download</mat-icon>
+            <span class="txt mr-1"> تنزيل ملف </span>
+          </button>
+        </mat-cell>
+      </ng-container>
 
-<ng-container matColumnDef="createdBy">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> اسم المستخدم</mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.createdBy}} </mat-cell>
-</ng-container>
+      <ng-container matColumnDef="action" sticky>
+        <mat-header-cell *matHeaderCellDef> الاجراء </mat-header-cell>
+        <mat-cell *matCellDef="let row" data-label="action">
+          <ng-container>
+            <button
+              mat-button
+              class="btn-info font-weight-bolder"
+              matTooltip="تفاصيل"
+              (click)="onDetails(row)"
+            >
+              <mat-icon>info</mat-icon>
+            </button>
+            <button
+              mat-button
+              class="btn-success mx-1 font-weight-bolder"
+              matTooltip="تعديل"
+              (click)="onEdit(row)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-button
+              class="btn-success mx-1 font-weight-bolder"
+              matTooltip="تعديل"
+              (click)="onEditMission(row)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
 
-<ng-container matColumnDef="updateBy">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>اسم المعدل</mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.updateBy}} </mat-cell>
-</ng-container>
+            <button
+              mat-button
+              class="btn-danger"
+              matTooltip="حذف"
+              (click)="onDelete(row)"
+            >
+              <mat-icon>delete_forever</mat-icon>
+            </button>
+          </ng-container>
+        </mat-cell>
+      </ng-container>
 
-<ng-container matColumnDef="comment">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>التعليق</mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.comment}} </mat-cell>
-</ng-container>
-<!-- <ng-container matColumnDef="Approvalmail">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> الموافقة</mat-header-cell>
-  <mat-cell *matCellDef="let element"> {{element.updatedBy}} </mat-cell>
-</ng-container> -->
+      <ng-container matColumnDef="noData">
+        <mat-footer-cell *matFooterCellDef colspan="6">
+          لا يوجد بيانات...
+        </mat-footer-cell>
+      </ng-container>
 
+      <mat-footer-row
+        *matFooterRowDef="['noData']"
+        [ngClass]="{
+          hide: !(dataSource.data.length == 0 && dataSource != null)
+        }"
+      ></mat-footer-row>
 
- <ng-container matColumnDef="action" sticky>
-    <mat-header-cell *matHeaderCellDef> الاجراء </mat-header-cell>
-    <mat-cell *matCellDef="let row" data-label="action">
-    <ng-container>
-
-      <button mat-button class="btn-success ml-1 font-weight-bolder" matTooltip="Edit"   (click)="onEdit(row)">
-        <mat-icon>edit</mat-icon>
-      </button>
-
-      <button mat-button class="btn-danger" matTooltip="Delete"  (click)="onDelete(row)">
-        <mat-icon>delete_forever</mat-icon>
-
-      </button>
-    </ng-container>
-
-
-
-
-
-
-
-
-
-
-
-  </mat-cell>
-  </ng-container>
-
-<ng-container matColumnDef="noData">
-  <mat-footer-cell *matFooterCellDef colspan="6">
-  لا يوجد بيانات...
-  </mat-footer-cell>
-
-</ng-container>
-
-
-  <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource.data.length==0 && dataSource !=null)}"></mat-footer-row>
-  
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-
-
-</mat-table>
-<!-- end test -->
-</div>
-<!-- </ng-template> -->
-<mat-paginator [pageSizeOptions]="[10,25,50, 100]" [pageSize]="10"  showFirstLastButtons>
-</mat-paginator>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+    <!-- end test -->
+  </div>
+  <!-- </ng-template> -->
+  <mat-paginator
+    [pageSizeOptions]="[10, 25, 50, 100]"
+    [pageSize]="10"
+    showFirstLastButtons
+  >
+  </mat-paginator>
 </mat-card>
-

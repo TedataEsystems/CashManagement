@@ -1,5 +1,6 @@
 <mat-toolbar class="top" dir="rtl">
-  <span class="fill-remaining-space">اضافة مستخدم</span>
+  <!-- <span class="fill-remaining-space">اضافة مستخدم</span> -->
+  <span class="fill-remaining-space">{{dialogTitle}}</span>
   <div class="w-100">
     <button
       class="btn-dialog-close"
@@ -57,10 +58,10 @@
             <input formControlName="team" matInput placeholder="المجموعة" />
             <mat-error>مطلوب</mat-error>
           </mat-form-field>
-          <!-- <mat-form-field>
-            <input formControlName="User" matInput placeholder="اسم المستخدم" />
+          <mat-form-field>
+            <input formControlName="userName" matInput placeholder="اسم المستخدم" />
             <mat-error>مطلوب</mat-error>
-          </mat-form-field> -->
+          </mat-form-field>
 
           <mat-form-field>
             <mat-select

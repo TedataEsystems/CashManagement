@@ -255,20 +255,24 @@ mat-card-title {
   font-size: 17px;
   font-weight: bold;
 }
-
+/* .cdk-overlay-pane:nth-child(2){
+  position: relative !important;
+} */
 .cdk-global-overlay-wrapper .cdk-overlay-pane.modals-dialog {
   position: absolute !important;
   height: 480px;
   overflow-y: auto;
   max-width: 50%;
 }
-.cdk-global-overlay-wrapper .cdk-overlay-pane.modals-dialog:nth-child(2){
+.cdk-global-overlay-wrapper .cdk-overlay-pane.edit-dialog {
   position: absolute !important;
-  height: 300px !important;
+  height: 350px;
   overflow-y: auto;
-  top:50px !important;
   max-width: 50%;
+  top:110px;
 }
+
+
 .cdk-global-overlay-wrapper .cdk-overlay-pane.confirm{
   position: absolute !important;
   height: 300px !important;
@@ -1244,3 +1248,14 @@ mat-footer-cell:first-of-type {
   border-radius: 0 !important;
   width: 160px;
  }
+ .botttom-dialog-container{
+  position: absolute !important;
+  top: 5px !important;
+  width: 500px;
+  left: 32%;
+  height: 210px;
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 15px !important;
+  border-bottom-right-radius: 15px  !important;
+  }

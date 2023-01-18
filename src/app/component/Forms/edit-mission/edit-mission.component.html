@@ -1,0 +1,66 @@
+<mat-toolbar class="top" dir="rtl">
+  <span class="fill-remaining-space"> تعديل</span>
+  <div class="w-100">
+    <button
+      class="btn-dialog-close"
+      mat-button
+      tabIndex="-1"
+      (click)="onClose()"
+    >
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+
+
+<form
+  [formGroup]="form"
+  class="normal-form mx-0"
+  (submit)="onSubmit()"
+  dir="rtl"
+>
+<mat-grid-list cols="2" rowHeight="200" class="mx-3" >
+  <mat-grid-tile colspan="1">
+    <div class="controles-container">
+
+      <mat-form-field>
+        <mat-label>الملاحظات</mat-label>
+        <textarea formControlName="comments" matInput  placeholder=" الملاحظات  " >
+          </textarea>
+        <mat-error>مطلوب</mat-error>
+      </mat-form-field>
+    </div>
+  </mat-grid-tile>
+
+      <mat-grid-tile colspan="1">
+        <div class="controles-container">
+
+
+
+          <mat-form-field>
+            <mat-select
+            matInput
+              formControlName="status"
+              placeholder=" حالة المأمورية "
+            >
+              <mat-option>-- اختر --</mat-option>
+
+            </mat-select>
+            <mat-error>مطلوب</mat-error>
+          </mat-form-field>
+          </div>
+          </mat-grid-tile>
+
+
+</mat-grid-list>
+<mat-toolbar class="bottom">
+  <div class="button-row w-100 text-center">
+    <button mat-raised-button class="btn-success w-50" type="submit" >
+      ارسال
+    </button>
+  </div>
+</mat-toolbar>
+</form>
+
+

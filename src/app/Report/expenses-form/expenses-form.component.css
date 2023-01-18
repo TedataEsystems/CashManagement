@@ -1,0 +1,22 @@
+span.text,.sign
+{
+  font-size: 18px;
+  font-weight: 800;
+}
+th,td{
+  text-align: center;
+}
+
+.table-bordered thead:first-of-type th{
+  border: none !important;
+}
+.table-bordered thead th{
+  font-size: 18px;
+}
+.table-bordered thead:first-of-type
+{
+  border: 1px solid #dee2e6;
+}
+.hd{
+  color: lightgrey;
+}

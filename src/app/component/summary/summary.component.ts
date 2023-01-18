@@ -11,7 +11,9 @@ import { MissionList } from 'src/app/model/mission-list';
 import { DeleteService } from 'src/app/shared/service/delete.service';
 import { MissionService } from 'src/app/shared/service/mission.service';
 import { AddMissionComponent } from '../Forms/add-mission/add-mission.component';
+import { EditMissionComponent } from '../Forms/edit-mission/edit-mission.component';
 import { EditComponent } from '../Forms/edit/edit.component';
+import { MissionDetailsComponent } from '../Forms/mission-details/mission-details.component';
 
 @Component({
   selector: 'app-summary',
@@ -30,7 +32,7 @@ export class SummaryComponent implements OnInit {
   @ViewChild(MatSort) sort?: MatSort;
   displayedColumns: string[] = ['all', 'id', 'jobNumber', 'jobDegree', 'user', 'missionPurpose', 'centerOfCost', 'companyType', 'missionPlace', 'startDateMission', 'endDateMission', 'noOfNights', 'stay',
     'mealsAndIncidentals', 'startDateStay', 'endDateStay', 'missionTypeCost', 'permissionRequest', 'permissionDuration', 'comment', 'createdBy',
-    'updateBy', 'creationDate', 'updateDate', 'status', 'missionType', 'action'];
+    'updateBy', 'creationDate', 'updateDate', 'status', 'missionType','exportexpenses','exportmission', 'action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource();
   settingtype = ''
@@ -110,7 +112,7 @@ export class SummaryComponent implements OnInit {
     dialogGonfig.data = { dialogTitle: "اضافة مأمورية" };
     dialogGonfig.disableClose = true;
     dialogGonfig.autoFocus = true;
-    dialogGonfig.width = "80%";
+    dialogGonfig.width = "70%";
     dialogGonfig.panelClass = 'modals-dialog';
     this.dialog.open(AddMissionComponent, dialogGonfig).afterClosed().subscribe(result => {
      // debugger
@@ -137,9 +139,9 @@ export class SummaryComponent implements OnInit {
     dialogGonfig.data = { dialogTitle: " تعديل" };
     dialogGonfig.disableClose = true;
     dialogGonfig.autoFocus = true;
-    dialogGonfig.width = "50%";
+    dialogGonfig.width = "70%";
     dialogGonfig.panelClass = 'modals-dialog';
-    this.dialog.open(EditComponent, { panelClass: 'modals-dialog', disableClose: true, autoFocus: true, width: "50%", data: row }).afterClosed().subscribe(result => {
+    this.dialog.open(EditComponent, { panelClass: 'modals-dialog', disableClose: true, autoFocus: true, width: "70%", data: row }).afterClosed().subscribe(result => {
       this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef)
     });
 
@@ -181,6 +183,41 @@ export class SummaryComponent implements OnInit {
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
+
+
+
+
+  exportPdf(){
+    this.router.navigate(['/cover']);
+  }
+  exportMissionFormPdf(){
+
+this.router.navigate(['/missionform'])
+  }
+  exportExpensesPdf(){
+    this.router.navigate(['/expenses']);
+  }
+
+
+  onDetails(row){
+
+    this.dialog.open(MissionDetailsComponent, { panelClass: 'modals-dialog', disableClose: true, width: "70%", data: row }).afterClosed().subscribe(result => {
+      this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef)
+    });
+
+  }
+  onEditMission(row){
+    this.dialog.open(EditMissionComponent, { panelClass: 'edit-dialog', disableClose: true, width: "50%", data: row }).afterClosed().subscribe(result => {
+      this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef)
+    });
+
+  }
+
+
+
+
+
+
 
 
 }
