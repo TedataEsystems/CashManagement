@@ -260,7 +260,7 @@ mat-card-title {
 } */
 .cdk-global-overlay-wrapper .cdk-overlay-pane.modals-dialog {
   position: absolute !important;
-  height: 480px;
+   height: 600px;
   overflow-y: auto;
   max-width: 50%;
 }
@@ -799,12 +799,12 @@ td.mat-footer-cell {
   color: #3a5a81;
 }
 .mat-expansion-panel {
-  background: #fcfcfc !important;
+  background: #fff !important;
   color: var(--seconed-color) !important;
 }
 .mat-expansion-panel-header-title,
 .mat-expansion-indicator::after {
-  color: #012535 !important;
+  color: var(--fifth-color) !important;
   font-size: 14px;
   font-weight: 600;
 }
@@ -1168,9 +1168,14 @@ textarea {
 }
 
 .mat-expansion-panel-header {
-  height: 60px !important;
-  background: linear-gradient(#e7e7e7, transparent) !important;
+  height: 50px !important;
+  background: #fdfdfd!important;
+  border-bottom: 1px solid #eaeaea;
 }
+
+.mat-expansion-panel-body {
+    padding: 16px 24px 30px !important;
+  }
 .mat-step-header .mat-step-icon-selected,
 .mat-step-header .mat-step-icon-state-done,
 .mat-step-header .mat-step-icon-state-edit {

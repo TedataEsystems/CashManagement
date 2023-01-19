@@ -133,9 +133,9 @@ fileuploaded:any;
       this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
         if (res) {
           this.userService.deleteUser(r.id).subscribe(res => {
-            this.toastr.success(':: successfully Deleted');
+            this.toastr.success(' successfully Deleted');
             this.getUsers(1, 100, '', this.sortColumnDef, this.SortDirDef);
-          }, error => { this.toastr.warning('::failed'); }
+          }, error => { this.toastr.warning('failed'); }
           )//end of subscribe
         }//end of if
       })//end of first subscriob

@@ -1,6 +1,8 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatAccordion } from '@angular/material/expansion';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MissionList } from 'src/app/model/mission-list';
 import { MissionType } from 'src/app/model/mission-type';
@@ -15,36 +17,40 @@ import { MissionService } from 'src/app/shared/service/mission.service';
   styleUrls: ['./add-mission.component.css']
 })
 export class AddMissionComponent implements OnInit {
+ 
+  appear=false;
 
   file_store: FileList;
   file_list: Array<string> = [];
- // userList: UserList[] = [];
- // statusList: Status[] = [];
+  file: File = null; // Variable to store file
+  fileName: string;
+
   missionTypeList: MissionType[] = [];
 missionList:MissionList[]=[];
   constructor(public dialogRef: MatDialogRef<AddMissionComponent>,
-    public service: MissionFormService, public missionService: MissionService, private toastr: ToastrService,) {
+    public service: MissionFormService, public missionService: MissionService,
+    private toastr: ToastrService,private _router:Router) {
   }
 
   ngOnInit() {
     this.service.initializeFormGroup();
     this.missionService.getLists().subscribe(res => {
       if (res.status == true) {
-      //  this.userList = res.usersList;
-      //  this.statusList = res.statusesList;
         this.missionTypeList = res.missionTypesList;
       }
       else {
-        this.toastr.warning(':failed');
+        this.toastr.warning('Failed');
       }
     })//end of subscribe
   }
 
+   // On file Select
+
   onSubmit() {
-    if(!this.service.form.valid) { console.log("not vaild");
+    debugger
+    if(!this.service.form.valid) {
       return;
     }//end of if
-    console.log("sub");
     let missionn={
       id:this.service.form.value.id,
       jobDegree:this.service.form.value.jobDegree,
@@ -64,7 +70,8 @@ missionList:MissionList[]=[];
       permissionRequest:this.service.form.value.permissionRequest,
       permissionDuration: this.service.form.value.permissionDuration,
       comment:this.service.form.value.comment,
-     // Approvalmail: '',
+      //attachFile: this.file,
+      file:'' ,
       creationDate:this.service.form.value.creationDate,
       createdBy:this.service.form.value.createdBy,
       updateDate:this.service.form.value.updateDate,
@@ -73,66 +80,90 @@ missionList:MissionList[]=[];
       missionTypeId:this.service.form.value.missionTypeId,
       userId:this.service.form.value.userId
     }//end of mission
-   // console.log(missionn.jobNumber);
-    console.log(missionn);
-    this.missionService.addMission(missionn).subscribe(res=>
-      {
-        if(res.status==true)
+
+
+
+
+    this.missionService.upload(this.file).subscribe(res=>{
+      missionn.file=res.uniqueFileName;
+      console.log(missionn)
+
+      this.missionService.addMission(missionn).subscribe(res=>
         {
-         // console.log(res.data);
-          this.toastr.success(":added successfully");
-          this.service.form.reset();
-          this.dialogRef.close('save');
-        }
-        else
-        {
-          this.toastr.warning(":failed");
-        }
-      })
+          console.log("resss",res);
+          if(res.status==true)
+          {
+            this.toastr.success("Added successfully");
+            this.service.form.reset();
+            this.dialogRef.close('save');
+          }
+          else
+          {
+            this.toastr.warning("Failed");
+          }
+        })
+
+    })
     this.onClose();
     this.dialogRef.close('save');
-
+    //this._router.navigate(['/summary'] );
   }//end of submit
   onClear() {
     this.service.form.reset();
     this.service.initializeFormGroup();
-    // this.service.form.reset();
-    // this.service.initializeFormGroup();
-    // this.notificationService.success(':: Submitted successfully');
   }
 
   onClose() {
-
-
     this.service.form.reset();
     this.service.initializeFormGroup();
     this.dialogRef.close('save');
   }
-  ///////////////////////////////////////
+search(){
+  this.appear =!this.appear
+}
 
-
-  handleFileInputChange(l: FileList): void {
-    this.file_store = l;
-    if (l.length) {
-      const f = l[0];
-      const count = l.length > 1 ? `(+${l.length - 1} files)` : "";
-      this.service.form.controls['Approvalmail'].patchValue(`${f.name}${count}`);
-    } else {
-      this.service.form.controls['Approvalmail'].patchValue("");
-    }
-  }
-
-  handleSubmit(): void {
-    var fd = new FormData();
-    this.file_list = [];
-    for (let i = 0; i < this.file_store.length; i++) {
-      fd.append("files", this.file_store[i], this.file_store[i].name);
-      this.file_list.push(this.file_store[i].name);
-    }
-
-    // do submit ajax
+handleFileInputChange(l: FileList): void {
+  this.file_store = l;
+  if (l.length) {
+    const f = l[0];
+    const count = l.length > 1 ? `(+${l.length - 1} files)` : "";
+    this.service.form.controls.attachFile.patchValue(`${f.name}${count}`);
+  } else {
+    this.service.form.controls.attachFile.patchValue("");
   }
 
 
+  var fd = new FormData();
+  this.file_list = [];
+  for (let i = 0; i < this.file_store.length; i++) {
+    fd.append("files", this.file_store[i], this.file_store[i].name);
+    this.file_list.push(this.file_store[i].name);
+  }
+}
+
+handleSubmit(): void {
+  var fd = new FormData();
+  this.file_list = [];
+  for (let i = 0; i < this.file_store.length; i++) {
+    fd.append("files", this.file_store[i], this.file_store[i].name);
+    this.file_list.push(this.file_store[i].name);
+  }
+}
+
+onChange(event) {
+  this.file = event.target.files[0];
+}
+
+
+// onChange(file) {
+//   this.file = file.files[0];
+//   this.fileName = file.files[0].name;
+// }
+
+removeFile(i) {
+  // this.file = null;
+  // this.fileName = '';
+  this.file_list.splice(i,1);
+}
 
 }

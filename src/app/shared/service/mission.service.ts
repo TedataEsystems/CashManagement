@@ -13,7 +13,6 @@ private url:string=`${environment.apiUrl}Mission`;
   getAllMissions(PageNumber :number , PageSize :number , searchValue:string ,sortcolumn:string,sortcolumndir:string)
   {
     let params= new HttpParams();
-  //  console.log(PageNumber.toString(),PageSize.toString(),searchValue.toString(),sortcolumn.toString(),sortcolumndir.toString());
     if(PageNumber!==null&& PageSize!==null)
     {
        params =params.append('pageNumber',PageNumber.toString());
@@ -29,6 +28,12 @@ private url:string=`${environment.apiUrl}Mission`;
           return response.body;
         })
     )
+  }
+  upload(file:any):Observable<any>
+  {
+    const formData = new FormData();
+    formData.append('file',file,file.name);
+   return this.httpClient.post<any>(`${this.url}/UploadedFile`,formData);
   }
   addMission(mission:any):Observable<any>
   {
