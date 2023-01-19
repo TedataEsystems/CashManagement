@@ -1,82 +1,185 @@
-<!-- <div class="my-3" dir="rtl">
+<div class="my-3" dir="rtl">
   <mat-accordion>
-    <mat-expansion-panel>
+    <mat-expansion-panel (opened)="openAdvancedSearchPanel()">
       <mat-expansion-panel-header>
         <mat-panel-title> بحث متقدم </mat-panel-title>
       </mat-expansion-panel-header>
       <mat-divider></mat-divider>
-      <form>
+      <form [formGroup]="form" (submit)="AdvancedSearchSubmit()">
         <mat-grid-list cols="4" rowHeight="300px">
           <mat-grid-tile>
             <div class="controles-container">
+
+
               <mat-form-field appearance="fill" class="serch">
-                <mat-label>اسم العميل</mat-label>
-                <input matInput />
+                <mat-label>رقم  </mat-label>
+                <input matInput type="number" formControlName="id" />
               </mat-form-field>
+
               <mat-form-field appearance="fill" class="serch">
-                <mat-label>رقم الدائرة </mat-label>
-                <input matInput type="number" />
+                <mat-label>الرقم الوظيفي</mat-label>
+                <input matInput formControlName="jobNumber"/>
               </mat-form-field>
+
               <mat-form-field appearance="fill" class="serch">
-                <mat-select placeholder=" *اسم الشركة (--اختر--) ">
+                <mat-select formControlName="statusId"  placeholder=" *الحاله (--اختر--) ">
                   <mat-option>-- Please select --</mat-option>
+                  <mat-option  *ngFor="let status of statusList"   [value]="status.id">
+                    {{status.name}}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
+
             </div>
           </mat-grid-tile>
           <mat-grid-tile>
             <div class="controles-container">
+
               <mat-form-field appearance="fill" class="serch">
-                <mat-label>السنترال</mat-label>
-                <input matInput />
+                <mat-label>غرض المهمه</mat-label>
+                <input matInput formControlName="missionPurpose" />
               </mat-form-field>
 
               <mat-form-field appearance="fill" class="serch">
-                <mat-label>نوع الجهاز</mat-label>
-                <input matInput />
+                <mat-label>الاسم</mat-label>
+                <input matInput formControlName="userName"/>
               </mat-form-field>
+
               <mat-form-field appearance="fill" class="serch">
-                <mat-select placeholder=" *موقف ايصال الاستلام (--اختر--) ">
+                <mat-label>مدة الاذن</mat-label>
+                <input matInput formControlName="permissionDuration"/>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="serch">
+                <mat-label>طلب الاذن</mat-label>
+                <input matInput formControlName="permissionRequest"/>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="serch">
+                <mat-select formControlName="missionTypeId" placeholder=" *نوع المامورية (--اختر--) ">
                   <mat-option>-- Please select --</mat-option>
+                  <mat-option  *ngFor="let missionType of missionTypeList"   [value]="missionType.id">
+                    {{missionType.name}}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
+              <mat-form-field appearance="fill" class="serch">
+                <mat-label>تكلفه</mat-label>
+                <input matInput formControlName="missionTypeCost"/>
+              </mat-form-field>
+
             </div>
           </mat-grid-tile>
           <mat-grid-tile>
             <div class="controles-container">
+
               <mat-form-field appearance="fill" class="serch">
-                <mat-label>رقم الاوردر</mat-label>
-                <input matInput type="number" />
+                <mat-label>مكان المهمه</mat-label>
+                <input matInput  formControlName="missionPlace" />
               </mat-form-field>
 
               <mat-form-field appearance="fill" class="serch">
-                <mat-label>السيريال نامبر</mat-label>
-                <input matInput />
+                <mat-label>وجبات ونثريات</mat-label>
+                <input matInput formControlName="mealsAndIncidentals" type="number"/>
               </mat-form-field>
+
               <mat-form-field appearance="fill" class="serch">
-                <mat-select placeholder="*حالة الهاردوير(--اختر--)">
+                <mat-select formControlName="jobDegreeId" placeholder="*الحالة الوظيفيه(--اختر--)">
                   <mat-option>-- Please select --</mat-option>
+                  <mat-option  *ngFor="let jobDegree of jobDegreeList"   [value]="jobDegree.id">
+                    {{jobDegree.name}}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
+
             </div>
           </mat-grid-tile>
           <mat-grid-tile>
             <div class="controles-container">
+
               <mat-form-field appearance="fill" class="serch">
-                <mat-label>اسم الفني</mat-label>
-                <input matInput />
-              </mat-form-field>
-              <mat-form-field appearance="fill" class="serch">
-                <mat-label>العدد</mat-label>
-                <input matInput type="number" />
+                <mat-label>ملاحظات</mat-label>
+                <input matInput formControlName="comment"  />
               </mat-form-field>
 
               <mat-form-field appearance="fill" class="serch">
-                <mat-select placeholder="-- اختر التاريخ --">
-                  <mat-option value="createdDate">تاريخ الاضافة</mat-option>
+                <mat-label>عدد الليالى</mat-label>
+                <input matInput formControlName="noOfNights" type="number"min="0" />
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-select formControlName="companyType"  placeholder=" *نوع الشركه (--اختار--) " >
+                  <mat-option>-- Please select --</mat-option>
+                  <mat-option value="Tedate Staff">Tedate Staff</mat-option>
+                  <mat-option value="Outsource">Outsource</mat-option>
                 </mat-select>
+                <mat-error> * مطلوب </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="serch">
+                <mat-label>اسم المستخدم</mat-label>
+                <input matInput formControlName="createdBy" />
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="serch">
+                <mat-label>اسم المعدل</mat-label>
+                <input matInput formControlName="updatedBy" />
               </mat-form-field>
             </div>
+            <!-- <div class="w-100 d-flex" > -->
+
+              <mat-form-field appearance="fill" class="w-50 serch">
+                  <input formControlName="createdDateFrom" matInput [matDatepicker]="createdDateFrom" placeholder="من">
+                  <mat-datepicker-toggle matSuffix [for]="createdDateFrom"></mat-datepicker-toggle>
+                  <mat-datepicker #createdDateFrom></mat-datepicker>
+                </mat-form-field>
+
+              <mat-form-field appearance="fill" class="w-50  serch" style="border-right:5px solid #fff">
+                  <input formControlName="createdDateTo" matInput [matDatepicker]="createdDateTo" placeholder="الى" [min]="form.controls.createdDateFrom?.value">
+                  <mat-datepicker-toggle matSuffix [for]="createdDateTo"></mat-datepicker-toggle>
+                  <mat-datepicker #createdDateTo></mat-datepicker>
+                </mat-form-field>
+
+              <!-- </div> -->
+              <div class="w-100 d-flex">
+                <mat-form-field appearance="fill" class="w-50 serch">
+                    <input formControlName="updatedDateFrom" matInput [matDatepicker]="updatedDateFrom" placeholder="من">
+                    <mat-datepicker-toggle matSuffix [for]="updatedDateFrom"></mat-datepicker-toggle>
+                    <mat-datepicker #updatedDateFrom></mat-datepicker>
+                  </mat-form-field>
+                <mat-form-field appearance="fill" class="w-50 serch"  style="border-right:5px solid #fff">
+                    <input formControlName="updatedDateTo" matInput [matDatepicker]="updatedDateTo" placeholder="الى" [min]="form.controls.updatedDateFrom?.value">
+                    <mat-datepicker-toggle matSuffix [for]="updatedDateTo"></mat-datepicker-toggle>
+                    <mat-datepicker #updatedDateTo></mat-datepicker>
+                  </mat-form-field>
+    
+                </div>
+                <div class="w-100 d-flex" >
+                  <mat-form-field appearance="fill" class="w-50 serch">
+                      <input formControlName="startDateMission" matInput [matDatepicker]="startDateMission" placeholder="من">
+                      <mat-datepicker-toggle matSuffix [for]="startDateMission"></mat-datepicker-toggle>
+                      <mat-datepicker #startDateMission></mat-datepicker>
+                    </mat-form-field>
+                  <mat-form-field appearance="fill" class="w-50  serch" style="border-right:5px solid #fff">
+                      <input formControlName="endDateMission" matInput [matDatepicker]="endDateMission" placeholder="الى" [min]="form.controls.EndDateMission?.value">
+                      <mat-datepicker-toggle matSuffix [for]="endDateMission"></mat-datepicker-toggle>
+                      <mat-datepicker #endDateMission></mat-datepicker>
+                    </mat-form-field>
+    
+                  </div>
+                  <div class="w-100 d-flex" >
+                    <mat-form-field appearance="fill" class="w-50 serch">
+                        <input formControlName="startDateStay" matInput [matDatepicker]="startDateStay" placeholder="من">
+                        <mat-datepicker-toggle matSuffix [for]="startDateStay"></mat-datepicker-toggle>
+                        <mat-datepicker #startDateStay></mat-datepicker>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill" class="w-50  serch" style="border-right:5px solid #fff">
+                        <input formControlName="endDateStay" matInput [matDatepicker]="endDateStay" placeholder="الى" [min]="form.controls.EndDateStay?.value">
+                        <mat-datepicker-toggle matSuffix [for]="endDateStay"></mat-datepicker-toggle>
+                        <mat-datepicker #endDateStay></mat-datepicker>
+                      </mat-form-field>
+      
+                    </div>
           </mat-grid-tile>
         </mat-grid-list>
         <div class="w-100 d-flex justify-content-end btn-group">
@@ -84,6 +187,7 @@
             mat-raised-button
             value="مسح "
             class="btn-danger text-center mx-1 ser"
+            (click)="clearAdvancedSearch()"
             readonly
           />
 
@@ -92,7 +196,7 @@
       </form>
     </mat-expansion-panel>
   </mat-accordion>
-</div> -->
+</div>
 
 <mat-card class="example-card">
   <mat-card-header>

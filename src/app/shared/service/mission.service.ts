@@ -46,5 +46,9 @@ private url:string=`${environment.apiUrl}Mission`;
   {
 return this.httpClient.get<any>(`${this.url}/GetLists`);
   }
+  AdvancedSearch(searchModel:any):Observable<any>
+  {
+    return this.httpClient.post<any>(`${this.url}/AdvancedSearch`, searchModel);
+  }
 }//end of service
 
