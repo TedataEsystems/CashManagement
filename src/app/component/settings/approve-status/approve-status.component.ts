@@ -143,7 +143,7 @@ addStatus(){
   // dialogGonfig.width = "50%";
   // dialogGonfig.panelClass = 'modals-dialog';
   //  this.dialog.open(AddApproveStatusComponent,dialogGonfig)
-
+  this.form.reset();
   this.isShowDiv = !this.isShowDiv;
 
 }

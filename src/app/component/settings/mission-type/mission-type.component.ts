@@ -111,6 +111,7 @@ export class MissionTypeComponent implements OnInit {
 ///////////////add crud operation/////////
 //show and hide form to add
 addType() {
+  this.form.reset();
   this.isShowDiv = !this.isShowDiv;
 }
 //when add mission type name check if this name alredy exsit or not

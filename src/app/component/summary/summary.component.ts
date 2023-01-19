@@ -31,7 +31,7 @@ export class SummaryComponent implements OnInit {
   missionTypeList: MissionType[] = [];
   statusList: Status[] = [];
   jobDegreeList: JobDegree[] = [];
-  
+
   searchKey: string = '';
 
   loading: boolean = true;
@@ -115,7 +115,7 @@ export class SummaryComponent implements OnInit {
   }
   ////////end of pagenation//////
   ngOnInit(): void {
-    this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
+    this.getMisssions(1,100,'',this.sortColumnDef,this.SortDirDef);
   }
   //////add (open add component as dialog)
   addMission() {
@@ -125,7 +125,7 @@ export class SummaryComponent implements OnInit {
     dialogGonfig.autoFocus = true;
     dialogGonfig.width = "50%";
     dialogGonfig.panelClass = 'modals-dialog';
-    this.dialog.open(AddMissionComponent, dialogGonfig).afterClosed().subscribe(result => {
+    this.dialog.open(AddMissionComponent,dialogGonfig).afterClosed().subscribe(result => {
      // debugger
       this.getMisssions(1,100,'',this.sortColumnDef,this.SortDirDef)
     });
@@ -195,14 +195,14 @@ export class SummaryComponent implements OnInit {
         this.statusList=res.statusesList
       }
     })
-    this.userService.getUserlists().subscribe(res=>{ 
+    this.userService.getUserlists().subscribe(res=>{
     if(res.status){
       console.log("jobdegree",res.data.jobDegrees)
       this.jobDegreeList=res.data.jobDegrees;
     }
     })
   }
-  
+
   AdvancedSearchSubmit() {
     // this.isFilterationData = true;
     // this.panelOpenState = true;
@@ -225,7 +225,7 @@ export class SummaryComponent implements OnInit {
     this.advSearchMission.noOfNights = Number(this.form.value.noOfNights);
     this.advSearchMission.missionTypeCost = Number(this.form.value.missionTypeCost);
     this.advSearchMission.comment = this.form.value.comment;
-    
+
     // this.advSearchMission.id = Number(this.form.value.id);
     this.advSearchMission.companyType = this.form.value.companyType;
     this.advSearchMission.userName = this.form.value.userName;
@@ -248,7 +248,7 @@ export class SummaryComponent implements OnInit {
     )
   }
 
-  
+
   IntialValCreateBy: string = "";
   IntialValDate: string = "";
   clearAdvancedSearch() {
