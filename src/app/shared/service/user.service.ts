@@ -56,4 +56,13 @@ export class UserService {
     console.log(name,"in the service");
     return this.httpClient.get<any>(`${this.url}/JobNumberExist/`+name);
    }
+   public importExcelFile(file : any)
+   {
+     return this.httpClient.post<any>(this.url + '/importExcelFile' , file );
+   }
+   public getEmptyDataEXel():Observable < Blob >
+  {
+    return this.httpClient.get(`${this.url}/ExportEmptyExcel`,
+    {responseType: 'blob'}); 
+  }
 }
