@@ -144,7 +144,7 @@
               type="number"
               min="0"
               matInput
-              placeholder="تكلفه نوع المأمورية"
+              placeholder="تكلفة المأمورية"
             />
           </mat-form-field>
         </div>
@@ -258,8 +258,8 @@
         <mat-error> * مطلوب </mat-error>
       </mat-form-field> -->
 
-      <input formControlName="attachFile"   type="file" placeholder=" ارفاق ملف" (change)="onChange($event)"/>
-<!-- 
+      <!-- <input formControlName="attachFile"   type="file" placeholder=" ارفاق ملف" (change)="onChange($event)"/> -->
+
       <mat-form-field class="w-100">
         <mat-label>ارفاق ميل الموافقة</mat-label>
         <button mat-icon-button matPrefix  type="button" (click)="f_input.click()">
@@ -267,21 +267,31 @@
         </button>
         <input type="text" readonly matInput   formControlName="attachFile" />
         <input
-
           type="file"
-          multiple
           hidden
           #f_input
-          (change)="handleFileInputChange(f_input.files)"
+          (change)="handleFileInputChange($event)"
         />
 
-      </mat-form-field> -->
+      </mat-form-field>
+      <div class="box" *ngIf="submittedfile">
+        <mat-list>
+          <mat-list-item>
+          <mat-icon mat-list-icon class=" text-danger"(click)="removeFile()">delete_forever</mat-icon>
+
+          <div mat-line>{{ fileName }}</div>
+          <mat-icon>insert_drive_file</mat-icon>
+        </mat-list-item>
+        </mat-list>
+       </div>
+
 
       <!-- <mat-card *ngIf="file_list.length" style="margin-top: 16px;">
         <mat-list>
           <div mat-subheader> الملفات المختارة ({{ file_list.length }})</div>
          <div class="box">
           <mat-list-item *ngFor="let file of file_list; index as i">
+            <mat-list-item>
             <mat-icon mat-list-icon class=" text-danger"(click)="removeFile(i)">delete_forever</mat-icon>
 
             <div mat-line>{{ file }}</div>

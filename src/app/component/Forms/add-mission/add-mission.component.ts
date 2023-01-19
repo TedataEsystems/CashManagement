@@ -17,7 +17,7 @@ import { MissionService } from 'src/app/shared/service/mission.service';
   styleUrls: ['./add-mission.component.css']
 })
 export class AddMissionComponent implements OnInit {
- 
+  submittedfile=false;
   appear=false;
   sameTeam=true;
   file_store: FileList;
@@ -96,12 +96,14 @@ if(this.file!=null)
         if(res.status==true)
         {
           this.toastr.success("Added successfully");
+          this.submittedfile=false;
           this.service.form.reset();
           this.dialogRef.close('save');
         }
         else
         {
           this.toastr.warning("Failed");
+          this.submittedfile=true;
         }
       })
 
@@ -116,14 +118,16 @@ else{
         this.toastr.success("Added successfully");
         this.service.form.reset();
         this.dialogRef.close('save');
+        this.submittedfile=false;
       }
       else
       {
         this.toastr.warning("Failed");
+        this.submittedfile=false;
       }
     })
 }
-   
+
     this.onClose();
     this.dialogRef.close('save');
     //this._router.navigate(['/summary'] );
@@ -157,23 +161,29 @@ else
   })
 }
 
-handleFileInputChange(l: FileList): void {
-  this.file_store = l;
-  if (l.length) {
-    const f = l[0];
-    const count = l.length > 1 ? `(+${l.length - 1} files)` : "";
-    this.service.form.controls.attachFile.patchValue(`${f.name}${count}`);
-  } else {
-    this.service.form.controls.attachFile.patchValue("");
-  }
+// handleFileInputChange(l: FileList): void {
+//   this.file_store = l;
+//   if (l.length) {
+//     const f = l[0];
+//     const count = l.length > 1 ? `(+${l.length - 1} files)` : "";
+//     this.service.form.controls.attachFile.patchValue(`${f.name}${count}`);
+//   } else {
+//     this.service.form.controls.attachFile.patchValue("");
+//   }
 
 
-  var fd = new FormData();
-  this.file_list = [];
-  for (let i = 0; i < this.file_store.length; i++) {
-    fd.append("files", this.file_store[i], this.file_store[i].name);
-    this.file_list.push(this.file_store[i].name);
-  }
+//   var fd = new FormData();
+//   this.file_list = [];
+//   for (let i = 0; i < this.file_store.length; i++) {
+//     fd.append("files", this.file_store[i], this.file_store[i].name);
+//     this.file_list.push(this.file_store[i].name);
+//   }
+// }
+handleFileInputChange(event){
+  this.file = event.target.files[0];
+ this.fileName = event.target.files[0].name;
+ this.submittedfile=true;
+
 }
 
 handleSubmit(): void {
@@ -195,10 +205,11 @@ onChange(event) {
 //   this.fileName = file.files[0].name;
 // }
 
-removeFile(i) {
-  // this.file = null;
-  // this.fileName = '';
-  this.file_list.splice(i,1);
+removeFile() {
+  this.file = null;
+  this.fileName = '';
+  this.submittedfile=false;
+  //this.file_list.splice(i,1);
 }
 
 }

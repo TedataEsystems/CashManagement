@@ -70,6 +70,8 @@ legend.scheduler-border {
     border-bottom:none;
 }
 .box{
-  height: 150px;
-  overflow-y: auto;
+  /* height: 150px;
+  overflow-y: auto; */
+  margin: 10px 0;
+    border: 1.5px dashed #c6cacd;
 }
