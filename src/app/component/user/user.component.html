@@ -12,7 +12,7 @@
       <span class="txt mr-1">خيارات إضافيه</span>
     </button>
     <mat-menu #menu="matMenu" >
-    <button  mat-menu-item >
+    <button  mat-menu-item (click)="downLoadEmptyExcel()">
       <span class="mr-1"> تنزيل ملف </span>
       <mat-icon class="txt">download</mat-icon>
     </button>
@@ -32,16 +32,11 @@
       <mat-form-field class="sheet">
           <div class="field">
               <mat-toolbar>
-
                   <input matInput [(ngModel)]="fileAttr" readonly name="name" />
-
-
                   <button mat-flat-button class="btn-color">
                       Browse file
                   </button>
               </mat-toolbar>
-
-
               <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvtF($event)"
                   name="uploadFile" multiple="multiple" />
           </div>
