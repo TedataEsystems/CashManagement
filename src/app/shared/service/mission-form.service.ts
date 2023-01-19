@@ -10,7 +10,7 @@ export class MissionFormService {
 
   form: FormGroup = new FormGroup({
     id: new FormControl(0),
-    jobDegree: new FormControl(''),
+    jobDegreeName: new FormControl(''),
     missionPurpose: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     centerOfCost: new FormControl(2455),
     companyType: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
@@ -35,6 +35,8 @@ export class MissionFormService {
     statusId: new FormControl(0,[Validators.required]),
     missionTypeId: new FormControl(0,[Validators.required]),
     userId: new FormControl(0),
+    userName:new FormControl(null),
+
   });
 
 
@@ -43,7 +45,8 @@ export class MissionFormService {
   initializeFormGroup(){
     this.form.setValue({
       id:0,
-      jobDegree:'',
+      jobDegreeName:'',
+     
       missionPurpose: '',
       centerOfCost:2455,
       companyType:0,
@@ -67,8 +70,8 @@ export class MissionFormService {
       updateBy:null,
       statusId:0,
       missionTypeId:0,
-      userId:0
-
+      userId:0,
+      userName:''
     })
 
 

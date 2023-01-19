@@ -18,14 +18,14 @@
       <legend class="scheduler-border"> <mat-icon>verified_user</mat-icon>  ادخل الرقم الوظيفي لاستكمال باقي البيانات</legend>
       <div class="control-group text-center ">
 
-          <button mat-button class="btn-success" type="button" style="height: 49px;vertical-align:bottom;" (click)="search()">
+          <button mat-button class="btn-success" type="button" style="height: 49px;vertical-align:bottom;" (click)="search(jobNumber.value)">
             بحث
           </button>
 
             <mat-form-field appearance="outline" class="text-right w-75">
-              <input  matInput placeholder=" الرقم الوظيفي"/>
+              <input #jobNumber matInput placeholder=" الرقم الوظيفي"/>
               <mat-hint align="end"><strong>يجب أن يكون الموظف مسجل بالمجموعة</strong> </mat-hint>
-              <mat-hint class="mat-error" align="start"><strong>هذا الموظف  غير مسجل بالمجموعة *</strong> </mat-hint>
+              <mat-hint *ngIf="!sameTeam" class="mat-error" align="start"><strong>هذا الموظف  غير مسجل بالمجموعة *</strong> </mat-hint>
             </mat-form-field>
 
 
@@ -52,6 +52,7 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
     <input type="hidden" formControlName="id">
+    <input type="hidden" formControlName="userId">
     <input type="hidden" formControlName="creationDate" />
     <input type="hidden" formControlName="createdBy" />
     <input type="hidden" formControlName="updateDate" />
@@ -64,12 +65,12 @@
         </mat-form-field>
 
         <mat-form-field class="w-100">
-          <input formControlName="userId" matInput placeholder="اسم الموظف"  type="number"/>
+          <input formControlName="userName" matInput placeholder="اسم الموظف" readonly />
         </mat-form-field>
       </div>
       <div class="col-sm-6 col-md-6 col-lg-6">
         <mat-form-field class="w-100">
-          <input formControlName="jobDegree" matInput placeholder=" الدرجه الوظيفيه" readonly/>
+          <input formControlName="jobDegreeName" matInput placeholder=" الدرجه الوظيفيه" readonly/>
         </mat-form-field>
         <mat-form-field class="w-100">
           <mat-select formControlName="companyType"  placeholder=" *نوع الشركه (--اختار--) " >
@@ -257,8 +258,8 @@
         <mat-error> * مطلوب </mat-error>
       </mat-form-field> -->
 
-      <!-- <input formControlName="attachFile"   type="file" placeholder=" ارفاق ملف" (change)="onChange($event)"/> -->
-
+      <input formControlName="attachFile"   type="file" placeholder=" ارفاق ملف" (change)="onChange($event)"/>
+<!-- 
       <mat-form-field class="w-100">
         <mat-label>ارفاق ميل الموافقة</mat-label>
         <button mat-icon-button matPrefix  type="button" (click)="f_input.click()">
@@ -274,9 +275,9 @@
           (change)="handleFileInputChange(f_input.files)"
         />
 
-      </mat-form-field>
+      </mat-form-field> -->
 
-      <mat-card *ngIf="file_list.length" style="margin-top: 16px;">
+      <!-- <mat-card *ngIf="file_list.length" style="margin-top: 16px;">
         <mat-list>
           <div mat-subheader> الملفات المختارة ({{ file_list.length }})</div>
          <div class="box">
@@ -288,7 +289,7 @@
           </mat-list-item>
          </div>
         </mat-list>
-      </mat-card>
+      </mat-card> -->
 
 
         </div>

@@ -55,5 +55,10 @@ return this.httpClient.get<any>(`${this.url}/GetLists`);
   {
     return this.httpClient.post<any>(`${this.url}/AdvancedSearch`, searchModel);
   }
+  checkSameTeam(id:number):Observable<any>
+  {
+    console.log("CheckSameTeamseevice",id)
+     return this.httpClient.get<any>(`${this.url}/CheckSameTeam/`+id);
+  }
 }//end of service
 

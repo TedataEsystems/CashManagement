@@ -19,7 +19,7 @@ import { MissionService } from 'src/app/shared/service/mission.service';
 export class AddMissionComponent implements OnInit {
  
   appear=false;
-
+  sameTeam=true;
   file_store: FileList;
   file_list: Array<string> = [];
   file: File = null; // Variable to store file
@@ -53,7 +53,8 @@ missionList:MissionList[]=[];
     }//end of if
     let missionn={
       id:this.service.form.value.id,
-      jobDegree:this.service.form.value.jobDegree,
+     // jobDegree:this.service.form.value.jobDegree,
+      jobDegree:this.service.form.value.jobDegreeName,
       missionPurpose: this.service.form.value.missionPurpose,
       centerOfCost:this.service.form.value.centerOfCost,
       companyType:this.service.form.value.companyType,
@@ -83,27 +84,46 @@ missionList:MissionList[]=[];
 
 
 
+if(this.file!=null)
+{
+  this.missionService.upload(this.file).subscribe(res=>{
+    missionn.file=res.uniqueFileName;
+    console.log(missionn)
 
-    this.missionService.upload(this.file).subscribe(res=>{
-      missionn.file=res.uniqueFileName;
-      console.log(missionn)
-
-      this.missionService.addMission(missionn).subscribe(res=>
+    this.missionService.addMission(missionn).subscribe(res=>
+      {
+        console.log("resss",res);
+        if(res.status==true)
         {
-          console.log("resss",res);
-          if(res.status==true)
-          {
-            this.toastr.success("Added successfully");
-            this.service.form.reset();
-            this.dialogRef.close('save');
-          }
-          else
-          {
-            this.toastr.warning("Failed");
-          }
-        })
+          this.toastr.success("Added successfully");
+          this.service.form.reset();
+          this.dialogRef.close('save');
+        }
+        else
+        {
+          this.toastr.warning("Failed");
+        }
+      })
 
+  })
+}
+else{
+  this.missionService.addMission(missionn).subscribe(res=>
+    {
+      console.log("resss",res);
+      if(res.status==true)
+      {
+        this.toastr.success("Added successfully");
+        this.service.form.reset();
+        this.dialogRef.close('save');
+      }
+      else
+      {
+        this.toastr.warning("Failed");
+      }
     })
+}
+   
     this.onClose();
     this.dialogRef.close('save');
     //this._router.navigate(['/summary'] );
@@ -118,8 +138,23 @@ missionList:MissionList[]=[];
     this.service.initializeFormGroup();
     this.dialogRef.close('save');
   }
-search(){
+search(jobNumber:any){
+  this.missionService.checkSameTeam(jobNumber).subscribe(res=>{
+if(res.status)
+{
+  this.service.form['controls']['jobNumber'].setValue(res.jobNumber)
+  this.service.form['controls']['userName'].setValue(res.name)
+  this.service.form['controls']['userId'].setValue(res.userId)
+   this.service.form['controls']['jobDegreeName'].setValue(res.jobDegreeName)
   this.appear =!this.appear
+  this.sameTeam=true;
+}
+else
+{
+  this.sameTeam=false;
+}
+
+  })
 }
 
 handleFileInputChange(l: FileList): void {
