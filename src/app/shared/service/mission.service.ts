@@ -29,11 +29,11 @@ private url:string=`${environment.apiUrl}Mission`;
         })
     )
   }
-  upload(file:any):Observable<any>
+  upload(file:any,id:Number):Observable<any>
   {
     const formData = new FormData();
     formData.append('file',file,file.name);
-   return this.httpClient.post<any>(`${this.url}/UploadedFile`,formData);
+   return this.httpClient.post<any>(`${this.url}/UploadedFile/`+id,formData);
   }
   addMission(mission:any):Observable<any>
   {

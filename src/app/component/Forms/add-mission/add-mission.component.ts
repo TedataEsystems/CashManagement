@@ -76,15 +76,15 @@ missionList:MissionList[]=[];
       userId:this.service.form.value.userId
     }//end of mission
   
-    this.missionService.upload(this.file).subscribe(res=>{
-      missionn.file=res.uniqueFileName;
-      console.log(missionn)
-      debugger
+    
       this.missionService.addMission(missionn).subscribe(res=>
         {
           console.log("resss",res);
           if(res.status==true)
           {
+            if(this.file!=null){
+      this.missionService.upload(this.file,res.id).subscribe(res=>{console.log(res.status)})
+           }
             this.toastr.success(":added successfully");
             this.service.form.reset();
             this.dialogRef.close('save');
@@ -95,7 +95,7 @@ missionList:MissionList[]=[];
           }
         })
 
-    })
+  
     this.onClose();
     this.dialogRef.close('save');
     this._router.navigate(['/summary'] );
