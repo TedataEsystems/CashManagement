@@ -60,5 +60,11 @@ return this.httpClient.get<any>(`${this.url}/GetLists`);
     console.log("CheckSameTeamseevice",id)
      return this.httpClient.get<any>(`${this.url}/CheckSameTeam/`+id);
   }
+  CoverReportsIds:number[];
+  CoverReport(CoverReportsIds):Observable<any>
+  {
+    console.log(this.CoverReportsIds)
+   return this.httpClient.post<any>(`${this.url}/CoverReport`,CoverReportsIds);
+  }
 }//end of service
 

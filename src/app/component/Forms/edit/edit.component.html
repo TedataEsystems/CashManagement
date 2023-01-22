@@ -18,7 +18,7 @@
 <!-- --------------------------test----------------------------------------------------------- -->
 
 
-
+<!-- 
 <div class="row mb-5" *ngIf="!appear" style="margin: 100px 0;">
   <div class="col-12">
     <fieldset class="scheduler-border w-75">
@@ -39,7 +39,7 @@
       </div>
   </fieldset>
   </div>
-</div>
+</div> -->
 
 
 <form
@@ -48,8 +48,8 @@
   (submit)="onSubmit()"
   dir="rtl"
 >
-<!-- ------------------------------test----------------------- -->
-<div class="px-3" *ngIf="appear" style="margin-top: 90px;">
+<!-- ------------------------------test-----------------*ngIf="appear"------ -->
+<div class="px-3"  style="margin-top: 90px;">
 <mat-accordion class="example-headers-align" multi>
   <mat-expansion-panel    expanded="0"
   opened="true">

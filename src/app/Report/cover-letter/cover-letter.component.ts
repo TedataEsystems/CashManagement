@@ -1,6 +1,8 @@
 import { Component,OnInit} from '@angular/core';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
+import { ActivatedRoute } from '@angular/router';
+import { MissionService } from 'src/app/shared/service/mission.service';
 @Component({
   selector: 'app-cover-letter',
   templateUrl: './cover-letter.component.html',
@@ -8,10 +10,16 @@ import html2canvas from 'html2canvas';
 })
 export class CoverLetterComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private missionServices:MissionService) { }
+  missionApproved:any[]=[];
   ngOnInit(): void {
-  }
+    this.missionServices.CoverReport(this.missionServices.CoverReportsIds).subscribe(res=>
+      {
+        this.missionApproved=res.missions;
+        console.log(this.missionApproved);
+      })
+      }
+
 
 
 
