@@ -14,6 +14,13 @@ import { AddMissionComponent } from '../Forms/add-mission/add-mission.component'
 import { EditMissionComponent } from '../Forms/edit-mission/edit-mission.component';
 import { EditComponent } from '../Forms/edit/edit.component';
 import { MissionDetailsComponent } from '../Forms/mission-details/mission-details.component';
+import { MissionType } from 'src/app/model/mission-type';
+import { Status } from 'src/app/model/status';
+import { JobDegree } from 'src/app/model/job-degree';
+import { UserService } from 'src/app/shared/service/user.service';
+import { FormControl, FormGroup } from '@angular/forms';
+import { AdvancedSearch } from 'src/app/model/advanced-search';
+
 
 @Component({
   selector: 'app-summary',
@@ -21,12 +28,16 @@ import { MissionDetailsComponent } from '../Forms/mission-details/mission-detail
   styleUrls: ['./summary.component.css']
 })
 export class SummaryComponent implements OnInit {
+  missionTypeList: MissionType[] = [];
+  statusList: Status[] = [];
+  jobDegreeList: JobDegree[] = [];
 
   searchKey: string = '';
 
   loading: boolean = true;
   /////////////////
   missions: MissionList[] = [];
+ advSearchMission: AdvancedSearch = <AdvancedSearch>{};
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
@@ -39,7 +50,7 @@ export class SummaryComponent implements OnInit {
   editUsr: any;
   editdisabled: boolean = false;
   constructor(private titleService: Title, private toastr: ToastrService, private dialog: MatDialog,
-    private router: Router, private route: ActivatedRoute, private dailogService: DeleteService, private missionService: MissionService
+    private router: Router, private route: ActivatedRoute, private dailogService: DeleteService, private missionService: MissionService,private userService: UserService
   ) {
     this.titleService.setTitle('المأموريات');
 
@@ -104,7 +115,7 @@ export class SummaryComponent implements OnInit {
   }
   ////////end of pagenation//////
   ngOnInit(): void {
-    this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
+    this.getMisssions(1,100,'',this.sortColumnDef,this.SortDirDef);
   }
   //////add (open add component as dialog)
   addMission() {
@@ -112,11 +123,11 @@ export class SummaryComponent implements OnInit {
     dialogGonfig.data = { dialogTitle: "اضافة مأمورية" };
     dialogGonfig.disableClose = true;
     dialogGonfig.autoFocus = true;
-    dialogGonfig.width = "70%";
+    dialogGonfig.width = "50%";
     dialogGonfig.panelClass = 'modals-dialog';
-    this.dialog.open(AddMissionComponent, dialogGonfig).afterClosed().subscribe(result => {
+    this.dialog.open(AddMissionComponent,dialogGonfig).afterClosed().subscribe(result => {
      // debugger
-      this.getMisssions(1, 100,'', this.sortColumnDef, this.SortDirDef)
+      this.getMisssions(1,100,'',this.sortColumnDef,this.SortDirDef)
     });
   }
   /////////////////delete
@@ -124,9 +135,9 @@ export class SummaryComponent implements OnInit {
     this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
       if (res) {
         this.missionService.deleteMission(r.id).subscribe(res => {
-            this.toastr.success(": deleted successfully");
+            this.toastr.success("Deleted Successfully");
             this.getMisssions(1,100,'',this.sortColumnDef,this.SortDirDef);
-        },error => {  this.toastr.warning(": failed "); }
+        },error => {  this.toastr.warning("failed "); }
         )//deletemission
       }//end of if
     })//end of subscribe
@@ -139,18 +150,115 @@ export class SummaryComponent implements OnInit {
     dialogGonfig.data = { dialogTitle: " تعديل" };
     dialogGonfig.disableClose = true;
     dialogGonfig.autoFocus = true;
-    dialogGonfig.width = "70%";
+    dialogGonfig.width = "50%";
     dialogGonfig.panelClass = 'modals-dialog';
-    this.dialog.open(EditComponent, { panelClass: 'modals-dialog', disableClose: true, autoFocus: true, width: "70%", data: row }).afterClosed().subscribe(result => {
-      this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef)
+    this.dialog.open(EditComponent, { panelClass: 'modals-dialog', disableClose: true, autoFocus: true, width: "50%", data: row }).afterClosed().subscribe(result => {
+      this.getMisssions(1,100,'',this.sortColumnDef,this.SortDirDef)
     });
 
 
   }
 
+  form: FormGroup = new FormGroup({
+    createdDateFrom: new FormControl(''),
+    createdDateTo: new FormControl(''),
+    updatedDateTo: new FormControl(''),
+    updatedDateFrom: new FormControl(''),
+    startDateMission: new FormControl(''),
+    endDateMission: new FormControl(''),
+    startDateStay: new FormControl(''),
+    endDateStay: new FormControl(''),
+    createdBy: new FormControl(''),
+    updatedBy: new FormControl(''),
+    id: new FormControl(''),
+    jobNumber: new FormControl(''),
+    statusId: new FormControl(''),
+    missionPurpose: new FormControl(''),
+    userName: new FormControl(''),
+    missionTypeId: new FormControl(''),
+    missionPlace: new FormControl(''),
+    mealsAndIncidentals: new FormControl(''),
+    comment: new FormControl(''),
+    jobDegreeId: new FormControl(''),
+    noOfNights: new FormControl(''),
+    companyType: new FormControl(''),
+    permissionDuration: new FormControl(''),
+    permissionRequest: new FormControl(''),
+    missionTypeCost: new FormControl(''),
+
+  });
+  openAdvancedSearchPanel() {
+    // this.panelOpenState = false;
+    this.missionService.getLists().subscribe(res => {
+      if (res.status == true) {
+        this.missionTypeList = res.missionTypesList;
+        this.statusList=res.statusesList
+      }
+    })
+    this.userService.getUserlists().subscribe(res=>{
+    if(res.status){
+      console.log("jobdegree",res.data.jobDegrees)
+      this.jobDegreeList=res.data.jobDegrees;
+    }
+    })
+  }
+
+  AdvancedSearchSubmit() {
+    // this.isFilterationData = true;
+    // this.panelOpenState = true;
+    this.loader = true;
+    this.advSearchMission.createdDateFrom = this.form.value.createdDateFrom == "" ? null : this.form.value.createdDateFrom;
+    this.advSearchMission.createdDateTo = this.form.value.createdDateTo == "" ? null : this.form.value.createdDateTo;
+    //
+    this.advSearchMission.updatedDateFrom = this.form.value.updatedDateFrom == "" ? null : this.form.value.updatedDateFrom;
+    this.advSearchMission.updatedDateTo = this.form.value.updatedDateTo == "" ? null : this.form.value.updatedDateTo;
+    //
+    this.advSearchMission.startDateMission = this.form.value.startDateMission == "" ? null : this.form.value.startDateMission;
+    this.advSearchMission.endDateMission = this.form.value.endDateMission == "" ? null : this.form.value.endDateMission;
+    //
+    this.advSearchMission.startDateStay = this.form.value.startDateMission == "" ? null : this.form.value.startDateStay;
+    this.advSearchMission.endDateStay = this.form.value.endDateMission == "" ? null : this.form.value.endDateStay;
+    this.advSearchMission.createdBy = this.form.value.createdBy;
+    this.advSearchMission.updatedBy = this.form.value.updatedBy;
+    this.advSearchMission.missionPurpose = this.form.value.missionPurpose;
+    this.advSearchMission.jobNumber = Number(this.form.value.jobNumber);
+    this.advSearchMission.noOfNights = Number(this.form.value.noOfNights);
+    this.advSearchMission.missionTypeCost = Number(this.form.value.missionTypeCost);
+    this.advSearchMission.comment = this.form.value.comment;
+
+    // this.advSearchMission.id = Number(this.form.value.id);
+    this.advSearchMission.companyType = this.form.value.companyType;
+    this.advSearchMission.userName = this.form.value.userName;
+    this.advSearchMission.missionPlace = this.form.value.missionPlace;
+    this.advSearchMission.mealsAndIncidentals = Number(this.form.value.mealsAndIncidentals);
+    this.advSearchMission.permissionDuration = this.form.value.permissionDuration;
+    this.advSearchMission.permissionRequest = this.form.value.permissionRequest;
+    this.advSearchMission.statusId = Number(this.form.value.statusId);
+    this.advSearchMission.missionTypeId = Number(this.form.value.missionTypeId);
+    this.advSearchMission.jobDegreeId = Number(this.form.value.jobDegreeId);
+    console.log("ad", this.advSearchMission);
+    this.missionService.AdvancedSearch(this.advSearchMission).subscribe(res => {
+      this.missions = res as MissionList[];
+      this.dataSource = new MatTableDataSource<any>(this.missions);
+      this.dataSource.paginator = this.paginator as MatPaginator;
+      this.dataSource.sort = this.sort as MatSort;
+      setTimeout(() => this.loader = false, 3000);
+      // this.form.reset();
+    }
+    )
+  }
 
 
-
+  IntialValCreateBy: string = "";
+  IntialValDate: string = "";
+  clearAdvancedSearch() {
+// this.appear=false
+//     this.isFilterationData = false;
+    this.form.reset();
+    // this.IntialValCreateBy = "--اختار تعديل او اضافة--";
+    // this.IntialValDate="--  اختار التاريخ--";
+    this.getMisssions(1, 25, '', this.sortColumnDef, this.SortDirDef);
+  }
 
 
 

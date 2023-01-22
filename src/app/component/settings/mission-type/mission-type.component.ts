@@ -111,6 +111,7 @@ export class MissionTypeComponent implements OnInit {
 ///////////////add crud operation/////////
 //show and hide form to add
 addType() {
+  this.form.reset();
   this.isShowDiv = !this.isShowDiv;
 }
 //when add mission type name check if this name alredy exsit or not
@@ -159,11 +160,11 @@ onChecknameIsalreadysign()
         setTimeout(() => {
           this.loader = false;
         }, 1500)//end of settime out
-        this.toastr.success('::add successfully');
+        this.toastr.success('add successfully');
         this.form['controls']['name'].setValue('');
         this.form['controls']['id'].setValue(0);
         this.getMissionTypes(1,100,'',this.sortColumnDef,this.SortDirDef);
-      },error=>{this.toastr.warning('::failed');})//end of subscribe
+      },error=>{this.toastr.warning('failed');})//end of subscribe
   }
     }//end of else
 
@@ -186,9 +187,9 @@ onDelete(r: any) {
   this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
     if (res) {
       this.missionTypeService.deleteMissionType(r.id).subscribe(res => {
-        this.toastr.success(':: successfully Deleted');
+        this.toastr.success(' successfully Deleted');
         this.getMissionTypes(1, 100, '', this.sortColumnDef, this.SortDirDef);
-      }, error => { this.toastr.warning('::failed'); }
+      }, error => { this.toastr.warning('failed'); }
       )//end of subscribe
     }//end of if
   })//end of first subscriob
@@ -222,14 +223,14 @@ this.missionTypeService.updateMissionType(missionTypeEdit).subscribe(res=>
   {this.loader = true;
       if(res.status==true)
       {
-        this.toastr.success("::updated successfully");
+        this.toastr.success("updated successfully");
         this.getMissionTypes(1,100,'',this.sortColumnDef,this.SortDirDef);
         this.form['controls']['name'].setValue('');
         this.form['controls']['id'].setValue(0);
 
       }
       else
-      this.toastr.warning("::failed");
+      this.toastr.warning("failed");
   })//end of subscribe
     this.cancelEdit();
 
@@ -251,7 +252,7 @@ this.missionTypeService.updateMissionType(missionTypeEdit).subscribe(res=>
         this.isDisabled=true;
         this.isNameUpdatedRepeated=true;
       }
-    }//,error=>{this.toastr.warning("::faild");}
+    }//,error=>{this.toastr.warning("faild");}
     )
   }
   else{

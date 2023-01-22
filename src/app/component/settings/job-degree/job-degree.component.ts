@@ -43,7 +43,7 @@ export class JobDegreeComponent implements OnInit {
   constructor(private titleService: Title,private jobDegreeService:JobDegreeService,private toastr:ToastrService, private router: Router,
     private route: ActivatedRoute, private dailogService: DeleteService, private dialog:MatDialog
   ) {
-    this.titleService.setTitle('المستخدمين');
+    this.titleService.setTitle('الدرجة الوظيفية');
 
   }
 
@@ -123,7 +123,7 @@ export class JobDegreeComponent implements OnInit {
         setTimeout(() => {
           this.loader = false;
         }, 1500)
-        this.toastr.success(":: update successfully");
+        this.toastr.success(" update successfully");
         this.form['controls']['Name'].setValue('');
         this.form['controls']['Id'].setValue(0);
         this.cancelEdit();
@@ -142,7 +142,7 @@ export class JobDegreeComponent implements OnInit {
     // dialogGonfig.width = "50%";
     // dialogGonfig.panelClass = 'modals-dialog';
     //  this.dialog.open(AddApproveStatusComponent,dialogGonfig)
-
+    this.form.reset();
     this.isShowDiv = !this.isShowDiv;
 
   }
@@ -195,6 +195,7 @@ export class JobDegreeComponent implements OnInit {
     this.isShowDiv = false;
 
     }
+
   }
 
   onDelete(r:any) {
@@ -203,10 +204,10 @@ export class JobDegreeComponent implements OnInit {
       if(res)
       {
         this.jobDegreeService.deleteJobDegree(r.id).subscribe(res=>{
-        this.toastr.success(':: successfully Deleted');
+        this.toastr.success(' successfully Deleted');
         this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
         }),
-        error => { this.toastr.error(':: An Error Occured') }
+        error => { this.toastr.error(' An Error Occured') }
       }
     })
 

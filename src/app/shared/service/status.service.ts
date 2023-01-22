@@ -30,7 +30,7 @@ export class StatusService {
   addStatus(model: any): Observable<any> {
     return this.httpClient.post<any>(`${environment.apiUrl}Status/AddStatus`, model);
   }
-  updateStatus(model: any): Observable<any> {      //cahnge to model
+  updateStatus(model: any): Observable<any> {      
     return this.httpClient.put<any>(`${environment.apiUrl}Status/UpdateStatus`, model
     );
   }

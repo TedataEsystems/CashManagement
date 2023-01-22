@@ -31,7 +31,7 @@ export class AddMissonTypeComponent implements OnInit {
 if(this.form.invalid){
   return;
 }
-    this.toastr.success(':: Submitted successfully');
+    this.toastr.success(' Submitted successfully');
       this.onClose();
       this.dialogRef.close('save');
 

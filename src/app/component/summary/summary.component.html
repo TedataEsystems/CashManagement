@@ -1,82 +1,213 @@
-<!-- <div class="my-3" dir="rtl">
+<div class="my-3" dir="rtl">
   <mat-accordion>
-    <mat-expansion-panel>
+    <mat-expansion-panel (opened)="openAdvancedSearchPanel()">
       <mat-expansion-panel-header>
         <mat-panel-title> بحث متقدم </mat-panel-title>
       </mat-expansion-panel-header>
-      <mat-divider></mat-divider>
-      <form>
-        <mat-grid-list cols="4" rowHeight="300px">
+
+      <form [formGroup]="form" (submit)="AdvancedSearchSubmit()">
+        <mat-grid-list cols="4" rowHeight="450px">
           <mat-grid-tile>
             <div class="controles-container">
-              <mat-form-field appearance="fill" class="serch">
-                <mat-label>اسم العميل</mat-label>
-                <input matInput />
-              </mat-form-field>
-              <mat-form-field appearance="fill" class="serch">
-                <mat-label>رقم الدائرة </mat-label>
-                <input matInput type="number" />
-              </mat-form-field>
-              <mat-form-field appearance="fill" class="serch">
-                <mat-select placeholder=" *اسم الشركة (--اختر--) ">
-                  <mat-option>-- Please select --</mat-option>
-                </mat-select>
-              </mat-form-field>
+
+              <fieldset class="scheduler-border w-100">
+                <legend class="scheduler-border"> <mat-icon>perm_contact_calender</mat-icon> بيانات الموظف</legend>
+                <div class="control-group">
+
+                  <mat-form-field appearance="fill" class="serch  w-100">
+                    <mat-label>رقم  </mat-label>
+                    <input matInput type="number" formControlName="id" />
+                  </mat-form-field>
+
+                  <mat-form-field appearance="fill" class="serch  w-100">
+                    <mat-label>الرقم الوظيفي</mat-label>
+                    <input matInput formControlName="jobNumber"/>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill" class="serch  w-100">
+                    <mat-label>اسم الموظف</mat-label>
+                    <input matInput formControlName="userName"/>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill" class="serch  w-100">
+                    <mat-select formControlName="jobDegreeId" placeholder="*الحالة الوظيفيه(--اختر--)">
+                      <mat-option>-- Please select --</mat-option>
+                      <mat-option  *ngFor="let jobDegree of jobDegreeList"   [value]="jobDegree.id">
+                        {{jobDegree.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="fill" class="serch  w-100">
+                    <mat-select formControlName="companyType"  placeholder=" *نوع الشركه (--اختار--) " >
+                      <mat-option>-- Please select --</mat-option>
+                      <mat-option value="Tedate Staff">Tedate Staff</mat-option>
+                      <mat-option value="Outsource">Outsource</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                </div>
+            </fieldset>
+
+
+
+
             </div>
           </mat-grid-tile>
           <mat-grid-tile>
             <div class="controles-container">
-              <mat-form-field appearance="fill" class="serch">
-                <mat-label>السنترال</mat-label>
-                <input matInput />
+              <fieldset class="scheduler-border w-100">
+                <legend class="scheduler-border"> <mat-icon>propane_tank</mat-icon> بيانات المأمورية</legend>
+                <div class="control-group">
+                  <mat-form-field appearance="fill" class="serch w-100">
+                    <mat-select formControlName="missionTypeId" placeholder=" *نوع المامورية (--اختر--) ">
+                      <mat-option>-- Please select --</mat-option>
+                      <mat-option  *ngFor="let missionType of missionTypeList"   [value]="missionType.id">
+                        {{missionType.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill" class="serch w-100">
+                    <mat-label>مكان المأمورية</mat-label>
+                    <input matInput  formControlName="missionPlace" />
+                  </mat-form-field>
+              <mat-form-field appearance="fill" class="serch w-100">
+                <mat-label>غرض المأمورية</mat-label>
+                <input matInput formControlName="missionPurpose" />
+              </mat-form-field>
+              <div class="w-100 d-flex" >
+
+                <mat-form-field appearance="fill" class="w-50 serch">
+                    <input formControlName="startDateMission" matInput [matDatepicker]="startDateMission" placeholder="بداية المأمورية ">
+                    <mat-datepicker-toggle matSuffix [for]="startDateMission"></mat-datepicker-toggle>
+                    <mat-datepicker #startDateMission></mat-datepicker>
+                  </mat-form-field>
+                <mat-form-field appearance="fill" class="w-50  serch" style="border-right:5px solid #fff">
+                    <input formControlName="endDateMission" matInput [matDatepicker]="endDateMission" placeholder="نهاية المأمورية" [min]="form.controls.EndDateMission?.value">
+                    <mat-datepicker-toggle matSuffix [for]="endDateMission"></mat-datepicker-toggle>
+                    <mat-datepicker #endDateMission></mat-datepicker>
+                  </mat-form-field>
+
+                </div>
+
+
+              <mat-form-field appearance="fill" class=" w-100 serch">
+                <mat-label>تكلفة المأمورية</mat-label>
+                <input matInput formControlName="missionTypeCost"/>
+              </mat-form-field>
+            </div>
+          </fieldset>
+            </div>
+
+
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="controles-container">
+              <fieldset class="scheduler-border w-100">
+                <legend class="scheduler-border"> <mat-icon>nights_stay</mat-icon> بيانات الاقامة</legend>
+                <div class="control-group">
+
+                  <div class="w-100 d-flex" >
+                    <mat-form-field appearance="fill" class="w-50 serch">
+                        <input formControlName="startDateStay" matInput [matDatepicker]="startDateStay" placeholder="بداية الاقامة">
+                        <mat-datepicker-toggle matSuffix [for]="startDateStay"></mat-datepicker-toggle>
+                        <mat-datepicker #startDateStay></mat-datepicker>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill" class="w-50  serch" style="border-right:5px solid #fff">
+                        <input formControlName="endDateStay" matInput [matDatepicker]="endDateStay" placeholder="نهاية الاقامة" [min]="form.controls.EndDateStay?.value">
+                        <mat-datepicker-toggle matSuffix [for]="endDateStay"></mat-datepicker-toggle>
+                        <mat-datepicker #endDateStay></mat-datepicker>
+                      </mat-form-field>
+
+                    </div>
+                  <mat-form-field appearance="fill" class="serch w-100">
+                    <mat-label>عدد الليالى</mat-label>
+                    <input matInput formControlName="noOfNights" type="number"min="0" />
+                  </mat-form-field>
+              <mat-form-field appearance="fill" class="serch w-100">
+                <mat-label>وجبات ونثريات</mat-label>
+                <input matInput formControlName="mealsAndIncidentals" type="number"/>
               </mat-form-field>
 
-              <mat-form-field appearance="fill" class="serch">
-                <mat-label>نوع الجهاز</mat-label>
-                <input matInput />
+              <mat-form-field appearance="fill" class="serch w-100">
+                <mat-label>طلب الاذن</mat-label>
+                <input matInput formControlName="permissionRequest"/>
               </mat-form-field>
-              <mat-form-field appearance="fill" class="serch">
-                <mat-select placeholder=" *موقف ايصال الاستلام (--اختر--) ">
-                  <mat-option>-- Please select --</mat-option>
-                </mat-select>
+
+              <mat-form-field appearance="fill" class="serch w-100">
+                <mat-label>مدة الاذن</mat-label>
+                <input matInput formControlName="permissionDuration"/>
               </mat-form-field>
+
+
+
+
+            </div>
+          </fieldset>
+
             </div>
           </mat-grid-tile>
           <mat-grid-tile>
             <div class="controles-container">
-              <mat-form-field appearance="fill" class="serch">
-                <mat-label>رقم الاوردر</mat-label>
-                <input matInput type="number" />
-              </mat-form-field>
 
-              <mat-form-field appearance="fill" class="serch">
-                <mat-label>السيريال نامبر</mat-label>
-                <input matInput />
-              </mat-form-field>
-              <mat-form-field appearance="fill" class="serch">
-                <mat-select placeholder="*حالة الهاردوير(--اختر--)">
+
+              <fieldset class="scheduler-border w-100">
+                <legend class="scheduler-border"> <mat-icon>verified_user</mat-icon> بيانات اخرى</legend>
+                <div class="control-group">
+
+              <mat-form-field appearance="fill" class="serch w-100">
+                <mat-select formControlName="statusId"  placeholder=" *الحاله (--اختر--) ">
                   <mat-option>-- Please select --</mat-option>
+                  <mat-option  *ngFor="let status of statusList"   [value]="status.id">
+                    {{status.name}}
+                  </mat-option>
                 </mat-select>
-              </mat-form-field>
-            </div>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            <div class="controles-container">
-              <mat-form-field appearance="fill" class="serch">
-                <mat-label>اسم الفني</mat-label>
-                <input matInput />
-              </mat-form-field>
-              <mat-form-field appearance="fill" class="serch">
-                <mat-label>العدد</mat-label>
-                <input matInput type="number" />
               </mat-form-field>
 
-              <mat-form-field appearance="fill" class="serch">
-                <mat-select placeholder="-- اختر التاريخ --">
-                  <mat-option value="createdDate">تاريخ الاضافة</mat-option>
-                </mat-select>
+              <mat-form-field appearance="fill" class="serch w-100">
+                <mat-label>ملاحظات</mat-label>
+                <input matInput formControlName="comment"  />
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="serch w-100">
+                <mat-label>اسم المستخدم</mat-label>
+                <input matInput formControlName="createdBy" />
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="serch w-100">
+                <mat-label>اسم المعدل</mat-label>
+                <input matInput formControlName="updatedBy" />
               </mat-form-field>
             </div>
+            <div class="w-100 d-flex" >
+
+              <mat-form-field appearance="fill" class="w-50 serch">
+                  <input formControlName="createdDateFrom" matInput [matDatepicker]="createdDateFrom" placeholder="من">
+                  <mat-datepicker-toggle matSuffix [for]="createdDateFrom"></mat-datepicker-toggle>
+                  <mat-datepicker #createdDateFrom></mat-datepicker>
+                </mat-form-field>
+
+              <mat-form-field appearance="fill" class="w-50  serch" style="border-right:5px solid #fff">
+                  <input formControlName="createdDateTo" matInput [matDatepicker]="createdDateTo" placeholder="الى" [min]="form.controls.createdDateFrom?.value">
+                  <mat-datepicker-toggle matSuffix [for]="createdDateTo"></mat-datepicker-toggle>
+                  <mat-datepicker #createdDateTo></mat-datepicker>
+                </mat-form-field>
+
+              </div>
+              <div class="w-100 d-flex">
+                <mat-form-field appearance="fill" class="w-50 serch">
+                    <input formControlName="updatedDateFrom" matInput [matDatepicker]="updatedDateFrom" placeholder="من">
+                    <mat-datepicker-toggle matSuffix [for]="updatedDateFrom"></mat-datepicker-toggle>
+                    <mat-datepicker #updatedDateFrom></mat-datepicker>
+                  </mat-form-field>
+                <mat-form-field appearance="fill" class="w-50 serch"  style="border-right:5px solid #fff">
+                    <input formControlName="updatedDateTo" matInput [matDatepicker]="updatedDateTo" placeholder="الى" [min]="form.controls.updatedDateFrom?.value">
+                    <mat-datepicker-toggle matSuffix [for]="updatedDateTo"></mat-datepicker-toggle>
+                    <mat-datepicker #updatedDateTo></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </fieldset>
+                </div>
+
+
           </mat-grid-tile>
         </mat-grid-list>
         <div class="w-100 d-flex justify-content-end btn-group">
@@ -84,6 +215,7 @@
             mat-raised-button
             value="مسح "
             class="btn-danger text-center mx-1 ser"
+            (click)="clearAdvancedSearch()"
             readonly
           />
 
@@ -92,7 +224,7 @@
       </form>
     </mat-expansion-panel>
   </mat-accordion>
-</div> -->
+</div>
 
 <mat-card class="example-card">
   <mat-card-header>
@@ -172,7 +304,7 @@
 
       <ng-container matColumnDef="jobNumber">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
-          الرقم الوضيفى</mat-header-cell
+          الرقم الوظيفى</mat-header-cell
         >
         <mat-cell *matCellDef="let element">
           {{ element.jobNumber }}
@@ -221,7 +353,7 @@
 
       <ng-container matColumnDef="missionPurpose">
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
-          غرض المهمه</mat-header-cell
+          غرض المأمورية</mat-header-cell
         >
         <mat-cell *matCellDef="let element">
           {{ element.missionPurpose }}
@@ -246,7 +378,7 @@
       </ng-container>
       <ng-container matColumnDef="missionPlace">
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
-          مكان المهمه</mat-header-cell
+          مكان المأمورية</mat-header-cell
         >
         <mat-cell *matCellDef="let element">
           {{ element.missionPlace }}
@@ -255,7 +387,7 @@
 
       <ng-container matColumnDef="startDateMission">
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header
-          >مده المهمه من</mat-header-cell
+          >مده المأمورية من</mat-header-cell
         >
         <mat-cell *matCellDef="let element">
           {{ element.startDateMission | date : "yyyy-MM-dd" }}
@@ -263,7 +395,7 @@
       </ng-container>
       <ng-container matColumnDef="endDateMission">
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
-          مدة المهمه الى
+          مدة المأمورية الى
         </mat-header-cell>
         <mat-cell *matCellDef="let element">
           {{ element.endDateMission | date : "yyyy-MM-dd" }}
@@ -294,7 +426,7 @@
       </ng-container>
       <ng-container matColumnDef="missionTypeCost">
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
-          تكلفه نوع المهمه</mat-header-cell
+          تكلفه نوع المأمورية</mat-header-cell
         >
         <mat-cell *matCellDef="let element">
           {{ element.missionTypeCost }}
@@ -344,7 +476,7 @@
       </ng-container>
       <ng-container matColumnDef="missionType">
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
-          نوع المهمه</mat-header-cell
+          نوع المأمورية</mat-header-cell
         >
         <mat-cell *matCellDef="let element">
           {{ element.missionType }}
@@ -402,14 +534,14 @@
         <mat-header-cell *matHeaderCellDef> الاجراء </mat-header-cell>
         <mat-cell *matCellDef="let row" data-label="action">
           <ng-container>
-            <button
+            <!-- <button
               mat-button
               class="btn-info font-weight-bolder"
               matTooltip="تفاصيل"
               (click)="onDetails(row)"
             >
               <mat-icon>info</mat-icon>
-            </button>
+            </button> -->
             <button
               mat-button
               class="btn-success mx-1 font-weight-bolder"
@@ -418,14 +550,14 @@
             >
               <mat-icon>edit</mat-icon>
             </button>
-            <button
+            <!-- <button
               mat-button
               class="btn-success mx-1 font-weight-bolder"
               matTooltip="تعديل"
               (click)="onEditMission(row)"
             >
               <mat-icon>edit</mat-icon>
-            </button>
+            </button> -->
 
             <button
               mat-button

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
@@ -15,6 +15,13 @@ import { MissionService } from 'src/app/shared/service/mission.service';
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
+
+  appear=false;
+
+  file_store: FileList;
+  file_list: Array<string> = [];
+  file: File = null; // Variable to store file
+  fileName: string;
   selectAll = false;
   userList: UserList[] = [];
   statusList: Status[] = [];
@@ -90,7 +97,7 @@ export class EditComponent implements OnInit {
         this.service.form.controls['createdBy'].setValue(this.data.createdBy);
         this.service.form.controls['updateDate'].setValue(this.data.updateDate);
         this.service.form.controls['updateBy'].setValue(this.data.updateBy);
-      }//end of if data 
+      }//end of if data
     })//end of subscribe
   }
 
@@ -128,12 +135,12 @@ export class EditComponent implements OnInit {
     }//end of object
     this.missionService.updateMission(mission).subscribe(res => {
       if (res.status == true) {
-        this.toastr.success("::updated successfully");
+        this.toastr.success("updated successfully");
         this.service.form.reset();
         this.dialogRef.close('save');
       }
       else {
-        this.toastr.warning("::updated failed");
+        this.toastr.warning("updated failed");
       }
     })
 
@@ -148,7 +155,7 @@ export class EditComponent implements OnInit {
     this.service.initializeFormGroup();
     // this.service.form.reset();
     // this.service.initializeFormGroup();
-    // this.notificationService.success(':: Submitted successfully');
+    // this.notificationService.success(' Submitted successfully');
   }
 
 
@@ -160,4 +167,47 @@ export class EditComponent implements OnInit {
     // this.dialogRef.close('save');
 
   }
+
+
+
+  search(){
+    this.appear =!this.appear
+  }
+
+  handleFileInputChange(l: FileList): void {
+    this.file_store = l;
+    if (l.length) {
+      const f = l[0];
+      const count = l.length > 1 ? `(+${l.length - 1} files)` : "";
+      this.service.form.controls.attachFile.patchValue(`${f.name}${count}`);
+    } else {
+      this.service.form.controls.attachFile.patchValue("");
+    }
+
+
+    var fd = new FormData();
+    this.file_list = [];
+    for (let i = 0; i < this.file_store.length; i++) {
+      fd.append("files", this.file_store[i], this.file_store[i].name);
+      this.file_list.push(this.file_store[i].name);
+    }
+  }
+
+  handleSubmit(): void {
+    var fd = new FormData();
+    this.file_list = [];
+    for (let i = 0; i < this.file_store.length; i++) {
+      fd.append("files", this.file_store[i], this.file_store[i].name);
+      this.file_list.push(this.file_store[i].name);
+    }
+  }
+
+
+
+  removeFile(i) {
+    // this.file = null;
+    // this.fileName = '';
+    this.file_list.splice(i,1);
+  }
+
 }

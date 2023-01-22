@@ -84,7 +84,7 @@ export class AddUserComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    if (this.data.dialogTitle == "اضافة جديد") 
+    if (this.data.dialogTitle == "اضافة جديد")
     {
       this.newuser1.name = this.form.value.name;
       this.newuser1.team = this.form.value.team;
@@ -105,9 +105,9 @@ export class AddUserComponent implements OnInit {
       this.newuser1.jobDegreeid = this.form.value.jobDegree;
       this.userService.updateUser(this.newuser1).subscribe(res=>{console.log(res,"from uodate")});
     }
-   
 
-    this.toastr.success(':: Submitted successfully');
+
+    this.toastr.success(' Submitted successfully');
     this.onClose();
     this.dialogRef.close('save');
     this._router.navigate(['/user'] );

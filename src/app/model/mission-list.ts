@@ -28,5 +28,5 @@ export interface MissionList {
     missionType:string,
     userId:number,
     user:string
-
+/////
 }

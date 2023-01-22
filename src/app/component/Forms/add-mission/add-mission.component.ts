@@ -1,6 +1,7 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatAccordion } from '@angular/material/expansion';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MissionList } from 'src/app/model/mission-list';
@@ -16,13 +17,18 @@ import { MissionService } from 'src/app/shared/service/mission.service';
   styleUrls: ['./add-mission.component.css']
 })
 export class AddMissionComponent implements OnInit {
-
+  submittedfile=false;
+  appear=false;
+  sameTeam=true;
   file_store: FileList;
   file_list: Array<string> = [];
+  file: File = null; // Variable to store file
+  fileName: string;
+
   missionTypeList: MissionType[] = [];
 missionList:MissionList[]=[];
   constructor(public dialogRef: MatDialogRef<AddMissionComponent>,
-    public service: MissionFormService, public missionService: MissionService, 
+    public service: MissionFormService, public missionService: MissionService,
     private toastr: ToastrService,private _router:Router) {
   }
 
@@ -33,22 +39,22 @@ missionList:MissionList[]=[];
         this.missionTypeList = res.missionTypesList;
       }
       else {
-        this.toastr.warning(':failed');
+        this.toastr.warning('Failed');
       }
     })//end of subscribe
   }
-  file: File = null; // Variable to store file
+
    // On file Select
-   onChange(event) {
-    this.file = event.target.files[0];
-}
+
   onSubmit() {
+    debugger
     if(!this.service.form.valid) {
       return;
     }//end of if
     let missionn={
       id:this.service.form.value.id,
-      jobDegree:this.service.form.value.jobDegree,
+     // jobDegree:this.service.form.value.jobDegree,
+      jobDegree:this.service.form.value.jobDegreeName,
       missionPurpose: this.service.form.value.missionPurpose,
       centerOfCost:this.service.form.value.centerOfCost,
       companyType:this.service.form.value.companyType,
@@ -98,7 +104,7 @@ missionList:MissionList[]=[];
   
     this.onClose();
     this.dialogRef.close('save');
-    this._router.navigate(['/summary'] );
+    //this._router.navigate(['/summary'] );
   }//end of submit
   onClear() {
     this.service.form.reset();
@@ -110,6 +116,74 @@ missionList:MissionList[]=[];
     this.service.initializeFormGroup();
     this.dialogRef.close('save');
   }
+search(jobNumber:any){
+  this.missionService.checkSameTeam(jobNumber).subscribe(res=>{
+if(res.status)
+{
+  this.service.form['controls']['jobNumber'].setValue(res.jobNumber)
+  this.service.form['controls']['userName'].setValue(res.name)
+  this.service.form['controls']['userId'].setValue(res.userId)
+   this.service.form['controls']['jobDegreeName'].setValue(res.jobDegreeName)
+  this.appear =!this.appear
+  this.sameTeam=true;
+}
+else
+{
+  this.sameTeam=false;
+}
 
+  })
+}
+
+// handleFileInputChange(l: FileList): void {
+//   this.file_store = l;
+//   if (l.length) {
+//     const f = l[0];
+//     const count = l.length > 1 ? `(+${l.length - 1} files)` : "";
+//     this.service.form.controls.attachFile.patchValue(`${f.name}${count}`);
+//   } else {
+//     this.service.form.controls.attachFile.patchValue("");
+//   }
+
+
+//   var fd = new FormData();
+//   this.file_list = [];
+//   for (let i = 0; i < this.file_store.length; i++) {
+//     fd.append("files", this.file_store[i], this.file_store[i].name);
+//     this.file_list.push(this.file_store[i].name);
+//   }
+// }
+handleFileInputChange(event){
+  this.file = event.target.files[0];
+ this.fileName = event.target.files[0].name;
+ this.submittedfile=true;
+
+}
+
+handleSubmit(): void {
+  var fd = new FormData();
+  this.file_list = [];
+  for (let i = 0; i < this.file_store.length; i++) {
+    fd.append("files", this.file_store[i], this.file_store[i].name);
+    this.file_list.push(this.file_store[i].name);
+  }
+}
+
+onChange(event) {
+  this.file = event.target.files[0];
+}
+
+
+// onChange(file) {
+//   this.file = file.files[0];
+//   this.fileName = file.files[0].name;
+// }
+
+removeFile() {
+  this.file = null;
+  this.fileName = '';
+  this.submittedfile=false;
+  //this.file_list.splice(i,1);
+}
 
 }

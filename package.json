@@ -38,6 +38,7 @@
     "pdfmake": "^0.2.7",
     "rxjs": "~6.6.0",
     "screenfull": "^6.0.2",
+    "sweetalert2": "^11.7.0",
     "tslib": "^2.0.0",
     "xlsx": "^0.17.0",
     "zone.js": "~0.11.4"

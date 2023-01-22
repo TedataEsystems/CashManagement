@@ -133,14 +133,14 @@ export class RoleComponent implements OnInit {
     {this.loader = true;
         if(res.status==true)
         {
-          this.toastr.success("::updated successfully");
+          this.toastr.success("updated successfully");
           this.getUserRoles(1,100,'',this.sortColumnDef,this.SortDirDef);
           this.form['controls']['name'].setValue('');
           this.form['controls']['id'].setValue(0);
 
         }
         else
-        this.toastr.warning("::failed");
+        this.toastr.warning("failed");
     })//end of subscribe
       this.cancelEdit();
 
@@ -154,9 +154,9 @@ export class RoleComponent implements OnInit {
   this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
     if (res) {
       this.userRoleService.deleteUserRole(r.id).subscribe(res => {
-        this.toastr.success(':: successfully Deleted');
+        this.toastr.success(' successfully Deleted');
         this.getUserRoles(1, 100, '', this.sortColumnDef, this.SortDirDef);
-      }, error => { this.toastr.warning('::failed'); }
+      }, error => { this.toastr.warning('failed'); }
       )//end of subscribe
     }//end of if
   })//end of first subscriob
@@ -172,6 +172,7 @@ export class RoleComponent implements OnInit {
     // dialogGonfig.width = "50%";
     // dialogGonfig.panelClass = 'modals-dialog';
     //  this.dialog.open(AddRoleComponent,dialogGonfig)
+    this.form.reset();
     this.isShowDiv = !this.isShowDiv;
   }
   onCreateUpdate() {
@@ -196,11 +197,11 @@ export class RoleComponent implements OnInit {
         setTimeout(() => {
           this.loader = false;
         }, 1500)//end of settime out
-        this.toastr.success('::add successfully');
+        this.toastr.success('add successfully');
         this.form['controls']['name'].setValue('');
         this.form['controls']['id'].setValue(0);
         this.getUserRoles(1,100,'',this.sortColumnDef,this.SortDirDef);
-      },error=>{this.toastr.warning('::failed');})
+      },error=>{this.toastr.warning('failed');})
   }
     }
 
@@ -251,7 +252,7 @@ export class RoleComponent implements OnInit {
         this.isDisabled=true;
         this.isNameUpdatedRepeated=true;
       }
-    }//,error=>{this.toastr.warning("::faild");}
+    }//,error=>{this.toastr.warning("faild");}
     )
   }
 
