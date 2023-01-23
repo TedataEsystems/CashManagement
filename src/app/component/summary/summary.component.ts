@@ -70,7 +70,6 @@ export class SummaryComponent implements OnInit {
     this.loader = true;
     this.missionService.getAllMissions(pageNum, pagesize, searchValue, sortColumn, sortDir).subscribe(respose => {
       this.missions = respose?.data;
-      // this.missions.length=respose?.pagenation.totalCount;
       this.dataSource = new MatTableDataSource<any>(this.missions);
       this.dataSource._updateChangeSubscription();
       this.dataSource.paginator = this.paginator as MatPaginator;
@@ -198,7 +197,6 @@ export class SummaryComponent implements OnInit {
     })
     this.userService.getUserlists().subscribe(res=>{
     if(res.status){
-      console.log("jobdegree",res.data.jobDegrees)
       this.jobDegreeList=res.data.jobDegrees;
     }
     })
@@ -253,18 +251,9 @@ export class SummaryComponent implements OnInit {
   IntialValCreateBy: string = "";
   IntialValDate: string = "";
   clearAdvancedSearch() {
-// this.appear=false
-//     this.isFilterationData = false;
     this.form.reset();
-    // this.IntialValCreateBy = "--اختار تعديل او اضافة--";
-    // this.IntialValDate="--  اختار التاريخ--";
     this.getMisssions(1, 25, '', this.sortColumnDef, this.SortDirDef);
   }
-
-
-
-  // onselectcheckall(e:Event){}
-
 
   selection = new SelectionModel<any>(true, []);
 
@@ -274,16 +263,21 @@ export class SummaryComponent implements OnInit {
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
-
+Ids=[];
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows() {
     if (this.isAllSelected()) {
       this.selection.clear();
       return;
     }
-
     this.selection.select(...this.dataSource.data);
-  }
+   this.Ids = [];
+   this.dataSource.data.forEach( (element:any) => {
+    if(element.status=="approve"){
+      this.Ids.push(element.id)}
+});
+  }//end of toggleAll
+  
 
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: any): string {
@@ -297,11 +291,19 @@ export class SummaryComponent implements OnInit {
 
 
   exportPdf(){
+    console.log(this.selection.isSelected);
+    //without choose rows or select all
+    if(this.selection.selected.length==0){
+      this.Ids=[];
+       this.dataSource.data.forEach( (element:any) => {
+          if(element.status=="approve"){
+            this.Ids.push(element.id)}})
+          } 
     this.router.navigate(['/cover']);
+    this.Ids=[];
   }
   exportMissionFormPdf(){
-
-this.router.navigate(['/missionform'])
+  this.router.navigate(['/missionform'])
   }
   exportExpensesPdf(){
     this.router.navigate(['/expenses']);

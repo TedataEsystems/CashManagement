@@ -68,9 +68,6 @@ export class UserComponent implements OnInit {
     this.loader = true;
     this.userService.getUsers(pageNum, pagesize, searchValue, sortColumn, sortDir).subscribe(respose => {
       this.users = respose?.data;
-
-      console.log(this.users);
-      console.log(respose);
       this.dataSource = new MatTableDataSource<any>(this.users);
       this.dataSource._updateChangeSubscription();
       this.dataSource.paginator = this.paginator as MatPaginator;
@@ -147,22 +144,32 @@ export class UserComponent implements OnInit {
       disableClose: true
     });
   }
+  message:string="";
   upLoadF() {
-    console.log("uploadF", "param:", this.param, "fileUploaded:", this.fileuploaded)
+    //console.log("uploadF", "param:", this.param, "fileUploaded:", this.fileuploaded)
     const fd = new FormData();
     fd.append(this.param, this.fileuploaded);
     this.userService.importExcelFile(fd).subscribe(res => {
       if (res.status == true) {
+        console.log(res.data,"that is data ");
         this.getUsers(1, 100, '', this.sortColumnDef, this.SortDirDef);
         this.fileAttr = 'Choose File';
         this.resetfile();
         this._bottomSheet.dismiss();
-        swal.fire('!uploaded ',res.data,'success')
+        // swal.fire('!uploaded ',res.data,'success')
+        this.message=res.data;
+        if(this.message.includes("مطلوب")||this.message.includes("0"))
+        // this.toastr.error("Error",res.data);
+        swal.fire('Not Uploade ',res.data,'error')
+        else
+       // this.toastr.success("File Uploaded",res.data);
+        swal.fire('File Uploaded ',res.data,'success')
       }
       else {
         this.fileAttr = 'Choose File';
         this.resetfile();
-        swal.fire('!not uploaded ', res.error,'error')
+        // this.toastr.error("Error",res.data);
+        swal.fire('Not uploaded ', res.error,'error')
         this.getUsers(1, 100, '', this.sortColumnDef, this.SortDirDef);
       }
     }
