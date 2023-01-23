@@ -30,7 +30,8 @@ export class EditComponent implements OnInit {
     private missionService: MissionService, private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
-
+  attachId:number;
+  attachName:string;
   ngOnInit() {
     this.service.initializeFormGroup();
     this.missionService.getLists().subscribe(res => {
@@ -43,6 +44,7 @@ export class EditComponent implements OnInit {
         this.toastr.warning(':failed');
       }
       if (this.data) {
+        console.log(this.data);
         //set values of lists
         var userCount = 0;
         var statusCount = 0;
@@ -74,9 +76,8 @@ export class EditComponent implements OnInit {
         if (missionTypeCount== 0) {
           this.service.form.controls['missionTypeId'].setValue(null);
         }
-
         this.service.form.controls['id'].setValue(this.data.id);
-        this.service.form.controls['jobDegree'].setValue(this.data.jobDegree);
+        this.service.form.controls['jobDegreeName'].setValue(this.data.jobDegree);
         this.service.form.controls['missionPurpose'].setValue(this.data.missionPurpose);
         this.service.form.controls['centerOfCost'].setValue(this.data.centerOfCost);
         this.service.form.controls['companyType'].setValue(this.data.companyType);
@@ -97,9 +98,17 @@ export class EditComponent implements OnInit {
         this.service.form.controls['createdBy'].setValue(this.data.createdBy);
         this.service.form.controls['updateDate'].setValue(this.data.updateDate);
         this.service.form.controls['updateBy'].setValue(this.data.updateBy);
+        this.service.form.controls['userName'].setValue(this.data.user);
+        this.service.form.controls['userId'].setValue(this.data.userId);
+        this.service.form.controls['attachFile'].setValue(this.data.attachFilename);
+        //this.service.form.controls['attachFileId'].setValue(this.data.attachFileId);
       }//end of if data
     })//end of subscribe
+  this.attachId= this.data.attachFileId;
+  this.attachName=this.data.attachFilename;
+  console.log(this.attachName);
   }
+ 
 
   onSubmit() {
     if(!this.service.form.valid){
@@ -107,7 +116,7 @@ export class EditComponent implements OnInit {
     }
     let mission = {
       id: this.service.form.value.id,
-      jobDegree: this.service.form.value.jobDegree,
+      //jobDegree: this.service.form.value.jobDegree,
       missionPurpose: this.service.form.value.missionPurpose,
       centerOfCost: this.service.form.value.centerOfCost,
       companyType: this.service.form.value.companyType,
@@ -160,52 +169,31 @@ export class EditComponent implements OnInit {
   onClose() {
     this.service.form.reset();
      this.dialogRef.close();
-    // this.service.form.reset();
-    // this.service.initializeFormGroup();
     // this.dialogRef.close('save');
 
   }
-
+//////////
 
 
   search(){
     this.appear =!this.appear
   }
-
-  handleFileInputChange(l: FileList): void {
-    this.file_store = l;
-    if (l.length) {
-      const f = l[0];
-      const count = l.length > 1 ? `(+${l.length - 1} files)` : "";
-      this.service.form.controls.attachFile.patchValue(`${f.name}${count}`);
-    } else {
-      this.service.form.controls.attachFile.patchValue("");
-    }
-
-
-    var fd = new FormData();
-    this.file_list = [];
-    for (let i = 0; i < this.file_store.length; i++) {
-      fd.append("files", this.file_store[i], this.file_store[i].name);
-      this.file_list.push(this.file_store[i].name);
-    }
-  }
-
-  handleSubmit(): void {
-    var fd = new FormData();
-    this.file_list = [];
-    for (let i = 0; i < this.file_store.length; i++) {
-      fd.append("files", this.file_store[i], this.file_store[i].name);
-      this.file_list.push(this.file_store[i].name);
-    }
+  submittedfile:boolean=false;
+  //edit on attach file
+  handleFileInputChange(event){
+    this.file = event.target.files[0];
+   this.fileName = event.target.files[0].name;
+   this.submittedfile=true;
+  
   }
 
 
+ 
+  removeFile(id:number) {
+    this.missionService.DeleteAttachFile(id).subscribe(res=>{console.log("hh")});
+    this.file = null;
+    this.fileName = '';
+    this.submittedfile=false;
 
-  removeFile(i) {
-    // this.file = null;
-    // this.fileName = '';
-    this.file_list.splice(i,1);
   }
-
 }
