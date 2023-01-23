@@ -64,6 +64,7 @@
     <input type="hidden" formControlName="updateDate" />
     <input type="hidden" formControlName="updateBy" />
     <input type="hidden" formControlName="statusId" />
+    <input type="hidden" formControlName="userId" />
     <div class="row">
       <div class="col-sm-6 col-md-6 col-lg-6">
         <mat-form-field class="w-100">
@@ -71,13 +72,13 @@
         </mat-form-field>
 
         <mat-form-field class="w-100">
-          <input formControlName="userId" matInput placeholder="اسم الموظف"  type="number"/>
+          <input formControlName="userName" matInput placeholder="اسم الموظف" readonly />
         </mat-form-field>
       </div>
       <div class="col-sm-6 col-md-6 col-lg-6">
-        <!-- <mat-form-field class="w-100">
-          <input formControlName="jobDegree" matInput placeholder=" الدرجه الوظيفيه" readonly/>
-        </mat-form-field> -->
+        <mat-form-field class="w-100">
+          <input formControlName="jobDegreeName" matInput placeholder=" الدرجه الوظيفيه" readonly/>
+        </mat-form-field>
         <mat-form-field class="w-100">
           <mat-select formControlName="companyType"  placeholder=" *نوع الشركه (--اختار--) " >
             <mat-option>-- Please select --</mat-option>
@@ -86,6 +87,10 @@
           </mat-select>
           <mat-error> * مطلوب </mat-error>
         </mat-form-field>
+        <!-- <mat-form-field class="w-100">
+          <input formControlName="companyType" matInput placeholder="نوع الشركه"  readonly/>
+          <mat-error> * مطلوب </mat-error>
+        </mat-form-field> -->
 
       </div>
 
@@ -240,6 +245,7 @@
               placeholder="مدة الاذن"
             />
           </mat-form-field>
+        
 
         </div>
         </div>
@@ -273,29 +279,23 @@
         </button>
         <input type="text" readonly matInput   formControlName="attachFile" />
         <input
-
           type="file"
-          multiple
           hidden
           #f_input
-          (change)="handleFileInputChange(f_input.files)"
+          (change)="handleFileInputChange($event)"
         />
 
       </mat-form-field>
-
-      <mat-card *ngIf="file_list.length" style="margin-top: 16px;">
+      <div class="box">
         <mat-list>
-          <div mat-subheader> الملفات المختارة ({{ file_list.length }})</div>
-         <div class="box">
-          <mat-list-item *ngFor="let file of file_list; index as i">
-            <mat-icon mat-list-icon class=" text-danger"(click)="removeFile(i)">delete_forever</mat-icon>
+          <mat-list-item>
+          <mat-icon mat-list-icon class=" text-danger"(click)="removeFile(attachId)">delete_forever</mat-icon>
 
-            <div mat-line>{{ file }}</div>
-            <mat-icon>insert_drive_file</mat-icon>
-          </mat-list-item>
-         </div>
+          <div mat-line>{{attachName}}</div>
+          <mat-icon>insert_drive_file</mat-icon>
+        </mat-list-item>
         </mat-list>
-      </mat-card>
+       </div>
 
 
         </div>

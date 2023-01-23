@@ -85,7 +85,6 @@ missionList:MissionList[]=[];
 
       this.missionService.addMission(missionn).subscribe(res=>
         {
-          console.log("resss",res);
           if(res.status==true)
           {
             if(this.file!=null){
@@ -100,8 +99,6 @@ missionList:MissionList[]=[];
             this.toastr.warning(":failed");
           }
         })
-
-
     this.onClose();
     this.dialogRef.close('save');
     //this._router.navigate(['/summary'] );
@@ -135,24 +132,7 @@ else
   })
 }
 
-// handleFileInputChange(l: FileList): void {
-//   this.file_store = l;
-//   if (l.length) {
-//     const f = l[0];
-//     const count = l.length > 1 ? `(+${l.length - 1} files)` : "";
-//     this.service.form.controls.attachFile.patchValue(`${f.name}${count}`);
-//   } else {
-//     this.service.form.controls.attachFile.patchValue("");
-//   }
 
-
-//   var fd = new FormData();
-//   this.file_list = [];
-//   for (let i = 0; i < this.file_store.length; i++) {
-//     fd.append("files", this.file_store[i], this.file_store[i].name);
-//     this.file_list.push(this.file_store[i].name);
-//   }
-// }
 handleFileInputChange(event){
   this.file = event.target.files[0];
  this.fileName = event.target.files[0].name;
@@ -161,24 +141,13 @@ handleFileInputChange(event){
 
 }
 
-handleSubmit(): void {
-  var fd = new FormData();
-  this.file_list = [];
-  for (let i = 0; i < this.file_store.length; i++) {
-    fd.append("files", this.file_store[i], this.file_store[i].name);
-    this.file_list.push(this.file_store[i].name);
-  }
-}
+
 
 onChange(event) {
   this.file = event.target.files[0];
 }
 
 
-// onChange(file) {
-//   this.file = file.files[0];
-//   this.fileName = file.files[0].name;
-// }
 
 removeFile() {
   this.file = null;

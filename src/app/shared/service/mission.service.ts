@@ -1,7 +1,8 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -41,6 +42,7 @@ private url:string=`${environment.apiUrl}Mission`;
   }
   updateMission(mission:any):Observable<any>
   {
+    console.log(mission,"pppp")
      return this.httpClient.post<any>(`${this.url}/EditMission`,mission);
   }
   deleteMission(id:number):Observable<any>
@@ -70,5 +72,18 @@ return this.httpClient.get<any>(`${this.url}/GetLists`);
     console.log("ExpensesFormReport",id)
      return this.httpClient.get<any>(`${this.url}/ExpensesFormReport/`+id);
   }
+  DownloadAttach(id:number):any
+  {
+   return this.httpClient.get<any>(`${this.url}/DownloadFile/`+id,
+  // {responseType: 'blob'});
+  {
+    headers: new HttpHeaders({'Content-Type': 'application/json'}),
+    observe: 'response'
+  })
+  }
+  DeleteAttachFile(id:number):Observable<any>
+  {
+    return this.httpClient.delete<any>(`${this.url}/DeleteFile/`+id);
+    }
 }//end of service
 

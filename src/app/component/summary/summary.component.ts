@@ -20,7 +20,8 @@ import { JobDegree } from 'src/app/model/job-degree';
 import { UserService } from 'src/app/shared/service/user.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AdvancedSearch } from 'src/app/model/advanced-search';
-
+import * as fileSaver from 'file-saver';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-summary',
@@ -43,8 +44,7 @@ export class SummaryComponent implements OnInit {
   @ViewChild(MatSort) sort?: MatSort;
   displayedColumns: string[] = ['all', 'id','jobNumber', 'jobDegree', 'user', 'missionPurpose', 'centerOfCost', 'companyType', 'missionPlace', 'startDateMission', 'endDateMission', 'noOfNights', 'stay',
     'mealsAndIncidentals', 'startDateStay', 'endDateStay', 'missionTypeCost', 'permissionRequest', 'permissionDuration', 'comment', 'createdBy',
-    'updateBy', 'creationDate', 'updateDate', 'status', 'missionType','exporAttach','exportmission', 'action'];
-    // 'updateBy', 'creationDate', 'updateDate', 'status', 'missionType','exportexpenses','exportmission', 'action'];
+    'updateBy', 'creationDate', 'updateDate', 'status', 'missionType','exporAttach','exportmission','action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource();
   settingtype = ''
@@ -70,7 +70,7 @@ export class SummaryComponent implements OnInit {
     this.loader = true;
     this.missionService.getAllMissions(pageNum, pagesize, searchValue, sortColumn, sortDir).subscribe(respose => {
       this.missions = respose?.data;
-      console.log(respose?.data,"xxxx");
+     // console.log(respose?.data);
       this.dataSource = new MatTableDataSource<any>(this.missions);
       this.dataSource._updateChangeSubscription();
       this.dataSource.paginator = this.paginator as MatPaginator;
@@ -127,7 +127,6 @@ export class SummaryComponent implements OnInit {
     dialogGonfig.width = "50%";
     dialogGonfig.panelClass = 'modals-dialog';
     this.dialog.open(AddMissionComponent,dialogGonfig).afterClosed().subscribe(result => {
-     // debugger
       this.getMisssions(1,100,'',this.sortColumnDef,this.SortDirDef)
     });
   }
@@ -247,7 +246,18 @@ export class SummaryComponent implements OnInit {
     }
     )
   }
-
+////download attach file
+exportAttach(id:any)
+{
+this.missionService.DownloadAttach(id).subscribe((response: any)=>
+  {
+    let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
+    const url = window.URL.createObjectURL(blob);
+    //window.open(url);
+    saveAs(blob, 'employees.json');
+    }), (error: any) => console.log('Error downloading the file'),
+    () => console.info('File downloaded successfully');
+}
   IntialValCreateBy: string = "";
   IntialValDate: string = "";
   clearAdvancedSearch() {
@@ -263,8 +273,7 @@ export class SummaryComponent implements OnInit {
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
-
-   Ids=[];
+Ids=[];
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows() {
     if (this.isAllSelected()) {
@@ -277,9 +286,8 @@ export class SummaryComponent implements OnInit {
     if(element.status=="approve"){
       this.Ids.push(element.id)}
 });
-  }
-  //end of toggleAll
-
+  }//end of toggleAll
+  
 
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: any): string {
@@ -289,19 +297,17 @@ export class SummaryComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
-  exportAttach(){
 
-  }
 
   exportPdf(){
-    console.log(this.selection.isSelected);
     //without choose rows or select all
     if(this.selection.selected.length==0){
       this.Ids=[];
        this.dataSource.data.forEach( (element:any) => {
           if(element.status=="approve"){
             this.Ids.push(element.id)}})
-          }
+          } 
+          this.missionService.CoverReportsIds=this.Ids;
     this.router.navigate(['/cover']);
     this.Ids=[];
   }
