@@ -70,7 +70,6 @@ export class SummaryComponent implements OnInit {
     this.loader = true;
     this.missionService.getAllMissions(pageNum, pagesize, searchValue, sortColumn, sortDir).subscribe(respose => {
       this.missions = respose?.data;
-     // console.log(respose?.data);
       this.dataSource = new MatTableDataSource<any>(this.missions);
       this.dataSource._updateChangeSubscription();
       this.dataSource.paginator = this.paginator as MatPaginator;
@@ -91,10 +90,6 @@ export class SummaryComponent implements OnInit {
       }
     }
     this.lastcol = sort.active;
-    // if (this.lastdir == 'asc'){
-    //   sort.direction = 'desc';}
-    // else{
-    //   sort.direction = 'asc';}
     this.lastdir = sort.direction;
     this.getMisssions(1, 100, '', sort.active, this.lastdir);
   }
