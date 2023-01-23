@@ -516,6 +516,20 @@
         >
         <mat-cell *matCellDef="let element"> {{ element.comment }} </mat-cell>
       </ng-container>
+
+
+
+      <ng-container matColumnDef="exporAttach">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+           البريد المرفق</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">
+          <button mat-stroked-button class="mx-1" (click)="exportAttach()">
+            <mat-icon class="">download</mat-icon>
+            <span class="txt mr-1"> تنزيل  </span>
+          </button>
+        </mat-cell>
+      </ng-container>
       <ng-container matColumnDef="exportmission">
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
           نموذج المأمورية</mat-header-cell
