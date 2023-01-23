@@ -43,7 +43,8 @@ export class SummaryComponent implements OnInit {
   @ViewChild(MatSort) sort?: MatSort;
   displayedColumns: string[] = ['all', 'id','jobNumber', 'jobDegree', 'user', 'missionPurpose', 'centerOfCost', 'companyType', 'missionPlace', 'startDateMission', 'endDateMission', 'noOfNights', 'stay',
     'mealsAndIncidentals', 'startDateStay', 'endDateStay', 'missionTypeCost', 'permissionRequest', 'permissionDuration', 'comment', 'createdBy',
-    'updateBy', 'creationDate', 'updateDate', 'status', 'missionType','exportexpenses','exportmission', 'action'];
+    'updateBy', 'creationDate', 'updateDate', 'status', 'missionType','exporAttach','exportmission', 'action'];
+    // 'updateBy', 'creationDate', 'updateDate', 'status', 'missionType','exportexpenses','exportmission', 'action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource();
   settingtype = ''
@@ -247,7 +248,6 @@ export class SummaryComponent implements OnInit {
     )
   }
 
-
   IntialValCreateBy: string = "";
   IntialValDate: string = "";
   clearAdvancedSearch() {
@@ -263,7 +263,8 @@ export class SummaryComponent implements OnInit {
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
-Ids=[];
+
+   Ids=[];
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows() {
     if (this.isAllSelected()) {
@@ -276,8 +277,9 @@ Ids=[];
     if(element.status=="approve"){
       this.Ids.push(element.id)}
 });
-  }//end of toggleAll
-  
+  }
+  //end of toggleAll
+
 
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: any): string {
@@ -287,7 +289,9 @@ Ids=[];
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
+  exportAttach(){
 
+  }
 
 
   exportPdf(){
@@ -298,7 +302,7 @@ Ids=[];
        this.dataSource.data.forEach( (element:any) => {
           if(element.status=="approve"){
             this.Ids.push(element.id)}})
-          } 
+          }
     this.router.navigate(['/cover']);
     this.Ids=[];
   }
