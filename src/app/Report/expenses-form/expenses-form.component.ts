@@ -1,6 +1,7 @@
 import { Component,OnInit} from '@angular/core';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
+import { MissionService } from 'src/app/shared/service/mission.service';
 @Component({
   selector: 'app-expenses-form',
   templateUrl: './expenses-form.component.html',
@@ -10,7 +11,11 @@ export class ExpensesFormComponent implements OnInit {
 
   appear=false;
   sameTeam=true;
-  constructor() { }
+  expensesForm:any[]=[]
+  userName:string;
+  jobNum:number;
+    total:number;
+  constructor(private missionService: MissionService) { }
 
   ngOnInit(): void {
   }
@@ -18,19 +23,22 @@ export class ExpensesFormComponent implements OnInit {
 
 /////check userId
 search(jobNumber:any){
-//   this.missionService.checkSameTeam(jobNumber).subscribe(res=>{
-// if(res.status)
-// {
+   this.missionService.ExpensesFormReport(jobNumber).subscribe(res=>{
+if(res.status)
+{
+ this.expensesForm=res.expensesForm;
+ this.jobNum=jobNumber;
+ this.userName=res.expensesForm[0].userName;
+ this.total=res.total;
+  this.appear =!this.appear
+  this.sameTeam=true;
+}
+else
+{
+  this.sameTeam=false;
+}
 
-//   this.appear =!this.appear
-//   this.sameTeam=true;
-// }
-// else
-// {
-//   this.sameTeam=false;
-// }
-
-//   })
+  })
 
 }
 
