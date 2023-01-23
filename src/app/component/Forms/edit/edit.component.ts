@@ -76,7 +76,7 @@ export class EditComponent implements OnInit {
         }
 
         this.service.form.controls['id'].setValue(this.data.id);
-        this.service.form.controls['jobDegree'].setValue(this.data.jobDegree);
+       // this.service.form.controls['jobDegree'].setValue(this.data.jobDegree);
         this.service.form.controls['missionPurpose'].setValue(this.data.missionPurpose);
         this.service.form.controls['centerOfCost'].setValue(this.data.centerOfCost);
         this.service.form.controls['companyType'].setValue(this.data.companyType);

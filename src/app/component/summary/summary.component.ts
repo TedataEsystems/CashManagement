@@ -292,7 +292,6 @@ export class SummaryComponent implements OnInit {
 
   }
 
-
   exportPdf(){
     console.log(this.selection.isSelected);
     //without choose rows or select all

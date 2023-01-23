@@ -81,8 +81,8 @@ missionList:MissionList[]=[];
       missionTypeId:this.service.form.value.missionTypeId,
       userId:this.service.form.value.userId
     }//end of mission
-  
-    
+
+
       this.missionService.addMission(missionn).subscribe(res=>
         {
           console.log("resss",res);
@@ -101,7 +101,7 @@ missionList:MissionList[]=[];
           }
         })
 
-  
+
     this.onClose();
     this.dialogRef.close('save');
     //this._router.navigate(['/summary'] );
@@ -156,18 +156,18 @@ else
 handleFileInputChange(event){
   this.file = event.target.files[0];
  this.fileName = event.target.files[0].name;
- this.submittedfile=true;
+ this.submittedfile= !this.submittedfile;
 
 }
 
-handleSubmit(): void {
-  var fd = new FormData();
-  this.file_list = [];
-  for (let i = 0; i < this.file_store.length; i++) {
-    fd.append("files", this.file_store[i], this.file_store[i].name);
-    this.file_list.push(this.file_store[i].name);
-  }
-}
+// handleSubmit(): void {
+//   var fd = new FormData();
+//   this.file_list = [];
+//   for (let i = 0; i < this.file_store.length; i++) {
+//     fd.append("files", this.file_store[i], this.file_store[i].name);
+//     this.file_list.push(this.file_store[i].name);
+//   }
+// }
 
 onChange(event) {
   this.file = event.target.files[0];

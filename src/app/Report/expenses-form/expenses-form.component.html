@@ -1,5 +1,5 @@
 
-<div class="example-container container bg-white mat-elevation-z8" *ngIf="!appear">
+<div class="example-container container bg-white mat-elevation-z8" *ngIf="!appear" dir="ltr">
 <div class="row pb-5 " >
   <div class="col-12">
     <fieldset class="scheduler-border w-75">
@@ -8,8 +8,8 @@
 
             <mat-form-field appearance="outline" class="text-right w-75">
               <input #jobNumber matInput placeholder=" الرقم الوظيفي"/>
-              <mat-hint align="start"><strong>يجب أن يكون الموظف مسجل بالمجموعة</strong> </mat-hint>
-              <mat-hint *ngIf="!sameTeam" class="mat-error" align="end"><strong>هذا الموظف  غير مسجل بالمجموعة *</strong> </mat-hint>
+              <mat-hint align="end"><strong>يجب أن يكون الموظف مسجل بالمجموعة</strong> </mat-hint>
+              <mat-hint *ngIf="!sameTeam" class="mat-error" align="start"><strong>هذا الموظف  غير مسجل بالمجموعة *</strong> </mat-hint>
             </mat-form-field>
 <br>
             <button mat-button class="btn-success mt-4 w-25" type="button" style="height: 49px;vertical-align:bottom;" (click)="search(jobNumber.value)">
