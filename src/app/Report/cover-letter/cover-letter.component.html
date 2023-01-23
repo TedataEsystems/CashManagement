@@ -69,17 +69,17 @@
               <td>{{item.stay}}</td>
               <td>{{item.mealsAndIncidentals}}</td>
               <td>{{item.missionTypeCost}}</td>
-              <td>Jill</td>
+              <td>{{item.stay+item.mealsAndIncidentals+item.missionTypeCost}}</td>
 
             </tr>
           </tbody>
           <tfoot>
             <tr>
               <th colspan="9" class="text-center">الاجمالي</th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
+              <th>{{TotalStay}}</th>
+              <th>{{TotalMealsAndIncidentals}}</th>
+              <th>{{TotalMissionTypeCost}}</th>
+              <th>{{TotalStay+TotalMealsAndIncidentals+TotalMissionTypeCost}}</th>
 
             </tr>
           </tfoot>

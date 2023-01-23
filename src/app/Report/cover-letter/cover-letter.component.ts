@@ -12,11 +12,20 @@ export class CoverLetterComponent implements OnInit {
 
   constructor(private missionServices:MissionService) { }
   missionApproved:any[]=[];
+  TotalStay:number=0;
+  TotalMealsAndIncidentals:number=0;
+  TotalMissionTypeCost:number=0;
+  
   ngOnInit(): void {
     this.missionServices.CoverReport(this.missionServices.CoverReportsIds).subscribe(res=>
       {
         this.missionApproved=res.missions;
-        console.log(this.missionApproved);
+        this.missionApproved.forEach( (element:any) => {
+         this.TotalStay+=element.stay;
+         this.TotalMealsAndIncidentals+=element.mealsAndIncidentals;
+         this.TotalMissionTypeCost+=element.missionTypeCost;
+      });
+       // console.log(this.missionApproved);
       })
       }
 
