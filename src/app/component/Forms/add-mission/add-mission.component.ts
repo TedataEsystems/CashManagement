@@ -156,18 +156,19 @@ else
 handleFileInputChange(event){
   this.file = event.target.files[0];
  this.fileName = event.target.files[0].name;
- this.submittedfile= !this.submittedfile;
+ this.service.form.controls['attachFile'].setValue(this.fileName)
+ this.submittedfile= true;
 
 }
 
-// handleSubmit(): void {
-//   var fd = new FormData();
-//   this.file_list = [];
-//   for (let i = 0; i < this.file_store.length; i++) {
-//     fd.append("files", this.file_store[i], this.file_store[i].name);
-//     this.file_list.push(this.file_store[i].name);
-//   }
-// }
+handleSubmit(): void {
+  var fd = new FormData();
+  this.file_list = [];
+  for (let i = 0; i < this.file_store.length; i++) {
+    fd.append("files", this.file_store[i], this.file_store[i].name);
+    this.file_list.push(this.file_store[i].name);
+  }
+}
 
 onChange(event) {
   this.file = event.target.files[0];
@@ -182,6 +183,7 @@ onChange(event) {
 removeFile() {
   this.file = null;
   this.fileName = '';
+  this.service.form.controls['attachFile'].setValue('')
   this.submittedfile=false;
   //this.file_list.splice(i,1);
 }
