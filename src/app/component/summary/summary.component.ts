@@ -41,7 +41,7 @@ export class SummaryComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
-  displayedColumns: string[] = ['all', 'id', 'jobNumber', 'jobDegree', 'user', 'missionPurpose', 'centerOfCost', 'companyType', 'missionPlace', 'startDateMission', 'endDateMission', 'noOfNights', 'stay',
+  displayedColumns: string[] = ['all', 'id','jobNumber', 'jobDegree', 'user', 'missionPurpose', 'centerOfCost', 'companyType', 'missionPlace', 'startDateMission', 'endDateMission', 'noOfNights', 'stay',
     'mealsAndIncidentals', 'startDateStay', 'endDateStay', 'missionTypeCost', 'permissionRequest', 'permissionDuration', 'comment', 'createdBy',
     'updateBy', 'creationDate', 'updateDate', 'status', 'missionType','exporAttach','exportmission', 'action'];
     // 'updateBy', 'creationDate', 'updateDate', 'status', 'missionType','exportexpenses','exportmission', 'action'];
@@ -70,6 +70,7 @@ export class SummaryComponent implements OnInit {
     this.loader = true;
     this.missionService.getAllMissions(pageNum, pagesize, searchValue, sortColumn, sortDir).subscribe(respose => {
       this.missions = respose?.data;
+      console.log(respose?.data,"xxxx");
       this.dataSource = new MatTableDataSource<any>(this.missions);
       this.dataSource._updateChangeSubscription();
       this.dataSource.paginator = this.paginator as MatPaginator;

@@ -172,7 +172,7 @@ export class RoleComponent implements OnInit {
     // dialogGonfig.width = "50%";
     // dialogGonfig.panelClass = 'modals-dialog';
     //  this.dialog.open(AddRoleComponent,dialogGonfig)
-    this.form.reset();
+    //this.form.reset();
     this.isShowDiv = !this.isShowDiv;
   }
   onCreateUpdate() {

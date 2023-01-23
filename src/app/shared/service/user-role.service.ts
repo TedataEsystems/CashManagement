@@ -39,7 +39,7 @@ export class UserRoleService {
    }
   updateUserRole(userrole:any):Observable<any>
    {
-      return this.httpClient.post<any>(`${this.url}/UpdateUserRole`,userrole);
+      return this.httpClient.put<any>(`${this.url}/UpdateUserRole`,userrole);
   }
   deleteUserRole(id:number):Observable<any>
    {
