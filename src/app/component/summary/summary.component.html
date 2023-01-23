@@ -233,10 +233,23 @@
       <mat-icon class="add-new ico">add</mat-icon>
       <span class="txt mr-1">اضافة مأمورية</span>
     </button>
-    <button mat-button class="opt mx-1" (click)="exportPdf()">
+    <button mat-button [matMenuTriggerFor]="menu" class="opt mr-1" >
       <mat-icon class="">download</mat-icon>
       <span class="txt mr-1"> تنزيل ملف </span>
     </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item  class="opt text-right" (click)="exportPdf()">
+
+        <span class=" mr-1"> تنزيل مصروفات السفر عن المأموريات </span>
+        <mat-icon class="txt">download</mat-icon>
+      </button>
+      <button mat-menu-item class="opt text-right" (click)="exportExpensesPdf()">
+
+        <span class="mr-1"> تنزيل نموذج المصروفات </span>
+        <mat-icon class="txt ">download</mat-icon>
+      </button>
+    </mat-menu>
+
   </mat-card-header>
   <mat-divider></mat-divider>
 
@@ -518,7 +531,7 @@
           </button>
         </mat-cell>
       </ng-container>
-      <ng-container matColumnDef="exportexpenses">
+      <!-- <ng-container matColumnDef="exportexpenses">
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
           نموذج المصاريف</mat-header-cell
         >
@@ -528,7 +541,7 @@
             <span class="txt mr-1"> تنزيل ملف </span>
           </button>
         </mat-cell>
-      </ng-container>
+      </ng-container> -->
 
       <ng-container matColumnDef="action" sticky>
         <mat-header-cell *matHeaderCellDef> الاجراء </mat-header-cell>

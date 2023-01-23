@@ -43,7 +43,8 @@ export class SummaryComponent implements OnInit {
   @ViewChild(MatSort) sort?: MatSort;
   displayedColumns: string[] = ['all', 'id', 'jobNumber', 'jobDegree', 'user', 'missionPurpose', 'centerOfCost', 'companyType', 'missionPlace', 'startDateMission', 'endDateMission', 'noOfNights', 'stay',
     'mealsAndIncidentals', 'startDateStay', 'endDateStay', 'missionTypeCost', 'permissionRequest', 'permissionDuration', 'comment', 'createdBy',
-    'updateBy', 'creationDate', 'updateDate', 'status', 'missionType','exportexpenses','exportmission', 'action'];
+    'updateBy', 'creationDate', 'updateDate', 'status', 'missionType','exportmission', 'action'];
+    // 'updateBy', 'creationDate', 'updateDate', 'status', 'missionType','exportexpenses','exportmission', 'action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource();
   settingtype = ''
