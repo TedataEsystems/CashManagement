@@ -59,7 +59,6 @@ return this.httpClient.get<any>(`${this.url}/GetLists`);
   }
   checkSameTeam(id:number):Observable<any>
   {
-    console.log("CheckSameTeamseevice",id)
      return this.httpClient.get<any>(`${this.url}/CheckSameTeam/`+id);
   }
   CoverReportsIds:number[];
@@ -67,6 +66,11 @@ return this.httpClient.get<any>(`${this.url}/GetLists`);
   {
     console.log(this.CoverReportsIds)
    return this.httpClient.post<any>(`${this.url}/CoverReport`,CoverReportsIds);
+  }
+  ExpensesFormReport(id:number):Observable<any>
+  {
+    console.log("ExpensesFormReport",id)
+     return this.httpClient.get<any>(`${this.url}/ExpensesFormReport/`+id);
   }
   DownloadAttach(id:number):any
   {

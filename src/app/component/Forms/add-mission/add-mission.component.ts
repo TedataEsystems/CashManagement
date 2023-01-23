@@ -81,8 +81,8 @@ missionList:MissionList[]=[];
       missionTypeId:this.service.form.value.missionTypeId,
       userId:this.service.form.value.userId
     }//end of mission
-  
-    
+
+
       this.missionService.addMission(missionn).subscribe(res=>
         {
           if(res.status==true)
@@ -136,7 +136,8 @@ else
 handleFileInputChange(event){
   this.file = event.target.files[0];
  this.fileName = event.target.files[0].name;
- this.submittedfile=true;
+ this.service.form.controls['attachFile'].setValue(this.fileName)
+ this.submittedfile= true;
 
 }
 
@@ -151,6 +152,7 @@ onChange(event) {
 removeFile() {
   this.file = null;
   this.fileName = '';
+  this.service.form.controls['attachFile'].setValue('')
   this.submittedfile=false;
   //this.file_list.splice(i,1);
 }

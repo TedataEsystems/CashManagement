@@ -299,7 +299,6 @@ Ids=[];
 
 
 
-
   exportPdf(){
     //without choose rows or select all
     if(this.selection.selected.length==0){
