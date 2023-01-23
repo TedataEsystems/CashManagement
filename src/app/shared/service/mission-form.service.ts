@@ -28,6 +28,8 @@ export class MissionFormService {
     permissionDuration: new FormControl(''),
     comment:new FormControl(''),
     attachFile: new FormControl(''),
+   // attachFilename:new FormControl(''),
+    attachFileId:new FormControl(0),
     creationDate:new FormControl(null),
     updateDate:new FormControl(null),
     createdBy:new FormControl(null),
@@ -46,7 +48,8 @@ export class MissionFormService {
     this.form.setValue({
       id:0,
       jobDegreeName:'',
-     
+     // attachFilename:'',
+      attachFileId:0,
       missionPurpose: '',
       centerOfCost:2455,
       companyType:0,
