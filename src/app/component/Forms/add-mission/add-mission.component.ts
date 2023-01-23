@@ -81,53 +81,27 @@ missionList:MissionList[]=[];
       missionTypeId:this.service.form.value.missionTypeId,
       userId:this.service.form.value.userId
     }//end of mission
-
-
-
-if(this.file!=null)
-{
-  this.missionService.upload(this.file).subscribe(res=>{
-    missionn.file=res.uniqueFileName;
-    console.log(missionn)
-
-    this.missionService.addMission(missionn).subscribe(res=>
-      {
-        console.log("resss",res);
-        if(res.status==true)
+  
+    
+      this.missionService.addMission(missionn).subscribe(res=>
         {
-          this.toastr.success("Added successfully");
-          this.submittedfile=false;
-          this.service.form.reset();
-          this.dialogRef.close('save');
-        }
-        else
-        {
-          this.toastr.warning("Failed");
-          this.submittedfile=true;
-        }
-      })
+          console.log("resss",res);
+          if(res.status==true)
+          {
+            if(this.file!=null){
+             this.missionService.upload(this.file,res.id).subscribe(res=>{console.log(res.status)})
+           }
+            this.toastr.success(":added successfully");
+            this.service.form.reset();
+            this.dialogRef.close('save');
+          }
+          else
+          {
+            this.toastr.warning(":failed");
+          }
+        })
 
-  })
-}
-else{
-  this.missionService.addMission(missionn).subscribe(res=>
-    {
-      console.log("resss",res);
-      if(res.status==true)
-      {
-        this.toastr.success("Added successfully");
-        this.service.form.reset();
-        this.dialogRef.close('save');
-        this.submittedfile=false;
-      }
-      else
-      {
-        this.toastr.warning("Failed");
-        this.submittedfile=false;
-      }
-    })
-}
-
+  
     this.onClose();
     this.dialogRef.close('save');
     //this._router.navigate(['/summary'] );

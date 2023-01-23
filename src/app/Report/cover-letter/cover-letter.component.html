@@ -56,19 +56,19 @@
           </thead>
 
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Smith</td>
-              <td>43</td>
-              <td>Jill</td>
-              <td>Smith</td>
-              <td>43</td>
-              <td>Jill</td>
-              <td>Smith</td>
-              <td>43</td>
-              <td>Jill</td>
-              <td>Smith</td>
-              <td>43</td>
+            <tr *ngFor="let item of  missionApproved;">
+              <td>{{item.id}}</td>
+              <td>{{item.jobNumber}}</td>
+              <td>{{item.centerOfCost}}</td>
+              <td>{{item.user}}</td>
+              <td>{{item.jobDegree}}</td>
+              <td>{{item.missionPlace}}</td>
+              <td>{{item.startDateStay| date : "yyyy-MM-dd" }}</td>
+              <td>{{item.endDateStay| date : "yyyy-MM-dd" }}</td>
+              <td>{{item.noOfNights}}</td>
+              <td>{{item.stay}}</td>
+              <td>{{item.mealsAndIncidentals}}</td>
+              <td>{{item.missionTypeCost}}</td>
               <td>Jill</td>
 
             </tr>

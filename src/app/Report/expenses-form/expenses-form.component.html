@@ -1,4 +1,31 @@
-<div class="example-container container bg-white py-5 mat-elevation-z8" id="pdfTable" #pdftable="">
+
+<div class="example-container container bg-white mat-elevation-z8" *ngIf="!appear">
+<div class="row pb-5 " >
+  <div class="col-12">
+    <fieldset class="scheduler-border w-75">
+      <legend class="scheduler-border"> <mat-icon>verified_user</mat-icon>  ادخل الرقم الوظيفي لاستكمال باقي البيانات</legend>
+      <div class="control-group text-center w-100">
+
+            <mat-form-field appearance="outline" class="text-right w-75">
+              <input #jobNumber matInput placeholder=" الرقم الوظيفي"/>
+              <mat-hint align="start"><strong>يجب أن يكون الموظف مسجل بالمجموعة</strong> </mat-hint>
+              <mat-hint *ngIf="!sameTeam" class="mat-error" align="end"><strong>هذا الموظف  غير مسجل بالمجموعة *</strong> </mat-hint>
+            </mat-form-field>
+<br>
+            <button mat-button class="btn-success mt-4 w-25" type="button" style="height: 49px;vertical-align:bottom;" (click)="search(jobNumber.value)">
+              بحث
+            </button>
+
+      </div>
+  </fieldset>
+  </div>
+</div>
+</div>
+
+
+
+
+<div class="example-container container bg-white py-5 mat-elevation-z8" id="pdfTable" #pdftable="" *ngIf="appear">
   <div class="row">
     <div class="col-sm-12 text-center">
       <img
@@ -68,6 +95,6 @@
     </div>
   </div>
 </div>
-<div class="col-sm-12 text-center mt-5">
+<div class="col-sm-12 text-center mt-5" *ngIf="appear">
   <button mat-raised-button class="text-white w-25" (click)="exportPDF()">طباعة</button>
 </div>

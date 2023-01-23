@@ -8,12 +8,31 @@ import html2canvas from 'html2canvas';
 })
 export class ExpensesFormComponent implements OnInit {
 
+  appear=false;
+  sameTeam=true;
   constructor() { }
 
   ngOnInit(): void {
   }
 
 
+/////check userId
+search(jobNumber:any){
+//   this.missionService.checkSameTeam(jobNumber).subscribe(res=>{
+// if(res.status)
+// {
+
+//   this.appear =!this.appear
+//   this.sameTeam=true;
+// }
+// else
+// {
+//   this.sameTeam=false;
+// }
+
+//   })
+
+}
 
 
   public exportPDF() {
