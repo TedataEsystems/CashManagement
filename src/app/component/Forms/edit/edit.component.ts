@@ -108,7 +108,7 @@ export class EditComponent implements OnInit {
   this.attachName=this.data.attachFilename;
   console.log(this.attachName);
   }
- 
+
 
   onSubmit() {
     if(!this.service.form.valid){
@@ -182,18 +182,20 @@ export class EditComponent implements OnInit {
   //edit on attach file
   handleFileInputChange(event){
     this.file = event.target.files[0];
-   this.fileName = event.target.files[0].name;
-   this.submittedfile=true;
-  
+    this.attachName = event.target.files[0].name;
+   this.service.form['controls']['attachFile'].setValue(this.fileName);
+
   }
 
 
- 
+
   removeFile(id:number) {
-    this.missionService.DeleteAttachFile(id).subscribe(res=>{console.log("hh")});
-    this.file = null;
-    this.fileName = '';
-    this.submittedfile=false;
+    this.missionService.DeleteAttachFile(id).subscribe(res=>{
+      this.file = null;
+      this.attachName = '';
+      this.service.form['controls']['attachFile'].setValue('');
+
+      console.log("hh")});
 
   }
 }

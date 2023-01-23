@@ -245,7 +245,7 @@
               placeholder="مدة الاذن"
             />
           </mat-form-field>
-        
+
 
         </div>
         </div>
@@ -282,11 +282,11 @@
           type="file"
           hidden
           #f_input
-          (change)="handleFileInputChange($event)"
+          (change)="handleFileInputChange($event)" (click)="f_input.value=null"
         />
 
       </mat-form-field>
-      <div class="box">
+      <div class="box" *ngIf="attachName">
         <mat-list>
           <mat-list-item>
           <mat-icon mat-list-icon class=" text-danger"(click)="removeFile(attachId)">delete_forever</mat-icon>

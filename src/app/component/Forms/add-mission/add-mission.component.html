@@ -270,14 +270,14 @@
           type="file"
           hidden
           #f_input
-          (change)="handleFileInputChange($event)"
+          (change)="handleFileInputChange($event)" (click)="f_input.value=null"
         />
 
       </mat-form-field>
       <div class="box" *ngIf="fileName">
         <mat-list>
           <mat-list-item>
-          <mat-icon mat-list-icon class=" text-danger"(click)="removeFile()">delete_forever</mat-icon>
+          <mat-icon mat-list-icon class=" text-danger" (click)="removeFile()">delete_forever</mat-icon>
 
           <div mat-line>{{ fileName }}</div>
           <mat-icon>insert_drive_file</mat-icon>
