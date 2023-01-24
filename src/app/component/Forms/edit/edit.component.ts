@@ -212,9 +212,10 @@ export class EditComponent implements OnInit {
   removeFile(id:number) {
     this.missionService.DeleteAttachFile(id).subscribe(res=>{console.log("hh")});
     this.file = null;
-    this.fileName = '';
-    this.submittedfile=false;
-    this.attachId=0;
+    this.attachName = '';
+        this.attachId=0;
+    this.service.form['controls']['attachFile'].setValue('');
+
   }//remove
 
 }
