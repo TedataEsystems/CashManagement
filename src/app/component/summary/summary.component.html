@@ -523,7 +523,7 @@
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
            البريد المرفق</mat-header-cell
         >
-        <mat-cell *matCellDef="let element">
+        <mat-cell *matCellDef="let element" >
           <button mat-stroked-button class="mx-1" (click)="exportAttach(element.attachFileId)">
             <mat-icon class="">download</mat-icon>
             <span class="txt mr-1"> تنزيل  </span>

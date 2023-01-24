@@ -33,6 +33,10 @@ export class EditComponent implements OnInit {
   attachId:number;
   attachName:string;
   ngOnInit() {
+    this.attachId= this.data.attachFileId;
+  this.attachName=this.data.attachFilename;
+  console.log(this.attachId,"attachid");
+  console.log(this.data.attachFileId,"attchfileid");
     this.service.initializeFormGroup();
     this.missionService.getLists().subscribe(res => {
       if (res.status == true) {
@@ -104,9 +108,7 @@ export class EditComponent implements OnInit {
         //this.service.form.controls['attachFileId'].setValue(this.data.attachFileId);
       }//end of if data
     })//end of subscribe
-  this.attachId= this.data.attachFileId;
-  this.attachName=this.data.attachFilename;
-  console.log(this.attachName);
+  
   }
 
 
@@ -206,15 +208,17 @@ export class EditComponent implements OnInit {
    this.service.form['controls']['attachFile'].setValue(this.attachName);
 
   }
-
-
-
   removeFile(id:number) {
-    this.missionService.DeleteAttachFile(id).subscribe(res=>{console.log("hh")});
+    this.missionService.DeleteAttachFile(id).subscribe(res=>{
+   if(res.status==true)
+   {
     this.file = null;
     this.attachName = '';
-        this.attachId=0;
+    this.attachId=0;
     this.service.form['controls']['attachFile'].setValue('');
+   }
+    });
+   
 
   }//remove
 

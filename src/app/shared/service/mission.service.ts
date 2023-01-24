@@ -77,10 +77,11 @@ return this.httpClient.get<any>(`${this.url}/GetLists`);
   {
    return this.httpClient.get<any>(`${this.url}/DownloadFile/`+id,
   // {responseType: 'blob'});
-  {
-    headers: new HttpHeaders({'Content-Type': 'application/json'}),
-    observe: 'response'
-  })
+  // {
+  //   headers: new HttpHeaders({'Content-Type': 'application/json'}),
+  //   observe: 'response'
+  // }
+  )
   }
   DeleteAttachFile(id:number):Observable<any>
   {
