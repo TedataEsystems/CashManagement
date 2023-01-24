@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { MissionList } from 'src/app/model/mission-list';
 import { MissionType } from 'src/app/model/mission-type';
@@ -26,6 +27,13 @@ export class EditComponent implements OnInit {
   userList: UserList[] = [];
   statusList: Status[] = [];
   missionTypeList: MissionType[] = [];
+  comment:string='';
+  creationDate:string='';
+  createdBy:string='';
+  createdByTeam:string='';
+Available=false;
+  displayedCommentColumns: string[] = ['comment', 'creationDate', 'createdBy','createdByTeam' ];
+  dataSourceComment = new MatTableDataSource<any>();
   constructor(public dialogRef: MatDialogRef<EditComponent>, public service: MissionFormService,
     private missionService: MissionService, private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -195,7 +203,19 @@ export class EditComponent implements OnInit {
 
   }
 //////////
+addComment(e){
 
+e.stopPropagation()
+  let commentsList=[{
+    comment:this.service.form.value.comment,
+    creationDate:this.service.form.value.creationDate,
+    createdBy:this.service.form.value.createdBy,
+    createdByTeam:''
+  }]
+
+    this.dataSourceComment = new MatTableDataSource<any>(commentsList);
+
+}
 
   search(){
     this.appear =!this.appear

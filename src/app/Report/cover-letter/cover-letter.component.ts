@@ -15,7 +15,7 @@ export class CoverLetterComponent implements OnInit {
   TotalStay:number=0;
   TotalMealsAndIncidentals:number=0;
   TotalMissionTypeCost:number=0;
-  
+
   ngOnInit(): void {
     this.missionServices.CoverReport(this.missionServices.CoverReportsIds).subscribe(res=>
       {
@@ -34,15 +34,14 @@ export class CoverLetterComponent implements OnInit {
 
   public exportPDF() {
 
-    const div = document.getElementById('pdfTable');console.log(div)
+    const div = document.getElementById('pdfTable');
     const options = {
       background: 'white',
       scale: 2,
     };
 
     html2canvas(div as HTMLElement,options).then((canvas) => {
-      debugger;
-      console.log("ed");
+
       var img = canvas.toDataURL("image/PNG");
       var doc = new jsPDF('l', 'mm', 'a4');
 

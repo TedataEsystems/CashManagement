@@ -44,7 +44,12 @@ direction: rtl;
   margin-top: 15px;
 
 } */
+.btn-box{
+  position: absolute;
+  top: 88px;
+    left: 15px;
 
+}
 .mat-toolbar-row, .mat-toolbar-single-row{
   height: 50px;
 }
@@ -73,6 +78,7 @@ legend.scheduler-border {
     border-bottom:none;
 }
 .box{
-  height: 150px;
-  overflow-y: auto;
+
+  margin: 10px 0;
+  border: 1.5px dashed #c6cacd;
 }
