@@ -12,11 +12,7 @@
   </div>
 </mat-toolbar>
 
-
-
-
 <!-- --------------------------test----------------------------------------------------------- -->
-
 
 <!--
 <div class="row mb-5" *ngIf="!appear" style="margin: 100px 0;">
@@ -41,282 +37,406 @@
   </div>
 </div> -->
 
-
 <form
   [formGroup]="service.form"
   class="normal-form mx-0"
   (submit)="onSubmit()"
   dir="rtl"
 >
-<!-- ------------------------------test----------------------- -->
-<div class="px-3" style="margin-top: 90px;">
-<mat-accordion class="example-headers-align" multi>
-  <mat-expansion-panel    expanded="0"
-  opened="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-       بيانات الموظف
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <input type="hidden" formControlName="id">
-    <input type="hidden" formControlName="creationDate" />
-    <input type="hidden" formControlName="createdBy" />
-    <input type="hidden" formControlName="updateDate" />
-    <input type="hidden" formControlName="updateBy" />
-    <input type="hidden" formControlName="statusId" />
-    <input type="hidden" formControlName="userId" />
-    <div class="row">
-      <div class="col-sm-6 col-md-6 col-lg-6">
-        <mat-form-field class="w-100">
-          <input formControlName="jobNumber" matInput placeholder=" الرقم الوظيفي" readonly />
-        </mat-form-field>
+  <!-- ------------------------------test----------------------- -->
+  <div class="px-3" style="margin-top: 90px">
+    <mat-accordion class="example-headers-align" multi>
+      <mat-expansion-panel expanded="0" opened="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title> بيانات الموظف </mat-panel-title>
+        </mat-expansion-panel-header>
+        <input type="hidden" formControlName="id" />
+        <input type="hidden" formControlName="creationDate" />
+        <input type="hidden" formControlName="createdBy" />
+        <input type="hidden" formControlName="updateDate" />
+        <input type="hidden" formControlName="updateBy" />
+        <input type="hidden" formControlName="statusId" />
+        <input type="hidden" formControlName="userId" />
+        <div class="row">
+          <div class="col-sm-6 col-md-6 col-lg-6">
+            <mat-form-field class="w-100">
+              <input
+                formControlName="jobNumber"
+                matInput
+                placeholder=" الرقم الوظيفي"
+                readonly
+              />
+            </mat-form-field>
 
-        <mat-form-field class="w-100">
-          <input formControlName="userName" matInput placeholder="اسم الموظف" readonly />
-        </mat-form-field>
-      </div>
-      <div class="col-sm-6 col-md-6 col-lg-6">
-        <mat-form-field class="w-100">
-          <input formControlName="jobDegreeName" matInput placeholder=" الدرجه الوظيفيه" readonly/>
-        </mat-form-field>
-        <mat-form-field class="w-100">
-          <mat-select formControlName="companyType"  placeholder=" *نوع الشركه (--اختار--) " >
-            <mat-option>-- Please select --</mat-option>
-            <mat-option value="Tedate Staff">Tedate Staff</mat-option>
-            <mat-option value="Outsource">Outsource</mat-option>
-          </mat-select>
-          <mat-error> * مطلوب </mat-error>
-        </mat-form-field>
-        <!-- <mat-form-field class="w-100">
+            <mat-form-field class="w-100">
+              <input
+                formControlName="userName"
+                matInput
+                placeholder="اسم الموظف"
+                readonly
+              />
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6 col-md-6 col-lg-6">
+            <mat-form-field class="w-100">
+              <input
+                formControlName="jobDegreeName"
+                matInput
+                placeholder=" الدرجه الوظيفيه"
+                readonly
+              />
+            </mat-form-field>
+            <mat-form-field class="w-100">
+              <mat-select
+                formControlName="companyType"
+                placeholder=" *نوع الشركه (--اختار--) "
+              >
+                <mat-option>-- Please select --</mat-option>
+                <mat-option value="Tedate Staff">Tedate Staff</mat-option>
+                <mat-option value="Outsource">Outsource</mat-option>
+              </mat-select>
+              <mat-error> * مطلوب </mat-error>
+            </mat-form-field>
+            <!-- <mat-form-field class="w-100">
           <input formControlName="companyType" matInput placeholder="نوع الشركه"  readonly/>
           <mat-error> * مطلوب </mat-error>
         </mat-form-field> -->
-
-      </div>
-
-    </div>
-
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-       بيانات المأمورية
-      </mat-panel-title>
-
-    </mat-expansion-panel-header>
-
-    <div class="row">
-      <div class="col-sm-6 col-md-6 col-lg-6">
-        <mat-form-field class="w-100">
-          <mat-select formControlName="missionTypeId" placeholder=" *نوع المأمورية (--اختار--) ">
-            <mat-option>-- Please select --</mat-option>
-            <mat-option  *ngFor="let missionType of missionTypeList"   [value]="missionType.id">
-             {{missionType.name}}
-            </mat-option>
-          </mat-select>
-          <mat-error> * مطلوب </mat-error>
-        </mat-form-field>
-
-
-        <mat-form-field class="w-100">
-    <input formControlName="missionPlace" matInput placeholder="مكان المأمورية"/>
-    <mat-error> * مطلوب </mat-error>
-  </mat-form-field>
-
-  <mat-form-field class="w-100">
-    <input formControlName="missionPurpose" matInput placeholder="غرض المأمورية"/>
-    <mat-error> * مطلوب </mat-error>
-  </mat-form-field>
-
+          </div>
         </div>
-        <div class="col-sm-6 col-md-6 col-lg-6">
-          <mat-form-field class="w-100" >
-            <mat-label>تاريخ بدء المأمورية </mat-label>
-            <input matInput formControlName="startDateMission" [matDatepicker]="picker3" >
-            <mat-datepicker-toggle matSuffix [for]="picker3">
-              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-            </mat-datepicker-toggle>
-            <mat-datepicker #picker3></mat-datepicker>
-            <mat-error> * مطلوب </mat-error>
-          </mat-form-field>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> بيانات المأمورية </mat-panel-title>
+        </mat-expansion-panel-header>
 
-          <mat-form-field class="w-100">
-            <mat-label>تاريخ انتهاء المأمورية</mat-label>
-            <input matInput formControlName="endDateMission"  [matDatepicker]="picker4" [min]="service.form.controls.startDateMission?.value">
-            <mat-datepicker-toggle matSuffix [for]="picker4">
-              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-            </mat-datepicker-toggle>
-            <mat-datepicker #picker4></mat-datepicker>
-            <mat-error> * مطلوب </mat-error>
-          </mat-form-field>
-          <mat-form-field class="w-100">
-            <input
-              formControlName="missionTypeCost"
-              type="number"
-              min="0"
-              matInput
-              placeholder="تكلفه نوع المأمورية"
-            />
-          </mat-form-field>
+        <div class="row">
+          <div class="col-sm-6 col-md-6 col-lg-6">
+            <mat-form-field class="w-100">
+              <mat-select
+                formControlName="missionTypeId"
+                placeholder=" *نوع المأمورية (--اختار--) "
+              >
+                <mat-option>-- Please select --</mat-option>
+                <mat-option
+                  *ngFor="let missionType of missionTypeList"
+                  [value]="missionType.id"
+                >
+                  {{ missionType.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error> * مطلوب </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-100">
+              <input
+                formControlName="missionPlace"
+                matInput
+                placeholder="مكان المأمورية"
+              />
+              <mat-error> * مطلوب </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-100">
+              <input
+                formControlName="missionPurpose"
+                matInput
+                placeholder="غرض المأمورية"
+              />
+              <mat-error> * مطلوب </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6 col-md-6 col-lg-6">
+            <mat-form-field class="w-100">
+              <mat-label>تاريخ بدء المأمورية </mat-label>
+              <input
+                matInput
+                formControlName="startDateMission"
+                [matDatepicker]="picker3"
+              />
+              <mat-datepicker-toggle matSuffix [for]="picker3">
+                <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #picker3></mat-datepicker>
+              <mat-error> * مطلوب </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-100">
+              <mat-label>تاريخ انتهاء المأمورية</mat-label>
+              <input
+                matInput
+                formControlName="endDateMission"
+                [matDatepicker]="picker4"
+                [min]="service.form.controls.startDateMission?.value"
+              />
+              <mat-datepicker-toggle matSuffix [for]="picker4">
+                <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #picker4></mat-datepicker>
+              <mat-error> * مطلوب </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-100">
+              <input
+                formControlName="missionTypeCost"
+                type="number"
+                min="0"
+                matInput
+                placeholder="تكلفه نوع المأمورية"
+              />
+            </mat-form-field>
+          </div>
         </div>
+      </mat-expansion-panel>
 
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> بيانات الاقامة </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <div class="col-sm-6 col-md-6 col-lg-6">
+            <mat-form-field class="w-100">
+              <input
+                formControlName="centerOfCost"
+                matInput
+                placeholder="مركز التكلفه"
+                readonly
+              />
+            </mat-form-field>
+
+            <mat-form-field class="w-100">
+              <mat-label>تاريخ بدء الاقامه</mat-label>
+              <input
+                matInput
+                formControlName="startDateStay"
+                [matDatepicker]="picker1"
+              />
+
+              <mat-datepicker-toggle matSuffix [for]="picker1">
+                <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+              <mat-error> * مطلوب </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-100">
+              <mat-label>تاريخ انتهاء الاقامه</mat-label>
+              <input
+                matInput
+                formControlName="endDateStay"
+                [matDatepicker]="picker2"
+                [min]="service.form.controls.startDateStay?.value"
+              />
+              <mat-datepicker-toggle matSuffix [for]="picker2">
+                <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+              <mat-error> * مطلوب </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-100">
+              <input
+                formControlName="stay"
+                matInput
+                placeholder="الاقامة"
+                readonly
+              />
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-6 col-md-6 col-lg-6">
+            <mat-form-field class="w-100">
+              <input
+                formControlName="noOfNights"
+                type="number"
+                min="0"
+                matInput
+                placeholder="عدد الليالى"
+              />
+            </mat-form-field>
+
+            <mat-form-field class="w-100">
+              <input
+                formControlName="mealsAndIncidentals"
+                type="number"
+                min="0"
+                matInput
+                placeholder="وجبات ونثريات"
+              />
+            </mat-form-field>
+
+            <mat-form-field class="w-100">
+              <input
+                formControlName="permissionRequest"
+                matInput
+                placeholder="غرض الاذن"
+              />
+            </mat-form-field>
+            <mat-form-field class="w-100">
+              <input
+                formControlName="permissionDuration"
+                matInput
+                placeholder="مدة الاذن"
+              />
+            </mat-form-field>
+          </div>
         </div>
-  </mat-expansion-panel>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> بيانات أخرى </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-12 row">
+            <!-- <mat-form-field class="col-md-6">
+              <mat-select
+                formControlName="statusId"
+                placeholder=" *الحاله (--اختار--) "
+              >
+                <mat-option>-- Please select --</mat-option>
+                <mat-option
+                  *ngFor="let status of statusList"
+                  [value]="status.id"
+                >
+                  {{ status.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error> * مطلوب </mat-error>
+            </mat-form-field>
+            <div class="col-md-6">
+            </div> -->
+            <mat-form-field class="col-md-6">
+              <mat-label>ارفاق ميل الموافقة</mat-label>
+              <button
+                mat-icon-button
+                matPrefix
+                type="button"
+                (click)="f_input.click()"
+              >
+                <mat-icon>attach_file</mat-icon>
+              </button>
+              <input
+                type="text"
+                readonly
+                matInput
+                formControlName="attachFile"
+              />
+              <input
+                type="file"
+                hidden
+                #f_input
+                (change)="handleFileInputChange($event)"
+                (click)="f_input.value = null"
+              />
+            </mat-form-field>
+            <div class="box col-md-6" *ngIf="attachName">
+              <mat-list>
+                <mat-list-item>
+                  <mat-icon
+                    mat-list-icon
+                    class="text-danger"
+                    (click)="removeFile(attachId)"
+                    >delete_forever</mat-icon
+                  >
 
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-       بيانات الاقامة
-      </mat-panel-title>
-
-    </mat-expansion-panel-header>
-    <div class="row">
-      <div class="col-sm-6 col-md-6 col-lg-6">
-        <mat-form-field class="w-100">
-          <input
-            formControlName="centerOfCost"
-            matInput
-            placeholder="مركز التكلفه"
-            readonly
-          />
-        </mat-form-field>
-
-
-        <mat-form-field class="w-100">
-          <mat-label>تاريخ بدء الاقامه</mat-label>
-          <input matInput formControlName="startDateStay" [matDatepicker]="picker1" >
-
-          <mat-datepicker-toggle matSuffix [for]="picker1">
-            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-          </mat-datepicker-toggle>
-          <mat-datepicker #picker1></mat-datepicker>
-          <mat-error> * مطلوب </mat-error>
-        </mat-form-field>
-
-        <mat-form-field class="w-100">
-          <mat-label>تاريخ انتهاء الاقامه</mat-label>
-          <input matInput formControlName="endDateStay"  [matDatepicker]="picker2" [min]="service.form.controls.startDateStay?.value"  >
-          <mat-datepicker-toggle matSuffix [for]="picker2">
-            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-          </mat-datepicker-toggle>
-          <mat-datepicker #picker2></mat-datepicker>
-          <mat-error> * مطلوب </mat-error>
-        </mat-form-field>
-
-        <mat-form-field class="w-100">
-          <input
-            formControlName="stay"
-            matInput
-            placeholder="الاقامة"
-            readonly
-          />
-        </mat-form-field>
-        </div>
-
-        <div class="col-sm-6 col-md-6 col-lg-6">
-          <mat-form-field class="w-100">
-            <input
-              formControlName="noOfNights"
-              type="number"
-              min="0"
-              matInput
-              placeholder="عدد الليالى"
-            />
-          </mat-form-field>
-
-
-          <mat-form-field class="w-100">
-            <input
-              formControlName="mealsAndIncidentals"
-              type="number"
-              min="0"
-              matInput
-              placeholder="وجبات ونثريات"
-            />
-          </mat-form-field>
-
-          <mat-form-field class="w-100">
-            <input formControlName="permissionRequest" matInput placeholder="غرض الاذن"/>
-          </mat-form-field>
-          <mat-form-field class="w-100">
-            <input
-              formControlName="permissionDuration"
-              matInput
-              placeholder="مدة الاذن"
-            />
-          </mat-form-field>
-
-
-        </div>
-        </div>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        بيانات أخرى
-      </mat-panel-title>
-
-    </mat-expansion-panel-header>
-    <div class="row">
-      <div class="col-sm-6 col-md-6 col-lg-6">
-
-        <!-- <mat-form-field class="w-100">
-        <mat-select formControlName="statusId" placeholder=" *الحاله (--اختار--) " >
-          <mat-option>-- Please select --</mat-option>
-          <mat-option  *ngFor="let status of statusList"   [value]="status.id">
-            {{status.name}}
-          </mat-option>
-        </mat-select>
-        <mat-error> * مطلوب </mat-error>
-      </mat-form-field> -->
-
-      <!-- <input formControlName="attachFile"   type="file" placeholder=" ارفاق ملف" (change)="onChange($event)"/> -->
-
-      <mat-form-field class="w-100">
-        <mat-label>ارفاق ميل الموافقة</mat-label>
-        <button mat-icon-button matPrefix  type="button" (click)="f_input.click()">
-          <mat-icon>attach_file</mat-icon>
-        </button>
-        <input type="text" readonly matInput   formControlName="attachFile" />
-        <input
-          type="file"
-          hidden
-          #f_input
-          (change)="handleFileInputChange($event)" (click)="f_input.value=null"
-        />
-
-      </mat-form-field>
-      <div class="box" *ngIf="attachName">
-        <mat-list>
-          <mat-list-item>
-          <mat-icon mat-list-icon class=" text-danger"(click)="removeFile(attachId)">delete_forever</mat-icon>
-
-          <div mat-line>{{attachName}}</div>
-          <mat-icon>insert_drive_file</mat-icon>
-        </mat-list-item>
-        </mat-list>
-       </div>
-
-
-        </div>
-        <div class="col-sm-6 col-md-6 col-lg-6">
-          <mat-form-field class="w-100  ">
-            <mat-label>ملاحظات</mat-label>
-            <textarea formControlName="comment" matInput placeholder="ملاحظات" rows="5">
-              </textarea>
-          </mat-form-field>
-        </div>
-        </div>
-
-  </mat-expansion-panel>
-</mat-accordion>
+                  <div mat-line>{{ attachName }}</div>
+                  <mat-icon>insert_drive_file</mat-icon>
+                </mat-list-item>
+              </mat-list>
+            </div>
 </div>
-<mat-toolbar class="bottom">
-  <div class="button-row w-100 text-center">
-    <button mat-raised-button class="btn-success w-50" type="submit">
-      ارسال
-    </button>
-  </div>
-</mat-toolbar>
-</form>
+          <div class="col-sm-12 col-md-12 col-lg-12 position-relative">
+            <mat-form-field class="w-100">
+              <mat-label>ملاحظات</mat-label>
+              <textarea
+              #area
+                formControlName="comment"
+                matInput
+                placeholder="ملاحظات"
+                rows="5"
+              >
+              </textarea>
+            </mat-form-field>
+<div class="btn-box">
+  <button mat-raised-button class="bg-success text-white" type='button' (click)="addComment($event)" [disabled]="area.value==''">اضافة</button>
+</div>
+            <div class="example-container mat-elevation-z8 mt-3" #TABLE>
+              <mat-table [dataSource]="dataSourceComment" matSort #table >
+                <ng-container matColumnDef="comment">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    الملاحظات</mat-header-cell
+                  >
+                  <mat-cell
+                    *matCellDef="let element"
+                  >
+                    {{
+                      element.comment?.length > 50
+                        ? (element.comment | slice : 0 : 50) + " ..."
+                        : element.comment
+                    }}
 
+
+
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="creationDate">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    تاريخ الانشاء </mat-header-cell
+                  >
+                  <mat-cell
+                    *matCellDef="let element"
+                    data-label="Creation date"
+                  >
+                    {{ element.creationDate | date : "medium" }}
+                  </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="createdBy">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    انشأ  بواسطة</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let element">
+                    {{ element.createdBy }}
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="createdByTeam">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    أنشأ بواسطة المجموعة </mat-header-cell
+                  >
+                  <mat-cell
+                    *matCellDef="let element"
+                    data-label="Created by team"
+                  >
+                    {{ element.createdByTeam}}
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="noData">
+                  <mat-footer-cell *matFooterCellDef colspan="1">
+                    No Data ...
+                  </mat-footer-cell>
+                </ng-container>
+
+
+                <mat-header-row
+                  *matHeaderRowDef="displayedCommentColumns"
+                ></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedCommentColumns">
+                </mat-row>
+              </mat-table>
+
+              <mat-paginator
+                [pageSizeOptions]="[30, 50, 100]"
+                [pageSize]="30"
+              ></mat-paginator>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <mat-toolbar class="bottom">
+    <div class="button-row w-100 text-center">
+      <button mat-raised-button class="btn-success w-50" type="submit">
+        ارسال
+      </button>
+    </div>
+  </mat-toolbar>
+</form>
