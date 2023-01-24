@@ -306,7 +306,8 @@ Ids=[];
     this.router.navigate(['/cover']);
     this.Ids=[];
   }
-  exportMissionFormPdf(){
+  exportMissionFormPdf(element){
+    this.missionService.missionForm=element;
   this.router.navigate(['/missionform'])
   }
   exportExpensesPdf(){

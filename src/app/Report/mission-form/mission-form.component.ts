@@ -1,6 +1,7 @@
 import { Component,OnInit} from '@angular/core';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
+import { MissionService } from 'src/app/shared/service/mission.service';
 
 @Component({
   selector: 'app-mission-form',
@@ -9,10 +10,21 @@ import html2canvas from 'html2canvas';
 })
 export class MissionFormComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private missionService:MissionService) { }
+mision:any;
+misionDuration:any;
+x:any;
   ngOnInit(): void {
+
+    this.mision=this.missionService.missionForm;
+    this.x=this.missionService.missionForm.startDateMission.getDate;
+    console.log(this.x,"xxx")
+    console.log(this.missionService.missionForm.startDateMission);
+    console.log(this.missionService.missionForm.endDateMission);
+    //this.misionDuration=this.missionService.missionForm.endDateMission-this.missionService.missionForm.startDateMission;
+    console.log(this.misionDuration,"mission");
     
+
   }
 
 
