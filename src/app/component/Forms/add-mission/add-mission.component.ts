@@ -87,12 +87,15 @@ export class AddMissionComponent implements OnInit {
       if (res.status == true) {
         if (this.file != null) {
           this.missionService.upload(this.file, res.id).subscribe((res) => {
-            console.log(res.status);
+          //  console.log(res.status);
+          if(res.status==true)
+          {     this.toastr.success(':added successfully');
+          this.service.form.reset();
+          this.dialogRef.close('save');}
+          else{this.toastr.warning(':failed to upload file');}
           });
         }
-        this.toastr.success(':added successfully');
-        this.service.form.reset();
-        this.dialogRef.close('save');
+   
       } else {
         this.toastr.warning(':failed');
       }
