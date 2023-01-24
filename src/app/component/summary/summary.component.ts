@@ -420,11 +420,7 @@ exportAttach(row:any){
     }
     this.selection.select(...this.dataSource.data);
     this.Ids = [];
-    this.dataSource.data.forEach((element: any) => {
-      if (element.status == 'approve') {
-        this.Ids.push(element.id);
-      }
-    });
+   
   } //end of toggleAll
 
   /** The label for the checkbox on the passed row */
@@ -454,56 +450,48 @@ exportAttach(row:any){
 
   exportPdf() {
     this.Ids = [];
-    //without choose rows or select all
+    //without choose rows or select all and click on download
     if (this.selection.selected.length == 0) {
       this.toastr.warning('Please select approved row');
       return
     }
 
     else {
+     // when select all
       if (this.isAllSelected()) {
-
          this.dataSource.data.forEach( (element:any) => {
             if(element.status=="approve"){
               this.Ids.push(element.id)
               this.Isnotapprove=false;
               this.warning=false;
-
             }
+            //not aprove
             else{
               this.Isnotapprove=true;
               this.warning=true;
-
-
             }
-
             })
 
-            if(this.Isnotapprove && this.warning){
-              this.toastr.warning(`some rows is not approved`,'PLease select approved row');
-              return
-            }
-            else{
+            // if(this.Isnotapprove && this.warning){
+            //   this.toastr.warning(`some rows is not approved`,'PLease select approved row');
+            //   return
+            // }
+            // else{
               this.missionService.CoverReportsIds = this.Ids;
               this.router.navigate(['/cover']);
-            }
-
+            //}
       }
+      //select specific rows
       else{
-
-
        this.selection.selected.forEach( (element:any) => {
         if(element.status=="approve"){
           this.Ids.push(element.id)
           this.Isnotapprove=false;
           this.warning=false;
-
         }
         else{
           this.Isnotapprove=true;
           this.warning=true;
-
-
         }
 
         })
