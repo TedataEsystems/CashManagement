@@ -195,7 +195,7 @@ export class EditComponent implements OnInit {
       this.attachName = '';
       this.service.form['controls']['attachFile'].setValue('');
 
-      console.log("hh")});
+    });
 
   }
 }
