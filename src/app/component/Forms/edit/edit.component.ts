@@ -183,7 +183,7 @@ export class EditComponent implements OnInit {
   handleFileInputChange(event){
     this.file = event.target.files[0];
     this.attachName = event.target.files[0].name;
-   this.service.form['controls']['attachFile'].setValue(this.fileName);
+   this.service.form['controls']['attachFile'].setValue(this.attachName);
 
   }
 
