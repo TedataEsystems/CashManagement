@@ -33,6 +33,10 @@ export class EditComponent implements OnInit {
   attachId:number;
   attachName:string;
   ngOnInit() {
+    this.attachId= this.data.attachFileId;
+  this.attachName=this.data.attachFilename;
+  console.log(this.attachId,"attachid");
+  console.log(this.data.attachFileId,"attchfileid");
     this.service.initializeFormGroup();
     this.missionService.getLists().subscribe(res => {
       if (res.status == true) {
@@ -104,9 +108,7 @@ export class EditComponent implements OnInit {
         //this.service.form.controls['attachFileId'].setValue(this.data.attachFileId);
       }//end of if data
     })//end of subscribe
-  this.attachId= this.data.attachFileId;
-  this.attachName=this.data.attachFilename;
-  console.log(this.attachName);
+
   }
 
 
@@ -140,6 +142,9 @@ export class EditComponent implements OnInit {
       missionTypeId: this.service.form.value.missionTypeId,
       userId: this.service.form.value.userId
     }//end of object
+    // this.attachId!=0  mean not edit in attach file and not remove it
+    //this.attachId==0&&this.file==null  mean remove file but not add anther one
+     if(this.attachId!=0 ||this.attachId==0&&this.file==null){
     this.missionService.updateMission(mission).subscribe(res => {
       if (res.status == true) {
         this.toastr.success("updated successfully");
@@ -150,7 +155,27 @@ export class EditComponent implements OnInit {
         this.toastr.warning("updated failed");
       }
     })
+  }
+  //delete file and add new one
+  else if (this.file!=null && this.attachId==0)
+  {[
+    this.missionService.updateMission(mission).subscribe(res => {
+      if (res.status == true) {
+        this.missionService.upload(this.file,res.id).subscribe(res=>{
+          if(res.status==true){
+            this.toastr.success("updated successfully");
+            this.service.form.reset();
+            this.dialogRef.close('save');
+          }
+          else{this.toastr.warning("updated file failed ");}
+        });
 
+      }
+      else {
+        this.toastr.warning("updated failed");
+      }
+    })
+  ]}
     this.onClose();
     this.dialogRef.close('save');
 
@@ -160,9 +185,6 @@ export class EditComponent implements OnInit {
   onClear() {
     this.service.form.reset();
     this.service.initializeFormGroup();
-    // this.service.form.reset();
-    // this.service.initializeFormGroup();
-    // this.notificationService.success(' Submitted successfully');
   }
 
 
@@ -186,16 +208,19 @@ export class EditComponent implements OnInit {
    this.service.form['controls']['attachFile'].setValue(this.attachName);
 
   }
-
-
-
   removeFile(id:number) {
     this.missionService.DeleteAttachFile(id).subscribe(res=>{
-      this.file = null;
-      this.attachName = '';
-      this.service.form['controls']['attachFile'].setValue('');
-
+   if(res.status==true)
+   {
+    this.file = null;
+    this.attachName = '';
+    this.attachId=0;
+    this.service.form['controls']['attachFile'].setValue('');
+   }
     });
 
-  }
+
+  }//remove
+
+
 }

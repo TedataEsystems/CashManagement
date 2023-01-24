@@ -22,18 +22,6 @@ export class AddUserComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<AddUserComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private toastr: ToastrService, private userService: UserService, private _router: Router) {
   }
   newuser1:User=new User();
-  // newUser = {
-  //   id:0,
-  //   name: "",
-  //   team: "",
-  //   jobNumber: 0,
-  //   jobDegreeid: 0,
-  //   roleId: 0,
-  //   createdBy: "",
-  //   updatedBy: ""
-
-
-  // };
   userRoles: UserolesList[] = [];
   jobDegrees: JobDegree[] = [];
   form: FormGroup = new FormGroup({
@@ -48,7 +36,6 @@ export class AddUserComponent implements OnInit {
 
   })
   user = { jobNum: "" }
-
   ngOnInit() {
     if (this.data.dialogTitle !== "اضافة جديد") {
       this.dialogTitle = 'تعديل';
@@ -62,7 +49,6 @@ export class AddUserComponent implements OnInit {
       this.userRoles = response?.data.userRoles;
     });
     if (this.data) {
-
       this.form.controls['Id'].setValue(this.data.id);
       this.form.controls['jobNumber'].setValue(this.data.jobNumber);
       this.form.controls['name'].setValue(this.data.name);
@@ -70,16 +56,8 @@ export class AddUserComponent implements OnInit {
       this.form.controls['jobDegree'].setValue(this.data.jobDegreeId);
       this.form.controls['userRole'].setValue(this.data.roleId);
       this.form.controls['userName'].setValue(this.data.userName);
-      //console.log(this.data);
-
-
     }
   }
-
-
-
-
-
   onSubmit() {
     if (this.form.invalid) {
       return;
@@ -105,21 +83,14 @@ export class AddUserComponent implements OnInit {
       this.newuser1.jobDegreeid = this.form.value.jobDegree;
       this.userService.updateUser(this.newuser1).subscribe(res=>{console.log(res,"from uodate")});
     }
-
-
     this.toastr.success(' Submitted successfully');
     this.onClose();
     this.dialogRef.close('save');
     this._router.navigate(['/user'] );
-
   }
-
   onClose() {
-
     this.form.reset();
-
     this.dialogRef.close('save');
-
   }
   onCheckJobNumIsalreadysign() {
     this.user.jobNum = this.form.value.jobNumber;
@@ -136,6 +107,4 @@ export class AddUserComponent implements OnInit {
       }
     });
   }
-
-
 }

@@ -521,9 +521,9 @@ exportAttach(row:any){
 
     this.Ids = [];
   }
-
-  exportMissionFormPdf() {
-    this.router.navigate(['/missionform']);
+  exportMissionFormPdf(element){
+    this.missionService.missionForm=element;
+  this.router.navigate(['/missionform'])
   }
   exportExpensesPdf() {
     this.router.navigate(['/expenses']);

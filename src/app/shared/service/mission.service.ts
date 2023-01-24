@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/commo
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { MissionList } from 'src/app/model/mission-list';
 
 import { environment } from 'src/environments/environment';
 
@@ -76,14 +77,16 @@ return this.httpClient.get<any>(`${this.url}/GetLists`);
   {
    return this.httpClient.get<any>(`${this.url}/DownloadFile/`+id,
   // {responseType: 'blob'});
-  {
-    headers: new HttpHeaders({'Content-Type': 'application/json'}),
-    observe: 'response'
-  })
+  // {
+  //   headers: new HttpHeaders({'Content-Type': 'application/json'}),
+  //   observe: 'response'
+  // }
+  )
   }
   DeleteAttachFile(id:number):Observable<any>
   {
     return this.httpClient.delete<any>(`${this.url}/DeleteFile/`+id);
     }
+    missionForm:MissionList;
 }//end of service
 
