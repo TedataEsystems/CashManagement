@@ -42,9 +42,9 @@
               <th scope="row" class="text-left"> <span class="answer"></span> <label> : Department </label> </th>
             </tr>
             <tr>
-              <th scope="row" class="text-right"> تاريخ المأمورية : <span class="answer">{{mision.startDateMission}}</span></th>
+              <th scope="row" class="text-right"> تاريخ المأمورية : <span class="answer">{{mision.startDateMission|date}}</span></th>
 
-              <th scope="row" class="text-left"><span class="answer">{{mision.startDateMission}}</span> <label> : Date of Mission </label> </th>
+              <th scope="row" class="text-left"><span class="answer">{{mision.startDateMission|date}}</span> <label> : Date of Mission </label> </th>
             </tr>
             <tr>
               <th scope="row" class="text-right"> مكان المأمورية : <span class="answer">{{mision.missionPlace}}</span></th>
@@ -57,9 +57,9 @@
               <th scope="row" class="text-left"><span class="answer">{{mision.missionPurpose}}</span> <label> : Mission Description  </label></th>
             </tr>
             <tr>
-              <th scope="row" class="text-right"> مدة المأمورية : <span class="answer">{{misionDuration|date}}</span></th>
+              <th scope="row" class="text-right"> مدة المأمورية : <span class="answer">{{misionDurationAr}}</span></th>
 
-              <th scope="row" class="text-left"> <span class="answer">{{misionDuration|date}}</span> <label> : Time of the Mission </label></th>
+              <th scope="row" class="text-left"> <span class="answer">{{misionDurationEn}}</span> <label> : Time of the Mission </label></th>
             </tr>
             <tr>
               <th scope="row" class="text-right">طلب اذن  : <span class="answer">{{mision.permissionRequest}}</span></th>
