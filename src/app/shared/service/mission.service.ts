@@ -34,6 +34,7 @@ private url:string=`${environment.apiUrl}Mission`;
   upload(file:any,id:Number):Observable<any>
   {
     const formData = new FormData();
+    console.log(file);
     formData.append('file',file,file.name);
    return this.httpClient.post<any>(`${this.url}/UploadedFile/`+id,formData);
   }
@@ -73,15 +74,10 @@ return this.httpClient.get<any>(`${this.url}/GetLists`);
     console.log("ExpensesFormReport",id)
      return this.httpClient.get<any>(`${this.url}/ExpensesFormReport/`+id);
   }
-  DownloadAttach(id:number):any
+  DownloadAttach(id:number):Observable<Blob>
   {
-   return this.httpClient.get<any>(`${this.url}/DownloadFile/`+id,
-  // {responseType: 'blob'});
-  // {
-  //   headers: new HttpHeaders({'Content-Type': 'application/json'}),
-  //   observe: 'response'
-  // }
-  )
+   return this.httpClient.get(`${this.url}/DownloadFile/`+id,
+   {responseType: 'blob'});
   }
   DeleteAttachFile(id:number):Observable<any>
   {

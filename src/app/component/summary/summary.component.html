@@ -525,7 +525,7 @@
         >
         <mat-cell *matCellDef="let element,let row">
           <!-- <button mat-stroked-button class="mx-1" (click)="exportAttach(element.attachFileId)"> -->
-            <button mat-stroked-button class="mx-1" (click)="exportAttach(row)" [disabled]="element.attachFilename==null">
+            <button mat-stroked-button class="mx-1" (click)="exportAttach(row)">
             <mat-icon class="">download</mat-icon>
             <span class="txt mr-1"> تنزيل  </span>
           </button>

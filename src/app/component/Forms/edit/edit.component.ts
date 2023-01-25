@@ -122,6 +122,7 @@ Available=false;
 
   onSubmit() {
     if(!this.service.form.valid){
+     // console.log("not");
       return;
     }
     let mission = {
@@ -150,23 +151,39 @@ Available=false;
       missionTypeId: this.service.form.value.missionTypeId,
       userId: this.service.form.value.userId
     }//end of object
-    // this.attachId!=0  mean not edit in attach file and not remove it
-    //this.attachId==0&&this.file==null  mean remove file but not add anther one
-     if(this.attachId!=0 ||this.attachId==0&&this.file==null){
-    this.missionService.updateMission(mission).subscribe(res => {
-      if (res.status == true) {
-        this.toastr.success("updated successfully");
-        this.service.form.reset();
-        this.dialogRef.close('save');
-      }
-      else {
-        this.toastr.warning("updated failed");
-      }
-    })
-  }
+    // this.attachId!=0  mean not edit in attach file and not remove it 
+    //update file without remove it
+  //    if(this.attachId!=0||this.file!=null){
+  //   this.missionService.updateMission(mission).subscribe(res => {
+  //     if (res.status == true) {
+  //       this.toastr.success("updated successfully");
+  //       this.service.form.reset();
+  //       this.dialogRef.close('save');
+  //     }
+  //     else {
+  //       this.toastr.warning("updated failed");
+  //     }
+  //   })
+  // }
   //delete file and add new one
-  else if (this.file!=null && this.attachId==0)
-  {[
+  // else if (this.file!=null && this.attachId==0)
+  // {[
+    //not upate in file 
+    if(this.file==null)
+    {
+      this.missionService.updateMission(mission).subscribe(res => {
+            if (res.status == true) {
+              this.toastr.success("updated successfully");
+              this.service.form.reset();
+              this.dialogRef.close('save');
+            }
+            else {
+              this.toastr.warning("updated failed");
+            }
+          })
+    }
+    //change exsit file
+   else {
     this.missionService.updateMission(mission).subscribe(res => {
       if (res.status == true) {
         this.missionService.upload(this.file,res.id).subscribe(res=>{
@@ -177,13 +194,15 @@ Available=false;
           }
           else{this.toastr.warning("updated file failed ");}
         });
-
+       
       }
       else {
         this.toastr.warning("updated failed");
       }
+     
     })
-  ]}
+  }
+  //]}
     this.onClose();
     this.dialogRef.close('save');
 

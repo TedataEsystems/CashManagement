@@ -133,6 +133,7 @@ warning=false;
         this.dataSource = new MatTableDataSource<any>(this.missions);
         this.dataSource._updateChangeSubscription();
         this.dataSource.paginator = this.paginator as MatPaginator;
+        console.log("closer2");
       }); //end of subscribe
     setTimeout(() => {
       this.loader = false;
@@ -228,7 +229,9 @@ warning=false;
       })
       .afterClosed()
       .subscribe((result) => {
+        console.log("close");
         this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
+        console.log("close3");
       });
   }
 
@@ -361,34 +364,47 @@ warning=false;
   // }
 
 
-exportAttach(row:any){
-  console.log('file:',row)
-  var mimeVal=""
-  var extArr= row.attachFilename.split('.')
-  var extVal=extArr[1];
- for(let i=0;i<mimetype.length;i++){
-   if(extVal.toLowerCase()==mimetype[i].ext.toLowerCase()){
-     mimeVal= mimetype[i].fileType;
-     continue;
-   }
- }
- this.missionService.DownloadAttach(row.attachFileId).subscribe(res=>{
-   const blob = new Blob([res],{ type : mimeVal });
-   const file= new File([blob], row.attachFilename,{ type : mimeVal });
-   console.log('file:',file)
-  saveAs(blob,file.name)
+// exportAttach(row:any){
+//   console.log('file:',row)
+//   var mimeVal=""
+//   var extArr= row.attachFilename.split('.')
+//   var extVal=extArr[1];
+//  for(let i=0;i<mimetype.length;i++){
+//    if(extVal.toLowerCase()==mimetype[i].ext.toLowerCase()){
+//      mimeVal= mimetype[i].fileType;
+//      continue;
+//    }
+//  }
+//  this.missionService.DownloadAttach(row.attachFileId).subscribe(res=>{
+//    const blob = new Blob([res],{ type : mimeVal });
+//    const file= new File([blob], row.attachFilename,{ type : mimeVal });
+//    console.log('file:',file)
+//   saveAs(blob,file.name)
 
- },err=>{
-   if(err.status==401)
-   this.router.navigate(['/login'], { relativeTo: this.route });
-   else
-   this.toastr.warning(" fail in download file !!")  ;
+//  },err=>{
+//    if(err.status==401)
+//    this.router.navigate(['/login'], { relativeTo: this.route });
+//    else
+//    this.toastr.warning(" fail in download file !!")  ;
 
- });
+//  });
+// }
+
+
+exportAttach(row:any)
+{console.log("click",row.attachFileId);
+  this.missionService.DownloadAttach(row.attachFileId).subscribe(res=>
+    {
+      console.log(res.type,"tttttyyypppee");
+      console.log(res)
+      const blob=new Blob([res],{type:res.type});
+      const url=window.URL.createObjectURL(blob);
+      window.open(url);
+
+    console.log("dowloads");
+    
+    });
 }
-
-
-
 
 
 
@@ -419,7 +435,7 @@ exportAttach(row:any){
       return;
     }
     this.selection.select(...this.dataSource.data);
-    this.Ids = [];
+    //this.Ids = [];
    
   } //end of toggleAll
 
@@ -452,9 +468,15 @@ exportAttach(row:any){
     this.Ids = [];
     //without choose rows or select all and click on download
     if (this.selection.selected.length == 0) {
-      this.toastr.warning('Please select approved row');
-      return
+     // this.toastr.warning('Please select approved row');
+   //   return
+   this.dataSource.data.forEach( (element:any) => {
+    if(element.status=="approve"){
+      this.Ids.push(element.id)
     }
+      this.missionService.CoverReportsIds = this.Ids;
+              this.router.navigate(['/cover']);
+    })}
 
     else {
      // when select all
@@ -462,24 +484,10 @@ exportAttach(row:any){
          this.dataSource.data.forEach( (element:any) => {
             if(element.status=="approve"){
               this.Ids.push(element.id)
-              this.Isnotapprove=false;
-              this.warning=false;
-            }
-            //not aprove
-            else{
-              this.Isnotapprove=true;
-              this.warning=true;
             }
             })
-
-            // if(this.Isnotapprove && this.warning){
-            //   this.toastr.warning(`some rows is not approved`,'PLease select approved row');
-            //   return
-            // }
-            // else{
               this.missionService.CoverReportsIds = this.Ids;
               this.router.navigate(['/cover']);
-            //}
       }
       //select specific rows
       else{
