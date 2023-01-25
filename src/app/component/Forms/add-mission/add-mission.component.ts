@@ -71,7 +71,7 @@ export class AddMissionComponent implements OnInit {
       missionTypeCost: this.service.form.value.missionTypeCost,
       permissionRequest: this.service.form.value.permissionRequest,
       permissionDuration: this.service.form.value.permissionDuration,
-      comment: this.service.form.value.comment,
+      // comment: this.service.form.value.comment,
       //attachFile: this.file,
       file: '',
       creationDate: this.service.form.value.creationDate,
