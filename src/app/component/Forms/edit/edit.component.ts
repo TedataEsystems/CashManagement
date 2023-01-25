@@ -45,8 +45,8 @@ Available=false;
   ngOnInit() {
     this.attachId= this.data.attachFileId;
   this.attachName=this.data.attachFilename;
-  console.log(this.attachId,"attachid");
-  console.log(this.data.attachFileId,"attchfileid");
+  //console.log(this.attachId,"attachid");
+  //console.log(this.data.attachFileId,"attchfileid");
     this.service.initializeFormGroup();
     this.missionService.getLists().subscribe(res => {
       if (res.status == true) {
@@ -285,7 +285,7 @@ e.stopPropagation()
    {
     this.file = null;
     this.attachName = '';
-    this.attachId=0;
+   // this.attachId=0;
     this.service.form['controls']['attachFile'].setValue('');
    }
     });
