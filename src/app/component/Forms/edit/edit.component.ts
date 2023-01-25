@@ -9,6 +9,7 @@ import { Status } from 'src/app/model/status';
 import { UserList } from 'src/app/model/user-list';
 import { MissionFormService } from 'src/app/shared/service/mission-form.service';
 import { MissionService } from 'src/app/shared/service/mission.service';
+import { CommentService } from 'src/app/shared/service/comment.service';
 
 @Component({
   selector: 'app-edit',
@@ -27,6 +28,7 @@ export class EditComponent implements OnInit {
   userList: UserList[] = [];
   statusList: Status[] = [];
   missionTypeList: MissionType[] = [];
+  commentList:Comment[]=[];
   comment:string='';
   creationDate:string='';
   createdBy:string='';
@@ -35,7 +37,7 @@ Available=false;
   displayedCommentColumns: string[] = ['comment', 'creationDate', 'createdBy','createdByTeam' ];
   dataSourceComment = new MatTableDataSource<any>();
   constructor(public dialogRef: MatDialogRef<EditComponent>, public service: MissionFormService,
-    private missionService: MissionService, private toastr: ToastrService,
+    private missionService: MissionService, private toastr: ToastrService,private commentService:CommentService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
   attachId:number;
@@ -116,7 +118,15 @@ Available=false;
         //this.service.form.controls['attachFileId'].setValue(this.data.attachFileId);
       }//end of if data
     })//end of subscribe
+    this.commentService.getComments(this.data.id).subscribe(res=>{
+      if(res.status)
+      {
+        this.commentList=res.comments
+        this.dataSourceComment = new MatTableDataSource<any>(this.commentList);
 
+      }
+
+    })
   }
 
 
@@ -151,46 +161,68 @@ Available=false;
       missionTypeId: this.service.form.value.missionTypeId,
       userId: this.service.form.value.userId
     }//end of object
-    // this.attachId!=0  mean not edit in attach file and not remove it 
-    //update file without remove it
-  //    if(this.attachId!=0||this.file!=null){
-  //   this.missionService.updateMission(mission).subscribe(res => {
-  //     if (res.status == true) {
-  //       this.toastr.success("updated successfully");
-  //       this.service.form.reset();
-  //       this.dialogRef.close('save');
-  //     }
-  //     else {
-  //       this.toastr.warning("updated failed");
-  //     }
-  //   })
-  // }
-  //delete file and add new one
-  // else if (this.file!=null && this.attachId==0)
-  // {[
-    //not upate in file 
-    if(this.file==null)
-    {
-      this.missionService.updateMission(mission).subscribe(res => {
-            if (res.status == true) {
-              this.toastr.success("updated successfully");
-              this.service.form.reset();
-              this.dialogRef.close('save');
-            }
-            else {
-              this.toastr.warning("updated failed");
-            }
-          })
+    let comment={
+      missionId: this.service.form.value.id,
+      comment: this.service.form.value.comment
     }
-    //change exsit file
-   else {
+
+    // this.attachId!=0  mean not edit in attach file and not remove it
+    //this.attachId==0&&this.file==null  mean remove file but not add anther one
+     if(this.attachId!=0 ||this.attachId==0&&this.file==null){
+    this.missionService.updateMission(mission).subscribe(res => {
+      if (res.status == true) {
+        if(comment.comment!=null&&comment.comment!="")
+        {
+          //Add comment
+            this.commentService.addComment(comment).subscribe(res=>{
+              if(res.status)
+              {
+                this.toastr.success("updated successfully");
+                this.service.form.reset();
+                this.dialogRef.close('save');
+              }
+              else{this.toastr.warning("Add comment failed");}
+              
+            })
+        }
+        else{
+          this.toastr.success("updated successfully");
+          this.service.form.reset();
+          this.dialogRef.close('save');
+        }
+      }
+      else {
+        this.toastr.warning("updated failed");
+      }
+    })
+  }
+  //delete file and add new one
+  else if (this.file!=null && this.attachId==0)
+  {[
     this.missionService.updateMission(mission).subscribe(res => {
       if (res.status == true) {
         this.missionService.upload(this.file,res.id).subscribe(res=>{
           if(res.status==true){
-            this.toastr.success("updated successfully");
-            this.service.form.reset();
-            this.dialogRef.close('save');
+            if(comment.comment!=null&&comment.comment!="")
+            {
+              //Add comment
+                this.commentService.addComment(comment).subscribe(res=>{
+                  if(res.status)
+                  {
+                    this.toastr.success("updated successfully");
+                    this.service.form.reset();
+                    this.dialogRef.close('save');
+                  }
+                  else{this.toastr.warning("Add comment failed");}
+                  
+                })
+            }
+            else{
+              this.toastr.success("updated successfully");
+              this.service.form.reset();
+              this.dialogRef.close('save');
+            }
+           
           }
           else{this.toastr.warning("updated file failed ");}
         });

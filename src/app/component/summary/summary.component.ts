@@ -324,7 +324,7 @@ warning=false;
     );
     this.advSearchMission.comment = this.form.value.comment;
 
-    // this.advSearchMission.id = Number(this.form.value.id);
+     this.advSearchMission.id = Number(this.form.value.id);
     this.advSearchMission.companyType = this.form.value.companyType;
     this.advSearchMission.userName = this.form.value.userName;
     this.advSearchMission.missionPlace = this.form.value.missionPlace;

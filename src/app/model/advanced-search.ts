@@ -16,6 +16,7 @@ export interface AdvancedSearch {
 
      
      jobNumber :number,
+     id :number,
      missionPurpose :string,
      noOfNights :number,
      missionTypeCost :number,
