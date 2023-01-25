@@ -168,7 +168,7 @@ Available=false;
 
     // this.attachId!=0  mean not edit in attach file and not remove it
     //this.attachId==0&&this.file==null  mean remove file but not add anther one
-     if(this.attachId!=0 ||this.attachId==0&&this.file==null){
+     if(this.file==null){
     this.missionService.updateMission(mission).subscribe(res => {
       if (res.status == true) {
         if(comment.comment!=null&&comment.comment!="")
@@ -197,8 +197,8 @@ Available=false;
     })
   }
   //delete file and add new one
-  else if (this.file!=null && this.attachId==0)
-  {[
+  else 
+  {
     this.missionService.updateMission(mission).subscribe(res => {
       if (res.status == true) {
         this.missionService.upload(this.file,res.id).subscribe(res=>{
