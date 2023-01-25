@@ -280,15 +280,15 @@ e.stopPropagation()
 
   }
   removeFile(id:number) {
-    this.missionService.DeleteAttachFile(id).subscribe(res=>{
-   if(res.status==true)
-   {
+   // this.missionService.DeleteAttachFile(id).subscribe(res=>{
+  // if(res.status==true)
+ //  {
     this.file = null;
     this.attachName = '';
    // this.attachId=0;
     this.service.form['controls']['attachFile'].setValue('');
-   }
-    });
+  // }
+   // });
 
 
   }//remove
