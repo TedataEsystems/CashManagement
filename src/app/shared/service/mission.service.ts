@@ -74,10 +74,12 @@ return this.httpClient.get<any>(`${this.url}/GetLists`);
     console.log("ExpensesFormReport",id)
      return this.httpClient.get<any>(`${this.url}/ExpensesFormReport/`+id);
   }
-  DownloadAttach(id:number):Observable<Blob>
+  DownloadAttach(id:number):Observable<any>
   {
-   return this.httpClient.get(`${this.url}/DownloadFile/`+id,
-   {responseType: 'blob'});
+    let x=this.httpClient.get(`${this.url}/DownloadFile/`+id);
+    console.log(x,"this is responce");
+   return this.httpClient.get(`${this.url}/DownloadFile/`+id);
+  //  {responseType: 'blob'});
   }
   DeleteAttachFile(id:number):Observable<any>
   {

@@ -48,7 +48,6 @@ export class AddMissionComponent implements OnInit {
   // On file Select
 
   onSubmit() {
-    debugger;
     if (!this.service.form.valid) {
       return;
     } //end of if
@@ -87,7 +86,6 @@ export class AddMissionComponent implements OnInit {
       if (res.status == true) {
         if (this.file != null) {
           this.missionService.upload(this.file, res.id).subscribe((res) => {
-          //  console.log(res.status);
           if(res.status==true)
           {     this.toastr.success(':added successfully');
           this.service.form.reset();
@@ -140,6 +138,11 @@ export class AddMissionComponent implements OnInit {
     this.file = event.target.files[0];
     this.fileName = event.target.files[0].name;
     this.service.form['controls']['attachFile'].setValue(this.fileName);
+   // const reader = new FileReader();
+    // reader.readAsDataURL(this.file);
+    // reader.onload = () => {
+    //     console.log(reader.result,"reader");
+    // };
 
   }
   removeFile() {

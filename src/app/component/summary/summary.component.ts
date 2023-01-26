@@ -346,63 +346,21 @@ warning=false;
         this.dataSource.paginator = this.paginator as MatPaginator;
         this.dataSource.sort = this.sort as MatSort;
         setTimeout(() => (this.loader = false), 3000);
-        // this.form.reset();
       });
   }
-  ////download attach file
-  // exportAttach(id: any) {
-  //   this.missionService.DownloadAttach(id).subscribe((response: any) => {
-  //     let blob: any = new Blob([response], {
-  //       type: 'text/json; charset=utf-8',
-  //     });
-  //     const url = window.URL.createObjectURL(blob);
-  //     //window.open(url);
-  //     saveAs(blob, 'employees.json');
-  //   }),
-  //     (error: any) => console.log('Error downloading the file'),
-  //     () => console.info('File downloaded successfully');
-  // }
-
-
-// exportAttach(row:any){
-//   console.log('file:',row)
-//   var mimeVal=""
-//   var extArr= row.attachFilename.split('.')
-//   var extVal=extArr[1];
-//  for(let i=0;i<mimetype.length;i++){
-//    if(extVal.toLowerCase()==mimetype[i].ext.toLowerCase()){
-//      mimeVal= mimetype[i].fileType;
-//      continue;
-//    }
-//  }
-//  this.missionService.DownloadAttach(row.attachFileId).subscribe(res=>{
-//    const blob = new Blob([res],{ type : mimeVal });
-//    const file= new File([blob], row.attachFilename,{ type : mimeVal });
-//    console.log('file:',file)
-//   saveAs(blob,file.name)
-
-//  },err=>{
-//    if(err.status==401)
-//    this.router.navigate(['/login'], { relativeTo: this.route });
-//    else
-//    this.toastr.warning(" fail in download file !!")  ;
-
-//  });
-// }
-
-
 exportAttach(row:any)
-{console.log("click",row.attachFileId);
+{
   this.missionService.DownloadAttach(row.attachFileId).subscribe(res=>
     {
-      console.log(res.type,"tttttyyypppee");
-      console.log(res)
-      const blob=new Blob([res],{type:res.type});
-      const url=window.URL.createObjectURL(blob);
-      window.open(url);
-
-    console.log("dowloads");
-    
+    const linkSource =
+    'data:'+res.type+';base64,' +res.data;
+    console.log('data:'+res.type+';base64,' +res.data,"f");
+  const downloadLink = document.createElement('a');
+  const fileName = res.name;
+  downloadLink.href = linkSource;
+  downloadLink.download = fileName;
+  downloadLink.click();
+   
     });
 }
 
@@ -448,21 +406,6 @@ exportAttach(row:any)
       row.id + 1
     }`;
   }
-
-  // exportPdf(){
-  //   //without choose rows or select all
-  //   if(this.selection.selected.length==0){
-  //     this.Ids=[];
-  //      this.dataSource.data.forEach( (element:any) => {
-  //         if(element.status=="approve"){
-  //           this.Ids.push(element.id)}})
-  //         }
-  //         this.missionService.CoverReportsIds=this.Ids;
-  //   this.router.navigate(['/cover']);
-  //   this.Ids=[];
-  // }
-
-  // ------------test---------------------------//
 
   exportPdf() {
     this.Ids = [];

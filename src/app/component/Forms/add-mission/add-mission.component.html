@@ -272,6 +272,7 @@
           #f_input
           (change)="handleFileInputChange($event)" (click)="f_input.value=null"
         />
+        <!-- accept="image/png, image/jpeg ,application/vnd.ms-outlooK" -->
         <mat-error> * مطلوب </mat-error>
       </mat-form-field>
       <div class="box" *ngIf="fileName">
