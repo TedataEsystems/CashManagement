@@ -353,16 +353,17 @@
                 matInput
                 placeholder="ملاحظات"
                 rows="5"
+                (keydown.space)="$event.preventDefault()"
               >
               </textarea>
             </mat-form-field>
 <div class="btn-box">
-  <button mat-raised-button class="bg-success text-white" type='button' (click)="addComment($event)" [disabled]="area.value==''">اضافة</button>
+  <button mat-raised-button class="bg-success text-white" type='button' (click)="addComment($event)" [disabled]="!area.value">اضافة</button>
 </div>
             <div class="example-container mat-elevation-z8 mt-3" #TABLE>
-              <mat-table [dataSource]="dataSourceComment" matSort #table >
+              <mat-table [dataSource]="dataSourceComment"  #table >
                 <ng-container matColumnDef="comment">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <mat-header-cell *matHeaderCellDef >
                     الملاحظات</mat-header-cell
                   >
                   <mat-cell
@@ -377,9 +378,10 @@
 
 
                   </mat-cell>
+
                 </ng-container>
                 <ng-container matColumnDef="creationDate">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <mat-header-cell *matHeaderCellDef >
                     تاريخ الانشاء </mat-header-cell
                   >
                   <mat-cell
@@ -388,18 +390,20 @@
                   >
                     {{ element.creationDate | date : "medium" }}
                   </mat-cell>
+
                 </ng-container>
 
                 <ng-container matColumnDef="createdBy">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <mat-header-cell *matHeaderCellDef >
                     انشأ  بواسطة</mat-header-cell
                   >
                   <mat-cell *matCellDef="let element">
                     {{ element.createdBy }}
                   </mat-cell>
+
                 </ng-container>
                 <ng-container matColumnDef="createdByTeam">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <mat-header-cell *matHeaderCellDef >
                     أنشأ بواسطة المجموعة </mat-header-cell
                   >
                   <mat-cell
@@ -408,6 +412,7 @@
                   >
                     {{ element.createdByTeam}}
                   </mat-cell>
+
                 </ng-container>
                 <ng-container matColumnDef="noData">
                   <mat-footer-cell *matFooterCellDef colspan="1">
@@ -422,11 +427,57 @@
                 <mat-row *matRowDef="let row; columns: displayedCommentColumns">
                 </mat-row>
               </mat-table>
+<!-- ----------------------------------------------second table ------------------------------------------->
 
-              <mat-paginator
-                [pageSizeOptions]="[30, 50, 100]"
-                [pageSize]="30"
-              ></mat-paginator>
+
+<mat-table [dataSource]="dataSourceComment1"  *ngIf="add && area.value!=''" >
+  <ng-container matColumnDef="comment">
+    <mat-cell
+      *matCellDef="let element"
+    >
+      {{
+        element.comment?.length > 50
+          ? (element.comment | slice : 0 : 50) + " ..."
+          : element.comment
+      }}
+
+
+
+    </mat-cell>
+
+  </ng-container>
+  <ng-container matColumnDef="creationDate">
+
+    <mat-cell
+      *matCellDef="let element"
+      data-label="Creation date"
+    >
+      {{ element.creationDate | date : "medium" }}
+    </mat-cell>
+
+  </ng-container>
+
+  <ng-container matColumnDef="createdBy">
+
+    <mat-cell *matCellDef="let element">
+      {{ element.createdBy }}
+    </mat-cell>
+
+  </ng-container>
+  <ng-container matColumnDef="createdByTeam">
+    <mat-cell
+      *matCellDef="let element"
+      data-label="Created by team"
+    >
+      {{ element.createdByTeam}}
+    </mat-cell>
+
+  </ng-container>
+
+  <mat-row *matRowDef="let row; columns: displayedCommentColumns">
+  </mat-row>
+</mat-table>
+
             </div>
           </div>
         </div>
