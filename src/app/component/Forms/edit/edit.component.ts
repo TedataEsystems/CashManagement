@@ -290,20 +290,24 @@ let commentsList=[{
   handleFileInputChange(event){
     this.file = event.target.files[0];
     this.attachName = event.target.files[0].name;
-   this.service.form['controls']['attachFile'].setValue(this.attachName);
+    var extensitin=this.attachName.split(".")[1];
+    if(extensitin.toLowerCase()=="msg"||extensitin.toLowerCase()=="jpeg"||extensitin.toLowerCase()=="jpg"||extensitin.toLowerCase()=="png"){
+      this.service.form['controls']['attachFile'].setValue(this.attachName);
+    }
+    else{
+      this.fileName ="";
+      this.attachName="";
+      this.service.form['controls']['attachFile'].setValue("");
+      this.toastr.warning("::Not Acceptable Extension only acceptable extenstion(jpeg,jpg,png,msg)");
+    }
+ 
+  // this.service.form['controls']['attachFile'].setValue(this.attachName);
 
   }
   removeFile(id:number) {
-   // this.missionService.DeleteAttachFile(id).subscribe(res=>{
-  // if(res.status==true)
- //  {
     this.file = null;
     this.attachName = '';
-   // this.attachId=0;
     this.service.form['controls']['attachFile'].setValue('');
-  // }
-   // });
-
 
   }//remove
 
