@@ -274,6 +274,7 @@
         />
         <!-- accept="image/png, image/jpeg ,application/vnd.ms-outlooK" -->
         <mat-error> * مطلوب </mat-error>
+        <mat-error  *ngIf="NotAcceptExtension==1">Not Acceptable Extension only acceotable extenstion(jpeg,jpg,png,msg)</mat-error>
       </mat-form-field>
       <div class="box" *ngIf="fileName">
         <mat-list>

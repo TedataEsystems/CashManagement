@@ -165,9 +165,7 @@ Available=false;
       missionId: this.service.form.value.id,
       comment: this.service.form.value.comment
     }
-
-    // this.attachId!=0  mean not edit in attach file and not remove it
-    //this.attachId==0&&this.file==null  mean remove file but not add anther one
+// sent from withput update in attach file so we will update mission only
      if(this.file==null){
     this.missionService.updateMission(mission).subscribe(res => {
       if (res.status == true) {
@@ -196,7 +194,7 @@ Available=false;
       }
     })
   }
-  //delete file and add new one
+  //click in delete file button and add new one or replace exsit file and add new one without click in remove button
   else 
   {
     this.missionService.updateMission(mission).subscribe(res => {

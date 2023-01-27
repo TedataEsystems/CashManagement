@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 import { Router } from '@angular/router';
+import { invalid } from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { MissionList } from 'src/app/model/mission-list';
 import { MissionType } from 'src/app/model/mission-type';
@@ -46,7 +47,7 @@ export class AddMissionComponent implements OnInit {
   }
 
   // On file Select
-
+  NotAcceptExtension:number=0;
   onSubmit() {
     if (!this.service.form.valid) {
       return;
@@ -81,23 +82,39 @@ export class AddMissionComponent implements OnInit {
       missionTypeId: this.service.form.value.missionTypeId,
       userId: this.service.form.value.userId,
     }; //end of mission
+var extensitin=this.fileName.split(".")[1];
+console.log(extensitin,"ex");
 
+if(extensitin.toLowerCase()=="msg"||extensitin.toLowerCase()=="jpeg"||extensitin.toLowerCase()=="jpg"||extensitin.toLowerCase()=="png"){
     this.missionService.addMission(missionn).subscribe((res) => {
       if (res.status == true) {
         if (this.file != null) {
           this.missionService.upload(this.file, res.id).subscribe((res) => {
           if(res.status==true)
           {     this.toastr.success(':added successfully');
+          this.NotAcceptExtension=0;
           this.service.form.reset();
           this.dialogRef.close('save');}
           else{this.toastr.warning(':failed to upload file');}
           });
         }
+        
    
       } else {
         this.toastr.warning(':failed');
       }
     });
+  }
+  //NotAcceptExtension
+  else
+  {
+    this.NotAcceptExtension=1;
+    this.removeFile();
+   //this.service.form.controls["attachFile"].setErrors({'incorrect': true});
+    if (!this.service.form.valid) {
+      return;
+    } 
+  }
     this.onClose();
     this.dialogRef.close('save');
     //this._router.navigate(['/summary'] );
