@@ -148,18 +148,20 @@ if(extensitin.toLowerCase()=="msg"||extensitin.toLowerCase()=="jpeg"||extensitin
 
 
 
-  // onChange(event) {
-  //   this.file = event.target.files[0];
-  // }
+  
   handleFileInputChange(event) {
     this.file = event.target.files[0];
     this.fileName = event.target.files[0].name;
-    this.service.form['controls']['attachFile'].setValue(this.fileName);
-   // const reader = new FileReader();
-    // reader.readAsDataURL(this.file);
-    // reader.onload = () => {
-    //     console.log(reader.result,"reader");
-    // };
+    var extensitin=this.fileName.split(".")[1];
+
+    if(extensitin.toLowerCase()=="msg"||extensitin.toLowerCase()=="jpeg"||extensitin.toLowerCase()=="jpg"||extensitin.toLowerCase()=="png"){
+      this.service.form['controls']['attachFile'].setValue(this.fileName);
+    }
+    else{
+      this.fileName ="";
+      this.toastr.warning("::Not Acceptable Extension only acceptable extenstion(jpeg,jpg,png,msg)");
+    }
+ 
 
   }
   removeFile() {
