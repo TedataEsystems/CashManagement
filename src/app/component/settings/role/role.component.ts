@@ -172,8 +172,9 @@ export class RoleComponent implements OnInit {
     // dialogGonfig.width = "50%";
     // dialogGonfig.panelClass = 'modals-dialog';
     //  this.dialog.open(AddRoleComponent,dialogGonfig)
-    //this.form.reset();
+
     this.isShowDiv = !this.isShowDiv;
+
   }
   onCreateUpdate() {
     this.isDisable = true;
@@ -205,6 +206,7 @@ export class RoleComponent implements OnInit {
   }
     }
 
+    this.form.reset();
     this.isShowDiv = false;
   }
   onChecknameIsalreadysign()

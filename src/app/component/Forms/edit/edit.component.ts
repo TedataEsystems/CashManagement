@@ -33,9 +33,11 @@ export class EditComponent implements OnInit {
   creationDate:string='';
   createdBy:string='';
   createdByTeam:string='';
-Available=false;
+Available=true;
+add=false;
   displayedCommentColumns: string[] = ['comment', 'creationDate', 'createdBy','createdByTeam' ];
   dataSourceComment = new MatTableDataSource<any>();
+  dataSourceComment1 = new MatTableDataSource<any>();
   constructor(public dialogRef: MatDialogRef<EditComponent>, public service: MissionFormService,
     private missionService: MissionService, private toastr: ToastrService,private commentService:CommentService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -180,7 +182,7 @@ Available=false;
                 this.dialogRef.close('save');
               }
               else{this.toastr.warning("Add comment failed");}
-              
+
             })
         }
         else{
@@ -212,7 +214,7 @@ Available=false;
                     this.dialogRef.close('save');
                   }
                   else{this.toastr.warning("Add comment failed");}
-                  
+
                 })
             }
             else{
@@ -220,19 +222,20 @@ Available=false;
               this.service.form.reset();
               this.dialogRef.close('save');
             }
-           
+
           }
           else{this.toastr.warning("updated file failed ");}
         });
-       
+
       }
       else {
         this.toastr.warning("updated failed");
       }
-     
+
     })
   }
   //]}
+  this.add=false;
     this.onClose();
     this.dialogRef.close('save');
 
@@ -253,18 +256,31 @@ Available=false;
   }
 //////////
 addComment(e){
-
+this.add=true;
 e.stopPropagation()
-  let commentsList=[{
+let commentsList=[{
     comment:this.service.form.value.comment,
     creationDate:this.service.form.value.creationDate,
     createdBy:this.service.form.value.createdBy,
     createdByTeam:''
   }]
 
-    this.dataSourceComment = new MatTableDataSource<any>(commentsList);
+    this.dataSourceComment1 = new MatTableDataSource<any>(commentsList);
 
 }
+
+
+// check(){
+//   if(this.service.form.value.comment.&&this.service.form.value.comment!="")
+//   {
+//     this.Available=true
+
+//   }
+//   else{
+//     this.Available=false;
+
+//   }
+// }
 
   search(){
     this.appear =!this.appear
