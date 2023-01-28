@@ -11,7 +11,6 @@ import { UserolesList } from 'src/app/model/useroles-list';
 import { DeleteService } from 'src/app/shared/service/delete.service';
 import { UserRoleService } from 'src/app/shared/service/user-role.service';
 import { AddRoleComponent } from '../Forms/add-role/add-role.component';
-
 @Component({
   selector: 'app-role',
   templateUrl: './role.component.html',
@@ -43,14 +42,13 @@ export class RoleComponent implements OnInit {
   // show: boolean = false;
   constructor(private titleService: Title,private toastr:ToastrService, private router: Router,
     private route: ActivatedRoute, private dailogService: DeleteService, private dialog:MatDialog,private userRoleService:UserRoleService
-  ) {
+  ) 
+  {
     this.titleService.setTitle('الصلاحيات');
-
   }
   form: FormGroup = new FormGroup({
     id: new FormControl(0),
     name: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
-
   })
   ngOnInit(): void {
     // if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
@@ -137,13 +135,11 @@ export class RoleComponent implements OnInit {
           this.getUserRoles(1,100,'',this.sortColumnDef,this.SortDirDef);
           this.form['controls']['name'].setValue('');
           this.form['controls']['id'].setValue(0);
-
         }
         else
         this.toastr.warning("failed");
     })//end of subscribe
       this.cancelEdit();
-
   }
   onDelete(r:any) {
  // if (localStorage.getItem("usernam") == "" || localStorage.getItem("usernam") == undefined || localStorage.getItem("usernam") == null) {
@@ -164,54 +160,34 @@ export class RoleComponent implements OnInit {
       //}
 
   }
-  addRole(){
-    // const dialogGonfig = new MatDialogConfig();
-    // dialogGonfig.data= {dialogTitle: " "};
-    // dialogGonfig.disableClose = true;
-    // dialogGonfig.autoFocus = true;
-    // dialogGonfig.width = "50%";
-    // dialogGonfig.panelClass = 'modals-dialog';
-    //  this.dialog.open(AddRoleComponent,dialogGonfig)
-
+  addRole() {
+    console.log("from add role method");
+    this.form.reset();
+    console.log("from add role method after reset form");
     this.isShowDiv = !this.isShowDiv;
-
   }
   onCreateUpdate() {
-    this.isDisable = true;
-    this.userRole.id = this.form.value.id;
-    this.userRole.name = this.form.value.name;
-    this.userRole.createdBy = localStorage.getItem('usernam') || '';
-    if (this.form.invalid || this.form.value.name == '') {
-      if (this.form.value.name == ' ')
-        this.setReactValue(Number(0), "");
-      this.isDisable = false;
-      return;
-    }
-    else
-    {
-  //add
-  if(this.form.value.id==0)
-  {
-    this.isDisable=true;
-    this.userRoleService.addUserRole(this.userRole).subscribe(res=>
-      {
-        setTimeout(() => {
-          this.loader = false;
-        }, 1500)//end of settime out
-        this.toastr.success('add successfully');
+    let userRole = {
+      id: 0,
+      name: this.form.value.name,
+      // createdBy:localStorage.getItem('userName') || ''
+    };
+    console.log(this.form, "Form");
+    console.log(this.form.valid,"valid or not ");
+    if (this.form.valid) {
+      this.userRoleService.addUserRole(userRole).subscribe(res => {
+        console.log( "from subscribe Form");
         this.form['controls']['name'].setValue('');
         this.form['controls']['id'].setValue(0);
-        this.getUserRoles(1,100,'',this.sortColumnDef,this.SortDirDef);
-      },error=>{this.toastr.warning('failed');})
-  }
+        this.getUserRoles(1, 100, '', this.sortColumnDef, this.SortDirDef);
+      }
+      )
+      this.isShowDiv = false;
     }
-
-    this.form.reset();
-    this.isShowDiv = false;
   }
   onChecknameIsalreadysign()
   {
-    this.userRole.id=this.form.value.id;
+    this.userRole.id=0;
     console.log(this.userRole.id);
     this.userRole.name=this.form.value.name;
     this.userRoleService.userRoleIsAlreadySigned(this.userRole.name,this.userRole.id).subscribe(res=>
@@ -232,14 +208,6 @@ export class RoleComponent implements OnInit {
         }
       })
   }
-  setReactValue(id: number, val: any) {
-    this.form.patchValue({
-      id: id,
-      name: val
-
-    });
-
-  }
   onChecknameIsalreadysignWhenUpdate(element:any)
   {
    this.userRoleService.userRoleIsAlreadySigned(element.name,element.id).subscribe(res=>
@@ -254,8 +222,6 @@ export class RoleComponent implements OnInit {
         this.isDisabled=true;
         this.isNameUpdatedRepeated=true;
       }
-    }//,error=>{this.toastr.warning("faild");}
-    )
+    })
   }
-
 }

@@ -42,7 +42,6 @@ export class UserComponent implements OnInit {
   fileAttrF = 'Choose File';
   htmlToAdd: string = "";
   fileuploaded: any;
-  // displayedColumns: string[] = ['Num','Id', 'Name','Team','User','Staffdegree','Role', 'action'];
   displayedColumns: string[] = ['id', 'jobNumber', 'Name', 'Team', 'jobDegree', 'createdBy', 'creationDate','updateBy', 'updateDate', 'action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource();
@@ -55,7 +54,6 @@ export class UserComponent implements OnInit {
   {
     this.titleService.setTitle('المستخدمين');
   }
-  // show: boolean = false;
   ngOnInit(): void {
     // if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
     // {
@@ -146,12 +144,10 @@ export class UserComponent implements OnInit {
   }
   message:string="";
   upLoadF() {
-    //console.log("uploadF", "param:", this.param, "fileUploaded:", this.fileuploaded)
     const fd = new FormData();
     fd.append(this.param, this.fileuploaded);
     this.userService.importExcelFile(fd).subscribe(res => {
       if (res.status == true) {
-        console.log(res.data,"that is data ");
         this.getUsers(1, 100, '', this.sortColumnDef, this.SortDirDef);
         this.fileAttr = 'Choose File';
         this.resetfile();

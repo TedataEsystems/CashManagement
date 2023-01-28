@@ -74,7 +74,6 @@ export class AddUserComponent implements OnInit {
     }
     else
     {
-      console.log(this.form.value,"This is the form ")
       this.newuser1.id=this.form.value.Id;
       this.newuser1.name = this.form.value.name;
       this.newuser1.team = this.form.value.team;

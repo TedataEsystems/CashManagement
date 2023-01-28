@@ -52,8 +52,6 @@ export class UserService {
   }
   jobNumberIsAlreadyExist(name:string):Observable<any>
    {
-    console.log("this is the service");
-    console.log(name,"in the service");
     return this.httpClient.get<any>(`${this.url}/JobNumberExist/`+name);
    }
    public importExcelFile(file : any)
