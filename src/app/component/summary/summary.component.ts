@@ -82,7 +82,7 @@ warning=false;
     'permissionDuration',
     'comment',
     'createdBy',
-    'updateBy',
+    'updatedBy',
     'creationDate',
     'updateDate',
     'status',

@@ -75,7 +75,7 @@ export class AddMissionComponent implements OnInit {
       //attachFile: this.file,
       file: '',
       creationDate: this.service.form.value.creationDate,
-      createdBy: this.service.form.value.createdBy,
+      createdBy: localStorage.getItem("userName"),
       updateDate: this.service.form.value.updateDate,
       updateBy: this.service.form.value.updateBy,
       statusId: this.service.form.value.statusId,

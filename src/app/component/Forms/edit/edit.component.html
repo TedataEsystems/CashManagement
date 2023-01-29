@@ -344,7 +344,7 @@
               </mat-list>
             </div>
 </div>
-          <div class="col-sm-12 col-md-12 col-lg-12 position-relative">
+          <div class="col-sm-12 col-md-12 col-lg-12 position-relative" *ngIf="commentStatus">
             <mat-form-field class="w-100">
               <mat-label>ملاحظات</mat-label>
               <textarea
@@ -360,6 +360,7 @@
 <div class="btn-box">
   <button mat-raised-button class="bg-success text-white" type='button' (click)="addComment($event)" [disabled]="!area.value">اضافة</button>
 </div>
+<input   formControlName="comment" readonly *ngIf="!commentStatus"/>
             <div class="example-container mat-elevation-z8 mt-3" #TABLE>
               <mat-table [dataSource]="dataSourceComment"  #table >
                 <ng-container matColumnDef="comment">

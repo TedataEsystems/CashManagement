@@ -18,7 +18,7 @@ import { CommentService } from 'src/app/shared/service/comment.service';
 })
 export class EditComponent implements OnInit {
 
-  appear=false;
+  appear = false;
 
   file_store: FileList;
   file_list: Array<string> = [];
@@ -28,27 +28,32 @@ export class EditComponent implements OnInit {
   userList: UserList[] = [];
   statusList: Status[] = [];
   missionTypeList: MissionType[] = [];
-  commentList:Comment[]=[];
-  comment:string='';
-  creationDate:string='';
-  createdBy:string='';
-  createdByTeam:string='';
-Available=true;
-add=false;
-  displayedCommentColumns: string[] = ['comment', 'creationDate', 'createdBy','createdByTeam' ];
+  commentList: Comment[] = [];
+  comment: string = '';
+  creationDate: string = '';
+  createdBy: string = '';
+  createdByTeam: string = '';
+  Available = true;
+  add = false;
+  displayedCommentColumns: string[] = ['comment', 'creationDate', 'createdBy', 'createdByTeam'];
   dataSourceComment = new MatTableDataSource<any>();
   dataSourceComment1 = new MatTableDataSource<any>();
   constructor(public dialogRef: MatDialogRef<EditComponent>, public service: MissionFormService,
-    private missionService: MissionService, private toastr: ToastrService,private commentService:CommentService,
+    private missionService: MissionService, private toastr: ToastrService, private commentService: CommentService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
-  attachId:number;
-  attachName:string;
+  attachId: number;
+  attachName: string;
+  commentStatus: boolean;
   ngOnInit() {
-    this.attachId= this.data.attachFileId;
-  this.attachName=this.data.attachFilename;
-  //console.log(this.attachId,"attachid");
-  //console.log(this.data.attachFileId,"attchfileid");
+    if (localStorage.getItem("team").toLocaleLowerCase().replace(/\s/, '') == "efocash") {
+      this.commentStatus = true;
+    }
+    if (localStorage.getItem("role").toLocaleLowerCase() == "creator") {
+      this.commentStatus = false;
+    }
+    this.attachId = this.data.attachFileId;
+    this.attachName = this.data.attachFilename;
     this.service.initializeFormGroup();
     this.missionService.getLists().subscribe(res => {
       if (res.status == true) {
@@ -89,7 +94,7 @@ add=false;
             this.service.form.controls['missionTypeId'].setValue(this.data.missionTypeId);
           }
         }
-        if (missionTypeCount== 0) {
+        if (missionTypeCount == 0) {
           this.service.form.controls['missionTypeId'].setValue(null);
         }
         this.service.form.controls['id'].setValue(this.data.id);
@@ -120,10 +125,9 @@ add=false;
         //this.service.form.controls['attachFileId'].setValue(this.data.attachFileId);
       }//end of if data
     })//end of subscribe
-    this.commentService.getComments(this.data.id).subscribe(res=>{
-      if(res.status)
-      {
-        this.commentList=res.comments
+    this.commentService.getComments(this.data.id).subscribe(res => {
+      if (res.status) {
+        this.commentList = res.comments
         this.dataSourceComment = new MatTableDataSource<any>(this.commentList);
 
       }
@@ -133,13 +137,11 @@ add=false;
 
 
   onSubmit() {
-    if(!this.service.form.valid){
-     // console.log("not");
+    if (!this.service.form.valid) {
       return;
     }
     let mission = {
       id: this.service.form.value.id,
-      //jobDegree: this.service.form.value.jobDegree,
       missionPurpose: this.service.form.value.missionPurpose,
       centerOfCost: this.service.form.value.centerOfCost,
       companyType: this.service.form.value.companyType,
@@ -158,84 +160,80 @@ add=false;
       comment: this.service.form.value.comment,
       creationDate: this.service.form.value.creationDate,
       createdBy: this.service.form.value.createdBy,
-      updateBy: localStorage.getItem('usernam') || '',
+      updatedBy: localStorage.getItem('userName') || '',
       statusId: this.service.form.value.statusId,
       missionTypeId: this.service.form.value.missionTypeId,
       userId: this.service.form.value.userId
     }//end of object
-    let comment={
+    let comment = {
       missionId: this.service.form.value.id,
       comment: this.service.form.value.comment
     }
-// sent from withput update in attach file so we will update mission only
-     if(this.file==null){
-    this.missionService.updateMission(mission).subscribe(res => {
-      if (res.status == true) {
-        if(comment.comment!=null&&comment.comment!="")
-        {
-          //Add comment
-            this.commentService.addComment(comment).subscribe(res=>{
-              if(res.status)
-              {
+    // sent from withput update in attach file so we will update mission only
+    if (this.file == null) {
+      console.log(mission,",,");
+      this.missionService.updateMission(mission).subscribe(res => {
+        if (res.status == true) {
+          if (comment.comment != null && comment.comment != "") {
+            //Add comment
+            this.commentService.addComment(comment).subscribe(res => {
+              if (res.status) {
                 this.toastr.success("updated successfully");
                 this.service.form.reset();
                 this.dialogRef.close('save');
               }
-              else{this.toastr.warning("Add comment failed");}
+              else { this.toastr.warning("Add comment failed"); }
 
             })
+          }
+          else {
+            this.toastr.success("updated successfully");
+            this.service.form.reset();
+            this.dialogRef.close('save');
+          }
         }
-        else{
-          this.toastr.success("updated successfully");
-          this.service.form.reset();
-          this.dialogRef.close('save');
+        else {
+          this.toastr.warning("updated failed");
         }
-      }
-      else {
-        this.toastr.warning("updated failed");
-      }
-    })
-  }
-  //click in delete file button and add new one or replace exsit file and add new one without click in remove button
-  else 
-  {
-    this.missionService.updateMission(mission).subscribe(res => {
-      if (res.status == true) {
-        this.missionService.upload(this.file,res.id).subscribe(res=>{
-          if(res.status==true){
-            if(comment.comment!=null&&comment.comment!="")
-            {
-              //Add comment
-                this.commentService.addComment(comment).subscribe(res=>{
-                  if(res.status)
-                  {
+      })
+    }
+    //click in delete file button and add new one or replace exsit file and add new one without click in remove button
+    else {
+      this.missionService.updateMission(mission).subscribe(res => {
+        if (res.status == true) {
+          this.missionService.upload(this.file, res.id).subscribe(res => {
+            if (res.status == true) {
+              if (comment.comment != null && comment.comment != "") {
+                //Add comment
+                this.commentService.addComment(comment).subscribe(res => {
+                  if (res.status) {
                     this.toastr.success("updated successfully");
                     this.service.form.reset();
                     this.dialogRef.close('save');
                   }
-                  else{this.toastr.warning("Add comment failed");}
+                  else { this.toastr.warning("Add comment failed"); }
 
                 })
+              }
+              else {
+                this.toastr.success("updated successfully");
+                this.service.form.reset();
+                this.dialogRef.close('save');
+              }
+
             }
-            else{
-              this.toastr.success("updated successfully");
-              this.service.form.reset();
-              this.dialogRef.close('save');
-            }
+            else { this.toastr.warning("updated file failed "); }
+          });
 
-          }
-          else{this.toastr.warning("updated file failed ");}
-        });
+        }
+        else {
+          this.toastr.warning("updated failed");
+        }
 
-      }
-      else {
-        this.toastr.warning("updated failed");
-      }
-
-    })
-  }
-  //]}
-  this.add=false;
+      })
+    }
+    //]}
+    this.add = false;
     this.onClose();
     this.dialogRef.close('save');
 
@@ -250,61 +248,61 @@ add=false;
 
   onClose() {
     this.service.form.reset();
-     this.dialogRef.close();
+    this.dialogRef.close();
     // this.dialogRef.close('save');
 
   }
-//////////
-addComment(e){
-this.add=true;
-e.stopPropagation()
-let commentsList=[{
-    comment:this.service.form.value.comment,
-    creationDate:this.service.form.value.creationDate,
-    createdBy:this.service.form.value.createdBy,
-    createdByTeam:''
-  }]
+  //////////
+  addComment(e) {
+    this.add = true;
+    e.stopPropagation()
+    let commentsList = [{
+      comment: this.service.form.value.comment,
+      creationDate: this.service.form.value.creationDate,
+      createdBy: this.service.form.value.createdBy,
+      createdByTeam: ''
+    }]
 
     this.dataSourceComment1 = new MatTableDataSource<any>(commentsList);
 
-}
-
-
-// check(){
-//   if(this.service.form.value.comment.&&this.service.form.value.comment!="")
-//   {
-//     this.Available=true
-
-//   }
-//   else{
-//     this.Available=false;
-
-//   }
-// }
-
-  search(){
-    this.appear =!this.appear
   }
-  submittedfile:boolean=false;
+
+
+  // check(){
+  //   if(this.service.form.value.comment.&&this.service.form.value.comment!="")
+  //   {
+  //     this.Available=true
+
+  //   }
+  //   else{
+  //     this.Available=false;
+
+  //   }
+  // }
+
+  search() {
+    this.appear = !this.appear
+  }
+  submittedfile: boolean = false;
   //edit on attach file
-  handleFileInputChange(event){
+  handleFileInputChange(event) {
     this.file = event.target.files[0];
     this.attachName = event.target.files[0].name;
-    var extensitin=this.attachName.split(".")[1];
-    if(extensitin.toLowerCase()=="msg"||extensitin.toLowerCase()=="jpeg"||extensitin.toLowerCase()=="jpg"||extensitin.toLowerCase()=="png"){
+    var extensitin = this.attachName.split(".")[1];
+    if (extensitin.toLowerCase() == "msg" || extensitin.toLowerCase() == "jpeg" || extensitin.toLowerCase() == "jpg" || extensitin.toLowerCase() == "png") {
       this.service.form['controls']['attachFile'].setValue(this.attachName);
     }
-    else{
-      this.fileName ="";
-      this.attachName="";
+    else {
+      this.fileName = "";
+      this.attachName = "";
       this.service.form['controls']['attachFile'].setValue("");
       this.toastr.warning("::Not Acceptable Extension only acceptable extenstion(jpeg,jpg,png,msg)");
     }
- 
-  // this.service.form['controls']['attachFile'].setValue(this.attachName);
+
+    // this.service.form['controls']['attachFile'].setValue(this.attachName);
 
   }
-  removeFile(id:number) {
+  removeFile(id: number) {
     this.file = null;
     this.attachName = '';
     this.service.form['controls']['attachFile'].setValue('');

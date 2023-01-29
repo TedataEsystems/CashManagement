@@ -22,7 +22,7 @@
         <mat-menu #missionSettings="matMenu">
 
           <a  mat-menu-item routerLink="./missionType" routerLinkActive="active"> <mat-icon>playlist_add</mat-icon> نوع المأمورية</a>
-            <a  mat-menu-item routerLink="./status"  routerLinkActive="active"><mat-icon>approval</mat-icon>حالة المأمورية</a>
+            <a  mat-menu-item routerLink="./status"  routerLinkActive="active" *ngIf="ShowStatus"><mat-icon>approval</mat-icon>حالة المأمورية</a>
 
         </mat-menu>
          <a  mat-button [matMenuTriggerFor]="user" routerLinkActive="active">المستخدم </a>
