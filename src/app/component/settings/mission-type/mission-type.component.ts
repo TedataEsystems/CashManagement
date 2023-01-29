@@ -111,7 +111,7 @@ export class MissionTypeComponent implements OnInit {
 ///////////////add crud operation/////////
 //show and hide form to add
 addType() {
-  //this.form.reset();
+  this.form.reset();
   this.isShowDiv = !this.isShowDiv;
 }
 //when add mission type name check if this name alredy exsit or not
@@ -152,11 +152,13 @@ onChecknameIsalreadysign()
     else
     {
   //add
-  if(this.form.value.id==0)
+  if(this.form.value.id==0||this.form.value.id==null)
   {
+    console.log("if condition");
     this.isDisable=true;
     this.missionTypeService.addMissionType(this.missionType).subscribe(res=>
       {
+        console.log("add");
         setTimeout(() => {
           this.loader = false;
         }, 1500)//end of settime out
