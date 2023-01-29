@@ -14,6 +14,7 @@ import { LoginComponent } from './shared/component/login/login.component';
 import { CoverLetterComponent } from './Report/cover-letter/cover-letter.component';
 import { MissionFormComponent } from './Report/mission-form/mission-form.component';
 import { ExpensesFormComponent } from './Report/expenses-form/expenses-form.component';
+import { AuthGuardGuard } from './auth-guard.guard';
 
 const routes: Routes = [
   {
@@ -29,56 +30,62 @@ const routes: Routes = [
       {
       path:'',
       component: DashboardComponent,
+      canActivate:[AuthGuardGuard]
 
     },
 
     {
       path:'summary',
       component: SummaryComponent,
-
+      canActivate:[AuthGuardGuard]
     },
     {
       path:'user',
       component: UserComponent,
-
+      canActivate:[AuthGuardGuard]
     },
     {
       path:'role',
       component: RoleComponent,
-
+      canActivate:[AuthGuardGuard]
     },
     {
       path:'jobDegree',
       component: JobDegreeComponent,
-
+      canActivate:[AuthGuardGuard]
     },
     {
       path:'missionType',
       component: MissionTypeComponent,
-
+      canActivate:[AuthGuardGuard]
     },
     {
       path:'status',
       component: ApproveStatusComponent,
-
+      canActivate:[AuthGuardGuard]
     },
 
     {
       path:'history',
-      component: LogsComponent
+      component: LogsComponent,
+      canActivate:[AuthGuardGuard]
+
     },
     {
       path:'cover',
-      component: CoverLetterComponent
+      component: CoverLetterComponent,
+      canActivate:[AuthGuardGuard]
     },
     {
       path:'missionform',
-      component: MissionFormComponent
+      component: MissionFormComponent,
+      canActivate:[AuthGuardGuard]
 
     },
     {
       path:'expenses',
-      component: ExpensesFormComponent
+      component: ExpensesFormComponent,
+      canActivate:[AuthGuardGuard]
     },
     {
       path:'**',

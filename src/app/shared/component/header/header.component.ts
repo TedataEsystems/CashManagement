@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import screenfull from 'screenfull';
+import { AccountService } from '../../service/account.service';
 
 @Component({
   selector: 'app-header',
@@ -10,9 +11,10 @@ import screenfull from 'screenfull';
 export class HeaderComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
 
-  constructor(private router: Router) { }
-
+  constructor(private router: Router,private accountService:AccountService) { }
+  userName:string;
   ngOnInit(): void {
+    this.userName=localStorage.getItem("userName");
   }
 
 
@@ -23,7 +25,9 @@ export class HeaderComponent implements OnInit {
 
      logOut(){
       localStorage.clear();
-      // this.accountService.logout().subscribe(res=>{
+      this.accountService.logout().subscribe(res=>{
+        
+      })
         this.router.navigateByUrl('/login');
 
       }

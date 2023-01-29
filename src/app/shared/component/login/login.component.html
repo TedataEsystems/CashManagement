@@ -21,13 +21,13 @@
                 <!--     Email       -->
                 <mat-form-field class="full-width" >
                     <mat-label>اسم المستخدم</mat-label>
-                    <input formControlName="username" matInput required>
+                    <input formControlName="userName" matInput required>
                     <button mat-icon-button matSuffix >
                       <mat-icon>account_circle</mat-icon>
                     </button>
 
 
-                    <mat-error *ngIf="form.controls['username'].errors?.required">
+                    <mat-error *ngIf="form.controls['userName'].errors?.required">
                     اسم المستخدم مطلوب *
                     </mat-error>
 
