@@ -172,7 +172,7 @@ warning=false;
   ////////end of pagenation//////
   ngOnInit(): void {
 
-   var role=localStorage.getItem("role");
+   var role=localStorage.getItem("role").toLocaleLowerCase();
    if(role=='creator')
    {
     this.IsAdmin=false;
