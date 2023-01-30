@@ -22,6 +22,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { AdvancedSearch } from 'src/app/model/advanced-search';
 import * as fileSaver from 'file-saver';
 import { saveAs } from 'file-saver';
+import { LoadingService } from 'src/app/shared/service/loading.service';
 var mimetype=[
   {ext:"txt", fileType:"text/plain"},
   {ext:"pdf", fileType:"application/pdf"},
@@ -106,7 +107,8 @@ warning=false;
     private route: ActivatedRoute,
     private dailogService: DeleteService,
     private missionService: MissionService,
-    private userService: UserService
+    private userService: UserService,
+    private load:LoadingService
   ) {
     this.titleService.setTitle('المأموريات');
   }
@@ -161,6 +163,7 @@ warning=false;
   }
   // when add search value and key up
   applyFilter() {
+
     let searchData = this.searchKey.trim().toLowerCase();
     this.getMisssions(1, 100, searchData, this.sortColumnDef, 'asc');
   } //applyfilter
@@ -247,9 +250,14 @@ warning=false;
       })
       .afterClosed()
       .subscribe((result) => {
-        console.log("close");
-        this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
-        console.log("close3");
+        if(this.form.value==''){
+          this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
+        }else
+        {
+          this.AdvancedSearchSubmit();
+        }
+
+
       });
   }
 
@@ -378,7 +386,7 @@ exportAttach(row:any)
   downloadLink.href = linkSource;
   downloadLink.download = fileName;
   downloadLink.click();
-   
+
     });
 }
 
@@ -412,7 +420,7 @@ exportAttach(row:any)
     }
     this.selection.select(...this.dataSource.data);
     //this.Ids = [];
-   
+
   } //end of toggleAll
 
   /** The label for the checkbox on the passed row */

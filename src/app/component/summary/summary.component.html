@@ -166,21 +166,23 @@
                 <mat-label>ملاحظات</mat-label>
                 <input matInput formControlName="comment"  />
               </mat-form-field>
-
-              <mat-form-field appearance="fill" class="serch w-100">
+              <div class="w-100 d-flex" >
+              <mat-form-field appearance="fill" class="serch w-50">
                 <mat-label>اسم المستخدم</mat-label>
                 <input matInput formControlName="createdBy" />
               </mat-form-field>
 
-              <mat-form-field appearance="fill" class="serch w-100">
+              <mat-form-field appearance="fill" class="w-50  serch" style="border-right:5px solid #fff">
                 <mat-label>اسم المعدل</mat-label>
                 <input matInput formControlName="updatedBy" />
               </mat-form-field>
-            </div>
+              </div>
+
             <div class="w-100 d-flex" >
 
               <mat-form-field appearance="fill" class="w-50 serch">
-                  <input formControlName="createdDateFrom" matInput [matDatepicker]="createdDateFrom" placeholder="من">
+                <mat-label>تاريخ الانشاء</mat-label>
+                  <input formControlName="createdDateFrom" matInput [matDatepicker]="createdDateFrom" placeholder="من ">
                   <mat-datepicker-toggle matSuffix [for]="createdDateFrom"></mat-datepicker-toggle>
                   <mat-datepicker #createdDateFrom></mat-datepicker>
                 </mat-form-field>
@@ -194,6 +196,7 @@
               </div>
               <div class="w-100 d-flex">
                 <mat-form-field appearance="fill" class="w-50 serch">
+                  <mat-label>تاريخ التعديل</mat-label>
                     <input formControlName="updatedDateFrom" matInput [matDatepicker]="updatedDateFrom" placeholder="من">
                     <mat-datepicker-toggle matSuffix [for]="updatedDateFrom"></mat-datepicker-toggle>
                     <mat-datepicker #updatedDateFrom></mat-datepicker>
@@ -204,6 +207,7 @@
                     <mat-datepicker #updatedDateTo></mat-datepicker>
                   </mat-form-field>
                 </div>
+              </div>
               </fieldset>
                 </div>
 
@@ -568,7 +572,7 @@
             >
               <mat-icon>info</mat-icon>
             </button> -->
-            <button 
+            <button
               mat-button
               [hidden]="!IsAdmin&& row.status == 'approve'"
               class="btn-success mx-1 font-weight-bolder"
