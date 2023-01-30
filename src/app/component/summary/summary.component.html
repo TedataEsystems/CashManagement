@@ -233,7 +233,7 @@
 <mat-card class="example-card">
   <mat-card-header>
     <mat-card-title> المأموريات </mat-card-title>
-    <button [disabled]="isCreator" mat-button class="opt" (click)="addMission()">
+    <button *ngIf="isCreator" mat-button class="opt" (click)="addMission()">
       <mat-icon class="add-new ico">add</mat-icon>
       <span class="txt mr-1">اضافة مأمورية</span>
     </button>

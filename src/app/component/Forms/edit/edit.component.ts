@@ -45,12 +45,16 @@ export class EditComponent implements OnInit {
   attachId: number;
   attachName: string;
   commentStatus: boolean;
+  statusShow:boolean=false;
+  statusname:string='';
   ngOnInit() {
     if (localStorage.getItem("team").toLocaleLowerCase().replace(/\s/, '') == "efocash") {
       this.commentStatus = true;
+      this.statusShow=true;
     }
     if (localStorage.getItem("role").toLocaleLowerCase() == "creator") {
       this.commentStatus = false;
+      this.statusShow=false;
     }
     this.attachId = this.data.attachFileId;
     this.attachName = this.data.attachFilename;
@@ -74,6 +78,7 @@ export class EditComponent implements OnInit {
           if (this.data.userId == user.id) {
             userCount++;
             this.service.form.controls['userId'].setValue(this.data.userId);
+            this.statusname=this.data.status;
           }
         }
         if (userCount == 0) {
@@ -83,6 +88,7 @@ export class EditComponent implements OnInit {
           if (this.data.statusId == status.id) {
             statusCount++;
             this.service.form.controls['statusId'].setValue(this.data.statusId);
+
           }
         }
         if (statusCount == 0) {
@@ -171,7 +177,7 @@ export class EditComponent implements OnInit {
     }
     // sent from withput update in attach file so we will update mission only
     if (this.file == null) {
-      console.log(mission,",,");
+      console.log(mission,"oooo");
       this.missionService.updateMission(mission).subscribe(res => {
         if (res.status == true) {
           if (comment.comment != null && comment.comment != "") {
