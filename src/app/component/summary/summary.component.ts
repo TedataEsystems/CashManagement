@@ -96,6 +96,7 @@ warning=false;
   settingtype = '';
   editUsr: any;
   editdisabled: boolean = false;
+  isCreator=false;
   constructor(
     private titleService: Title,
     private toastr: ToastrService,
@@ -169,6 +170,10 @@ warning=false;
   }
   ////////end of pagenation//////
   ngOnInit(): void {
+    if(localStorage.getItem("role").toLocaleLowerCase().replace(/\s/, '')=="creator")
+{
+ this.isCreator=true;
+}
     this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
   }
   //////add (open add component as dialog)
