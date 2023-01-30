@@ -50,6 +50,7 @@ export class SummaryComponent implements OnInit {
   jobDegreeList: JobDegree[] = [];
 
   searchKey: string = '';
+  IsAdmin: boolean =true;
 Isnotapprove=false;
 warning=false;
   loading: boolean = true;
@@ -169,6 +170,15 @@ warning=false;
   }
   ////////end of pagenation//////
   ngOnInit(): void {
+   var role=localStorage.getItem("role");
+   if(role=='creator')
+   {
+    this.IsAdmin=false;
+   }
+   else{
+    this.IsAdmin=true;
+   }
+   console.log(this.IsAdmin)
     this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
   }
   //////add (open add component as dialog)

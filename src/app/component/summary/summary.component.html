@@ -233,7 +233,7 @@
       <mat-icon class="add-new ico">add</mat-icon>
       <span class="txt mr-1">اضافة مأمورية</span>
     </button>
-    <button mat-button [matMenuTriggerFor]="menu" class="opt mr-1" >
+    <button *ngIf="IsAdmin" mat-button [matMenuTriggerFor]="menu" class="opt mr-1" >
       <mat-icon class="">download</mat-icon>
       <span class="txt mr-1"> تنزيل ملف </span>
     </button>
@@ -519,11 +519,9 @@
 
 
 
-      <ng-container matColumnDef="exporAttach">
-        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
-           البريد المرفق</mat-header-cell
-        >
-        <mat-cell *matCellDef="let element,let row">
+      <ng-container  matColumnDef="exporAttach" >
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>  البريد المرفق</mat-header-cell>
+        <mat-cell  *matCellDef="let element,let row" >
           <!-- <button mat-stroked-button class="mx-1" (click)="exportAttach(element.attachFileId)"> -->
             <button mat-stroked-button class="mx-1" (click)="exportAttach(row)">
             <mat-icon class="">download</mat-icon>
@@ -531,11 +529,11 @@
           </button>
         </mat-cell>
       </ng-container>
-      <ng-container matColumnDef="exportmission">
-        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
-          نموذج المأمورية</mat-header-cell
-        >
-        <mat-cell *matCellDef="let element">
+
+      <ng-container matColumnDef="exportmission"  >
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header [hidden]="!IsAdmin" >
+          نموذج المأمورية</mat-header-cell >
+        <mat-cell *matCellDef="let element" [hidden]="!IsAdmin">
           <button
             mat-stroked-button
             class="mx-1"
@@ -570,8 +568,9 @@
             >
               <mat-icon>info</mat-icon>
             </button> -->
-            <button
+            <button 
               mat-button
+              [hidden]="!IsAdmin&& row.status == 'approve'"
               class="btn-success mx-1 font-weight-bolder"
               matTooltip="تعديل"
               (click)="onEdit(row)"
@@ -590,6 +589,7 @@
             <button
               mat-button
               class="btn-danger"
+              [hidden]="!IsAdmin"
               matTooltip="حذف"
               (click)="onDelete(row)"
             >
