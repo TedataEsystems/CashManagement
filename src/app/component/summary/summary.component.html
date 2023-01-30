@@ -489,7 +489,7 @@
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
           الحاله</mat-header-cell
         >
-        <mat-cell *matCellDef="let element"  [ngClass]="{'green' : element.status=='approve','orange':element.status=='pending'}"> {{ element.status }} </mat-cell>
+        <mat-cell *matCellDef="let element"  [ngClass]="{'red':element.status=='Reject','green' : element.status=='approve','orange':element.status=='pending'}"> {{ element.status }} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="missionType">
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -604,7 +604,7 @@
       </ng-container>
 
       <ng-container matColumnDef="noData">
-        <mat-footer-cell *matFooterCellDef colspan="6">
+        <mat-footer-cell *matFooterCellDef colspan="13">
           لا يوجد بيانات...
         </mat-footer-cell>
       </ng-container>

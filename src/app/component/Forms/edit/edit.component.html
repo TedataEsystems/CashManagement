@@ -302,7 +302,15 @@
               <mat-error> * مطلوب </mat-error>
             </mat-form-field>
             <input  *ngIf="!statusShow" formControlName="statusId" hidden/>
-            <input *ngIf="!statusShow" [value]="statusname" readonly/>
+            <!-- <input *ngIf="!statusShow" [value]="statusname" readonly/> -->
+            <mat-form-field  class="col-md-6"  *ngIf="!statusShow">
+              <input
+              [value]="statusname"
+               readonly
+                matInput
+                placeholder="الحاله"
+              />
+            </mat-form-field>
             <div class="col-md-6">
             </div>
             <mat-form-field class="col-md-6">
@@ -347,25 +355,26 @@
             </div>
 </div>
           <div class="col-sm-12 col-md-12 col-lg-12 position-relative">
-            <mat-form-field class="w-100">
-              <mat-label *ngIf="commentStatus">ملاحظات</mat-label>
+            <mat-form-field class="w-100" *ngIf="commentStatus">
+              <mat-label>ملاحظات</mat-label>
               <textarea
-              #area
+
+
                 formControlName="comment"
                 matInput
                 placeholder="ملاحظات"
                 rows="5"
                 (keydown.space)="$event.preventDefault()"
-               
+
               >
               </textarea>
             </mat-form-field>
 <div class="btn-box" *ngIf="commentStatus">
-  <button mat-raised-button class="bg-success text-white" type='button' (click)="addComment($event)" [disabled]="!area.value">اضافة</button>
+  <button mat-raised-button class="bg-success text-white" type='button' (click)="addComment($event)" [disabled]="!area">اضافة</button>
 </div>
 
-            <div class="example-container mat-elevation-z8 mt-3" #TABLE>
-              <mat-table [dataSource]="dataSourceComment"  #table >
+            <div class="example-container  mt-3" #TABLE>
+              <mat-table [dataSource]="dataSourceComment" *ngIf="dataSourceComment.data.length != 0 "  #table >
                 <ng-container matColumnDef="comment">
                   <mat-header-cell *matHeaderCellDef >
                     الملاحظات</mat-header-cell
@@ -434,7 +443,7 @@
 <!-- ----------------------------------------------second table ------------------------------------------->
 
 
-<mat-table [dataSource]="dataSourceComment1"  *ngIf="add && area.value!=''&&!commentStatus" >
+<mat-table [dataSource]="dataSourceComment1"  *ngIf="add && area!=''&&!commentStatus" >
   <ng-container matColumnDef="comment">
     <mat-cell
       *matCellDef="let element"

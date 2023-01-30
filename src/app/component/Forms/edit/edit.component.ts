@@ -19,7 +19,7 @@ import { CommentService } from 'src/app/shared/service/comment.service';
 export class EditComponent implements OnInit {
 
   appear = false;
-
+area:string;
   file_store: FileList;
   file_list: Array<string> = [];
   file: File = null; // Variable to store file
@@ -48,13 +48,16 @@ export class EditComponent implements OnInit {
   statusShow:boolean=false;
   statusname:string='';
   ngOnInit() {
+    this.area=this.service.form.value.comment;
     if (localStorage.getItem("team").toLocaleLowerCase().replace(/\s/, '') == "efocash") {
       this.commentStatus = true;
       this.statusShow=true;
+
     }
     if (localStorage.getItem("role").toLocaleLowerCase() == "creator") {
       this.commentStatus = false;
       this.statusShow=false;
+
     }
     this.attachId = this.data.attachFileId;
     this.attachName = this.data.attachFilename;
