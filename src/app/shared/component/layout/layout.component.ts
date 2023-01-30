@@ -21,12 +21,12 @@ export class LayoutComponent implements OnInit{
 
   isMenuOpen = true;
   contentMargin = 240;
-
+  
   pageYoffset = 0;
   @HostListener('window:scroll', ['$event']) onScroll(event:any){
     this.pageYoffset = window.pageYOffset;
   }
-
+  ShowStatus:boolean=false;
   constructor(private scroll: ViewportScroller) {
 
   }
@@ -34,7 +34,10 @@ export class LayoutComponent implements OnInit{
 
  ngOnInit(): void {
 
-
+if(localStorage.getItem("team").toLocaleLowerCase().replace(/\s/, '')=="efocash")
+{
+ this.ShowStatus=true;
+}
 
   }
 

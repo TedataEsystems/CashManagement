@@ -137,7 +137,7 @@ export class EditComponent implements OnInit {
       comment: this.service.form.value.comment,
       creationDate: this.service.form.value.creationDate,
       createdBy: this.service.form.value.createdBy,
-      updateBy: localStorage.getItem('usernam') || '',
+      updateBy: localStorage.getItem('userName') || '',
       statusId: this.service.form.value.statusId,
       missionTypeId: this.service.form.value.missionTypeId,
       userId: this.service.form.value.userId

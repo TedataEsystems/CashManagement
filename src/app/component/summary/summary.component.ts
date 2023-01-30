@@ -83,7 +83,7 @@ warning=false;
     'permissionDuration',
     'comment',
     'createdBy',
-    'updateBy',
+    'updatedBy',
     'creationDate',
     'updateDate',
     'status',
@@ -97,6 +97,7 @@ warning=false;
   settingtype = '';
   editUsr: any;
   editdisabled: boolean = false;
+  isCreator=false;
   constructor(
     private titleService: Title,
     private toastr: ToastrService,
@@ -170,6 +171,7 @@ warning=false;
   }
   ////////end of pagenation//////
   ngOnInit(): void {
+
    var role=localStorage.getItem("role");
    if(role=='creator')
    {
@@ -179,6 +181,12 @@ warning=false;
     this.IsAdmin=true;
    }
    console.log(this.IsAdmin)
+
+    if(localStorage.getItem("role").toLocaleLowerCase().replace(/\s/, '')=="creator")
+{
+ this.isCreator=true;
+}
+
     this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
   }
   //////add (open add component as dialog)
