@@ -11,6 +11,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
+import { InterceptorService } from './interceptor.service';
 
 
 
@@ -36,8 +37,12 @@ import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 
 
   ],
-  providers: [Title,
-              {provide:HTTP_INTERCEPTORS , useClass:LoadingInterceptor , multi:true}],
+  providers: [
+    Title, {provide:HTTP_INTERCEPTORS , useClass:LoadingInterceptor , multi:true},
+     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
+
+            ],
+              
   bootstrap: [AppComponent]
 })
 export class AppModule { }
