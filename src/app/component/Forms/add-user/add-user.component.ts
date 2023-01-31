@@ -31,8 +31,8 @@ export class AddUserComponent implements OnInit {
     team: new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     jobDegree: new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     userRole: new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
-    userName: new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
-
+    // userName: new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
+    userName: new FormControl('')
 
   })
   user = { jobNum: "" }
@@ -70,6 +70,7 @@ export class AddUserComponent implements OnInit {
       this.newuser1.roleId = this.form.value.userRole;
       this.newuser1.jobDegreeid = this.form.value.jobDegree;
       this.newuser1.userName = this.form.value.userName;
+      this.newuser1.createdBy=localStorage.getItem("userName");
       this.userService.addUser(this.newuser1).subscribe();
     }
     else
@@ -80,6 +81,7 @@ export class AddUserComponent implements OnInit {
       this.newuser1.jobNumber = this.form.value.jobNumber;
       this.newuser1.roleId = this.form.value.userRole;
       this.newuser1.jobDegreeid = this.form.value.jobDegree;
+      this.newuser1.updatedBy=localStorage.getItem("userName");
       this.userService.updateUser(this.newuser1).subscribe(res=>{console.log(res,"from uodate")});
     }
     this.toastr.success(' Submitted successfully');

@@ -55,10 +55,10 @@ export class UserComponent implements OnInit {
     this.titleService.setTitle('المستخدمين');
   }
   ngOnInit(): void {
-    // if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    // {
-    //   this.router.navigateByUrl('/login');
-    // }
+     if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
+      {
+       this.router.navigateByUrl('/login');
+      }
     this.getUsers(1, 100, '', this.sortColumnDef, this.SortDirDef);
 
   }
@@ -83,7 +83,6 @@ export class UserComponent implements OnInit {
     this.searchKey = '';
     this.applyFilter();
   }
-  //this is comment
   applyFilter() {
     let searchData = this.searchKey.trim().toLowerCase();
     this.getUsers(1, 100, searchData, this.sortColumnDef, this.SortDirDef)
@@ -214,7 +213,7 @@ export class UserComponent implements OnInit {
     this.userService.getEmptyDataEXel().subscribe(res=>{
       const blob = new Blob([res], { type : 'application/vnd.ms.excel' });
       const file = new File([blob],  'users' + '.xlsx', { type: 'application/vnd.ms.excel' });
-      saveAs(file, 'HardwareStatus' + Date.now() + '.xlsx')
+      saveAs(file, 'CashMangmentUsers' + Date.now() + '.xlsx')
     },err=>{
       swal.fire('Fail ', err.error,'error')
     });

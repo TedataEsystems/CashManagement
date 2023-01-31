@@ -142,11 +142,10 @@ export class RoleComponent implements OnInit {
       this.cancelEdit();
   }
   onDelete(r:any) {
- // if (localStorage.getItem("usernam") == "" || localStorage.getItem("usernam") == undefined || localStorage.getItem("usernam") == null) {
-    //   this.router.navigateByUrl('/login');
-    // }
-    // else {
-
+ if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
+      this.router.navigateByUrl('/login');
+     }
+ else {
   this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
     if (res) {
       this.userRoleService.deleteUserRole(r.id).subscribe(res => {
@@ -156,9 +155,7 @@ export class RoleComponent implements OnInit {
       )//end of subscribe
     }//end of if
   })//end of first subscriob
-
-      //}
-
+      }
   }
   addRole() {
     console.log("from add role method");
@@ -170,7 +167,7 @@ export class RoleComponent implements OnInit {
     let userRole = {
       id: 0,
       name: this.form.value.name,
-      // createdBy:localStorage.getItem('userName') || ''
+      createdBy:localStorage.getItem('userName') || ''
     };
     console.log(this.form, "Form");
     console.log(this.form.valid,"valid or not ");
