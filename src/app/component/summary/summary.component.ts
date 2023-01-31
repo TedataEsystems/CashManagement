@@ -175,8 +175,9 @@ warning=false;
   ////////end of pagenation//////
   ngOnInit(): void {
 
-   var role=localStorage.getItem("role").toLocaleLowerCase();
-   if(role=='creator')
+   var role=localStorage.getItem("role").toLocaleLowerCase().replace(/\s/, '');
+   var team=localStorage.getItem("team").toLocaleLowerCase().replace(/\s/, '');
+   if(role=='creator'&&team!="efocash")
    {
     this.IsAdmin=false;
    }
