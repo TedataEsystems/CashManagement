@@ -83,7 +83,6 @@ export class AddMissionComponent implements OnInit {
       userId: this.service.form.value.userId,
     }; //end of mission
 var extensitin=this.fileName.split(".")[1];
-console.log(extensitin,"ex");
 
 if(extensitin.toLowerCase()=="msg"||extensitin.toLowerCase()=="jpeg"||extensitin.toLowerCase()=="jpg"||extensitin.toLowerCase()=="png"){
     this.missionService.addMission(missionn).subscribe((res) => {
@@ -117,7 +116,7 @@ if(extensitin.toLowerCase()=="msg"||extensitin.toLowerCase()=="jpeg"||extensitin
   }
     this.onClose();
     this.dialogRef.close('save');
-    //this._router.navigate(['/summary'] );
+    this._router.navigate(['/summary'] );
   } //end of submit
   onClear() {
     this.service.form.reset();
