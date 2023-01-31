@@ -54,7 +54,7 @@ area:string;
       this.statusShow=true;
 
     }
-    if (localStorage.getItem("role").toLocaleLowerCase() == "creator") {
+    if (localStorage.getItem("role").toLocaleLowerCase() == "creator"&&localStorage.getItem("team").toLocaleLowerCase().replace(/\s/, '') != "efocash") {
       this.commentStatus = false;
       this.statusShow=false;
 
