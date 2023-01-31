@@ -253,12 +253,7 @@ warning=false;
       .subscribe((result) => {
         if(this.form.value==''){
           this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
-        }else
-        {
-          this.AdvancedSearchSubmit();
         }
-
-
       });
   }
 
