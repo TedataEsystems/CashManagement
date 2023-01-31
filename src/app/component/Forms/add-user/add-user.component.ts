@@ -86,7 +86,7 @@ export class AddUserComponent implements OnInit {
     }
     this.toastr.success(' Submitted successfully');
     this.onClose();
-    this.dialogRef.close('save');
+    //this.dialogRef.close('save');
     this._router.navigate(['/user'] );
   }
   onClose() {
