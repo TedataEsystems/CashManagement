@@ -26,7 +26,7 @@ export class MissionFormService {
     missionTypeCost: new FormControl(0),
     permissionRequest: new FormControl(''),
     permissionDuration: new FormControl(''),
-    comment:new FormControl(''),
+    comment:new FormControl('',[Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
     attachFile: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
    // attachFilename:new FormControl(''),
     attachFileId:new FormControl(0),

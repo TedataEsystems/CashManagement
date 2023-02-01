@@ -207,8 +207,7 @@
             <mat-form-field class="col-md-6" *ngIf="!statusShow">
               <input [value]="statusname" readonly matInput placeholder="الحاله" />
             </mat-form-field>
-            <div class="col-md-6">
-            </div>
+
             <mat-form-field class="col-md-6">
               <mat-label>ارفاق ميل الموافقة</mat-label>
               <button mat-icon-button matPrefix type="button" (click)="f_input.click()">
@@ -219,7 +218,13 @@
                 (click)="f_input.value = null" />
               <mat-error> * مطلوب </mat-error>
             </mat-form-field>
-            <div class="box col-md-6" *ngIf="attachName">
+            <mat-form-field class="col-md-6" *ngIf="commentStatus">
+              <mat-label>ملاحظات</mat-label>
+              <textarea formControlName="comment" matInput placeholder="ملاحظات" rows="5"  >
+              </textarea>
+            </mat-form-field>
+            <div class="col-md-6">
+            <div class="box" *ngIf="attachName">
               <mat-list>
                 <mat-list-item>
                   <mat-icon mat-list-icon class="text-danger" (click)="removeFile(attachId)">delete_forever</mat-icon>
@@ -230,115 +235,115 @@
               </mat-list>
             </div>
           </div>
-          <div class="col-sm-12 col-md-12 col-lg-12 position-relative">
-            <mat-form-field class="w-100" *ngIf="commentStatus">
+            <!-- <mat-form-field class="col-md-12" *ngIf="commentStatus">
               <mat-label>ملاحظات</mat-label>
-              <textarea formControlName="comment" matInput placeholder="ملاحظات" rows="5"(keydown.space)="$event.preventDefault()">
+              <textarea formControlName="comment" matInput placeholder="ملاحظات" rows="5"  >
               </textarea>
-            </mat-form-field>
-            <div class="btn-box" *ngIf="commentStatus">
-              <button mat-raised-button class="bg-success text-white" type='button' (click)="addComment($event)"
-                [disabled]="!area">اضافة</button>
-            </div>
+            </mat-form-field> -->
 
-            <div class="example-container  mt-3" #TABLE>
-              <mat-table [dataSource]="dataSourceComment" *ngIf="dataSourceComment.data.length != 0 " #table>
-                <ng-container matColumnDef="comment">
-                  <mat-header-cell *matHeaderCellDef>
-                    الملاحظات</mat-header-cell>
-                  <mat-cell *matCellDef="let element">
-                    {{
-                    element.comment?.length > 50
-                    ? (element.comment | slice : 0 : 50) + " ..."
-                    : element.comment
-                    }}
+            <mat-accordion class="details  col-md-12" *ngIf="dataSourceComment.data.length != 0 && dataSourceComment != null">
+              <mat-expansion-panel  expanded="0" opened="true">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <mat-icon>date_range</mat-icon> الملاحظات السابقة
+                  </mat-panel-title>
 
+                </mat-expansion-panel-header>
 
-
-                  </mat-cell>
-
-                </ng-container>
-                <ng-container matColumnDef="creationDate">
-                  <mat-header-cell *matHeaderCellDef>
-                    تاريخ الانشاء </mat-header-cell>
-                  <mat-cell *matCellDef="let element" data-label="Creation date">
-                    {{ element.creationDate | date : "medium" }}
-                  </mat-cell>
-
-                </ng-container>
-
-                <ng-container matColumnDef="createdBy">
-                  <mat-header-cell *matHeaderCellDef>
-                    انشأ بواسطة</mat-header-cell>
-                  <mat-cell *matCellDef="let element">
-                    {{ element.createdBy }}
-                  </mat-cell>
-
-                </ng-container>
-                <ng-container matColumnDef="createdByTeam">
-                  <mat-header-cell *matHeaderCellDef>
-                    أنشأ بواسطة المجموعة </mat-header-cell>
-                  <mat-cell *matCellDef="let element" data-label="Created by team">
-                    {{ element.createdByTeam}}
-                  </mat-cell>
-
-                </ng-container>
-                <ng-container matColumnDef="noData">
-                  <mat-footer-cell *matFooterCellDef colspan="1">
-                    No Data ...
-                  </mat-footer-cell>
-                </ng-container>
-
-
-                <mat-header-row *matHeaderRowDef="displayedCommentColumns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedCommentColumns">
-                </mat-row>
-              </mat-table>
-              <!-- ----------------------------------------------second table ------------------------------------------->
-
-
-              <mat-table [dataSource]="dataSourceComment1" *ngIf="add && area!=''&&!commentStatus">
-                <ng-container matColumnDef="comment">
-                  <mat-cell *matCellDef="let element">
-                    {{
-                    element.comment?.length > 50
-                    ? (element.comment | slice : 0 : 50) + " ..."
-                    : element.comment
-                    }}
+                <div class="example-container" #TABLE>
+                  <mat-table [dataSource]="dataSourceComment"  #table>
+                    <ng-container matColumnDef="comment">
+                      <mat-header-cell *matHeaderCellDef>
+                        الملاحظات</mat-header-cell>
+                      <mat-cell *matCellDef="let element">
+                        {{
+                        element.comment?.length > 50
+                        ? (element.comment | slice : 0 : 50) + " ..."
+                        : element.comment
+                        }}
 
 
 
-                  </mat-cell>
+                      </mat-cell>
 
-                </ng-container>
-                <ng-container matColumnDef="creationDate">
+                    </ng-container>
+                    <ng-container matColumnDef="creationDate">
+                      <mat-header-cell *matHeaderCellDef>
+                        تاريخ الانشاء </mat-header-cell>
+                      <mat-cell *matCellDef="let element" data-label="Creation date">
+                        {{ element.creationDate | date : "medium" }}
+                      </mat-cell>
 
-                  <mat-cell *matCellDef="let element" data-label="Creation date">
-                    {{ element.creationDate | date : "medium" }}
-                  </mat-cell>
+                    </ng-container>
 
-                </ng-container>
+                    <ng-container matColumnDef="createdBy">
+                      <mat-header-cell *matHeaderCellDef>
+                        انشأ بواسطة</mat-header-cell>
+                      <mat-cell *matCellDef="let element">
+                        {{ element.createdBy }}
+                      </mat-cell>
 
-                <ng-container matColumnDef="createdBy">
+                    </ng-container>
 
-                  <mat-cell *matCellDef="let element">
-                    {{ element.createdBy }}
-                  </mat-cell>
 
-                </ng-container>
-                <ng-container matColumnDef="createdByTeam">
-                  <mat-cell *matCellDef="let element" data-label="Created by team">
-                    {{ element.createdByTeam}}
-                  </mat-cell>
 
-                </ng-container>
 
-                <mat-row *matRowDef="let row; columns: displayedCommentColumns">
-                </mat-row>
-              </mat-table>
+                    <mat-header-row *matHeaderRowDef="displayedCommentColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedCommentColumns">
+                    </mat-row>
+                  </mat-table>
+                  <!-- ----------------------------------------------second table ------------------------------------------->
 
-            </div>
+
+                  <!-- <mat-table [dataSource]="dataSourceComment1" *ngIf="add &&commentStatus">
+                    <ng-container matColumnDef="comment">
+                      <mat-cell *matCellDef="let element">
+                        {{
+                        element.comment?.length > 50
+                        ? (element.comment | slice : 0 : 50) + " ..."
+                        : element.comment
+                        }}
+
+
+
+                      </mat-cell>
+
+                    </ng-container>
+                    <ng-container matColumnDef="creationDate">
+
+                      <mat-cell *matCellDef="let element" data-label="Creation date">
+                        {{ element.creationDate | date : "medium" }}
+                      </mat-cell>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="createdBy">
+
+                      <mat-cell *matCellDef="let element">
+                        {{ element.createdBy }}
+                      </mat-cell>
+
+                    </ng-container>
+                    <ng-container matColumnDef="createdByTeam">
+                      <mat-cell *matCellDef="let element" data-label="Created by team">
+                        {{ element.createdByTeam}}
+                      </mat-cell>
+
+                    </ng-container>
+
+                    <mat-row *matRowDef="let row; columns: displayedCommentColumns">
+                    </mat-row>
+                  </mat-table> -->
+
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
           </div>
+          <!-- <div class="col-sm-12 col-md-12 col-lg-12 ">
+
+
+
+          </div> -->
         </div>
       </mat-expansion-panel>
     </mat-accordion>

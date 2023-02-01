@@ -27,12 +27,12 @@ const routes: Routes = [
 
 
     children: [
-      {
-      path:'',
-      component: DashboardComponent,
-      canActivate:[AuthGuardGuard]
+    //   {
+    //   path:'',
+    //   component: DashboardComponent,
+    //   canActivate:[AuthGuardGuard]
 
-    },
+    // },
 
     {
       path:'summary',

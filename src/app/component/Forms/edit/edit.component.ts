@@ -17,9 +17,9 @@ import { CommentService } from 'src/app/shared/service/comment.service';
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
-
+  // expression=new RegExp("^[^-\s][a-zA-Z0-9_\s-]+$")
   appear = false;
-area:string;
+// area:string;
   file_store: FileList;
   file_list: Array<string> = [];
   file: File = null; // Variable to store file
@@ -34,8 +34,9 @@ area:string;
   createdBy: string = '';
   createdByTeam: string = '';
   Available = true;
+  disabled=false;
   add = false;
-  displayedCommentColumns: string[] = ['comment', 'creationDate', 'createdBy', 'createdByTeam'];
+  displayedCommentColumns: string[] = ['comment', 'creationDate','createdBy'];
   dataSourceComment = new MatTableDataSource<any>();
   dataSourceComment1 = new MatTableDataSource<any>();
   constructor(public dialogRef: MatDialogRef<EditComponent>, public service: MissionFormService,
@@ -48,7 +49,7 @@ area:string;
   statusShow:boolean=false;
   statusname:string='';
   ngOnInit() {
-    this.area=this.service.form.value.comment;
+
     if (localStorage.getItem("team").toLocaleLowerCase().replace(/\s/, '') == "efocash") {
       this.commentStatus = true;
       this.statusShow=true;
@@ -262,20 +263,25 @@ area:string;
 
   }
   //////////
-  addComment(e) {
-    this.add = true;
-    e.stopPropagation()
-    let commentsList = [{
-      comment: this.service.form.value.comment,
-      creationDate: this.service.form.value.creationDate,
-      createdBy: this.service.form.value.createdBy,
-      createdByTeam: ''
-    }]
+//   addComment(e) {
 
-    this.dataSourceComment1 = new MatTableDataSource<any>(commentsList);
+//     this.area=this.service.form.value.comment
 
-  }
+// if(this.expression.test(this.area)){
 
+//     this.add = true;
+//     e.stopPropagation()
+//     let commentsList = [{
+//       comment: this.service.form.value.comment,
+//       creationDate: this.service.form.value.creationDate,
+//       createdBy: this.service.form.value.createdBy,
+//       createdByTeam: ''
+//     }]
+// console.log(commentsList)
+//     this.dataSourceComment1 = new MatTableDataSource<any>(commentsList);
+
+//   }
+// }
 
   // check(){
   //   if(this.service.form.value.comment.&&this.service.form.value.comment!="")

@@ -1264,3 +1264,16 @@ mat-footer-cell:first-of-type {
   border-bottom-left-radius: 15px !important;
   border-bottom-right-radius: 15px  !important;
   }
+  .details .mat-expansion-panel-body{
+    padding: 0 !important;
+  }
+  .details .mat-expansion-panel-header {
+    height: 40px !important;
+    background: transparent!important;
+    border-bottom: none !important;
+    padding: 0;
+}
+.details .mat-expansion-panel:not([class*=mat-elevation-z])
+{
+box-shadow: none !important;
+}

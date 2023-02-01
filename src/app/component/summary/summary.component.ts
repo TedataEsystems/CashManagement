@@ -183,7 +183,7 @@ warning=false;
    else{
     this.IsAdmin=true;
    }
-  
+
 
     if(localStorage.getItem("role").toLocaleLowerCase().replace(/\s/, '')=="creator")
 {
@@ -251,7 +251,7 @@ warning=false;
       .afterClosed()
       .subscribe((result) => {
         if(this.form.value==''){
-          this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
+          this.getMisssions(1,100,'',this.sortColumnDef,this.SortDirDef);
         }
         else
         {
@@ -362,7 +362,7 @@ warning=false;
     this.advSearchMission.statusId = Number(this.form.value.statusId);
     this.advSearchMission.missionTypeId = Number(this.form.value.missionTypeId);
     this.advSearchMission.jobDegreeId = Number(this.form.value.jobDegreeId);
-    
+
     this.missionService
       .AdvancedSearch(this.advSearchMission)
       .subscribe((res) => {
