@@ -16,7 +16,7 @@ import { LogsService } from 'src/app/shared/service/logs.service';
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('1100ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      transition('expanded <=> collapsed', animate('300ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ]
 })
@@ -28,7 +28,7 @@ export class LogsComponent implements OnInit {
     this.title.setTitle("History")
 
   }
-  
+
   @ViewChild(MatSort) sort?:MatSort ;
   @ViewChild(MatPaginator) paginator?:MatPaginator ;
   displayedColumns: string[] = ['Id', 'userName' ,'creationDate','parentType', 'actionType' ,'Details'];
@@ -81,12 +81,12 @@ export class LogsComponent implements OnInit {
           else
             sort.direction = 'asc';
         }
-        this.lastcol = sort.active; 
+        this.lastcol = sort.active;
         this.lastdir = sort.direction;
         var c = this.pageIn;
         this.getRequestdata(1, 100, '', sort.active, this.lastdir);
     }
-    pageChanged(event:any){    
+    pageChanged(event:any){
       //this.loading = true;
       this.pIn=event.pageIndex;
       this.pageIn=event.pageIndex;
@@ -96,7 +96,7 @@ export class LogsComponent implements OnInit {
       let previousSize = pageSize * pageIndex;
       this.previousSizedef=previousSize;
 this.getRequestdataNext(previousSize,pageSize,pageIndex+1,'',this.sortColumnDef,this.SortDirDef)
-      let previousIndex = event.previousPageIndex; 
+      let previousIndex = event.previousPageIndex;
 
     }
     getRequestdataNext(cursize:number,pageSize:number,pageNum:number ,search:string,sortColumn:string,sortDir:string){
@@ -115,10 +115,10 @@ this.getRequestdataNext(previousSize,pageSize,pageIndex+1,'',this.sortColumnDef,
       },err=>{
         if(err.status==401)
         this._router.navigate(['/login'], { relativeTo: this.route });
-        else 
+        else
         this.toastr.error("! Fail");
         //this.loading = false;
-       
+
       })
-     } 
+     }
 }

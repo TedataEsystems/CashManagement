@@ -12,6 +12,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 import { InterceptorService } from './interceptor.service';
+// import { SplitPipe } from './pipes/split.pipe';
 
 
 
@@ -20,6 +21,7 @@ import { InterceptorService } from './interceptor.service';
 @NgModule({
   declarations: [
     AppComponent,
+    // SplitPipe,
 
 
 
@@ -42,7 +44,7 @@ import { InterceptorService } from './interceptor.service';
      { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
 
             ],
-              
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

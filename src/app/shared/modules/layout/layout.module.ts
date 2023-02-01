@@ -43,6 +43,7 @@ import { MissionFormComponent } from '../../../Report/mission-form/mission-form.
 import { ExpensesFormComponent } from '../../../Report/expenses-form/expenses-form.component';
 import { MissionDetailsComponent } from '../../../component/Forms/mission-details/mission-details.component';
 import { EditMissionComponent } from '../../../component/Forms/edit-mission/edit-mission.component';
+import { SplitPipe } from 'src/app/pipes/split.pipe';
 
 
 
@@ -74,7 +75,8 @@ import { EditMissionComponent } from '../../../component/Forms/edit-mission/edit
     MissionFormComponent,
     ExpensesFormComponent,
     MissionDetailsComponent,
-    EditMissionComponent
+    EditMissionComponent,
+    SplitPipe
 
   ],
   imports: [
