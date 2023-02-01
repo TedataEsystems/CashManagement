@@ -114,7 +114,8 @@ cancelEdit() {
 OnEditSubmit(row: any) {
   let status={
     id:row.id,
-    name:row.name
+    name:row.name,
+    updatedBy: localStorage.getItem('userName') || '',
   };
   this.statusService.updateStatus(status).subscribe(res=>{
     if (res.status) {
@@ -224,7 +225,6 @@ onAddSubmit() {
   };
   if(this.form.valid)
   {
-   console.log("statusrepeat",status)
     this.statusService.isNameRepeated(status.name, status.id).subscribe(
       res => {
         if (res.status == true) {
@@ -248,16 +248,15 @@ onAddSubmit() {
     };
      if(row.name.length>0&&row.name!=' ')
      {
-   console.log("naamenotwithspace")
-    this.statusService.isNameRepeated(status.name, status.id).subscribe(
-      res => {
-        if (res.status == true) {
-          this.isDisabled = false;
-          this.isNameUpdatedRepeated = false;
-        } else {
-          this.isDisabled = true;
-          this.isNameUpdatedRepeated = true;
-        }
+      this.statusService.isNameRepeated(status.name, status.id).subscribe(
+        res => {
+          if (res.status == true) {
+            this.isDisabled = false;
+            this.isNameUpdatedRepeated = false;
+          } else {
+            this.isDisabled = true;
+            this.isNameUpdatedRepeated = true;
+          }
       });
     }
     else{

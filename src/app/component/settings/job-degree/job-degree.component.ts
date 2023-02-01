@@ -115,7 +115,8 @@ export class JobDegreeComponent implements OnInit {
   OnEditSubmit(row: any) {
     let jobDegree={
       id:row.id,
-      name:row.name
+      name:row.name,
+      updatedBy: localStorage.getItem('userName') || ''
     };
 
     this.jobDegreeService.updateJobDegree(jobDegree).subscribe(res=>{

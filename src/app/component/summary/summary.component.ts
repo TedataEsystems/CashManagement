@@ -137,7 +137,6 @@ warning=false;
         this.dataSource = new MatTableDataSource<any>(this.missions);
         this.dataSource._updateChangeSubscription();
         this.dataSource.paginator = this.paginator as MatPaginator;
-        console.log("closer2");
       }); //end of subscribe
     setTimeout(() => {
       this.loader = false;
@@ -184,7 +183,7 @@ warning=false;
    else{
     this.IsAdmin=true;
    }
-   console.log(this.IsAdmin)
+  
 
     if(localStorage.getItem("role").toLocaleLowerCase().replace(/\s/, '')=="creator")
 {
@@ -253,6 +252,10 @@ warning=false;
       .subscribe((result) => {
         if(this.form.value==''){
           this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
+        }
+        else
+        {
+          this.AdvancedSearchSubmit();
         }
       });
   }
@@ -359,7 +362,7 @@ warning=false;
     this.advSearchMission.statusId = Number(this.form.value.statusId);
     this.advSearchMission.missionTypeId = Number(this.form.value.missionTypeId);
     this.advSearchMission.jobDegreeId = Number(this.form.value.jobDegreeId);
-    console.log('ad', this.advSearchMission);
+    
     this.missionService
       .AdvancedSearch(this.advSearchMission)
       .subscribe((res) => {
@@ -376,7 +379,6 @@ exportAttach(row:any)
     {
     const linkSource =
     'data:'+res.type+';base64,' +res.data;
-    console.log('data:'+res.type+';base64,' +res.data,"f");
   const downloadLink = document.createElement('a');
   const fileName = res.name;
   downloadLink.href = linkSource;
