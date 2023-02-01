@@ -251,7 +251,7 @@ warning=false;
       .afterClosed()
       .subscribe((result) => {
         if(this.form.value==''){
-          this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
+          this.getMisssions(1,100,'',this.sortColumnDef,this.SortDirDef);
         }
         else
         {
