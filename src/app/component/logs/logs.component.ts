@@ -4,31 +4,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Logs } from 'src/app/model/logs';
 import { LogsService } from 'src/app/shared/service/logs.service';
-
-
-export interface PeriodicElement {
-  CallDate: string;
-  CustName:string;
-  User:string;
-  Serial: string;
-  MonitorName:string;
-  Status:string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { CallDate: 'oooo', CustName: 'Hydrogen',User:"user",  Serial: 'H',MonitorName: 'Hydrogen', Status: 'Hydrogen'},
-  { CallDate: 'oooo', CustName: 'Hydrogen',User:"user",  Serial: 'H',MonitorName: 'Hydrogen', Status: 'Hydrogen'},
-  { CallDate: 'oooo', CustName: 'Hydrogen',User:"user",  Serial: 'H',MonitorName: 'Hydrogen', Status: 'Hydrogen'},
-  { CallDate: 'oooo', CustName: 'Hydrogen',User:"user",  Serial: 'H',MonitorName: 'Hydrogen', Status: 'Hydrogen'},
-  { CallDate: 'oooo', CustName: 'Hydrogen',User:"user",  Serial: 'H',MonitorName: 'Hydrogen', Status: 'Hydrogen'},
-  { CallDate: 'oooo', CustName: 'Hydrogen',User:"user",  Serial: 'H',MonitorName: 'Hydrogen', Status: 'Hydrogen'},
-  { CallDate: 'oooo', CustName: 'Hydrogen',User:"user",  Serial: 'H',MonitorName: 'Hydrogen', Status: 'Hydrogen'},
-  { CallDate: 'oooo', CustName: 'Hydrogen',User:"user",  Serial: 'H',MonitorName: 'Hydrogen', Status: 'Hydrogen'},
-  { CallDate: 'oooo', CustName: 'Hydrogen',User:"user",  Serial: 'H',MonitorName: 'Hydrogen', Status: 'Hydrogen'}
-];
 @Component({
   selector: 'app-logs',
   templateUrl: './logs.component.html',
@@ -44,12 +23,12 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class LogsComponent implements OnInit {
 
   searchKey:string ='' ;
-  constructor(private title:Title,private toastr:ToastrService,private logsService:LogsService){
+  constructor(private title:Title,private route: ActivatedRoute,private _router:Router,private toastr:ToastrService,private logsService:LogsService){
 
     this.title.setTitle("History")
 
   }
-
+  
   @ViewChild(MatSort) sort?:MatSort ;
   @ViewChild(MatPaginator) paginator?:MatPaginator ;
   displayedColumns: string[] = ['Id', 'userName' ,'creationDate','parentType', 'actionType' ,'Details'];
@@ -58,7 +37,6 @@ export class LogsComponent implements OnInit {
   sortColumnDef: string = "Id";
   SortDirDef: string = 'desc';
   loader: boolean = false;
-
 
   getRequestdata(pageNum: number, pageSize: number, search: string, sortColumn: string, sortDir: string) {
     this.loader = true;
@@ -69,18 +47,13 @@ export class LogsComponent implements OnInit {
       this.dataSource._updateChangeSubscription();
       this.dataSource.paginator = this.paginator as MatPaginator;
       this.loader = false;
-
     })
-    
-  
   }
   ngOnInit(){
-    this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
-
+    //this.logsService.getLogs(pageNum, pageSize, search, sortColumn, sortDir).subscribe(response => {});
+    this.getRequestdata(1,100,'',this.sortColumnDef,this.SortDirDef);
   }
-
   ngAfterViewInit() {
-
     this.dataSource.sort = this.sort as MatSort;
     this.dataSource.paginator = this.paginator as MatPaginator;}
 
@@ -93,17 +66,13 @@ export class LogsComponent implements OnInit {
       this.getRequestdata(1, 100, searchData, this.sortColumnDef, "desc");
       // this.dataSource.filter=this.searchKey.trim().toLowerCase();
     }
-
-
-
     pageIn = 0;
     public pIn: number = 0;
+    pagesizedef:number=100;
+    previousSizedef:number=100;
     lastcol: string = 'Id';
     lastdir: string = 'asc';
-   
-  
     sortData(sort: any) {
-  
         if (this.pIn != 0)
           window.location.reload();
         if (this.lastcol == sort.active && this.lastdir == sort.direction) {
@@ -116,10 +85,40 @@ export class LogsComponent implements OnInit {
         this.lastdir = sort.direction;
         var c = this.pageIn;
         this.getRequestdata(1, 100, '', sort.active, this.lastdir);
-      
     }
-   
+    pageChanged(event:any){    
+      //this.loading = true;
+      this.pIn=event.pageIndex;
+      this.pageIn=event.pageIndex;
+      this.pagesizedef=event.pageSize;
+      let pageIndex = event.pageIndex;
+      let pageSize = event.pageSize;
+      let previousSize = pageSize * pageIndex;
+      this.previousSizedef=previousSize;
+this.getRequestdataNext(previousSize,pageSize,pageIndex+1,'',this.sortColumnDef,this.SortDirDef)
+      let previousIndex = event.previousPageIndex; 
 
-
-
+    }
+    getRequestdataNext(cursize:number,pageSize:number,pageNum:number ,search:string,sortColumn:string,sortDir:string){
+      this.logsService.getLogs(pageNum,pageSize,search,sortColumn,sortDir).subscribe(res=>{
+        if(res.status==true){
+          console.log(res);
+       this.logsList.length = cursize;
+       this.logsList.push(...res?.data);
+       //this.Requetss = res.result.data;
+       this.logsList.length = res.pagination?.totalCount;
+       this.dataSource =new MatTableDataSource<any>(this.logsList);
+       this.dataSource._updateChangeSubscription();
+       this.dataSource.paginator = this.paginator as MatPaginator;
+        }
+        else this.toastr.error(res.error)
+      },err=>{
+        if(err.status==401)
+        this._router.navigate(['/login'], { relativeTo: this.route });
+        else 
+        this.toastr.error("! Fail");
+        //this.loading = false;
+       
+      })
+     } 
 }

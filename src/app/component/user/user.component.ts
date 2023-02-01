@@ -48,7 +48,7 @@ export class UserComponent implements OnInit {
   settingtype = ''
   editUsr: any;
   editdisabled: boolean = false;
-  constructor(private titleService: Title, private toastr: ToastrService, private router: Router, private bottomSheet: MatBottomSheet,
+  constructor(private titleService: Title, private toastr: ToastrService,private _router:Router,private router: Router, private bottomSheet: MatBottomSheet,
               private route: ActivatedRoute, private dailogService: DeleteService, private dialog: MatDialog,
               private userService: UserService, private _bottomSheet: MatBottomSheet) 
   {
@@ -59,7 +59,7 @@ export class UserComponent implements OnInit {
       {
        this.router.navigateByUrl('/login');
       }
-    this.getUsers(1, 100, '', this.sortColumnDef, this.SortDirDef);
+    this.getUsers(1,100,'',this.sortColumnDef,this.SortDirDef);
 
   }
   getUsers(pageNum: number, pagesize: number, searchValue: string, sortColumn: string, sortDir: string) {
@@ -95,7 +95,7 @@ export class UserComponent implements OnInit {
     dialogGonfig.width = "50%";
     dialogGonfig.panelClass = 'edit-dialog';
     this.dialog.open(AddUserComponent, { panelClass: "edit-dialog", disableClose: true, autoFocus: true, width: "50%", data: row }).afterClosed().subscribe(result => {
-      this.getUsers(1, 100, '', this.sortColumnDef, this.SortDirDef)
+      this.getUsers(1,100,'',this.sortColumnDef,this.SortDirDef)
     });
   }
   onDelete(r: any) {
@@ -103,7 +103,7 @@ export class UserComponent implements OnInit {
       if (res) {
         this.userService.deleteUser(r.id).subscribe(res => {
           this.toastr.success(' successfully Deleted');
-          this.getUsers(1, 100, '', this.sortColumnDef, this.SortDirDef);
+          this.getUsers(1,100,'',this.sortColumnDef, this.SortDirDef);
         }, error => { this.toastr.warning('failed'); }
         )//end of subscribe
       }//end of if
@@ -120,7 +120,7 @@ export class UserComponent implements OnInit {
     dialogGonfig.width = "50%";
     dialogGonfig.panelClass = 'edit-dialog';
     this.dialog.open(AddUserComponent, dialogGonfig).afterClosed().subscribe(res => {
-      this.getUsers(1, 100, '', this.sortColumnDef, this.SortDirDef);
+      this.getUsers(1,100,'',this.sortColumnDef,this.SortDirDef);
     });
 
   }
@@ -218,5 +218,40 @@ export class UserComponent implements OnInit {
       swal.fire('Fail ', err.error,'error')
     });
   }
+  pageIn = 0;
+  public pIn: number = 0;
+  pagesizedef:number=100;
+  previousSizedef:number=100;
 
+  pageChanged(event:any){    
+    this.pIn=event.pageIndex;
+    this.pageIn=event.pageIndex;
+    this.pagesizedef=event.pageSize;
+    let pageIndex = event.pageIndex;
+    let pageSize = event.pageSize;
+    let previousSize = pageSize * pageIndex;
+    this.previousSizedef=previousSize;
+this.getRequestdataNext(previousSize,pageSize,pageIndex+1,'',this.sortColumnDef,this.SortDirDef)
+    let previousIndex = event.previousPageIndex; 
+
+  }
+  getRequestdataNext(cursize:number,pageSize:number,pageNum:number ,search:string,sortColumn:string,sortDir:string){
+    this.userService.getUsers(pageNum,pageSize,search,sortColumn,sortDir).subscribe(res=>{
+      if(res.status==true){
+        console.log(res);
+     this.users.length = cursize;
+     this.users.push(...res?.data);
+     this.users.length = res.pagination?.totalCount;
+     this.dataSource =new MatTableDataSource<any>(this.users);
+     this.dataSource._updateChangeSubscription();
+     this.dataSource.paginator = this.paginator as MatPaginator;
+      }
+      else this.toastr.error(res.error)
+    },err=>{
+      if(err.status==401)
+      this._router.navigate(['/login'], { relativeTo: this.route });
+      else 
+      this.toastr.error("! Fail");
+    })
+   } 
 }
