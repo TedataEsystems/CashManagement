@@ -39,7 +39,6 @@ export class RoleComponent implements OnInit {
   isDisabled = false;
   isDisable = false;
   userRole = {id: 0,name:'',createdBy:''}
-  // show: boolean = false;
   constructor(private titleService: Title,private toastr:ToastrService, private router: Router,
     private route: ActivatedRoute, private dailogService: DeleteService, private dialog:MatDialog,private userRoleService:UserRoleService
   ) 
@@ -51,19 +50,12 @@ export class RoleComponent implements OnInit {
     name: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
   })
   ngOnInit(): void {
-    // if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    // {
-    //   this.router.navigateByUrl('/login');
-    // }
-
     this.getUserRoles(1, 100, '', this.sortColumnDef, this.SortDirDef);
   }
   getUserRoles(pageNum: number, pagesize: number, searchValue: string, sortColumn: string, sortDir: string) {
     this.loader = true;
     this.userRoleService.getAllUserRoles(pageNum, pagesize, searchValue, sortColumn, sortDir).subscribe(respose => {
       this.userRoles = respose?.data;
-      console.log(this.userRoles );
-      console.log(respose);
       this.dataSource = new MatTableDataSource<any>(this.userRoles);
       this.dataSource._updateChangeSubscription();
       this.dataSource.paginator = this.paginator as MatPaginator;
@@ -71,7 +63,6 @@ export class RoleComponent implements OnInit {
     setTimeout(() => {
       this.loader = false
     }, (2000));
-
   }
   sortData(sort: any) {
     if (this.colname == sort.active && this.coldir == sort.direction) {
@@ -89,21 +80,10 @@ export class RoleComponent implements OnInit {
     this.dataSource.paginator = this.paginator as MatPaginator;
   }
   onSearchClear() {
-    // if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    // {
-    //   this.router.navigateByUrl('/login');
-    // }
-    // else{
     this.searchKey = '';
     this.applyFilter();
-
   }
   applyFilter() {
-    // if(localStorage.getItem("userName")==""||localStorage.getItem("userName")==undefined||localStorage.getItem("userName")==null)
-    // {
-    //   this.router.navigateByUrl('/login');
-    // }
-    // else{
     let searchData = this.searchKey.trim().toLowerCase();
     this.getUserRoles(1, 100, searchData, this.sortColumnDef, 'asc');
   }
@@ -113,19 +93,16 @@ export class RoleComponent implements OnInit {
     this.editdisabled = true;
   }
   cancelEdit() {
-
     this.editdisabled = false;
     this.isNameUpdatedRepeated = false;
     this.getUserRoles(1,100,'',this.sortColumnDef,this.SortDirDef);
-
   }
   updateEdit(row: any) {
     let userRoleEdit:UserolesList={
       id:row.id,
       name:row.name,
-      createdBy:row.name,
       creationDate:row.creationDate,
-      updatedBy:localStorage.getItem('usernam') || ''
+      updatedBy:localStorage.getItem('userName') || ''
     }
   this.userRoleService.updateUserRole(userRoleEdit).subscribe(res=>
     {this.loader = true;
@@ -142,10 +119,6 @@ export class RoleComponent implements OnInit {
       this.cancelEdit();
   }
   onDelete(r:any) {
- if (localStorage.getItem("userName") == "" || localStorage.getItem("userName") == undefined || localStorage.getItem("userName") == null) {
-      this.router.navigateByUrl('/login');
-     }
- else {
   this.dailogService.openConfirmDialog().afterClosed().subscribe(res => {
     if (res) {
       this.userRoleService.deleteUserRole(r.id).subscribe(res => {
@@ -155,7 +128,7 @@ export class RoleComponent implements OnInit {
       )//end of subscribe
     }//end of if
   })//end of first subscriob
-      }
+      
   }
   addRole() {
     console.log("from add role method");

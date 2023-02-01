@@ -176,7 +176,9 @@ area:string;
     }//end of object
     let comment = {
       missionId: this.service.form.value.id,
-      comment: this.service.form.value.comment
+      comment: this.service.form.value.comment,
+      createdBy:localStorage.getItem("userName")
+
     }
     // sent from withput update in attach file so we will update mission only
     if (this.file == null) {
