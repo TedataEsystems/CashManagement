@@ -59,7 +59,7 @@ export class UserComponent implements OnInit {
       {
        this.router.navigateByUrl('/login');
       }
-    this.getUsers(1, 100, '', this.sortColumnDef, this.SortDirDef);
+    this.getUsers(1,100,'',this.sortColumnDef,this.SortDirDef);
 
   }
   getUsers(pageNum: number, pagesize: number, searchValue: string, sortColumn: string, sortDir: string) {
@@ -95,7 +95,7 @@ export class UserComponent implements OnInit {
     dialogGonfig.width = "50%";
     dialogGonfig.panelClass = 'edit-dialog';
     this.dialog.open(AddUserComponent, { panelClass: "edit-dialog", disableClose: true, autoFocus: true, width: "50%", data: row }).afterClosed().subscribe(result => {
-      this.getUsers(1, 100, '', this.sortColumnDef, this.SortDirDef)
+      this.getUsers(1,100,'',this.sortColumnDef,this.SortDirDef)
     });
   }
   onDelete(r: any) {
@@ -103,7 +103,7 @@ export class UserComponent implements OnInit {
       if (res) {
         this.userService.deleteUser(r.id).subscribe(res => {
           this.toastr.success(' successfully Deleted');
-          this.getUsers(1, 100, '', this.sortColumnDef, this.SortDirDef);
+          this.getUsers(1,100,'',this.sortColumnDef, this.SortDirDef);
         }, error => { this.toastr.warning('failed'); }
         )//end of subscribe
       }//end of if
@@ -120,7 +120,7 @@ export class UserComponent implements OnInit {
     dialogGonfig.width = "50%";
     dialogGonfig.panelClass = 'edit-dialog';
     this.dialog.open(AddUserComponent, dialogGonfig).afterClosed().subscribe(res => {
-      this.getUsers(1, 100, '', this.sortColumnDef, this.SortDirDef);
+      this.getUsers(1,100,'',this.sortColumnDef,this.SortDirDef);
     });
 
   }
