@@ -142,11 +142,9 @@ export class RoleComponent implements OnInit {
       name: this.form.value.name,
       createdBy:localStorage.getItem('userName') || ''
     };
-    console.log(this.form, "Form");
-    console.log(this.form.valid,"valid or not ");
     if (this.form.valid) {
       this.userRoleService.addUserRole(userRole).subscribe(res => {
-        console.log( "from subscribe Form");
+        this.toastr.success("Succesfully added");
         this.form['controls']['name'].setValue('');
         this.form['controls']['id'].setValue(0);
         this.getUserRoles(1, 100, '', this.sortColumnDef, this.SortDirDef);

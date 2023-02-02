@@ -181,7 +181,7 @@ export class JobDegreeComponent implements OnInit {
 
   onAddSubmit() {
     let jobDegree={
-      id:this.form.value.id,
+      id:0,
       name:this.form.value.Name,
       createdBy:localStorage.getItem('userName') || ''
     };
@@ -189,10 +189,10 @@ export class JobDegreeComponent implements OnInit {
     if (this.form.valid ) {
       this.jobDegreeService.addJobDegree(jobDegree).subscribe(res=>
       {
-         this.form['controls']['Name'].setValue('');
-          this.form['controls']['Id'].setValue(0);
-        this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
-
+        this.form['controls']['Name'].setValue('');
+        this.form['controls']['Id'].setValue(0);
+        this.toastr.success("Succesfully added");
+        this.getRequestdata(1,100,'',this.sortColumnDef,this.SortDirDef);
       }
     )
     this.isShowDiv = false;

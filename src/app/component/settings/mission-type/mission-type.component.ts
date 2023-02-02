@@ -51,10 +51,11 @@ export class MissionTypeComponent implements OnInit {
 
   })
   isDisable = false;
-  missionType = {
+  missionType:MissionType = {
     id: 0,
     name: '',
-    createdBy: ''
+    createdBy: '',
+    
   }
   //////pagenation
   isDisabled = false;
@@ -118,7 +119,7 @@ addType() {
 onChecknameIsalreadysign()
 {
   if(this.form.invalid){return ;}
-  this.missionType.id=this.form.value.id;
+  this.missionType.id=0;
   this.missionType.name=this.form.value.name;
 
   this.missionTypeService.MissionTypeIsAlreadySigned(this.missionType.name,this.missionType.id).subscribe(res=>
@@ -140,7 +141,7 @@ onChecknameIsalreadysign()
 //submit add
   onCreateUpdate() {
     this.isDisable = true;
-    this.missionType.id = this.form.value.id;
+    this.missionType.id = 0;
     this.missionType.name = this.form.value.name;
     this.missionType.createdBy = localStorage.getItem('userName') || '';
     if (this.form.invalid || this.form.value.name == '') {

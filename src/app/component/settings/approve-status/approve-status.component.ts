@@ -160,7 +160,7 @@ setReactValue(id: number, val: any) {
 }
 onAddSubmit() {
   let status={
-    id:this.form.value.id,
+    id:0,
     name:this.form.value.Name,
     createdBy: localStorage.getItem('userName') || ''
   };
@@ -169,6 +169,7 @@ onAddSubmit() {
       {
          this.form['controls']['Name'].setValue('');
           this.form['controls']['Id'].setValue(0);
+          this.toastr.success("Succesfully added");
         this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
 
       }
