@@ -121,7 +121,7 @@
   <mat-cell *matCellDef="let element" data-label=" المستخدم"> {{element.updatedBy}} </mat-cell>
 </ng-container> -->
       <ng-container matColumnDef="createdBy">
-        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> اسم المنشئ</mat-header-cell>
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> الانشاء بواسطة</mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.createdBy}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="creationDate">
@@ -129,7 +129,7 @@
         <mat-cell *matCellDef="let element"> {{element.creationDate|date : 'yyyy-MM-dd'}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="updateBy">
-        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>اسم المعدل</mat-header-cell>
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> التعديل بواسطة</mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.updatedBy}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="updateDate">

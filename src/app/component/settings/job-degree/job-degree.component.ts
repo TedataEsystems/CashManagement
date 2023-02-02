@@ -246,7 +246,7 @@ export class JobDegreeComponent implements OnInit {
       name:row.name,
       id:row.id
     };
-    if(row.name.length>0&&row.name!=' '&&row.name!='  '&&row.name!='   ')
+    if(row.name.trim().length>0&&row.name.trim()!='')
     {
     this.jobDegreeService.isNameRepeated(status.name, status.id).subscribe(
       res => {

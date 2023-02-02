@@ -221,7 +221,7 @@ onAddSubmit() {
       name:row.name,
       id:row.id
     };
-     if(row.name.length>0&&row.name!=' '&&row.name!='  '&&row.name!='   ')
+    if(row.name.trim().length>0&&row.name.trim()!='')
      {
       this.statusService.isNameRepeated(status.name, status.id).subscribe(
         res => {

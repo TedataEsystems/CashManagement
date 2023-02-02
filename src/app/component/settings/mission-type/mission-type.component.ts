@@ -236,15 +236,8 @@ this.missionTypeService.updateMissionType(missionTypeEdit).subscribe(res=>
     this.cancelEdit();
 
   }
-  //expression=new RegExp("/^(\s+\S+\s*)*(?!\s).*$/")
-  expression=new RegExp('/^[^-\s][a-zA-Z0-9_\s-]+$')
-
-x:string='';
   onChecknameIsalreadysignWhenUpdate(element:any)
   {
-    this.x=element.name.trim();
-      // if(this.expression.test(element.name)){
-      //  if(element.name.length>0&&element.name!=' '&&element.name!='  '&&element.name!='   '){
         if(element.name.trim().length>0&&element.name.trim()!=''){
    this.missionTypeService.MissionTypeIsAlreadySigned(element.name,element.id).subscribe(res=>
     {

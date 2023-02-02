@@ -71,7 +71,7 @@
   <mat-cell *matCellDef="let element" data-label=" تاريخ الانشاء"> {{element.creationDate|date : 'yyyy-MM-dd'}} </mat-cell>
 </ng-container>
 <ng-container matColumnDef="createdBy">
-  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> اسم المستخدم</mat-header-cell>
+  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> الانشاء بواسطة</mat-header-cell>
   <mat-cell *matCellDef="let element" data-label="اسم المستخدم"> {{element.createdBy}} </mat-cell>
 </ng-container>
 <ng-container matColumnDef="updateDate">

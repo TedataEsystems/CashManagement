@@ -180,7 +180,7 @@ export class RoleComponent implements OnInit {
   }
   onChecknameIsalreadysignWhenUpdate(element:any)
   {
-    if(element.name.length>0&&element.name!=' '&&element.name!='  '&&element.name!='   ')
+    if(element.name.trim().length>0&&element.name.trim()!='')
     {
    this.userRoleService.userRoleIsAlreadySigned(element.name,element.id).subscribe(res=>
     {
