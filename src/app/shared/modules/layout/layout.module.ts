@@ -44,6 +44,7 @@ import { ExpensesFormComponent } from '../../../Report/expenses-form/expenses-fo
 import { MissionDetailsComponent } from '../../../component/Forms/mission-details/mission-details.component';
 import { EditMissionComponent } from '../../../component/Forms/edit-mission/edit-mission.component';
 import { SplitPipe } from 'src/app/pipes/split.pipe';
+import { LoadingService } from '../../service/loading.service';
 
 
 
@@ -109,6 +110,6 @@ import { SplitPipe } from 'src/app/pipes/split.pipe';
   ],
 
 
-  providers:[{provide:HTTP_INTERCEPTORS , useClass:LoadingInterceptor , multi:true}]
+  providers:[LoadingService,{provide:HTTP_INTERCEPTORS , useClass:LoadingInterceptor , multi:true}]
 })
 export class LayoutModule { }
