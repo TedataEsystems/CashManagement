@@ -164,7 +164,7 @@ onChecknameIsalreadysign()
         this.toastr.success('add successfully');
         this.form['controls']['name'].setValue('');
         this.form['controls']['id'].setValue(0);
-        this.getMissionTypes(1,100,'',this.sortColumnDef,this.SortDirDef);
+        this.getMissionTypes(1, 100, '', this.sortColumnDef, this.SortDirDef);
       },error=>{this.toastr.warning('failed');})//end of subscribe
   }
     }//end of else
@@ -215,7 +215,7 @@ onDelete(r: any) {
 
   let missionTypeEdit:MissionType={
     id:row.id,
-    name:row.name,
+    name:row.name.trim(),
     createdBy:row.createdBy,
     creationDate:row.creationDate,
     updatedBy:localStorage.getItem('userName') || ''
@@ -225,7 +225,7 @@ this.missionTypeService.updateMissionType(missionTypeEdit).subscribe(res=>
       if(res.status==true)
       {
         this.toastr.success("updated successfully");
-        this.getMissionTypes(1,100,'',this.sortColumnDef,this.SortDirDef);
+        this.getMissionTypes(1, 100, '', this.sortColumnDef, this.SortDirDef);
         this.form['controls']['name'].setValue('');
         this.form['controls']['id'].setValue(0);
 
@@ -236,11 +236,16 @@ this.missionTypeService.updateMissionType(missionTypeEdit).subscribe(res=>
     this.cancelEdit();
 
   }
+  //expression=new RegExp("/^(\s+\S+\s*)*(?!\s).*$/")
+  expression=new RegExp('/^[^-\s][a-zA-Z0-9_\s-]+$')
 
-
+x:string='';
   onChecknameIsalreadysignWhenUpdate(element:any)
   {
-    if(element.name.length>0&&element.name!=' '){
+    this.x=element.name.trim();
+      // if(this.expression.test(element.name)){
+      //  if(element.name.length>0&&element.name!=' '&&element.name!='  '&&element.name!='   '){
+        if(element.name.trim().length>0&&element.name.trim()!=''){
    this.missionTypeService.MissionTypeIsAlreadySigned(element.name,element.id).subscribe(res=>
     {
       if(res.status==true)
@@ -257,6 +262,8 @@ this.missionTypeService.updateMissionType(missionTypeEdit).subscribe(res=>
     )
   }
   else{
+    console.log("expression not valid")
+
     this.isDisabled=true;
 
   }

@@ -131,7 +131,7 @@ warning=false;
     sortDir: string
   ) {
 
-    this.loader.busy();
+   // this.loader.busy();
 
 
 
@@ -143,9 +143,9 @@ warning=false;
         this.dataSource._updateChangeSubscription();
         this.dataSource.paginator = this.paginator as MatPaginator;
       }); //end of subscribe
-      setTimeout(()=>{
-        this.loader.idle();
-      },2000)
+      // setTimeout(()=>{
+      //   this.loader.idle();
+      // },2000)
   } //end of getallmission
   //sort
   sortData(sort: any) {

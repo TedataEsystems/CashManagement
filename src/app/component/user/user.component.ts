@@ -67,7 +67,7 @@ export class UserComponent implements OnInit {
     this.getUsers(1,100,'',this.sortColumnDef,this.SortDirDef);
 
   }
-  getUsers(pageNum: number, pagesize: number, searchValue: string, sortColumn: string, sortDir: string) {
+  getUsers(pageNum: number,pagesize: number,searchValue: string,sortColumn: string,sortDir: string) {
     this.loader = true;
     this.userService.getUsers(pageNum, pagesize, searchValue, sortColumn, sortDir).subscribe(respose => {
       console.log("user",respose.data)
@@ -152,7 +152,7 @@ export class UserComponent implements OnInit {
     fd.append(this.param, this.fileuploaded);
     this.userService.importExcelFile(fd).subscribe(res => {
       if (res.status == true) {
-        this.getUsers(1, 100, '', this.sortColumnDef, this.SortDirDef);
+        this.getUsers(1,100,'',this.sortColumnDef,this.SortDirDef);
         this.fileAttr = 'Choose File';
         this.resetfile();
         this._bottomSheet.dismiss();
@@ -170,7 +170,7 @@ export class UserComponent implements OnInit {
         this.resetfile();
         // this.toastr.error("Error",res.data);
         swal.fire('Not uploaded ', res.error,'error')
-        this.getUsers(1, 100, '', this.sortColumnDef, this.SortDirDef);
+        this.getUsers(1,100,'',this.sortColumnDef,this.SortDirDef);
       }
     }
       , error => {

@@ -182,35 +182,7 @@ onAddSubmit() {
 
 
 }
-// onAddSubmit() {
-//   // this.isDisabled = true;
-//   this.Status.id = this.form.value.id;
-//   this.Status.name=this.form.value.Name
-//    this.Status.createdBy = localStorage.getItem('userName') || '';
-//   if (this.form.invalid || this.form.value.name == '') {
-//     console.log("IsInvalid")
-//      if (this.form.value.name == ' ')
-//        this.setReactValue(Number(0), "");
-//   //   this.isDisabled = false;
-//   //   console.log("isDisabled=false firstOfSubmit")
-//     return;
-//   }
-//   else{
-//     // this.isDisabled=true;
-//     // console.log("isDisabled=true else")
 
-//   this.statusService.addStatus(this.Status).subscribe(res=>
-//     {
-//        this.form['controls']['Name'].setValue('');
-//         this.form['controls']['Id'].setValue(0);
-//       this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
-
-//     }
-//   )
-//   this.isShowDiv = false;
-
-//   }
-// }
   onSearchClear() {
     this.searchKey = '';
     this.applyFilter();
@@ -249,7 +221,7 @@ onAddSubmit() {
       name:row.name,
       id:row.id
     };
-     if(row.name.length>0&&row.name!=' ')
+     if(row.name.length>0&&row.name!=' '&&row.name!='  '&&row.name!='   ')
      {
       this.statusService.isNameRepeated(status.name, status.id).subscribe(
         res => {

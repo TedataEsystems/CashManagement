@@ -80,12 +80,12 @@ export class AddUserComponent implements OnInit {
             {
               this.newuser1.userName = this.form.value.userName;
               this.userService.addUser(this.newuser1).subscribe();
+              this.toastr.success(' Submitted successfully');
+
             }
           else
             {
-              this.toastr.error('userName is not exist you can not add a new user');
-              this.onClose();
-              this._router.navigate(['/user'] );
+              this.toastr.error('User name is not exist you can not add a new user');
             }
         });
       }
@@ -93,6 +93,8 @@ export class AddUserComponent implements OnInit {
       {
         this.newuser1.userName = this.form.value.userName;
         this.userService.addUser(this.newuser1).subscribe();  
+    this.toastr.success(' Submitted successfully');
+
       }
     }
     else
@@ -113,12 +115,13 @@ export class AddUserComponent implements OnInit {
             {
               this.newuser1.userName = this.form.value.userName;
               this.userService.updateUser(this.newuser1).subscribe();
+              this.toastr.success(' Submitted successfully');
+
             }
           else
             {
-              this.toastr.error('userName is not exist you can not update this user');
-              this.onClose();
-              this._router.navigate(['/user'] );
+              this.toastr.error('User name is not exist you can not update this user');
+             
             }
         });
       }
@@ -126,9 +129,9 @@ export class AddUserComponent implements OnInit {
       {
         this.newuser1.userName = this.form.value.userName;
         this.userService.updateUser(this.newuser1).subscribe();  
+        this.toastr.success(' Submitted successfully');
       }
     }
-    this.toastr.success(' Submitted successfully');
     this.onClose();
     this._router.navigate(['/user'] );
   }

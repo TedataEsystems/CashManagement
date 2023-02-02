@@ -73,7 +73,6 @@ export class EditComponent implements OnInit {
         this.toastr.warning(':failed');
       }
       if (this.data) {
-        console.log(this.data);
         //set values of lists
         var userCount = 0;
         var statusCount = 0;
