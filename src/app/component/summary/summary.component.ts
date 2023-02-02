@@ -108,7 +108,8 @@ warning=false;
     private dailogService: DeleteService,
     private missionService: MissionService,
     private userService: UserService,
-    private load:LoadingService
+    private load:LoadingService,
+    private _router:Router
   ) {
     this.titleService.setTitle('المأموريات');
   }
@@ -192,6 +193,42 @@ warning=false;
 
     this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
   }
+  //next previous page
+  pageIn = 0;
+  public pIn: number = 0;
+  pagesizedef:number=100;
+  previousSizedef:number=100;
+  pageChanged(event:any){
+    //this.loading = true;
+    this.pIn=event.pageIndex;
+    this.pageIn=event.pageIndex;
+    this.pagesizedef=event.pageSize;
+    let pageIndex = event.pageIndex;
+    let pageSize = event.pageSize;
+    let previousSize = pageSize * pageIndex;
+    this.previousSizedef=previousSize;
+this.getRequestdataNext(previousSize,pageSize,pageIndex+1,'',this.sortColumnDef,this.SortDirDef)
+    let previousIndex = event.previousPageIndex;
+  }
+  getRequestdataNext(cursize:number,pageSize:number,pageNum:number ,search:string,sortColumn:string,sortDir:string){
+    this.missionService.getAllMissions(pageNum,pageSize,search,sortColumn,sortDir).subscribe(res=>{
+      if(res.status==true){
+        console.log(res);
+     this.missions.length = cursize;
+     this.missions.push(...res?.data);
+     this.missions.length = res.pagination?.totalCount;
+     this.dataSource =new MatTableDataSource<any>(this.missions);
+     this.dataSource._updateChangeSubscription();
+     this.dataSource.paginator = this.paginator as MatPaginator;
+      }
+      else this.toastr.error(res.error)
+    },err=>{
+      if(err.status==401)
+      this._router.navigate(['/login'], { relativeTo: this.route });
+      else
+      this.toastr.error("! Fail");
+    })
+   }
   //////add (open add component as dialog)
   addMission() {
     const dialogGonfig = new MatDialogConfig();

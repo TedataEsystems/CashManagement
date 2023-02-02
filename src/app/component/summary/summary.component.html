@@ -625,6 +625,7 @@
   <mat-paginator
     [pageSizeOptions]="[10, 25, 50, 100]"
     [pageSize]="10"
+    (page)="pageChanged($event)"
     showFirstLastButtons
   >
   </mat-paginator>
