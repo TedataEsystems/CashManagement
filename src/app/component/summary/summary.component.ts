@@ -68,27 +68,35 @@ warning=false;
     'jobNumber',
     'jobDegree',
     'user',
-    'missionPurpose',
-    'centerOfCost',
     'companyType',
+    'missionPurpose',
+    'missionType',
     'missionPlace',
+    'missionTypeCost',
+    'centerOfCost',
+    
+    
     'startDateMission',
     'endDateMission',
+    'startDateStay',
+    'endDateStay',
+
     'noOfNights',
     'stay',
     'mealsAndIncidentals',
-    'startDateStay',
-    'endDateStay',
-    'missionTypeCost',
+    
+    
     'permissionRequest',
     'permissionDuration',
+
     'comment',
     'createdBy',
-    'updatedBy',
     'creationDate',
+    'updatedBy',
     'updateDate',
+    
     'status',
-    'missionType',
+    
     'exporAttach',
     'exportmission',
     'action',
