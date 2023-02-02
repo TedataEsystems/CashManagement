@@ -158,8 +158,9 @@ export class RoleComponent implements OnInit {
   onChecknameIsalreadysign()
   {
     this.userRole.id=0;
-    console.log(this.userRole.id);
     this.userRole.name=this.form.value.name;
+    if(this.form.valid)
+    {
     this.userRoleService.userRoleIsAlreadySigned(this.userRole.name,this.userRole.id).subscribe(res=>
       {
         //not asign before
@@ -177,6 +178,7 @@ export class RoleComponent implements OnInit {
           this.isNameRepeated = true;
         }
       })
+    }
   }
   onChecknameIsalreadysignWhenUpdate(element:any)
   {
