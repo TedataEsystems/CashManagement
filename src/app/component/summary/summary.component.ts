@@ -54,7 +54,7 @@ export class SummaryComponent implements OnInit {
   IsAdmin: boolean =true;
 Isnotapprove=false;
 warning=false;
-  loading: boolean = true;
+
   /////////////////
   missions: MissionList[] = [];
   advSearchMission: AdvancedSearch = <AdvancedSearch>{};
@@ -108,7 +108,7 @@ warning=false;
     private dailogService: DeleteService,
     private missionService: MissionService,
     private userService: UserService,
-    private load:LoadingService,
+    private loader:LoadingService,
     private _router:Router
   ) {
     this.titleService.setTitle('المأموريات');
@@ -118,7 +118,7 @@ warning=false;
   pageSize = 100;
   sortColumnDef: string = 'Id';
   SortDirDef: string = 'asc';
-  loader: boolean = false;
+
   lastcol: string = 'Id';
   lastdir: string = 'asc';
   ///////////////
@@ -130,7 +130,11 @@ warning=false;
     sortColumn: string,
     sortDir: string
   ) {
-    this.loader = true;
+
+    this.loader.busy();
+
+
+
     this.missionService
       .getAllMissions(pageNum, pagesize, searchValue, sortColumn, sortDir)
       .subscribe((respose) => {
@@ -139,9 +143,9 @@ warning=false;
         this.dataSource._updateChangeSubscription();
         this.dataSource.paginator = this.paginator as MatPaginator;
       }); //end of subscribe
-    setTimeout(() => {
-      this.loader = false;
-    }, 2000);
+      setTimeout(()=>{
+        this.loader.idle();
+      },2000)
   } //end of getallmission
   //sort
   sortData(sort: any) {
@@ -342,7 +346,9 @@ this.getRequestdataNext(previousSize,pageSize,pageIndex+1,'',this.sortColumnDef,
   AdvancedSearchSubmit() {
     // this.isFilterationData = true;
     // this.panelOpenState = true;
-    this.loader = true;
+
+      this.loader.busy();
+
     this.advSearchMission.createdDateFrom =
       this.form.value.createdDateFrom == ''
         ? null
@@ -407,7 +413,9 @@ this.getRequestdataNext(previousSize,pageSize,pageIndex+1,'',this.sortColumnDef,
         this.dataSource = new MatTableDataSource<any>(this.missions);
         this.dataSource.paginator = this.paginator as MatPaginator;
         this.dataSource.sort = this.sort as MatSort;
-        setTimeout(() => (this.loader = false), 3000);
+        setTimeout(()=>{
+          this.loader.idle();
+        },2000)
       });
   }
 exportAttach(row:any)
