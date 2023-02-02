@@ -153,7 +153,7 @@ onChecknameIsalreadysign()
     {
   //add
   if(this.form.value.id==0||this.form.value.id==null)
-  {
+  { 
     this.isDisable=true;
     this.missionTypeService.addMissionType(this.missionType).subscribe(res=>
       {
@@ -215,7 +215,7 @@ onDelete(r: any) {
   let missionTypeEdit:MissionType={
     id:row.id,
     name:row.name,
-    createdBy:row.name,
+    createdBy:row.createdBy,
     creationDate:row.creationDate,
     updatedBy:localStorage.getItem('userName') || ''
   }
