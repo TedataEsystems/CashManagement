@@ -138,6 +138,7 @@ export class EditComponent implements OnInit {
     this.commentService.getComments(this.data.id).subscribe(res => {
       if (res.status) {
         this.commentList = res.comments
+       
         this.dataSourceComment = new MatTableDataSource<any>(this.commentList);
 
       }
