@@ -373,9 +373,9 @@ mat-spinner {
     border: 0;
     /* vertical-align: middle */
   }
-  mat-header-row {
+  /* mat-header-row {
     width: max-content;
-  }
+  } */
   mat-row,
   mat-footer-row {
     width: inherit;

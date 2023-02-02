@@ -1,8 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+//import { userInfo } from 'os';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { UserList } from 'src/app/model/user-list';
+//import { UserList } from 'src/app/model/user-list';
 import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
@@ -62,5 +63,9 @@ export class UserService {
   {
     return this.httpClient.get(`${this.url}/ExportEmptyExcel`,
     {responseType: 'blob'}); 
+  }
+ CheckUserName(userName:string):Observable<any>
+  {
+    return this.httpClient.get<any>(`${this.url}/checkUserNameexist/`+userName);
   }
 }
