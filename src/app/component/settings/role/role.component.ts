@@ -182,6 +182,8 @@ export class RoleComponent implements OnInit {
   }
   onChecknameIsalreadysignWhenUpdate(element:any)
   {
+    if(element.name.length>0&&element.name!=' '&&element.name!='  '&&element.name!='   ')
+    {
    this.userRoleService.userRoleIsAlreadySigned(element.name,element.id).subscribe(res=>
     {
       if(res.status==true)
@@ -196,4 +198,9 @@ export class RoleComponent implements OnInit {
       }
     })
   }
+  else{
+    this.isDisabled=true;
+        }
+
+}
 }
