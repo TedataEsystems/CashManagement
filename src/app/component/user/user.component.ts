@@ -42,12 +42,17 @@ export class UserComponent implements OnInit {
   fileAttrF = 'Choose File';
   htmlToAdd: string = "";
   fileuploaded: any;
-  displayedColumns: string[] = ['id', 'jobNumber', 'Name', 'Team', 'jobDegree', 'createdBy', 'creationDate','updateBy', 'updateDate', 'action'];
+  displayedColumns: string[] = ['id','jobNumber','Name','Team','jobDegree','createdBy','creationDate','updateBy','updateDate','action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource();
   settingtype = ''
   editUsr: any;
   editdisabled: boolean = false;
+  pageIn = 0;
+  public pIn: number = 0;
+  pagesizedef:number=100;
+  previousSizedef:number=100;
+  message:string="";
   constructor(private titleService: Title, private toastr: ToastrService,private _router:Router,private router: Router, private bottomSheet: MatBottomSheet,
               private route: ActivatedRoute, private dailogService: DeleteService, private dialog: MatDialog,
               private userService: UserService, private _bottomSheet: MatBottomSheet) 
@@ -85,7 +90,7 @@ export class UserComponent implements OnInit {
   }
   applyFilter() {
     let searchData = this.searchKey.trim().toLowerCase();
-    this.getUsers(1, 100, searchData, this.sortColumnDef, this.SortDirDef)
+    this.getUsers(1,100,searchData,this.sortColumnDef,this.SortDirDef)
   }
   onEdit(row: any) {
     const dialogGonfig = new MatDialogConfig();
@@ -133,7 +138,7 @@ export class UserComponent implements OnInit {
     }
     this.coldir = sort.direction;
     this.colname = sort.active;
-    this.getUsers(1, 100, '', this.colname, this.coldir);
+    this.getUsers(1,100,'',this.colname,this.coldir);
   }
   UploadPdf() {
     this.bottomSheet.open(this.template, {
@@ -141,7 +146,6 @@ export class UserComponent implements OnInit {
       disableClose: true
     });
   }
-  message:string="";
   upLoadF() {
     const fd = new FormData();
     fd.append(this.param, this.fileuploaded);
@@ -218,11 +222,6 @@ export class UserComponent implements OnInit {
       swal.fire('Fail ', err.error,'error')
     });
   }
-  pageIn = 0;
-  public pIn: number = 0;
-  pagesizedef:number=100;
-  previousSizedef:number=100;
-
   pageChanged(event:any){    
     this.pIn=event.pageIndex;
     this.pageIn=event.pageIndex;
