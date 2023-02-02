@@ -70,6 +70,7 @@ export class UserComponent implements OnInit {
   getUsers(pageNum: number, pagesize: number, searchValue: string, sortColumn: string, sortDir: string) {
     this.loader = true;
     this.userService.getUsers(pageNum, pagesize, searchValue, sortColumn, sortDir).subscribe(respose => {
+      console.log("user",respose.data)
       this.users = respose?.data;
       this.dataSource = new MatTableDataSource<any>(this.users);
       this.dataSource._updateChangeSubscription();

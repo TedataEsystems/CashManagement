@@ -41,19 +41,16 @@ export class LoginComponent implements OnInit {
       if (this.form.invalid) {
           return;
       }
-      console.log(this.form.value);
+      setInterval(()=>{
+        console.log("timer")
+        this.AccountService.logout();
+    }, 3600000);
       this.LoginModel.userName=this.form.value.userName;
       this.LoginModel.password=this.form.value.password;
-
-console.log(this.LoginModel.userName);
-console.log(this.LoginModel.password);
-console.log(this.LoginModel,"pp");
-this.AccountService.login(this.LoginModel).subscribe(res=>
+ this.AccountService.login(this.LoginModel).subscribe(res=>
   {
-    console.log("1",res);
     if(res.status)
     {
-      console.log("2");
       localStorage.setItem("tokenNumber", res.token);
         localStorage.setItem("userName", res.userName);
         localStorage.setItem("team", res.team);
@@ -62,10 +59,8 @@ this.AccountService.login(this.LoginModel).subscribe(res=>
     }
     else
     {
-      console.log("3");
       this.warning=true;
     }}, err => {
-      console.log("4");
       this.warning=true;
 
   });
