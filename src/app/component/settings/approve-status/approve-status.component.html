@@ -63,7 +63,35 @@
        </ng-container>
      </mat-cell>
 </ng-container>
-
+<ng-container matColumnDef="createdBy">
+  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+    اسم المستخدم</mat-header-cell>
+  <mat-cell *matCellDef="let element" data-label="اسم المستخدم">
+    {{ element.createdBy }}
+  </mat-cell>
+</ng-container>
+<ng-container matColumnDef="creationDate">
+  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+    تاريخ الانشاء
+  </mat-header-cell>
+  <mat-cell *matCellDef="let element" data-label=" تاريخ الانشاء">
+    {{ element.creationDate | date : "yyyy-MM-dd" }}
+  </mat-cell>
+</ng-container>
+<ng-container matColumnDef="updatedBy">
+  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+    التعديل بواسطة</mat-header-cell>
+  <mat-cell *matCellDef="let element" data-label=" المستخدم">
+    {{ element.updatedBy }}
+  </mat-cell>
+</ng-container>
+<ng-container matColumnDef="updateDate">
+  <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+    تاريخ التعديل</mat-header-cell>
+  <mat-cell *matCellDef="let element" data-label="تاريخ العديل">
+    {{ element.updateDate | date : "yyyy-MM-dd" }}
+  </mat-cell>
+</ng-container>
 
  <ng-container matColumnDef="action">
     <mat-header-cell *matHeaderCellDef> الاجراء </mat-header-cell>

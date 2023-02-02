@@ -34,7 +34,7 @@ export class JobDegreeComponent implements OnInit {
   SortDirDef: string = 'asc';
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
-  displayedColumns: string[] = ['Id','Staffdegree', 'action'];
+  displayedColumns: string[] = ['Id','Staffdegree','createdBy' ,'creationDate', 'updatedBy','updateDate','action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource();
  jobDegreeList:JobDegree[]=[]
@@ -116,6 +116,8 @@ export class JobDegreeComponent implements OnInit {
     let jobDegree={
       id:row.id,
       name:row.name,
+      createdBy:row.createdBy,
+      creationDate:row.creationDate,
       updatedBy: localStorage.getItem('userName') || ''
     };
 

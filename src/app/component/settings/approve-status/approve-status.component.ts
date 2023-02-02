@@ -38,7 +38,7 @@ export class ApproveStatusComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
-  displayedColumns: string[] = ['Id','status', 'action'];
+  displayedColumns: string[] = ['Id','status','createdBy' ,'creationDate', 'updatedBy','updateDate', 'action'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource();
   settingtype = ''
@@ -115,6 +115,8 @@ OnEditSubmit(row: any) {
   let status={
     id:row.id,
     name:row.name,
+    createdBy:row.createdBy,
+    creationDate:row.creationDate,
     updatedBy: localStorage.getItem('userName') || '',
   };
   this.statusService.updateStatus(status).subscribe(res=>{
