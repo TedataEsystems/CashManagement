@@ -218,7 +218,7 @@
                 (click)="f_input.value = null" />
               <mat-error> * مطلوب </mat-error>
             </mat-form-field>
-            <mat-form-field class="col-md-6" *ngIf="commentStatus">
+            <mat-form-field class="col-md-6" *ngIf="commentStatus" style="margin-bottom: 50px;">
               <mat-label>ملاحظات</mat-label>
               <textarea formControlName="comment" matInput placeholder="ملاحظات" rows="5"  >
               </textarea>
