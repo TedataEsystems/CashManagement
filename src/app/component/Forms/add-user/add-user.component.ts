@@ -58,6 +58,7 @@ export class AddUserComponent implements OnInit {
       this.form.controls['userName'].setValue(this.data.userName);
     }
   }
+  check:boolean;
   onSubmit() {
     if (this.form.invalid) {
       return;
@@ -69,9 +70,30 @@ export class AddUserComponent implements OnInit {
       this.newuser1.jobNumber = this.form.value.jobNumber;
       this.newuser1.roleId = this.form.value.userRole;
       this.newuser1.jobDegreeid = this.form.value.jobDegree;
-      this.newuser1.userName = this.form.value.userName;
       this.newuser1.createdBy=localStorage.getItem("userName");
-      this.userService.addUser(this.newuser1).subscribe();
+      let userName=this.form.value.userName;
+      if(userName!=null)
+      {
+      this.userService.CheckUserName(userName).subscribe(res=>
+        {
+          if(res.status==true)
+            {
+              this.newuser1.userName = this.form.value.userName;
+              this.userService.addUser(this.newuser1).subscribe();
+            }
+          else
+            {
+              this.toastr.error('userName is not exist you can not add a new user');
+              this.onClose();
+              this._router.navigate(['/user'] );
+            }
+        });
+      }
+      else
+      {
+        this.newuser1.userName = this.form.value.userName;
+        this.userService.addUser(this.newuser1).subscribe();  
+      }
     }
     else
     {
@@ -82,11 +104,32 @@ export class AddUserComponent implements OnInit {
       this.newuser1.roleId = this.form.value.userRole;
       this.newuser1.jobDegreeid = this.form.value.jobDegree;
       this.newuser1.updatedBy=localStorage.getItem("userName");
-      this.userService.updateUser(this.newuser1).subscribe(res=>{console.log(res,"from uodate")});
+      let userName=this.form.value.userName;
+      if(userName!=null)
+      {
+      this.userService.CheckUserName(userName).subscribe(res=>
+        {
+          if(res.status==true)
+            {
+              this.newuser1.userName = this.form.value.userName;
+              this.userService.updateUser(this.newuser1).subscribe();
+            }
+          else
+            {
+              this.toastr.error('userName is not exist you can not update this user');
+              this.onClose();
+              this._router.navigate(['/user'] );
+            }
+        });
+      }
+      else
+      {
+        this.newuser1.userName = this.form.value.userName;
+        this.userService.updateUser(this.newuser1).subscribe();  
+      }
     }
     this.toastr.success(' Submitted successfully');
     this.onClose();
-    //this.dialogRef.close('save');
     this._router.navigate(['/user'] );
   }
   onClose() {

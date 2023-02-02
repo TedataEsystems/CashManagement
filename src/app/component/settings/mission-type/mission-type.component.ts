@@ -142,7 +142,7 @@ onChecknameIsalreadysign()
     this.isDisable = true;
     this.missionType.id = this.form.value.id;
     this.missionType.name = this.form.value.name;
-    this.missionType.createdBy = localStorage.getItem('usernam') || '';
+    this.missionType.createdBy = localStorage.getItem('userName') || '';
     if (this.form.invalid || this.form.value.name == '') {
       if (this.form.value.name == ' ')
         this.setReactValue(Number(0), "");
@@ -154,11 +154,9 @@ onChecknameIsalreadysign()
   //add
   if(this.form.value.id==0||this.form.value.id==null)
   {
-    console.log("if condition");
     this.isDisable=true;
     this.missionTypeService.addMissionType(this.missionType).subscribe(res=>
       {
-        console.log("add");
         setTimeout(() => {
           this.loader = false;
         }, 1500)//end of settime out
@@ -219,7 +217,7 @@ onDelete(r: any) {
     name:row.name,
     createdBy:row.name,
     creationDate:row.creationDate,
-    updatedBy:localStorage.getItem('usernam') || ''
+    updatedBy:localStorage.getItem('userName') || ''
   }
 this.missionTypeService.updateMissionType(missionTypeEdit).subscribe(res=>
   {this.loader = true;
