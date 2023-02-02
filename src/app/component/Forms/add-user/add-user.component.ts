@@ -47,34 +47,39 @@ export class AddUserComponent implements OnInit {
     }
     this.form;
     this.userService.getUserlists().subscribe(response => {
-      this.jobDegrees = response?.data.jobDegrees;
-      this.userRoles = response?.data.userRoles;
+      if(response.status)
+      {
+        this.jobDegrees = response?.data.jobDegrees;
+        this.userRoles = response?.data.userRoles;
+      }
+      if (this.data) {
+        for (var jobDeg of this.jobDegrees) {
+          if (this.data.jobDegreeId == jobDeg.id) {
+            this.jobDegreeExist++;
+            this.form.controls['jobDegree'].setValue(this.data.jobDegreeId);
+          }
+        }
+        if (this.jobDegreeExist == 0) {
+          this.form.controls['jobDegree'].setValue(null);
+        }
+        for (var userRol of this.userRoles) {
+          if (this.data.roleId == userRol.id) {
+            this.userRoleExist++;
+            this.form.controls['userRole'].setValue(this.data.roleId);
+          }
+        }
+        if (this.userRoleExist == 0) {
+          this.form.controls['userRole'].setValue(null);
+        }
+        this.form.controls['Id'].setValue(this.data.id);
+        this.form.controls['jobNumber'].setValue(this.data.jobNumber);
+        this.form.controls['name'].setValue(this.data.name);
+        this.form.controls['team'].setValue(this.data.team);
+        this.form.controls['userName'].setValue(this.data.userName);
+      }
+     
     });
-    if (this.data) {
-      for (var jobDeg of this.jobDegrees) {
-        if (this.data.jobDegreeId == jobDeg.id) {
-          this.jobDegreeExist++;
-          this.form.controls['jobDegree'].setValue(this.data.jobDegreeId);
-        }
-      }
-      if (this.jobDegreeExist == 0) {
-        this.form.controls['jobDegree'].setValue(null);
-      }
-      for (var userRol of this.userRoles) {
-        if (this.data.roleId == userRol.id) {
-          this.userRoleExist++;
-          this.form.controls['userRole'].setValue(this.data.roleId);
-        }
-      }
-      if (this.userRoleExist == 0) {
-        this.form.controls['userRole'].setValue(null);
-      }
-      this.form.controls['Id'].setValue(this.data.id);
-      this.form.controls['jobNumber'].setValue(this.data.jobNumber);
-      this.form.controls['name'].setValue(this.data.name);
-      this.form.controls['team'].setValue(this.data.team);
-      this.form.controls['userName'].setValue(this.data.userName);
-    }
+   
   }
   onSubmit() {
     if (this.form.invalid) {
