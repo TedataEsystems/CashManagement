@@ -97,8 +97,8 @@ if(extensitin.toLowerCase()=="msg"||extensitin.toLowerCase()=="jpeg"||extensitin
           else{this.toastr.warning(':failed to upload file');}
           });
         }
-        
-   
+
+
       } else {
         this.toastr.warning(':failed');
       }
@@ -112,11 +112,11 @@ if(extensitin.toLowerCase()=="msg"||extensitin.toLowerCase()=="jpeg"||extensitin
    //this.service.form.controls["attachFile"].setErrors({'incorrect': true});
     if (!this.service.form.valid) {
       return;
-    } 
+    }
   }
     this.onClose();
     this.dialogRef.close('save');
-    this._router.navigate(['/summary'] );
+    this._router.navigate(['/mission'] );
   } //end of submit
   onClear() {
     this.service.form.reset();
@@ -147,7 +147,7 @@ if(extensitin.toLowerCase()=="msg"||extensitin.toLowerCase()=="jpeg"||extensitin
 
 
 
-  
+
   handleFileInputChange(event) {
     this.file = event.target.files[0];
     this.fileName = event.target.files[0].name;
@@ -160,14 +160,14 @@ if(extensitin.toLowerCase()=="msg"||extensitin.toLowerCase()=="jpeg"||extensitin
       this.fileName ="";
       this.toastr.warning("::Not Acceptable Extension only acceptable extenstion(jpeg,jpg,png,msg)");
     }
- 
+
 
   }
   removeFile() {
     this.file = null;
     this.fileName ='';
    this.service.form['controls']['attachFile'].setValue('');
-  
+
 
   }
 

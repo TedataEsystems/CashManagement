@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("userName", res.userName);
         localStorage.setItem("team", res.team);
         localStorage.setItem("role", res.role);
-        this.router.navigate(["/summary"]);
+        this.router.navigate(["/mission"]);
     }
     else
     {

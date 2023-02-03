@@ -16,7 +16,7 @@
          <!-- <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">الصفحة الرئيسية</a> -->
          <a  mat-button [matMenuTriggerFor]="mission" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">الصفحة الرئيسية</a>
          <mat-menu #mission="matMenu">
-          <a  mat-menu-item routerLink="/summary"  routerLinkActive="active"> <mat-icon>checklist_rtl</mat-icon>المأموريات</a>
+          <a  mat-menu-item routerLink="/mission"  routerLinkActive="active"> <mat-icon>checklist_rtl</mat-icon>المأموريات</a>
             <a  mat-menu-item [matMenuTriggerFor]="missionSettings"><mat-icon>settings</mat-icon> الاعدادات  </a>
         </mat-menu>
         <mat-menu #missionSettings="matMenu">

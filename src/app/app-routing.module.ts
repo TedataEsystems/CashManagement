@@ -18,14 +18,17 @@ import { AuthGuardGuard } from './auth-guard.guard';
 
 const routes: Routes = [
   {
-    path:'login',
+    path:'',
   component:LoginComponent,
  },
   {
-    path:'',
+    path:'login',
+  component:LoginComponent,
+ },
+
+  {
+    path:'mission',
     component: LayoutComponent,
-
-
     children: [
     //   {
     //   path:'',
@@ -35,7 +38,7 @@ const routes: Routes = [
     // },
 
     {
-      path:'summary',
+      path:'',
       component: SummaryComponent,
       canActivate:[AuthGuardGuard]
     },

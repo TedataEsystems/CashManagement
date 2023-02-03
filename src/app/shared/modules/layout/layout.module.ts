@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from 'src/app/component/dashboard/dashboard.component';
 import { HeaderComponent } from '../../component/header/header.component';
 import { FooterComponent } from '../../component/footer/footer.component';
-import { SidebarComponent } from '../../component/sidebar/sidebar.component';
 import { MaterialModule } from '../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -54,7 +53,6 @@ import { LoadingService } from '../../service/loading.service';
     DashboardComponent,
     HeaderComponent,
     FooterComponent,
-    SidebarComponent,
     DeleteMsgComponent,
     EditComponent,
     LoaderComponent,
