@@ -140,7 +140,7 @@ export class AddUserComponent implements OnInit {
       }
     }
     this.onClose();
-  //  this._router.navigate(['/user']);
+    //this._router.navigate(['/user']);
   }
   onClose() {
     this.form.reset();
