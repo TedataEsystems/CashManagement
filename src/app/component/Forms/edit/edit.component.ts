@@ -60,8 +60,10 @@ export class EditComponent implements OnInit {
       this.statusShow=false;
 
     }
+console.log(this.data)
     this.attachId = this.data.attachFileId;
     this.attachName = this.data.attachFilename;
+    console.log(this.data.attachFilename,"file name")
     this.service.initializeFormGroup();
     this.missionService.getLists().subscribe(res => {
       if (res.status == true) {

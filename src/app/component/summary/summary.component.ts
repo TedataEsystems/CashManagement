@@ -23,19 +23,19 @@ import { AdvancedSearch } from 'src/app/model/advanced-search';
 import * as fileSaver from 'file-saver';
 import { saveAs } from 'file-saver';
 import { LoadingService } from 'src/app/shared/service/loading.service';
-var mimetype=[
-  {ext:"txt", fileType:"text/plain"},
-  {ext:"pdf", fileType:"application/pdf"},
-  {ext:"png", fileType:"image/png"},
-  {ext:"jpg", fileType:"image/jpeg"},
-  {ext:"jpeg",fileType: "image/jpeg"},
-  {ext:"gif", fileType:"image/gif"},
-  {ext:"csv", fileType:"text/csv"},
-  {ext:"doc", fileType:"application/vnd.ms-word"},
-  {ext:"docx",fileType: "application/vnd.ms-word"},
-  {ext:"xls", fileType:"application/vnd.ms-excel"},
-  {ext:"msg", fileType:"application/vnd.ms-outlook"},
-  {ext:"xlsx",fileType: "application/vnd.openxmlformatsofficedocument.spreadsheetml.sheet"},
+var mimetype = [
+  { ext: "txt", fileType: "text/plain" },
+  { ext: "pdf", fileType: "application/pdf" },
+  { ext: "png", fileType: "image/png" },
+  { ext: "jpg", fileType: "image/jpeg" },
+  { ext: "jpeg", fileType: "image/jpeg" },
+  { ext: "gif", fileType: "image/gif" },
+  { ext: "csv", fileType: "text/csv" },
+  { ext: "doc", fileType: "application/vnd.ms-word" },
+  { ext: "docx", fileType: "application/vnd.ms-word" },
+  { ext: "xls", fileType: "application/vnd.ms-excel" },
+  { ext: "msg", fileType: "application/vnd.ms-outlook" },
+  { ext: "xlsx", fileType: "application/vnd.openxmlformatsofficedocument.spreadsheetml.sheet" },
 
 ];
 
@@ -51,9 +51,9 @@ export class SummaryComponent implements OnInit {
   jobDegreeList: JobDegree[] = [];
 
   searchKey: string = '';
-  IsAdmin: boolean =true;
-Isnotapprove=false;
-warning=false;
+  IsAdmin: boolean = true;
+  Isnotapprove = false;
+  warning = false;
 
   /////////////////
   missions: MissionList[] = [];
@@ -74,8 +74,8 @@ warning=false;
     'missionPlace',
     'missionTypeCost',
     'centerOfCost',
-    
-    
+
+
     'startDateMission',
     'endDateMission',
     'startDateStay',
@@ -84,8 +84,8 @@ warning=false;
     'noOfNights',
     'stay',
     'mealsAndIncidentals',
-    
-    
+
+
     'permissionRequest',
     'permissionDuration',
 
@@ -94,9 +94,9 @@ warning=false;
     'creationDate',
     'updatedBy',
     'updateDate',
-    
+
     'status',
-    
+
     'exporAttach',
     'exportmission',
     'action',
@@ -106,7 +106,7 @@ warning=false;
   settingtype = '';
   editUsr: any;
   editdisabled: boolean = false;
-  isCreator=false;
+  isCreator = false;
   constructor(
     private titleService: Title,
     private toastr: ToastrService,
@@ -116,8 +116,8 @@ warning=false;
     private dailogService: DeleteService,
     private missionService: MissionService,
     private userService: UserService,
-    private loader:LoadingService,
-    private _router:Router
+    private loader: LoadingService,
+    private _router: Router
   ) {
     this.titleService.setTitle('المأموريات');
   }
@@ -131,29 +131,21 @@ warning=false;
   lastdir: string = 'asc';
   ///////////////
   /////pagenation////////
-  getMisssions(
-    pageNum: number,
-    pagesize: number,
-    searchValue: string,
-    sortColumn: string,
-    sortDir: string
-  ) {
+  getMisssions(pageNum: number, pagesize: number, searchValue: string, sortColumn: string, sortDir: string) {
 
-   // this.loader.busy();
-
-
-
-    this.missionService
-      .getAllMissions(pageNum, pagesize, searchValue, sortColumn, sortDir)
-      .subscribe((respose) => {
+    // this.loader.busy();
+    this.missionService.getAllMissions(pageNum, pagesize, searchValue, sortColumn, sortDir)
+    .subscribe((respose) => {
         this.missions = respose?.data;
         this.dataSource = new MatTableDataSource<any>(this.missions);
         this.dataSource._updateChangeSubscription();
         this.dataSource.paginator = this.paginator as MatPaginator;
+        console.log(this.missions);
+     
       }); //end of subscribe
-      // setTimeout(()=>{
-      //   this.loader.idle();
-      // },2000)
+    // setTimeout(()=>{
+    //   this.loader.idle();
+    // },2000)
   } //end of getallmission
   //sort
   sortData(sort: any) {
@@ -187,60 +179,58 @@ warning=false;
   ////////end of pagenation//////
   ngOnInit(): void {
 
-   var role=localStorage.getItem("role").toLocaleLowerCase().replace(/\s/, '');
-   var team=localStorage.getItem("team").toLocaleLowerCase().replace(/\s/, '');
-   if(role=='creator'&&team!="efocash")
-   {
-    this.IsAdmin=false;
-   }
-   else{
-    this.IsAdmin=true;
-   }
+    var role = localStorage.getItem("role").toLocaleLowerCase().replace(/\s/, '');
+    var team = localStorage.getItem("team").toLocaleLowerCase().replace(/\s/, '');
+    if (role == 'creator' && team != "efocash") {
+      this.IsAdmin = false;
+    }
+    else {
+      this.IsAdmin = true;
+    }
 
 
-    if(localStorage.getItem("role").toLocaleLowerCase().replace(/\s/, '')=="creator")
-{
- this.isCreator=true;
-}
+    if (localStorage.getItem("role").toLocaleLowerCase().replace(/\s/, '') == "creator") {
+      this.isCreator = true;
+    }
 
     this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
   }
   //next previous page
   pageIn = 0;
   public pIn: number = 0;
-  pagesizedef:number=100;
-  previousSizedef:number=100;
-  pageChanged(event:any){
+  pagesizedef: number = 100;
+  previousSizedef: number = 100;
+  pageChanged(event: any) {
     //this.loading = true;
-    this.pIn=event.pageIndex;
-    this.pageIn=event.pageIndex;
-    this.pagesizedef=event.pageSize;
+    this.pIn = event.pageIndex;
+    this.pageIn = event.pageIndex;
+    this.pagesizedef = event.pageSize;
     let pageIndex = event.pageIndex;
     let pageSize = event.pageSize;
     let previousSize = pageSize * pageIndex;
-    this.previousSizedef=previousSize;
-this.getRequestdataNext(previousSize,pageSize,pageIndex+1,'',this.sortColumnDef,this.SortDirDef)
+    this.previousSizedef = previousSize;
+    this.getRequestdataNext(previousSize, pageSize, pageIndex + 1, '', this.sortColumnDef, this.SortDirDef)
     let previousIndex = event.previousPageIndex;
   }
-  getRequestdataNext(cursize:number,pageSize:number,pageNum:number ,search:string,sortColumn:string,sortDir:string){
-    this.missionService.getAllMissions(pageNum,pageSize,search,sortColumn,sortDir).subscribe(res=>{
-      if(res.status==true){
+  getRequestdataNext(cursize: number, pageSize: number, pageNum: number, search: string, sortColumn: string, sortDir: string) {
+    this.missionService.getAllMissions(pageNum, pageSize, search, sortColumn, sortDir).subscribe(res => {
+      if (res.status == true) {
         console.log(res);
-     this.missions.length = cursize;
-     this.missions.push(...res?.data);
-     this.missions.length = res.pagination?.totalCount;
-     this.dataSource =new MatTableDataSource<any>(this.missions);
-     this.dataSource._updateChangeSubscription();
-     this.dataSource.paginator = this.paginator as MatPaginator;
+        this.missions.length = cursize;
+        this.missions.push(...res?.data);
+        this.missions.length = res.pagination?.totalCount;
+        this.dataSource = new MatTableDataSource<any>(this.missions);
+        this.dataSource._updateChangeSubscription();
+        this.dataSource.paginator = this.paginator as MatPaginator;
       }
       else this.toastr.error(res.error)
-    },err=>{
-      if(err.status==401)
-      this._router.navigate(['/login'], { relativeTo: this.route });
+    }, err => {
+      if (err.status == 401)
+        this._router.navigate(['/login'], { relativeTo: this.route });
       else
-      this.toastr.error("! Fail");
+        this.toastr.error("! Fail");
     })
-   }
+  }
   //////add (open add component as dialog)
   addMission() {
     const dialogGonfig = new MatDialogConfig();
@@ -266,13 +256,7 @@ this.getRequestdataNext(previousSize,pageSize,pageIndex+1,'',this.sortColumnDef,
           this.missionService.deleteMission(r.id).subscribe(
             (res) => {
               this.toastr.success('Deleted Successfully');
-              this.getMisssions(
-                1,
-                100,
-                '',
-                this.sortColumnDef,
-                this.SortDirDef
-              );
+              this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
             },
             (error) => {
               this.toastr.warning('failed ');
@@ -299,11 +283,10 @@ this.getRequestdataNext(previousSize,pageSize,pageIndex+1,'',this.sortColumnDef,
       })
       .afterClosed()
       .subscribe((result) => {
-        if(this.form.value==''){
-          this.getMisssions(1,100,'',this.sortColumnDef,this.SortDirDef);
+        if (this.form.value == '') {
+          this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
         }
-        else
-        {
+        else {
           this.AdvancedSearchSubmit();
         }
       });
@@ -355,7 +338,7 @@ this.getRequestdataNext(previousSize,pageSize,pageIndex+1,'',this.sortColumnDef,
     // this.isFilterationData = true;
     // this.panelOpenState = true;
 
-      this.loader.busy();
+    this.loader.busy();
 
     this.advSearchMission.createdDateFrom =
       this.form.value.createdDateFrom == ''
@@ -400,7 +383,7 @@ this.getRequestdataNext(previousSize,pageSize,pageIndex+1,'',this.sortColumnDef,
     );
     this.advSearchMission.comment = this.form.value.comment;
 
-     this.advSearchMission.id = Number(this.form.value.id);
+    this.advSearchMission.id = Number(this.form.value.id);
     this.advSearchMission.companyType = this.form.value.companyType;
     this.advSearchMission.userName = this.form.value.userName;
     this.advSearchMission.missionPlace = this.form.value.missionPlace;
@@ -421,25 +404,23 @@ this.getRequestdataNext(previousSize,pageSize,pageIndex+1,'',this.sortColumnDef,
         this.dataSource = new MatTableDataSource<any>(this.missions);
         this.dataSource.paginator = this.paginator as MatPaginator;
         this.dataSource.sort = this.sort as MatSort;
-        setTimeout(()=>{
+        setTimeout(() => {
           this.loader.idle();
-        },2000)
+        }, 2000)
       });
   }
-exportAttach(row:any)
-{
-  this.missionService.DownloadAttach(row.attachFileId).subscribe(res=>
-    {
-    const linkSource =
-    'data:'+res.type+';base64,' +res.data;
-  const downloadLink = document.createElement('a');
-  const fileName = res.name;
-  downloadLink.href = linkSource;
-  downloadLink.download = fileName;
-  downloadLink.click();
+  exportAttach(row: any) {
+    this.missionService.DownloadAttach(row.attachFileId).subscribe(res => {
+      const linkSource =
+        'data:' + res.type + ';base64,' + res.data;
+      const downloadLink = document.createElement('a');
+      const fileName = res.name;
+      downloadLink.href = linkSource;
+      downloadLink.download = fileName;
+      downloadLink.click();
 
     });
-}
+  }
 
 
 
@@ -450,7 +431,7 @@ exportAttach(row:any)
   IntialValDate: string = '';
   clearAdvancedSearch() {
     this.form.reset();
-    this.getMisssions(1, 25, '', this.sortColumnDef, this.SortDirDef);
+    this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
   }
 
   selection = new SelectionModel<any>(true, []);
@@ -479,70 +460,70 @@ exportAttach(row:any)
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.id + 1
-    }`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1
+      }`;
   }
 
   exportPdf() {
     this.Ids = [];
     //without choose rows or select all and click on download
     if (this.selection.selected.length == 0) {
-     // this.toastr.warning('Please select approved row');
-   //   return
-   this.dataSource.data.forEach( (element:any) => {
-    if(element.status=="approve"){
-      this.Ids.push(element.id)
+      // this.toastr.warning('Please select approved row');
+      //   return
+      this.dataSource.data.forEach((element: any) => {
+        if (element.status == "approved") {
+          this.Ids.push(element.id)
+        }
+        this.missionService.CoverReportsIds = this.Ids;
+        this.router.navigateByUrl('/mission/cover');
+      })
     }
-      this.missionService.CoverReportsIds = this.Ids;
-              this.router.navigate(['./cover']);
-    })}
 
     else {
-     // when select all
+      // when select all
       if (this.isAllSelected()) {
-         this.dataSource.data.forEach( (element:any) => {
-            if(element.status=="approve"){
-              this.Ids.push(element.id)
-            }
-            })
-              this.missionService.CoverReportsIds = this.Ids;
-              this.router.navigate(['./cover']);
+        this.dataSource.data.forEach((element: any) => {
+          if (element.status == "approved") {
+            this.Ids.push(element.id)
+          }
+        })
+        this.missionService.CoverReportsIds = this.Ids;
+        this.router.navigateByUrl('/mission/cover');
       }
       //select specific rows
-      else{
-       this.selection.selected.forEach( (element:any) => {
-        if(element.status=="approve"){
-          this.Ids.push(element.id)
-          this.Isnotapprove=false;
-          this.warning=false;
-        }
-        else{
-          this.Isnotapprove=true;
-          this.warning=true;
-        }
+      else {
+        this.selection.selected.forEach((element: any) => {
+          if (element.status == "approved") {
+            this.Ids.push(element.id)
+            this.Isnotapprove = false;
+            this.warning = false;
+          }
+          else {
+            this.Isnotapprove = true;
+            this.warning = true;
+          }
 
         })
 
-        if(this.Isnotapprove && this.warning){
-          this.toastr.warning(`some rows is not approved`,'PLease select approved row');
+        if (this.Isnotapprove && this.warning) {
+          this.toastr.warning(`some rows is not approved`, 'PLease select approved row');
           return
         }
-        else{
+        else {
           this.missionService.CoverReportsIds = this.Ids;
-          this.router.navigate(['./cover']);
+          this.router.navigateByUrl('/mission/cover');
         }
       }
     }
 
     this.Ids = [];
   }
-  exportMissionFormPdf(element){
-    this.missionService.missionForm=element;
-  this.router.navigate(['./missionform'])
+  exportMissionFormPdf(element) {
+    this.missionService.missionForm = element;
+    this.router.navigateByUrl('/mission/missionform')
   }
   exportExpensesPdf() {
-    this.router.navigate(['./expenses']);
+    this.router.navigateByUrl('/mission/expenses');
   }
 
   onDetails(row) {

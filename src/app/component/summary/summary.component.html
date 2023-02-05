@@ -489,7 +489,7 @@
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
           الحاله</mat-header-cell
         >
-        <mat-cell *matCellDef="let element"  [ngClass]="{'red':element.status=='Reject','green' : element.status=='approve','orange':element.status=='pending'}"> {{ element.status }} </mat-cell>
+        <mat-cell *matCellDef="let element"  [ngClass]="{'red':element.status=='rejected','green' : element.status=='approved','ora' : element.status=='pending'}"> {{ element.status }} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="missionType">
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -574,7 +574,7 @@
             </button> -->
             <button
               mat-button
-              [hidden]="!IsAdmin&& row.status == 'approve'"
+              [hidden]="!IsAdmin&& row.status == 'approved'"
               class="btn-success mx-1 font-weight-bolder"
               matTooltip="تعديل"
               (click)="onEdit(row)"

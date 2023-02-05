@@ -10,7 +10,8 @@ import { MissionService } from 'src/app/shared/service/mission.service';
 export class ExpensesFormComponent implements OnInit {
 
   appear=false;
-  sameTeam=true;
+  noData=true;
+  isExist=true;
   expensesForm:any[]=[]
   userName:string;
   jobNum:number;
@@ -23,19 +24,27 @@ export class ExpensesFormComponent implements OnInit {
 
 /////check userId
 search(jobNumber:any){
+  
    this.missionService.ExpensesFormReport(jobNumber).subscribe(res=>{
 if(res.status)
 {
+  console.log(res.status,"if true");
  this.expensesForm=res.expensesForm;
  this.jobNum=jobNumber;
  this.userName=res.expensesForm[0].userName;
  this.total=res.total;
   this.appear =!this.appear
-  this.sameTeam=true;
+  this.noData=true;
 }
-else
+else if(res.errorNum==1)
 {
-  this.sameTeam=false;
+  console.log(res.status,"if error 1");
+  this.isExist=false;
+
+}
+else if(res.errorNum==2){
+  console.log(res.status,"if error 2");
+  this.noData=false;
 }
 
   })
