@@ -116,7 +116,7 @@ if(extensitin.toLowerCase()=="msg"||extensitin.toLowerCase()=="jpeg"||extensitin
   }
     this.onClose();
     this.dialogRef.close('save');
-    this._router.navigate(['/mission'] );
+    //this._router.navigate(['/mission'] );
   } //end of submit
   onClear() {
     this.service.form.reset();
