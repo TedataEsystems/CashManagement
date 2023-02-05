@@ -53,6 +53,7 @@ export class AddUserComponent implements OnInit {
         this.userRoles = response?.data.userRoles;
       }
       if (this.data) {
+        console.log(this.data);
         for (var jobDeg of this.jobDegrees) {
           if (this.data.jobDegreeId == jobDeg.id) {
             this.jobDegreeExist++;
@@ -96,7 +97,7 @@ export class AddUserComponent implements OnInit {
       if (userName != null) {
         this.userService.CheckUserName(userName).subscribe(res => {
           if (res.status == true) {
-            this.newuser1.userName = this.form.value.userName;
+            this.newuser1.userName = userName;
             this.userService.addUser(this.newuser1).subscribe();
             this.toastr.success(' Submitted successfully');
           }
@@ -123,7 +124,7 @@ export class AddUserComponent implements OnInit {
       if (userName != null) {
         this.userService.CheckUserName(userName).subscribe(res => {
           if (res.status == true) {
-            this.newuser1.userName = this.form.value.userName;
+            this.newuser1.userName = userName;
             this.userService.updateUser(this.newuser1).subscribe();
             this.toastr.success(' Submitted successfully');
           }
@@ -139,7 +140,7 @@ export class AddUserComponent implements OnInit {
       }
     }
     this.onClose();
-    //this._router.navigate(['./user']);
+    //this._router.navigate(['/user']);
   }
   onClose() {
     this.form.reset();

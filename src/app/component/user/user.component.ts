@@ -70,7 +70,7 @@ export class UserComponent implements OnInit {
   getUsers(pageNum: number,pagesize: number,searchValue: string,sortColumn: string,sortDir: string) {
     this.loader = true;
     this.userService.getUsers(pageNum, pagesize, searchValue, sortColumn, sortDir).subscribe(respose => {
-      console.log("user",respose.data)
+      //console.log("user",respose.data)
       this.users = respose?.data;
       this.dataSource = new MatTableDataSource<any>(this.users);
       this.dataSource._updateChangeSubscription();
@@ -238,7 +238,7 @@ this.getRequestdataNext(previousSize,pageSize,pageIndex+1,'',this.sortColumnDef,
   getRequestdataNext(cursize:number,pageSize:number,pageNum:number ,search:string,sortColumn:string,sortDir:string){
     this.userService.getUsers(pageNum,pageSize,search,sortColumn,sortDir).subscribe(res=>{
       if(res.status==true){
-        console.log(res);
+    //    console.log(res);
      this.users.length = cursize;
      this.users.push(...res?.data);
      this.users.length = res.pagination?.totalCount;
