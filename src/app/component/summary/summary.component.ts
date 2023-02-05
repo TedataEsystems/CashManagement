@@ -495,7 +495,7 @@ exportAttach(row:any)
       this.Ids.push(element.id)
     }
       this.missionService.CoverReportsIds = this.Ids;
-              this.router.navigate(['/cover']);
+              this.router.navigate(['./cover']);
     })}
 
     else {
@@ -507,7 +507,7 @@ exportAttach(row:any)
             }
             })
               this.missionService.CoverReportsIds = this.Ids;
-              this.router.navigate(['/cover']);
+              this.router.navigate(['./cover']);
       }
       //select specific rows
       else{
@@ -530,7 +530,7 @@ exportAttach(row:any)
         }
         else{
           this.missionService.CoverReportsIds = this.Ids;
-          this.router.navigate(['/cover']);
+          this.router.navigate(['./cover']);
         }
       }
     }
@@ -539,10 +539,10 @@ exportAttach(row:any)
   }
   exportMissionFormPdf(element){
     this.missionService.missionForm=element;
-  this.router.navigate(['/missionform'])
+  this.router.navigate(['./missionform'])
   }
   exportExpensesPdf() {
-    this.router.navigate(['/expenses']);
+    this.router.navigate(['./expenses']);
   }
 
   onDetails(row) {
