@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { JobDegree } from 'src/app/model/job-degree';
+import { Team } from 'src/app/model/team';
 import { User, UserList } from 'src/app/model/user-list';
 import { UserolesList } from 'src/app/model/useroles-list';
 import { UserService } from 'src/app/shared/service/user.service';
@@ -22,6 +23,7 @@ export class AddUserComponent implements OnInit {
   newuser1: User = new User();
   userRoles: UserolesList[] = [];
   jobDegrees: JobDegree[] = [];
+  teams: Team[] = [];
   form: FormGroup = new FormGroup({
     Id: new FormControl(0),
     jobNumber: new FormControl('', [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
@@ -35,6 +37,7 @@ export class AddUserComponent implements OnInit {
   isDisabled: boolean;
   isNameRepeated: boolean;
   dialogTitle: string = "";
+  teamExist: number = 0;
   jobDegreeExist: number = 0;
   userRoleExist: number = 0;
   user = { jobNum: "" }
@@ -51,9 +54,18 @@ export class AddUserComponent implements OnInit {
       {
         this.jobDegrees = response?.data.jobDegrees;
         this.userRoles = response?.data.userRoles;
+        this.teams=response?.data.teams;
       }
       if (this.data) {
-        console.log(this.data);
+        for (var team of this.teams) {
+          if (this.data.teamId == team.id) {
+            this.teamExist++;
+            this.form.controls['team'].setValue(this.data.teamId);
+          }
+        }
+        if (this.teamExist == 0) {
+          this.form.controls['team'].setValue(null);
+        }
         for (var jobDeg of this.jobDegrees) {
           if (this.data.jobDegreeId == jobDeg.id) {
             this.jobDegreeExist++;
@@ -75,7 +87,7 @@ export class AddUserComponent implements OnInit {
         this.form.controls['Id'].setValue(this.data.id);
         this.form.controls['jobNumber'].setValue(this.data.jobNumber);
         this.form.controls['name'].setValue(this.data.name);
-        this.form.controls['team'].setValue(this.data.team);
+        //this.form.controls['team'].setValue(this.data.team);
         this.form.controls['userName'].setValue(this.data.userName);
       }
      
@@ -88,7 +100,7 @@ export class AddUserComponent implements OnInit {
     }
     if (this.data.dialogTitle == "اضافة جديد") {
       this.newuser1.name = this.form.value.name;
-      this.newuser1.team = this.form.value.team;
+      this.newuser1.teamId = this.form.value.team;
       this.newuser1.jobNumber = this.form.value.jobNumber;
       this.newuser1.roleId = this.form.value.userRole;
       this.newuser1.jobDegreeid = this.form.value.jobDegree;
@@ -115,7 +127,7 @@ export class AddUserComponent implements OnInit {
     else {
       this.newuser1.id = this.form.value.Id;
       this.newuser1.name = this.form.value.name;
-      this.newuser1.team = this.form.value.team;
+      this.newuser1.teamId = this.form.value.team;
       this.newuser1.jobNumber = this.form.value.jobNumber;
       this.newuser1.roleId = this.form.value.userRole;
       this.newuser1.jobDegreeid = this.form.value.jobDegree;

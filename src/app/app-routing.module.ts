@@ -15,6 +15,7 @@ import { CoverLetterComponent } from './Report/cover-letter/cover-letter.compone
 import { MissionFormComponent } from './Report/mission-form/mission-form.component';
 import { ExpensesFormComponent } from './Report/expenses-form/expenses-form.component';
 import { AuthGuardGuard } from './auth-guard.guard';
+import { TeamComponent } from './component/settings/team/team.component';
 
 const routes: Routes = [
   {
@@ -50,6 +51,11 @@ const routes: Routes = [
     {
       path:'role',
       component: RoleComponent,
+      canActivate:[AuthGuardGuard]
+    },
+    {
+      path:'team',
+      component: TeamComponent,
       canActivate:[AuthGuardGuard]
     },
     {
