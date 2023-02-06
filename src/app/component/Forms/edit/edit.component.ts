@@ -125,7 +125,7 @@ console.log(this.data)
         this.service.form.controls['missionTypeCost'].setValue(this.data.missionTypeCost);
         this.service.form.controls['permissionRequest'].setValue(this.data.permissionRequest);
         this.service.form.controls['permissionDuration'].setValue(this.data.permissionDuration);
-        this.service.form.controls['comment'].setValue(this.data.comment);
+        //this.service.form.controls['comment'].setValue(this.data.comment);
         this.service.form.controls['creationDate'].setValue(this.data.creationDate);
         this.service.form.controls['createdBy'].setValue(this.data.createdBy);
         this.service.form.controls['updateDate'].setValue(this.data.updateDate);
