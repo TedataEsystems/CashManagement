@@ -30,12 +30,12 @@ const routes: Routes = [
     path:'mission',
     component: LayoutComponent,
     children: [
-    //   {
-    //   path:'',
-    //   component: DashboardComponent,
-    //   canActivate:[AuthGuardGuard]
+      {
+      path:'dashboard',
+      component: DashboardComponent,
+      canActivate:[AuthGuardGuard]
 
-    // },
+    },
 
     {
       path:'',
