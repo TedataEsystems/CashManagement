@@ -101,7 +101,20 @@ mat-icon,.percentage{
   width: 100%;
   float: left;
   text-align: center;
-  color: #d3d3d3;
+  /* color: var(--font-color); */
+  margin-top: 12px;
+}
+.lblbigtxtundero{
+  color: var(--font-color);
+}
+.lblbigtxtunder.item1{
+  color:rgb(33, 179, 33);
+}
+.lblbigtxtunder.item2{
+  color: rgb(245, 182, 66) ;
+}
+.lblbigtxtunder.item3{
+  color: rgb(221, 7, 7);
 }
 .lblevaulatestat3 {
   text-align: center;
@@ -111,7 +124,10 @@ mat-icon,.percentage{
   color: #c93a3a;
 }
 canvas{
-  height: 250px !important;
+  height: 468px!important;
+}
+canvas.creator{
+  height: 258px!important;
 }
 
 

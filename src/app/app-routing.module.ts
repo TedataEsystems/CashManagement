@@ -31,14 +31,14 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-      path:'dashboard',
+      path:'',
       component: DashboardComponent,
       canActivate:[AuthGuardGuard]
 
     },
 
     {
-      path:'',
+      path:'missions',
       component: SummaryComponent,
       canActivate:[AuthGuardGuard]
     },

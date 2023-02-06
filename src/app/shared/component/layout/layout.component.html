@@ -13,75 +13,15 @@
 
        <div fxShow="true" fxFlex fxLayout fxLayoutAlign="center" role="menu" dir="rtl">
          <!-- The following menu items will be hidden on both SM and XS screen sizes -->
-         <!-- <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">الصفحة الرئيسية</a> -->
-         <a  mat-button [matMenuTriggerFor]="mission" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">الصفحة الرئيسية</a>
-         <mat-menu #mission="matMenu">
-          <a  mat-menu-item routerLink="/mission"  routerLinkActive="active"> <mat-icon>checklist_rtl</mat-icon>المأموريات</a>
-            <a  mat-menu-item [matMenuTriggerFor]="missionSettings" *ngIf="ShowStatus"><mat-icon>settings</mat-icon> الاعدادات  </a>
-        </mat-menu>
-        <mat-menu #missionSettings="matMenu">
 
-          <a  mat-menu-item routerLink="./missionType" routerLinkActive="active"> <mat-icon>playlist_add</mat-icon> نوع المأمورية</a>
-            <a  mat-menu-item routerLink="./status"  routerLinkActive="active" ><mat-icon>approval</mat-icon>حالة المأمورية</a>
-
-        </mat-menu>
-         <a  mat-button [matMenuTriggerFor]="user" *ngIf="ShowStatus" routerLinkActive="active">المستخدم </a>
-
-              <mat-menu #user="matMenu">
-                <a  mat-menu-item routerLink="./user" routerLinkActive="active"> <mat-icon>groups</mat-icon>المستخدمين</a>
-                  <a  mat-menu-item [matMenuTriggerFor]="userSettings"><mat-icon>settings</mat-icon> الاعدادات  </a>
-              </mat-menu>
-              <mat-menu #userSettings="matMenu">
-
-                <a  mat-menu-item routerLink="./jobDegree" routerLinkActive="active"> <mat-icon>assignment_ind</mat-icon>الدرجة الوظيفية</a>
-                  <a  mat-menu-item routerLink="./role"  routerLinkActive="active"><mat-icon>admin_panel_settings</mat-icon>الصلاحية</a>
-
-              </mat-menu>
-
-
-
+         <a  mat-button routerLink ="/mission" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">الصفحة الرئيسية</a>
+         <a  mat-button routerLink="./missions"  routerLinkActive="active">المأموريات</a>
        </div>
 
-       <!-- <div class="menu-icon" fxFlex fxLayout fxLayoutAlign="end" fxShow="true" fxHide.gt-sm="true">
-         <span  (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></span>
-       </div> -->
+
      </mat-toolbar>
 
   <mat-sidenav-container fxFlexFill class="example-container">
-
-         <!-- start sidenav in sm screen -->
-          <!-- <mat-sidenav #sidenav fxLayout="column">
-            <div fxLayout="column">
-
-              <a  mat-button [matMenuTriggerFor]="mission" routerLinkActive="active1" [routerLinkActiveOptions]="{exact:true}">الصفحة الرئيسية</a>
-              <mat-menu #mission="matMenu">
-               <a  mat-menu-item routerLink="/summary"  routerLinkActive="active1"> <mat-icon>checklist_rtl</mat-icon>المأموريات</a>
-                 <a  mat-menu-item [matMenuTriggerFor]="missionSettings"><mat-icon>settings</mat-icon> الاعدادات  </a>
-             </mat-menu>
-             <mat-menu #missionSettings="matMenu">
-
-               <a  mat-menu-item routerLink="./missionType" routerLinkActive="active1"> <mat-icon>playlist_add</mat-icon> نوع المأمورية</a>
-                 <a  mat-menu-item routerLink="./status"  routerLinkActive="active1"><mat-icon>approval</mat-icon>حالة المأمورية</a>
-
-             </mat-menu>
-              <a  mat-button [matMenuTriggerFor]="user" routerLinkActive="active1">المستخدم </a>
-
-                   <mat-menu #user="matMenu">
-                     <a  mat-menu-item routerLink="./user" routerLinkActive="active1"> <mat-icon>groups</mat-icon>المستخدمين</a>
-                       <a  mat-menu-item [matMenuTriggerFor]="userSettings"><mat-icon>settings</mat-icon> الاعدادات  </a>
-                   </mat-menu>
-                   <mat-menu #userSettings="matMenu">
-
-                     <a  mat-menu-item routerLink="./jobDegree" routerLinkActive="active1"> <mat-icon>assignment_ind</mat-icon>الدرجة الوظيفية</a>
-                       <a  mat-menu-item routerLink="./role"  routerLinkActive="active1"><mat-icon>admin_panel_settings</mat-icon>الصلاحية</a>
-
-                   </mat-menu>
-
-
-
-            </div>
-          </mat-sidenav> -->
-          <!-- End sidenav -->
 
       <mat-sidenav-content fxFlexFill>
 

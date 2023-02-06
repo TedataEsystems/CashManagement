@@ -67,9 +67,22 @@ mat-toolbar{
   min-height: 64px;
 }
 .active{
-  background-color: var(--forth-color);
-  color: #fff;
+  color: var(--fifth-color) !important;
+  font-weight: bolder !important;
   border-radius: 0;
+}
+.subheader{
+  color: #d4d5d5;
+    font-size: 14px;
+    font-weight: 900;
+    padding-left: 40px;
+    margin-top: 8px;
+    display: block;
+
+}
+.subheader mat-icon{
+  font-size: 10px !important;
+  vertical-align: inherit;
 }
 
 @media screen and (max-width: 960px) {

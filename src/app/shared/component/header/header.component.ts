@@ -10,11 +10,16 @@ import { AccountService } from '../../service/account.service';
 })
 export class HeaderComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
-
+  ShowStatus=false;
   constructor(private router: Router,private accountService:AccountService) { }
   userName:string;
   ngOnInit(): void {
     this.userName=localStorage.getItem("userName");
+    if(localStorage.getItem("team").toLocaleLowerCase().replace(/\s/, '')=="efocash")
+    {
+     this.ShowStatus=true;
+    }
+
   }
 
 
@@ -26,7 +31,7 @@ export class HeaderComponent implements OnInit {
      logOut(){
       localStorage.clear();
       this.accountService.logout().subscribe(res=>{
-        
+
       })
         this.router.navigateByUrl('/login');
 
