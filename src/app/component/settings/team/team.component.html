@@ -1,0 +1,147 @@
+<mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>المجموعات</mat-card-title>
+      <button mat-button class="opt" (click)="addTeam()">
+        <mat-icon class="add-new ico">add</mat-icon>
+        <span class="txt mr-1">اضافة </span>
+      </button>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <div class="search-div" fxLayout="row">
+      <form *ngIf="isShowDiv" [formGroup]="form" (ngSubmit)="onCreateUpdate()" class="example-form">
+        <mat-form-field class="example-full-width">
+          <mat-label> المجموعه</mat-label>
+          <input type="text" matInput #role formControlName="name" (keyup)="onChecknameIsalreadysign()" />
+          <input type="hidden" formControlName="id" />
+          <span class="mat-err" *ngIf="isNameRepeated && role.value != ''">
+            مسجلة مسبقاً <strong>&nbsp;!</strong></span>
+          <mat-error>* مطلوب</mat-error>
+        </mat-form-field>
+        <button type="submit" mat-raised-button class="search mr-1 text-white" >اضافة</button>
+      </form>
+      <mat-form-field class="search-form-field" floatLabel="never">
+        <input matInput [(ngModel)]="searchKey" placeholder="بحث" autocomplete="off" (keyup)="applyFilter()" />
+        <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div class="example-container mat-elevation-z8">
+      <mat-table [dataSource]="dataSource" #table matSort (matSortChange)="sortData($event)" matSortActive="Name"
+        matSortDirection="asc" matSortDisableClear>
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            الرقم
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.id }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+            المجموعه
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <ng-container *ngIf="!editdisabled || element.id != editUsr">
+              {{ element.name }}
+            </ng-container>
+            <ng-container *ngIf="editdisabled && element.id == editUsr">
+              <mat-form-field hideRequiredMarker="false" appearance="legacy">
+                <input matInput #role placeholder="المجموعة" name="name" [(ngModel)]="element.name"
+                  (keyup)="onChecknameIsalreadysignWhenUpdate(element)" />
+                <span class="mat-err1" *ngIf="
+                    isNameUpdatedRepeated &&
+                    element.id == editUsr &&
+                    role.value != ''
+                  ">
+                  <strong>! &nbsp;</strong>مسجلة مسبقاً
+                </span>
+  
+                <span class="mat-err1" *ngIf="role.value == ''">* مطلوب</span>
+              </mat-form-field>
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="createdBy">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+            الانشاء بواسطة</mat-header-cell>
+          <mat-cell *matCellDef="let element" data-label="اسم المستخدم">
+            {{ element.createdBy }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="creationDate">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+            تاريخ الانشاء
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element" data-label=" تاريخ الانشاء">
+            {{ element.creationDate | date : "yyyy-MM-dd" }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="updatedBy">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+            التعديل بواسطة</mat-header-cell>
+          <mat-cell *matCellDef="let element" data-label=" المستخدم">
+            {{ element.updatedBy }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="updateDate">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+            تاريخ التعديل</mat-header-cell>
+          <mat-cell *matCellDef="let element" data-label="تاريخ العديل">
+            {{ element.updateDate | date : "yyyy-MM-dd" }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef> الاجراء </mat-header-cell>
+          <mat-cell *matCellDef="let row" data-label="action">
+            <!-- <ng-container>
+  
+        <button mat-button class="btn-success ml-1 font-weight-bolder" matTooltip="Edit"   (click)="onEdit(row)">
+          <mat-icon>edit</mat-icon>
+        </button>
+  
+        <button mat-button class="btn-danger" matTooltip="Delete"  (click)="onDelete(row)">
+          <mat-icon>delete_forever</mat-icon>
+  
+        </button>
+      </ng-container> -->
+  
+            <ng-container *ngIf="!editdisabled || row.id != editUsr">
+              <button mat-button class="btn-success ml-1 font-weight-bolder" matTooltip="Edit" (click)="editROw(row)">
+                <mat-icon>edit</mat-icon>
+              </button>
+  
+              <button mat-button class="btn-danger" matTooltip="Delete" (click)="onDelete(row)">
+                <mat-icon>delete_forever</mat-icon>
+              </button>
+            </ng-container>
+            <ng-container *ngIf="editdisabled && row.id == editUsr">
+              <button class="btn-success btn ml-1" matTooltip="Update" [disabled]="isDisabled || !row.name.length"
+                (click)="updateEdit(row)">
+                <mat-icon>check</mat-icon>
+              </button>
+  
+              <button class="btn-danger btn" matTooltip="Cancel" (click)="cancelEdit()">
+                <mat-icon>clear</mat-icon>
+              </button>
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="noData">
+          <mat-footer-cell *matFooterCellDef colspan="6">
+            لا يوجد بيانات...
+          </mat-footer-cell>
+        </ng-container>
+  
+        <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{
+            hide: !(dataSource.data.length == 0 && dataSource != null)
+          }"></mat-footer-row>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+      <!-- end test -->
+    </div>
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" [pageSize]="10" showFirstLastButtons>
+    </mat-paginator>
+  </mat-card>

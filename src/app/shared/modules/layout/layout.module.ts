@@ -44,6 +44,7 @@ import { MissionDetailsComponent } from '../../../component/Forms/mission-detail
 import { EditMissionComponent } from '../../../component/Forms/edit-mission/edit-mission.component';
 import { SplitPipe } from 'src/app/pipes/split.pipe';
 import { LoadingService } from '../../service/loading.service';
+import { TeamComponent } from 'src/app/component/settings/team/team.component';
 
 
 
@@ -64,6 +65,7 @@ import { LoadingService } from '../../service/loading.service';
     AddUserComponent,
     JobDegreeComponent,
     RoleComponent,
+    TeamComponent,
     MissionTypeComponent,
     ApproveStatusComponent,
     AddJobComponent,

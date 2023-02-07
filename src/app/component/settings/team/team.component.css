@@ -1,0 +1,39 @@
+form{
+    position: absolute !important;
+    left: 12px !important;
+    top: 58px;
+  
+  }
+  form mat-form-field{
+  text-align: right;
+  }
+  .mat-err {
+    display: block;
+    /* position: absolute;
+    bottom: 0; */
+    color: #f44336;
+    display: block;
+    color: #f44336;
+    font-size: 12px;
+    position: absolute;
+    bottom: -18px;
+  }
+  .search{
+    height: 32px;
+  }
+  .mat-err1 {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    color: #f44336;
+    display: block;
+    color: #f44336;
+    font-size: 12px;
+  
+  
+  }
+  
+  mat-form-field{
+    direction: rtl;
+  }
+  
