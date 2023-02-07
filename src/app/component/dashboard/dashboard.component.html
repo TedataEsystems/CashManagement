@@ -18,12 +18,12 @@
                     <div class="detailschartblocks">
 
 
-                        <span id="MainContent_monthstat_lbl" class="lblbigtxt">9.734</span>
+                        <span id="MainContent_monthstat_lbl" class="lblbigtxt">{{totalApproved}}</span>
                         <label class="lblbigtxtunder item1">Total Approved</label>
                     </div>
                     <div class="detailschartblocks">
 
-                        <span id="MainContent_totalevu_lbl" class="lblbigtxt">125,457</span>
+                        <span id="MainContent_totalevu_lbl" class="lblbigtxt">{{totalPending}}</span>
 
                         <label class="lblbigtxtunder item2">Total Pending</label>
                     </div>
@@ -31,7 +31,7 @@
                     <div class="detailschartblocks">
 
 
-                        <span id="MainContent_totalevoustat_lbl" class="lblbigtxt">+ 17%</span>
+                        <span id="MainContent_totalevoustat_lbl" class="lblbigtxt">{{totalRejected}}</span>
                         <label class="lblbigtxtunder item3">Total Rejected </label>
                     </div>
 
@@ -68,18 +68,18 @@
              <div class="detailschartblocks">
 
 
-                 <span id="MainContent_monthstat_lbl" class="lblbigtxt">100</span>
+                 <span id="MainContent_monthstat_lbl" class="lblbigtxt">{{totalApproved}}</span>
                  <label class="lblbigtxtunder item1">Total Approved </label>
              </div>
              <div class="detailschartblocks">
 
-                 <span id="MainContent_totalevu_lbl" class="lblbigtxt">300</span>
+                 <span id="MainContent_totalevu_lbl" class="lblbigtxt">{{totalPending}}</span>
 
                  <label class="lblbigtxtunder item2">Total Pending </label>
              </div>
              <div class="detailschartblocks">
 
-              <span id="MainContent_totalevu_lbl" class="lblbigtxt">600</span>
+              <span id="MainContent_totalevu_lbl" class="lblbigtxt">{{totalRejected}}</span>
 
               <label class="lblbigtxtunder item3">Total Rejected </label>
           </div>
@@ -88,7 +88,7 @@
              <div class="text-center">
 
 
-              <span id="MainContent_monthstat_lbl" class="lblbigtxt">1000</span>
+              <span id="MainContent_monthstat_lbl" class="lblbigtxt">{{totalRejected+totalPending+totalApproved}}</span>
               <label class="lblbigtxtundero mt-3">Total  </label>
           </div>
 
