@@ -24,7 +24,7 @@ export class AddMissionComponent implements OnInit {
   file_list: Array<string> = [];
   file: File |null; // Variable to store file
   fileName: string;
-
+  step=0;
   missionTypeList: MissionType[] = [];
   missionList: MissionList[] = [];
   constructor(
@@ -169,6 +169,9 @@ if(extensitin.toLowerCase()=="msg"||extensitin.toLowerCase()=="jpeg"||extensitin
    this.service.form['controls']['attachFile'].setValue('');
 
 
+  }
+  setStep(index: number) {
+    this.step = index;
   }
 
 }

@@ -59,8 +59,12 @@ export class DashboardComponent implements OnInit {
 
 /////////bar chart/////////////////////////
 barChartOptions: ChartOptions = {
-
   responsive: true,
+    scales: {
+    //   y: {
+    //     type:  // this is the same id that was set on the scale
+    // }
+    }
 };
 barChartLabels: Label[] = ['EFO Cash', 'Estore', 'ETSI', 'ETSM', 'EWFM','Fiber Support','Fiber Team','TE MSAN','WiMax'];
 barChartType: ChartType = 'bar';
