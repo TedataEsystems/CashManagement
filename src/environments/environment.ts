@@ -4,12 +4,12 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://localhost:44382/api/'
-  //apiUrl: 'http://172.29.29.9:2023/api/'
+  //apiUrl: 'https://localhost:44382/api/'
+  apiUrl: 'http://172.29.29.9:2023/api/'
   //comment
-  //comment 2 
+  //comment 2
   //knn
-  
+
 };
 
 /*

@@ -42,10 +42,9 @@
   dir="rtl"
 >
 <!-- ------------------------------test----------------------- -->
-<div class="px-3" *ngIf="appear" style="margin-top: 90px;">
+<div class="px-3" *ngIf="appear" style="margin-top:65px;">
 <mat-accordion class="example-headers-align" multi>
-  <mat-expansion-panel    expanded="0"
-  opened="true">
+  <mat-expansion-panel  [expanded]="step === 0" (opened)="setStep(0)">
     <mat-expansion-panel-header>
       <mat-panel-title>
        بيانات الموظف
@@ -86,7 +85,7 @@
     </div>
 
   </mat-expansion-panel>
-  <mat-expansion-panel>
+  <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
     <mat-expansion-panel-header>
       <mat-panel-title>
        بيانات المأمورية
@@ -152,7 +151,7 @@
         </div>
   </mat-expansion-panel>
 
-  <mat-expansion-panel>
+  <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)">
     <mat-expansion-panel-header>
       <mat-panel-title>
        بيانات الاقامة
@@ -238,7 +237,7 @@
         </div>
         </div>
   </mat-expansion-panel>
-  <mat-expansion-panel>
+  <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)">
     <mat-expansion-panel-header>
       <mat-panel-title>
         بيانات أخرى

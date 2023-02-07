@@ -19,7 +19,7 @@ import { CommentService } from 'src/app/shared/service/comment.service';
 export class EditComponent implements OnInit {
   // expression=new RegExp("^[^-\s][a-zA-Z0-9_\s-]+$")
   appear = false;
-// area:string;
+ step=0;
   file_store: FileList;
   file_list: Array<string> = [];
   file: File = null; // Variable to store file
@@ -139,7 +139,7 @@ console.log(this.data)
     this.commentService.getComments(this.data.id).subscribe(res => {
       if (res.status) {
         this.commentList = res.comments
-       
+
         this.dataSourceComment = new MatTableDataSource<any>(this.commentList);
 
       }
@@ -328,5 +328,7 @@ console.log(this.data)
 
   }//remove
 
-
+  setStep(index: number) {
+    this.step = index;
+  }
 }
