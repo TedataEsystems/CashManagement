@@ -31,7 +31,7 @@ export class LogsComponent implements OnInit {
 
   @ViewChild(MatSort) sort?:MatSort ;
   @ViewChild(MatPaginator) paginator?:MatPaginator ;
-  displayedColumns: string[] = ['Id', 'userName' ,'creationDate','parentType', 'actionType' ,'Details'];
+  displayedColumns: string[] = ['Id', 'userName' ,'creationDate','parentType','elementId', 'actionType' ,'Details'];
   dataSource = new MatTableDataSource();
   logsList:Logs[]=[]
   sortColumnDef: string = "Id";

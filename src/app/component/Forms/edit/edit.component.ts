@@ -50,12 +50,12 @@ export class EditComponent implements OnInit {
   statusname:string='';
   ngOnInit() {
 
-    if (localStorage.getItem("team").toLocaleLowerCase().replace(/\s/, '') == "efocash") {
+    if (localStorage.getItem("team") == "1") {
       this.commentStatus = true;
       this.statusShow=true;
 
     }
-    if (localStorage.getItem("role").toLocaleLowerCase() == "creator"&&localStorage.getItem("team").toLocaleLowerCase().replace(/\s/, '') != "efocash") {
+    if (localStorage.getItem("role") == "1"&&localStorage.getItem("team")!= "1") {
       this.commentStatus = false;
       this.statusShow=false;
 

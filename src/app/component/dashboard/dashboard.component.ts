@@ -23,9 +23,9 @@ export class DashboardComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    var role = localStorage.getItem("role").toLocaleLowerCase().replace(/\s/, '');
-    var team = localStorage.getItem("team").toLocaleLowerCase().replace(/\s/, '');
-    if (role == 'creator' && team != "efocash") {
+    var role = localStorage.getItem("role");
+    var team = localStorage.getItem("team");
+    if (role == '1' && team != "1") {
       this.IsAdmin = false;
     }
     else {
@@ -33,11 +33,11 @@ export class DashboardComponent implements OnInit {
     }
 
 
-    if (localStorage.getItem("role").toLocaleLowerCase().replace(/\s/, '') == "creator") {
+    if (role == "1") {
       this.isCreator = true;
     }
       this.dashboardService.getDashboard().subscribe(res=>{
-        if (role == 'creator' && team != "efocash") 
+        if (role == '1' && team != "1") 
         {
           this.doughnutChartData=[res.data.approvedCount,res.data.pendingCount,res.data.rejectedCount]
           this.totalPending=res.data.pendingCount;

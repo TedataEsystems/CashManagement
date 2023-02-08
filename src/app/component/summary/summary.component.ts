@@ -179,17 +179,20 @@ export class SummaryComponent implements OnInit {
   ////////end of pagenation//////
   ngOnInit(): void {
 
-    var role = localStorage.getItem("role").toLocaleLowerCase().replace(/\s/, '');
-    var team = localStorage.getItem("team").toLocaleLowerCase().replace(/\s/, '');
-    if (role == 'creator' && team != "efocash") {
+    var role =localStorage.getItem("role");
+    // localStorage.getItem("role").toLocaleLowerCase().replace(/\s/, '');
+    var team = localStorage.getItem("team");
+    //role is creator and not efo cash team
+    if (role == '1' && team != "1") {
       this.IsAdmin = false;
     }
+
     else {
       this.IsAdmin = true;
     }
 
-
-    if (localStorage.getItem("role").toLocaleLowerCase().replace(/\s/, '') == "creator") {
+//if creator or super admin
+    if (role == "1"||role=='3') {
       this.isCreator = true;
     }
 

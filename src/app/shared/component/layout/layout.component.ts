@@ -34,7 +34,7 @@ export class LayoutComponent implements OnInit{
 
  ngOnInit(): void {
 
-if(localStorage.getItem("team").toLocaleLowerCase().replace(/\s/, '')=="efocash")
+if(localStorage.getItem("team")=="1")
 {
  this.ShowStatus=true;
 }

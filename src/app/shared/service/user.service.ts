@@ -68,4 +68,8 @@ export class UserService {
   {
     return this.httpClient.get<any>(`${this.url}/checkUserNameexist/`+userName);
   }
+  CheckUserNameRepeated(userName:string):Observable<any>
+  {
+    return this.httpClient.get<any>(`${this.url}/checkUserNameRepeated/`+userName);
+  }
 }

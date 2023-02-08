@@ -37,6 +37,7 @@ export class TeamComponent implements OnInit {
   editdisabled: boolean = false;
   loader: boolean = false;
   isDisabled = false;
+  isAdmin:boolean=false;
   isDisable = false;
   team = {id: 0,name:'',createdBy:''}
   constructor(private titleService: Title,private toastr:ToastrService, private router: Router,
@@ -50,7 +51,12 @@ export class TeamComponent implements OnInit {
   })
 
   ngOnInit(): void {
+    if(localStorage.getItem("role")=='3')
+    {
+      this.isAdmin=true;
+    }
     this.getTeams(1,100,'',this.sortColumnDef,this.SortDirDef);
+
   }
   getTeams(pageNum: number,pagesize: number,searchValue: string,sortColumn: string,sortDir: string) {
     this.loader = true;

@@ -42,6 +42,7 @@ export class ApproveStatusComponent implements OnInit {
   columnsToDisplay: string[] = this.displayedColumns.slice();
   dataSource = new MatTableDataSource();
   settingtype = ''
+  isAdmin: boolean;
   // Status = {id: 0,name:'',createdBy:''}
 
   constructor(private statusService:StatusService, private titleService: Title,private toastr:ToastrService, private router: Router,
@@ -72,6 +73,10 @@ export class ApproveStatusComponent implements OnInit {
 
 
   ngOnInit(): void {
+    if(localStorage.getItem("role")=="3")
+    {
+      this.isAdmin=true;
+    }
     this.getRequestdata(1, 100, '', this.sortColumnDef, this.SortDirDef);
   }
 

@@ -17,11 +17,12 @@ import { UserService } from 'src/app/shared/service/user.service';
 })
 
 export class AddUserComponent implements OnInit {
- 
+
   constructor(public dialogRef: MatDialogRef<AddUserComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private toastr: ToastrService, private userService: UserService, private _router: Router) {
   }
   newuser1: User = new User();
   userRoles: UserolesList[] = [];
+  notAdminuserRoles:UserolesList[]=[];
   jobDegrees: JobDegree[] = [];
   teams: Team[] = [];
   form: FormGroup = new FormGroup({
@@ -36,6 +37,8 @@ export class AddUserComponent implements OnInit {
 })
   isDisabled: boolean;
   isNameRepeated: boolean;
+  isUserNameRepeated:boolean;
+  isUserNameDisabled:boolean;
   dialogTitle: string = "";
   teamExist: number = 0;
   jobDegreeExist: number = 0;
@@ -54,6 +57,17 @@ export class AddUserComponent implements OnInit {
       {
         this.jobDegrees = response?.data.jobDegrees;
         this.userRoles = response?.data.userRoles;
+        if(localStorage.getItem("role")!="3")
+        {
+          this.userRoles.forEach((element:any,index) => {
+            if(element.name.toLowerCase().trim()=="3")
+            {
+             //  this.notAdminuserRoles.push(element);
+             // delete this.userRoles[index];
+             this.userRoles.splice(index,1);
+            }
+         });
+        }
         this.teams=response?.data.teams;
       }
       if (this.data) {
@@ -90,9 +104,9 @@ export class AddUserComponent implements OnInit {
         //this.form.controls['team'].setValue(this.data.team);
         this.form.controls['userName'].setValue(this.data.userName);
       }
-     
+
     });
-   
+
   }
   onSubmit() {
     if (this.form.invalid) {
@@ -159,18 +173,53 @@ export class AddUserComponent implements OnInit {
     this.dialogRef.close('save');
   }
   onCheckJobNumIsalreadysign() {
+
     this.user.jobNum = this.form.value.jobNumber;
-    this.userService.jobNumberIsAlreadyExist(this.user.jobNum.toString()).subscribe(res => {
-      //not asign before
-      if (res.status == true) {
-        this.isDisabled = false;
-        this.isNameRepeated = false;
-      }
-      //already exsit
-      else {
-        this.isDisabled = true;
-        this.isNameRepeated = true;
-      }
-    });
+    if(this.user.jobNum.trim().length>0&&this.user.jobNum.trim()!='')
+    {
+      this.userService.jobNumberIsAlreadyExist(this.user.jobNum.toString()).subscribe(res => {
+        //not asign before
+        if (res.status == true) {
+          this.isDisabled = false;
+          this.isNameRepeated = false;
+        }
+        //already exsit
+        else {
+          this.isDisabled = true;
+          this.isNameRepeated = true;
+        }
+      });
+    }
+    else
+    this.isDisabled = false;
+    this.isNameRepeated = false;
+
+
   }
-}
+  IsUserNameRepeated()
+  {
+  let userName=this.form.value.userName;
+console.log(userName,"UserName")
+    if(userName.trim().length>0&&userName.trim()!='')
+    {
+      this.userService.CheckUserNameRepeated(userName).subscribe(
+        res => {
+          if (res.status == true) {
+            this.isUserNameDisabled = false;
+            this.isUserNameRepeated = false;
+
+
+          } else {
+            this.isUserNameDisabled = true;
+            this.isUserNameRepeated = true;
+
+          }
+
+        });
+  }
+  else
+             this.isUserNameDisabled = false;
+            this.isUserNameRepeated = false;
+
+}}
+

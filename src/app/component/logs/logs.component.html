@@ -33,7 +33,10 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header>اسم المستخدم</mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.userName}} </mat-cell>
       </ng-container>
-
+      <ng-container matColumnDef="elementId">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> رقم العنصر</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.elementId}} </mat-cell>
+    </ng-container>
 
       <ng-container matColumnDef="creationDate">
           <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> تاريخ الانشاء </mat-header-cell>
@@ -69,7 +72,7 @@
             <mat-list>
 
               <mat-list-item >
-                {{element.descirption | split:'-'}}
+                {{element.descirption }}
 
               </mat-list-item>
             </mat-list>

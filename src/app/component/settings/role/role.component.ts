@@ -39,6 +39,7 @@ export class RoleComponent implements OnInit {
   isDisabled = false;
   isDisable = false;
   userRole = {id: 0,name:'',createdBy:''}
+  isAdmin: boolean;
   constructor(private titleService: Title,private toastr:ToastrService, private router: Router,
     private route: ActivatedRoute, private dailogService: DeleteService, private dialog:MatDialog,private userRoleService:UserRoleService
   ) 
@@ -50,6 +51,10 @@ export class RoleComponent implements OnInit {
     name: new FormControl('',[Validators.required,Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)]),
   })
   ngOnInit(): void {
+    if(localStorage.getItem("role")=="3")
+    {
+      this.isAdmin=true;
+    }
     this.getUserRoles(1, 100, '', this.sortColumnDef, this.SortDirDef);
   }
   getUserRoles(pageNum: number, pagesize: number, searchValue: string, sortColumn: string, sortDir: string) {

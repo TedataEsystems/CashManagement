@@ -90,7 +90,8 @@ if(extensitin.toLowerCase()=="msg"||extensitin.toLowerCase()=="jpeg"||extensitin
         if (this.file != null) {
           this.missionService.upload(this.file, res.id).subscribe((res) => {
           if(res.status==true)
-          {     this.toastr.success(':added successfully');
+          {     
+            this.toastr.success(':added successfully');
           this.NotAcceptExtension=0;
           this.service.form.reset();
           this.dialogRef.close('save');}
@@ -116,7 +117,7 @@ if(extensitin.toLowerCase()=="msg"||extensitin.toLowerCase()=="jpeg"||extensitin
   }
     this.onClose();
     this.dialogRef.close('save');
-   // this._router.navigate(['/mission'] );
+    this._router.navigate(['/mission'] );
   } //end of submit
   onClear() {
     this.service.form.reset();

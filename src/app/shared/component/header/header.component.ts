@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   userName:string;
   ngOnInit(): void {
     this.userName=localStorage.getItem("userName");
-    if(localStorage.getItem("team").toLocaleLowerCase().replace(/\s/, '')=="efocash")
+    if(localStorage.getItem("team")=="1")
     {
      this.ShowStatus=true;
     }

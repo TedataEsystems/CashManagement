@@ -59,8 +59,8 @@
           <mat-error>مطلوب</mat-error>
         </mat-form-field>
         <mat-form-field>
-          <input formControlName="userName" matInput placeholder="اسم المستخدم" />
-          <!-- <mat-error>مطلوب</mat-error> -->
+          <input formControlName="userName" matInput (keyup)="IsUserNameRepeated()" placeholder="اسم المستخدم" />
+           <span   class="mat-error" *ngIf="isUserNameRepeated">اسم المستخدم موجود من قبل </span> 
         </mat-form-field>
 
         <mat-form-field>
@@ -82,7 +82,7 @@
   </mat-grid-list>
   <mat-toolbar class="bottom">
     <div class="button-row w-100 text-center">
-      <button mat-raised-button class="btn-success w-50" type="submit" [disabled]="isDisabled">
+      <button mat-raised-button class="btn-success w-50" type="submit" [disabled]="isDisabled||isUserNameDisabled">
         ارسال
       </button>
     </div>

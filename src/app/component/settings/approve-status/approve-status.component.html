@@ -113,7 +113,7 @@
         <mat-icon>edit</mat-icon>
       </button>
 
-      <button mat-button class="btn-danger" matTooltip="Delete"  (click)="onDelete(row)">
+      <button mat-button class="btn-danger" [disabled]="!isAdmin&&(row.id=='1'||row.id=='2'||row.id=='3')" matTooltip="Delete"  (click)="onDelete(row)">
         <mat-icon>delete_forever</mat-icon>
 
       </button>
