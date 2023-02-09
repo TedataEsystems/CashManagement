@@ -60,7 +60,7 @@ export class AddUserComponent implements OnInit {
         if(localStorage.getItem("role")!="3")
         {
           this.userRoles.forEach((element:any,index) => {
-            if(element.name.toLowerCase().trim()=="3")
+            if(element.id=="3")
             {
              //  this.notAdminuserRoles.push(element);
              // delete this.userRoles[index];
@@ -199,7 +199,6 @@ export class AddUserComponent implements OnInit {
   IsUserNameRepeated()
   {
   let userName=this.form.value.userName;
-console.log(userName,"UserName")
     if(userName.trim().length>0&&userName.trim()!='')
     {
       this.userService.CheckUserNameRepeated(userName).subscribe(

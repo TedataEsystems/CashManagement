@@ -52,7 +52,7 @@ export class MissionFormService {
       attachFileId:0,
       missionPurpose: '',
       centerOfCost:2455,
-      companyType:0,
+      companyType:'',
       missionPlace: '',
       startDateMission: '',
       endDateMission:'',
