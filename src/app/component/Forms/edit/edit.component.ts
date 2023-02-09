@@ -60,10 +60,10 @@ export class EditComponent implements OnInit {
       this.statusShow=false;
 
     }
-console.log(this.data)
+//console.log(this.data)
     this.attachId = this.data.attachFileId;
     this.attachName = this.data.attachFilename;
-    console.log(this.data.attachFilename,"file name")
+    //console.log(this.data.attachFilename,"file name")
     this.service.initializeFormGroup();
     this.missionService.getLists().subscribe(res => {
       if (res.status == true) {
@@ -222,8 +222,10 @@ console.log(this.data)
                 this.commentService.addComment(comment).subscribe(res => {
                   if (res.status) {
                     this.toastr.success("updated successfully");
-                    this.service.form.reset();
-                    this.dialogRef.close('save');
+                    // this.service.form.reset();
+                    //this.dialogRef.close('save');
+                      this.onClose();
+
                   }
                   else { this.toastr.warning("Add comment failed"); }
 
@@ -231,8 +233,9 @@ console.log(this.data)
               }
               else {
                 this.toastr.success("updated successfully");
-                this.service.form.reset();
-                this.dialogRef.close('save');
+                // this.service.form.reset();
+                this.onClose();
+
               }
 
             }
@@ -248,8 +251,7 @@ console.log(this.data)
     }
     //]}
     this.add = false;
-    this.onClose();
-    this.dialogRef.close('save');
+//    this.dialogRef.close('save');
 
   }
 

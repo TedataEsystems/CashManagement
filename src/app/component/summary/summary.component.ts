@@ -140,7 +140,7 @@ export class SummaryComponent implements OnInit {
         this.dataSource = new MatTableDataSource<any>(this.missions);
         this.dataSource._updateChangeSubscription();
         this.dataSource.paginator = this.paginator as MatPaginator;
-        console.log(this.missions);
+        // console.log(this.missions);
      
       }); //end of subscribe
     // setTimeout(()=>{
@@ -178,7 +178,6 @@ export class SummaryComponent implements OnInit {
   }
   ////////end of pagenation//////
   ngOnInit(): void {
-
     var role =localStorage.getItem("role");
     // localStorage.getItem("role").toLocaleLowerCase().replace(/\s/, '');
     var team = localStorage.getItem("team");
@@ -218,7 +217,7 @@ export class SummaryComponent implements OnInit {
   getRequestdataNext(cursize: number, pageSize: number, pageNum: number, search: string, sortColumn: string, sortDir: string) {
     this.missionService.getAllMissions(pageNum, pageSize, search, sortColumn, sortDir).subscribe(res => {
       if (res.status == true) {
-        console.log(res);
+        // console.log(res);
         this.missions.length = cursize;
         this.missions.push(...res?.data);
         this.missions.length = res.pagination?.totalCount;

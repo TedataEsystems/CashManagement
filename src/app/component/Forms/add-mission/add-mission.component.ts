@@ -47,7 +47,7 @@ export class AddMissionComponent implements OnInit {
   }
 
   // On file Select
-  NotAcceptExtension:number=0;
+  // NotAcceptExtension:number=0;
   onSubmit() {
     if (!this.service.form.valid) {
       return;
@@ -92,9 +92,11 @@ if(extensitin.toLowerCase()=="msg"||extensitin.toLowerCase()=="jpeg"||extensitin
           if(res.status==true)
           {     
             this.toastr.success(':added successfully');
-          this.NotAcceptExtension=0;
-          this.service.form.reset();
-          this.dialogRef.close('save');}
+            this.onClose();
+          // this.NotAcceptExtension=0;
+          // this.service.form.reset();
+          // this.dialogRef.close('save');
+        }
           else{this.toastr.warning(':failed to upload file');}
           });
         }
@@ -106,18 +108,18 @@ if(extensitin.toLowerCase()=="msg"||extensitin.toLowerCase()=="jpeg"||extensitin
     });
   }
   //NotAcceptExtension
-  else
-  {
-    this.NotAcceptExtension=1;
-    this.removeFile();
-   //this.service.form.controls["attachFile"].setErrors({'incorrect': true});
-    if (!this.service.form.valid) {
-      return;
-    }
-  }
-    this.onClose();
-    this.dialogRef.close('save');
-    this._router.navigate(['/mission'] );
+  // else
+  // {
+  //   this.NotAcceptExtension=1;
+  //   this.removeFile();
+  //  //this.service.form.controls["attachFile"].setErrors({'incorrect': true});
+  //   if (!this.service.form.valid) {
+  //     return;
+  //   }
+  // }
+  
+    // this.dialogRef.close('save');
+   // this._router.navigate(['/mission/missions'] );
   } //end of submit
   onClear() {
     this.service.form.reset();
