@@ -141,7 +141,7 @@ export class SummaryComponent implements OnInit {
         this.dataSource._updateChangeSubscription();
         this.dataSource.paginator = this.paginator as MatPaginator;
         // console.log(this.missions);
-     
+
       }); //end of subscribe
     // setTimeout(()=>{
     //   this.loader.idle();
@@ -553,5 +553,10 @@ export class SummaryComponent implements OnInit {
       .subscribe((result) => {
         this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
       });
+  }
+
+
+  exportExcel(){
+
   }
 }
