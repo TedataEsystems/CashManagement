@@ -68,6 +68,7 @@ export class SummaryComponent implements OnInit {
     'jobNumber',
     'jobDegree',
     'user',
+    'teamName',
     'companyType',
     'missionPurpose',
     'missionType',

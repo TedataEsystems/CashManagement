@@ -339,6 +339,17 @@
         </mat-cell>
       </ng-container>
 
+      <ng-container matColumnDef="teamName">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
+          المجموعه
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <ng-container>
+            {{ element.teamName }}
+          </ng-container>
+        </mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="creationDate">
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
           تاريخ الانشاء</mat-header-cell

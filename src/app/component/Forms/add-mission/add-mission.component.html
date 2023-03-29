@@ -24,8 +24,8 @@
 
             <mat-form-field appearance="outline" class="text-right w-75">
               <input #jobNumber matInput placeholder=" الرقم الوظيفي"/>
-              <mat-hint align="end"><strong>يجب أن يكون الموظف مسجل بالمجموعة</strong> </mat-hint>
-              <mat-hint *ngIf="!sameTeam" class="mat-error" align="start"><strong>هذا الموظف  غير مسجل بالمجموعة *</strong> </mat-hint>
+               <mat-hint align="end"><strong>يجب أن يكون الموظف مسجل </strong> </mat-hint>
+             <!-- <mat-hint *ngIf="!sameTeam" class="mat-error" align="start"><strong>هذا الموظف  غير مسجل بالمجموعة *</strong> </mat-hint> -->
             </mat-form-field>
 
 
@@ -65,6 +65,10 @@
 
         <mat-form-field class="w-100">
           <input formControlName="userName" matInput placeholder="اسم الموظف" readonly />
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
+          <input formControlName="teamName" matInput placeholder=" المجموعه" readonly />
         </mat-form-field>
       </div>
       <div class="col-sm-6 col-md-6 col-lg-6">

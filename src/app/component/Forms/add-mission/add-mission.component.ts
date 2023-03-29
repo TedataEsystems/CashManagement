@@ -137,6 +137,7 @@ if(extensitin.toLowerCase()=="msg"||extensitin.toLowerCase()=="jpeg"||extensitin
         this.service.form['controls']['jobNumber'].setValue(res.jobNumber);
         this.service.form['controls']['userName'].setValue(res.name);
         this.service.form['controls']['userId'].setValue(res.userId);
+        this.service.form['controls']['teamName'].setValue(res.teamName);
         this.service.form['controls']['jobDegreeName'].setValue(
           res.jobDegreeName
         );

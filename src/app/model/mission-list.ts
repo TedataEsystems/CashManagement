@@ -27,6 +27,8 @@ export interface MissionList {
     missionTypeId:number,
     missionType:string,
     userId:number,
-    user:string
+    user:string,
+    teamName:string
+
 /////
 }

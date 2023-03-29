@@ -38,6 +38,7 @@ export class MissionFormService {
     missionTypeId: new FormControl(0,[Validators.required]),
     userId: new FormControl(0),
     userName:new FormControl(null),
+    teamName:new FormControl(null),
 
   });
 
@@ -74,7 +75,9 @@ export class MissionFormService {
       statusId:0,
       missionTypeId:0,
       userId:0,
-      userName:''
+      userName:'',
+      teamName:''
+
     })
 
 
