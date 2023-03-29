@@ -133,6 +133,7 @@ export class EditComponent implements OnInit {
         this.service.form.controls['userName'].setValue(this.data.user);
         this.service.form.controls['userId'].setValue(this.data.userId);
         this.service.form.controls['attachFile'].setValue(this.data.attachFilename);
+        this.service.form.controls['teamName'].setValue(this.data.teamName);
         //this.service.form.controls['attachFileId'].setValue(this.data.attachFileId);
       }//end of if data
     })//end of subscribe

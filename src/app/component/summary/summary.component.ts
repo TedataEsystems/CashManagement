@@ -98,6 +98,7 @@ export class SummaryComponent implements OnInit {
 
     'exporAttach',
     'exportmission',
+    'exportexpenses',
     'action',
   ];
   columnsToDisplay: string[] = this.displayedColumns.slice();
@@ -523,7 +524,11 @@ export class SummaryComponent implements OnInit {
     this.missionService.missionForm = element;
     this.router.navigateByUrl('/mission/missionform')
   }
-  exportExpensesPdf() {
+  exportExpensesPdf() {   
+    this.router.navigateByUrl('/mission/expenses');
+  }
+  exportExpensesPdfRow(element) {   
+    this.missionService.missionId=element.id;
     this.router.navigateByUrl('/mission/expenses');
   }
 

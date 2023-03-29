@@ -69,10 +69,10 @@ return this.httpClient.get<any>(`${this.url}/GetLists`);
     console.log(this.CoverReportsIds)
    return this.httpClient.post<any>(`${this.url}/CoverReport`,CoverReportsIds);
   }
-  ExpensesFormReport(id:number):Observable<any>
+  ExpensesFormReport(id:number,missionId:any):Observable<any>
   {
     console.log("ExpensesFormReport",id)
-     return this.httpClient.get<any>(`${this.url}/ExpensesFormReport/`+id);
+     return this.httpClient.get<any>(`${this.url}/ExpensesFormReport/`+id+`/`+missionId);
   }
   DownloadAttach(id:number):Observable<any>
   {
@@ -86,5 +86,6 @@ return this.httpClient.get<any>(`${this.url}/GetLists`);
     return this.httpClient.delete<any>(`${this.url}/DeleteFile/`+id);
     }
     missionForm:MissionList;
+    missionId:any;
 }//end of service
 
