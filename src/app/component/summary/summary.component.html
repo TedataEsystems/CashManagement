@@ -4,8 +4,9 @@
       <mat-expansion-panel-header>
         <mat-panel-title> بحث متقدم </mat-panel-title>
       </mat-expansion-panel-header>
-
+      <img src="../../../assets/image/ex.png"  (click)="exportExcel()" class="shadow ml-3"  height="45px" width="45px">
       <form [formGroup]="form" (submit)="AdvancedSearchSubmit()">
+
         <mat-grid-list cols="4" rowHeight="450px">
           <mat-grid-tile>
             <div class="controles-container">
@@ -27,7 +28,12 @@
                     <mat-label>اسم الموظف</mat-label>
                     <input matInput formControlName="userName"/>
                   </mat-form-field>
-                  <mat-form-field appearance="fill" class="serch  w-100">
+                  <div class="w-100 d-flex" >
+                  <mat-form-field appearance="fill" class="serch  w-50">
+                    <mat-label> المجموعة</mat-label>
+                    <input matInput formControlName="userName"/>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill" class="serch  w-50" style="border-right:5px solid #fff">
                     <mat-select formControlName="jobDegreeId" placeholder="*الحالة الوظيفيه(--اختر--)">
                       <mat-option>-- Please select --</mat-option>
                       <mat-option  *ngFor="let jobDegree of jobDegreeList"   [value]="jobDegree.id">
@@ -35,7 +41,7 @@
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
-
+                   </div>
                   <mat-form-field appearance="fill" class="serch  w-100">
                     <mat-select formControlName="companyType"  placeholder=" *نوع الشركه (--اختار--) " >
                       <mat-option>-- Please select --</mat-option>
@@ -218,12 +224,13 @@
           <input
             mat-raised-button
             value="مسح "
-            class="btn-danger text-center mx-1 ser"
+            class="btn-danger text-center  ser"
             (click)="clearAdvancedSearch()"
             readonly
           />
 
-          <button mat-raised-button class="ser" color="warn">بحث</button>
+          <button mat-raised-button class="ser mx-1" color="warn">بحث</button>
+
         </div>
       </form>
     </mat-expansion-panel>
