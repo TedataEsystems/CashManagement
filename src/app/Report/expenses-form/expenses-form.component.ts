@@ -19,21 +19,40 @@ export class ExpensesFormComponent implements OnInit {
   constructor(private missionService: MissionService) { }
 
   ngOnInit(): void {
+    console.log("this.missionService.missionId",this.missionService.missionId)
+    if(this.missionService.missionId !=0)
+    {
+      this.appear=true;
+      this.search(0,this.missionService.missionId);
+      this.missionService.missionId=0
+    }
+    else{
+      this.appear=false;
+    }
+   
   }
 
 
 /////check userId
-search(jobNumber:any){
+search(jobNumber:any,missionId:any){
   
-   this.missionService.ExpensesFormReport(jobNumber).subscribe(res=>{
+   this.missionService.ExpensesFormReport(jobNumber,missionId).subscribe(res=>{
 if(res.status)
 {
-  console.log(res.status,"if true");
- this.expensesForm=res.expensesForm;
- this.jobNum=jobNumber;
- this.userName=res.expensesForm[0].userName;
- this.total=res.total;
+  console.log("response true",res.expensesForm)
+ if(missionId!=0)
+ {
+ this.expensesForm.push(res.expensesForm);
+ this.jobNum=res.jobNumber;
+ }
+ else{
+  this.expensesForm=res.expensesForm;
   this.appear =!this.appear
+  this.jobNum=jobNumber;
+ }
+ this.userName=this.expensesForm[0].userName;
+ this.total=res.total;
+  //this.appear =!this.appear
   this.noData=true;
 }
 else if(res.errorNum==1)
