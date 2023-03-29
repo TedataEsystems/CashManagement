@@ -4,7 +4,8 @@
       <mat-expansion-panel-header>
         <mat-panel-title> بحث متقدم </mat-panel-title>
       </mat-expansion-panel-header>
-      <img src="../../../assets/image/ex.png"  (click)="exportExcel()" class="shadow ml-3"  height="45px" width="45px">
+
+      <!-- <img src="../../../assets/image/ex.png"  (click)="exportExcel()" class="shadow ml-3"  height="45px" width="45px"> -->
       <form [formGroup]="form" (submit)="AdvancedSearchSubmit()">
 
         <mat-grid-list cols="4" rowHeight="450px">
@@ -240,6 +241,8 @@
 <mat-card class="example-card">
   <mat-card-header>
     <mat-card-title> المأموريات </mat-card-title>
+
+
     <button *ngIf="isCreator" mat-button class="opt" (click)="addMission()">
       <mat-icon class="add-new ico">add</mat-icon>
       <span class="txt mr-1">اضافة مأمورية</span>
@@ -252,13 +255,21 @@
       <button mat-menu-item  class="opt text-right" (click)="exportPdf()">
 
         <span class=" mr-1"> تنزيل مصروفات السفر عن المأموريات </span>
-        <mat-icon class="txt">download</mat-icon>
+        <span class="txt "> <img src="../../../assets/image/pdf.png"   height="30px" width="30px"></span>
+      </button>
+      <button mat-menu-item class="opt text-right" (click)="exportExcel()" >
+
+        <span class=" mr-1"> تنزيل مصروفات السفر عن المأموريات </span>
+        <span class="txt "> <img src="../../../assets/image/ex.png"   height="30px" width="30px"></span>
       </button>
       <button mat-menu-item class="opt text-right" (click)="exportExpensesPdf()">
 
         <span class="mr-1"> تنزيل نموذج المصروفات </span>
-        <mat-icon class="txt ">download</mat-icon>
+        <span class="txt "> <img src="../../../assets/image/pdf.png"   height="30px" width="30px"></span>
       </button>
+
+
+
     </mat-menu>
 
   </mat-card-header>
@@ -284,6 +295,8 @@
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
+
+    <!-- <img src="../../../assets/image/ex.png"  (click)="exportExcel()" class="shadow float-left"  height="40px" width="40px"> -->
   </div>
 
   <div class="example-container mat-elevation-z8">
@@ -562,8 +575,9 @@
             class="mx-1"
             (click)="exportMissionFormPdf(element)"
           >
-            <mat-icon class="">download</mat-icon>
-            <span class="txt mr-1"> تنزيل ملف </span>
+            <!-- <mat-icon class="">download</mat-icon>
+            <span class="txt mr-1"> تنزيل ملف </span> -->
+            <img src="../../../assets/image/pdf.png"   height="30px" width="30px">
           </button>
         </mat-cell>
       </ng-container>

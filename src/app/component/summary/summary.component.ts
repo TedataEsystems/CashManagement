@@ -11,9 +11,7 @@ import { MissionList } from 'src/app/model/mission-list';
 import { DeleteService } from 'src/app/shared/service/delete.service';
 import { MissionService } from 'src/app/shared/service/mission.service';
 import { AddMissionComponent } from '../Forms/add-mission/add-mission.component';
-import { EditMissionComponent } from '../Forms/edit-mission/edit-mission.component';
 import { EditComponent } from '../Forms/edit/edit.component';
-import { MissionDetailsComponent } from '../Forms/mission-details/mission-details.component';
 import { MissionType } from 'src/app/model/mission-type';
 import { Status } from 'src/app/model/status';
 import { JobDegree } from 'src/app/model/job-degree';
@@ -529,32 +527,7 @@ export class SummaryComponent implements OnInit {
     this.router.navigateByUrl('/mission/expenses');
   }
 
-  onDetails(row) {
-    this.dialog
-      .open(MissionDetailsComponent, {
-        panelClass: 'modals-dialog',
-        disableClose: true,
-        width: '70%',
-        data: row,
-      })
-      .afterClosed()
-      .subscribe((result) => {
-        this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
-      });
-  }
-  onEditMission(row) {
-    this.dialog
-      .open(EditMissionComponent, {
-        panelClass: 'edit-dialog',
-        disableClose: true,
-        width: '50%',
-        data: row,
-      })
-      .afterClosed()
-      .subscribe((result) => {
-        this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
-      });
-  }
+
 
 
   exportExcel(){

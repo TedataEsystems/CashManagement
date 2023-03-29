@@ -56,15 +56,6 @@
             <mat-form-field class="w-100">
               <input formControlName="userName" matInput placeholder="اسم الموظف" readonly />
             </mat-form-field>
-            
-            <mat-form-field class="w-100">
-              <input formControlName="teamName" matInput placeholder=" المجموعه" readonly />
-            </mat-form-field>
-          </div>
-          <div class="col-sm-6 col-md-6 col-lg-6">
-            <mat-form-field class="w-100">
-              <input formControlName="jobDegreeName" matInput placeholder=" الدرجه الوظيفيه" readonly />
-            </mat-form-field>
             <mat-form-field class="w-100">
               <mat-select formControlName="companyType" placeholder=" *نوع الشركه (--اختار--) ">
                 <mat-option>-- Please select --</mat-option>
@@ -73,6 +64,17 @@
               </mat-select>
               <mat-error> * مطلوب </mat-error>
             </mat-form-field>
+
+
+          </div>
+          <div class="col-sm-6 col-md-6 col-lg-6">
+            <mat-form-field class="w-100">
+              <input formControlName="jobDegreeName" matInput placeholder=" الدرجه الوظيفيه" readonly />
+            </mat-form-field>
+            <mat-form-field class="w-100">
+              <input formControlName="teamName" matInput placeholder=" المجموعه" readonly />
+            </mat-form-field>
+
             <!-- <mat-form-field class="w-100">
           <input formControlName="companyType" matInput placeholder="نوع الشركه"  readonly/>
           <mat-error> * مطلوب </mat-error>
