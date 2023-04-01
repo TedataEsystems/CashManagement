@@ -217,7 +217,6 @@ export class SummaryComponent implements OnInit {
   getRequestdataNext(cursize: number, pageSize: number, pageNum: number, search: string, sortColumn: string, sortDir: string) {
     this.missionService.getAllMissions(pageNum, pageSize, search, sortColumn, sortDir).subscribe(res => {
       if (res.status == true) {
-        // console.log(res);
         this.missions.length = cursize;
         this.missions.push(...res?.data);
         this.missions.length = res.pagination?.totalCount;
@@ -446,6 +445,7 @@ export class SummaryComponent implements OnInit {
   }
 
   Ids = [];
+  exportIds=[];
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows() {
     if (this.isAllSelected()) {
@@ -453,8 +453,6 @@ export class SummaryComponent implements OnInit {
       return;
     }
     this.selection.select(...this.dataSource.data);
-    //this.Ids = [];
-
   } //end of toggleAll
 
   /** The label for the checkbox on the passed row */
@@ -465,7 +463,41 @@ export class SummaryComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1
       }`;
   }
-
+  ExportExcel()
+  {
+    this.exportIds=[];
+    //select all when click in all checkbox or
+    // not choose any row or all but click export //button or
+    // search but not choose all or any row
+    if (this.isAllSelected()||this.selection.selected.length == 0) {
+      console.log("if");
+      this.dataSource.data.forEach((element: any) => {
+          this.exportIds.push(element.id)
+      })
+    }//if
+      //choose specific rows 
+      //search and choose specific rows
+      else
+      {
+        console.log("else");
+        this.selection.selected.forEach((element: any) => {
+          this.exportIds.push(element.id)
+        })
+      }
+      this.missionService.ExportExcel(this.exportIds).subscribe(res=>
+        {
+          console.log("excel2");
+          const blob = new Blob([res], { type: 'application/vnd.ms.excel' });
+          const file = new File([blob], 'Supportrequestedit' + '.xlsx', { type: 'application/vnd.ms.excel' });
+          saveAs(file, 'cashManagement' + Date.now() + '.xlsx')
+        },err=>
+        {
+          this.toastr.warning("::failed");
+        }
+        )
+     
+    
+  }//excel
   exportPdf() {
     localStorage.removeItem('coverId')
     this.Ids = [];
@@ -545,9 +577,4 @@ export class SummaryComponent implements OnInit {
   }
 
 
-
-
-  exportExcel(){
-
-  }
 }

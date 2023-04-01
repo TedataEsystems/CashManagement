@@ -247,7 +247,7 @@
       <mat-icon class="add-new ico">add</mat-icon>
       <span class="txt mr-1">اضافة مأمورية</span>
     </button>
-    <button *ngIf="IsAdmin" mat-button [matMenuTriggerFor]="menu" class="opt mr-1" >
+    <button *ngIf="IsAdmin" mat-button [matMenuTriggerFor]="menu" class="opt mr-1"  >
       <mat-icon class="">download</mat-icon>
       <span class="txt mr-1"> تنزيل ملف </span>
     </button>
@@ -257,7 +257,7 @@
         <span class=" mr-1"> تنزيل مصروفات السفر عن المأموريات </span>
         <span class="txt "> <img src="../../../assets/image/pdf.png"   height="30px" width="30px"></span>
       </button>
-      <button mat-menu-item class="opt text-right" (click)="exportExcel()" >
+      <button mat-menu-item class="opt text-right" (click)="ExportExcel()" >
 
         <span class=" mr-1"> تنزيل  المأموريات </span>
         <span class="txt "> <img src="../../../assets/image/ex.png"   height="30px" width="30px"></span>
