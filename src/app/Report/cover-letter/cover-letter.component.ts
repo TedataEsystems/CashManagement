@@ -17,7 +17,10 @@ export class CoverLetterComponent implements OnInit {
   TotalMissionTypeCost:number=0;
 
   ngOnInit(): void {
-    this.missionServices.CoverReport(this.missionServices.CoverReportsIds).subscribe(res=>
+
+
+    // this.missionServices.CoverReport(this.missionServices.CoverReportsIds).subscribe(res=>
+    this.missionServices.CoverReport(JSON.parse(localStorage.getItem('coverId')|| '[]')).subscribe(res=>
       {
         this.missionApproved=res.missions;
         this.missionApproved.forEach( (element:any) => {

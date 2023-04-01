@@ -467,6 +467,7 @@ export class SummaryComponent implements OnInit {
   }
 
   exportPdf() {
+    localStorage.removeItem('coverId')
     this.Ids = [];
     //without choose rows or select all and click on download
     if (this.selection.selected.length == 0) {
@@ -477,6 +478,7 @@ export class SummaryComponent implements OnInit {
           this.Ids.push(element.id)
         }
         this.missionService.CoverReportsIds = this.Ids;
+        localStorage.setItem('coverId',JSON.stringify(this.Ids))
         this.router.navigateByUrl('/mission/cover');
       })
     }
@@ -490,6 +492,9 @@ export class SummaryComponent implements OnInit {
           }
         })
         this.missionService.CoverReportsIds = this.Ids;
+
+
+        localStorage.setItem('coverId',JSON.stringify(this.Ids))
         this.router.navigateByUrl('/mission/cover');
       }
       //select specific rows
@@ -513,6 +518,7 @@ export class SummaryComponent implements OnInit {
         }
         else {
           this.missionService.CoverReportsIds = this.Ids;
+          localStorage.setItem('coverId',JSON.stringify(this.Ids))
           this.router.navigateByUrl('/mission/cover');
         }
       }
@@ -521,14 +527,20 @@ export class SummaryComponent implements OnInit {
     this.Ids = [];
   }
   exportMissionFormPdf(element) {
+    localStorage.removeItem('missionId')
     this.missionService.missionForm = element;
+    localStorage.setItem('missionId',JSON.stringify(element))
     this.router.navigateByUrl('/mission/missionform')
   }
-  exportExpensesPdf() {   
+  exportExpensesPdf() {
+    localStorage.removeItem('expenseId')
+    localStorage.setItem('expenseId','0')
     this.router.navigateByUrl('/mission/expenses');
   }
-  exportExpensesPdfRow(element) {   
+  exportExpensesPdfRow(element) {
+    localStorage.removeItem('expenseId')
     this.missionService.missionId=element.id;
+    localStorage.setItem('expenseId',element.id)
     this.router.navigateByUrl('/mission/expenses');
   }
 
