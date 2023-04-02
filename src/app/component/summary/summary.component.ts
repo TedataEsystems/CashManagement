@@ -11,9 +11,7 @@ import { MissionList } from 'src/app/model/mission-list';
 import { DeleteService } from 'src/app/shared/service/delete.service';
 import { MissionService } from 'src/app/shared/service/mission.service';
 import { AddMissionComponent } from '../Forms/add-mission/add-mission.component';
-import { EditMissionComponent } from '../Forms/edit-mission/edit-mission.component';
 import { EditComponent } from '../Forms/edit/edit.component';
-import { MissionDetailsComponent } from '../Forms/mission-details/mission-details.component';
 import { MissionType } from 'src/app/model/mission-type';
 import { Status } from 'src/app/model/status';
 import { JobDegree } from 'src/app/model/job-degree';
@@ -221,7 +219,6 @@ export class SummaryComponent implements OnInit {
   getRequestdataNext(cursize: number, pageSize: number, pageNum: number, search: string, sortColumn: string, sortDir: string) {
     this.missionService.getAllMissions(pageNum, pageSize, search, sortColumn, sortDir).subscribe(res => {
       if (res.status == true) {
-        // console.log(res);
         this.missions.length = cursize;
         this.missions.push(...res?.data);
         this.missions.length = res.pagination?.totalCount;
@@ -453,6 +450,7 @@ export class SummaryComponent implements OnInit {
   }
 
   Ids = [];
+  exportIds=[];
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows() {
     if (this.isAllSelected()) {
@@ -460,8 +458,6 @@ export class SummaryComponent implements OnInit {
       return;
     }
     this.selection.select(...this.dataSource.data);
-    //this.Ids = [];
-
   } //end of toggleAll
 
   /** The label for the checkbox on the passed row */
@@ -472,8 +468,43 @@ export class SummaryComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1
       }`;
   }
-
+  ExportExcel()
+  {
+    this.exportIds=[];
+    //select all when click in all checkbox or
+    // not choose any row or all but click export //button or
+    // search but not choose all or any row
+    if (this.isAllSelected()||this.selection.selected.length == 0) {
+      console.log("if");
+      this.dataSource.data.forEach((element: any) => {
+          this.exportIds.push(element.id)
+      })
+    }//if
+      //choose specific rows 
+      //search and choose specific rows
+      else
+      {
+        console.log("else");
+        this.selection.selected.forEach((element: any) => {
+          this.exportIds.push(element.id)
+        })
+      }
+      this.missionService.ExportExcel(this.exportIds).subscribe(res=>
+        {
+          console.log("excel2");
+          const blob = new Blob([res], { type: 'application/vnd.ms.excel' });
+          const file = new File([blob], 'Supportrequestedit' + '.xlsx', { type: 'application/vnd.ms.excel' });
+          saveAs(file, 'cashManagement' + Date.now() + '.xlsx')
+        },err=>
+        {
+          this.toastr.warning("::failed");
+        }
+        )
+     
+    
+  }//excel
   exportPdf() {
+    localStorage.removeItem('coverId')
     this.Ids = [];
     //without choose rows or select all and click on download
     if (this.selection.selected.length == 0) {
@@ -484,6 +515,7 @@ export class SummaryComponent implements OnInit {
           this.Ids.push(element.id)
         }
         this.missionService.CoverReportsIds = this.Ids;
+        localStorage.setItem('coverId',JSON.stringify(this.Ids))
         this.router.navigateByUrl('/mission/cover');
       })
     }
@@ -497,6 +529,9 @@ export class SummaryComponent implements OnInit {
           }
         })
         this.missionService.CoverReportsIds = this.Ids;
+
+
+        localStorage.setItem('coverId',JSON.stringify(this.Ids))
         this.router.navigateByUrl('/mission/cover');
       }
       //select specific rows
@@ -520,6 +555,7 @@ export class SummaryComponent implements OnInit {
         }
         else {
           this.missionService.CoverReportsIds = this.Ids;
+          localStorage.setItem('coverId',JSON.stringify(this.Ids))
           this.router.navigateByUrl('/mission/cover');
         }
       }
@@ -528,46 +564,22 @@ export class SummaryComponent implements OnInit {
     this.Ids = [];
   }
   exportMissionFormPdf(element) {
+    localStorage.removeItem('missionId')
     this.missionService.missionForm = element;
+    localStorage.setItem('missionId',JSON.stringify(element))
     this.router.navigateByUrl('/mission/missionform')
   }
-  exportExpensesPdf() {   
+  exportExpensesPdf() {
+    localStorage.removeItem('expenseId')
+    localStorage.setItem('expenseId','0')
     this.router.navigateByUrl('/mission/expenses');
   }
-  exportExpensesPdfRow(element) {   
+  exportExpensesPdfRow(element) {
+    localStorage.removeItem('expenseId')
     this.missionService.missionId=element.id;
+    localStorage.setItem('expenseId',element.id)
     this.router.navigateByUrl('/mission/expenses');
   }
 
-  onDetails(row) {
-    this.dialog
-      .open(MissionDetailsComponent, {
-        panelClass: 'modals-dialog',
-        disableClose: true,
-        width: '70%',
-        data: row,
-      })
-      .afterClosed()
-      .subscribe((result) => {
-        this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
-      });
-  }
-  onEditMission(row) {
-    this.dialog
-      .open(EditMissionComponent, {
-        panelClass: 'edit-dialog',
-        disableClose: true,
-        width: '50%',
-        data: row,
-      })
-      .afterClosed()
-      .subscribe((result) => {
-        this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
-      });
-  }
 
-
-  exportExcel(){
-
-  }
 }
