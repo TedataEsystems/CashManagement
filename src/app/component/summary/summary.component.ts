@@ -23,6 +23,7 @@ import { AdvancedSearch } from 'src/app/model/advanced-search';
 import * as fileSaver from 'file-saver';
 import { saveAs } from 'file-saver';
 import { LoadingService } from 'src/app/shared/service/loading.service';
+import { Team } from 'src/app/model/team';
 var mimetype = [
   { ext: "txt", fileType: "text/plain" },
   { ext: "pdf", fileType: "application/pdf" },
@@ -49,6 +50,7 @@ export class SummaryComponent implements OnInit {
   missionTypeList: MissionType[] = [];
   statusList: Status[] = [];
   jobDegreeList: JobDegree[] = [];
+  teamList:Team[]=[];
 
   searchKey: string = '';
   IsAdmin: boolean = true;
@@ -322,6 +324,7 @@ export class SummaryComponent implements OnInit {
     permissionDuration: new FormControl(''),
     permissionRequest: new FormControl(''),
     missionTypeCost: new FormControl(''),
+    team:new FormControl('')
   });
   openAdvancedSearchPanel() {
     // this.panelOpenState = false;
@@ -334,6 +337,7 @@ export class SummaryComponent implements OnInit {
     this.userService.getUserlists().subscribe((res) => {
       if (res.status) {
         this.jobDegreeList = res.data.jobDegrees;
+        this.teamList=res.data.teams;
       }
     });
   }
@@ -400,6 +404,7 @@ export class SummaryComponent implements OnInit {
     this.advSearchMission.statusId = Number(this.form.value.statusId);
     this.advSearchMission.missionTypeId = Number(this.form.value.missionTypeId);
     this.advSearchMission.jobDegreeId = Number(this.form.value.jobDegreeId);
+    this.advSearchMission.teamId = Number(this.form.value.team);
 
     this.missionService
       .AdvancedSearch(this.advSearchMission)

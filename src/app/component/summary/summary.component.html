@@ -29,10 +29,16 @@
                     <input matInput formControlName="userName"/>
                   </mat-form-field>
                   <div class="w-100 d-flex" >
+
                   <mat-form-field appearance="fill" class="serch  w-50">
-                    <mat-label> المجموعة</mat-label>
-                    <input matInput formControlName="userName"/>
+                     <mat-select formControlName="team" placeholder="*المجموعه(--اختر--)">
+                      <mat-option>-- Please select --</mat-option>
+                      <mat-option  *ngFor="let team of teamList"   [value]="team.id">
+                        {{team.name}}
+                      </mat-option>
+                    </mat-select>
                   </mat-form-field>
+
                   <mat-form-field appearance="fill" class="serch  w-50" style="border-right:5px solid #fff">
                     <mat-select formControlName="jobDegreeId" placeholder="*الحالة الوظيفيه(--اختر--)">
                       <mat-option>-- Please select --</mat-option>
@@ -554,12 +560,13 @@
 
       <ng-container matColumnDef="exportmission"  >
         <!-- *ngIf="IsAdmin&& row.status == 'approved' " -->
+        <!-- *ngIf="!IsAdmin && element.status == 'pending' || IsAdmin" -->
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header >
           نموذج المأمورية</mat-header-cell >
         <mat-cell *matCellDef="let element; let row"  >
           <button
            
-           *ngIf="row.status == 'pending' "
+           *ngIf="(!IsAdmin && row.status == 'pending' || IsAdmin)&&(row.missionType=='بدل سفر'||row.missionType=='بدل انتقالات وبدل سفر')"
             mat-stroked-button
             class="mx-1"
             (click)="exportMissionFormPdf(element)"
@@ -576,7 +583,8 @@
         >
         <mat-cell *matCellDef="let element">
           <button
-          *ngIf="element.status == 'pending' "
+          *ngIf="(!IsAdmin && element.status == 'pending' || IsAdmin)&&(element.missionType=='بدل انتقالات'||element.missionType=='بدل انتقالات وبدل سفر')"
+          
            mat-stroked-button class="mx-1" 
           (click)="exportExpensesPdfRow(element)">
             <mat-icon class="">download</mat-icon>

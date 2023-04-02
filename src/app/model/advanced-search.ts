@@ -31,5 +31,6 @@ export interface AdvancedSearch {
 
      statusId :number,
      missionTypeId :number,
-     jobDegreeId: number
+     jobDegreeId: number,
+     teamId: number
 }
