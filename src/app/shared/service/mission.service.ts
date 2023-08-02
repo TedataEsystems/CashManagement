@@ -59,6 +59,10 @@ export class MissionService {
   CoverReport(CoverReportsIds): Observable<any> {
     return this.httpClient.post<any>(`${this.url}/CoverReport`, CoverReportsIds);
   }
+  AddSerialNumberToMissions(model:any)
+  {
+    return this.httpClient.post<any>(`${this.url}/AddSerialNumberToMissions`,model)
+  }
   ExpensesFormReport(id: number, missionId: any): Observable<any> {
     return this.httpClient.get<any>(`${this.url}/ExpensesFormReport/` + id + `/` + missionId);
   }

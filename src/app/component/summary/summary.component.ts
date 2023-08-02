@@ -21,6 +21,7 @@ import { AdvancedSearch } from 'src/app/model/advanced-search';
 import * as fileSaver from 'file-saver';
 import { saveAs } from 'file-saver';
 import { LoadingService } from 'src/app/shared/service/loading.service';
+import { element } from 'protractor';
 var mimetype = [
   { ext: "txt", fileType: "text/plain" },
   { ext: "pdf", fileType: "application/pdf" },
@@ -64,6 +65,8 @@ export class SummaryComponent implements OnInit {
     'all',
     'id',
     'jobNumber',
+    'serialNumber',
+    'serialDate',
     'jobDegree',
     'user',
     'teamName',
@@ -135,17 +138,22 @@ export class SummaryComponent implements OnInit {
 
     // this.loader.busy();
     this.missionService.getAllMissions(pageNum, pagesize, searchValue, sortColumn, sortDir)
-    .subscribe((respose) => {
+      .subscribe((respose) => {
         this.missions = respose?.data;
         this.dataSource = new MatTableDataSource<any>(this.missions);
         this.dataSource._updateChangeSubscription();
         this.dataSource.paginator = this.paginator as MatPaginator;
+        // this.dataSource.data.forEach((element: any) => {
+        //      if (element.status!== "approved" ||(element.status=="approved" && element.serialNumber !=0)) {
+
+        //      }
+        //   })//foreach
         // console.log(this.missions);
 
       }); //end of subscribe
     // setTimeout(()=>{
     //   this.loader.idle();
-    // },2000)
+    // ,2000)
   } //end of getallmission
   //sort
   sortData(sort: any) {
@@ -178,7 +186,7 @@ export class SummaryComponent implements OnInit {
   }
   ////////end of pagenation//////
   ngOnInit(): void {
-    var role =localStorage.getItem("role");
+    var role = localStorage.getItem("role");
     // localStorage.getItem("role").toLocaleLowerCase().replace(/\s/, '');
     var team = localStorage.getItem("team");
     //role is creator and not efo cash team
@@ -190,13 +198,32 @@ export class SummaryComponent implements OnInit {
       this.IsAdmin = true;
     }
 
-//if creator or super admin
-    if (role == "1"||role=='3') {
+    //if creator or super admin
+    if (role == "1" || role == '3') {
       this.isCreator = true;
     }
 
     this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
-  }
+    // this.dataSource.data.forEach((element: any) => {
+    //   console.log(element,"jjkik")
+    //   // if (element.status!== "approved" ||(element.status=="approved" && element.serialNumber !=0)) {
+    //   //  console.log(element,"jjkik")
+    //   // }
+    // })//foreach
+
+  }//oninit
+  // [disabled]="isDisable(row)"
+  // isDisable(obj: any) {
+  //   //Only disable Car and Motor
+  //   // var index = this.rawData.indexOf(obj);
+  //   // console.log(index)
+  //   if (obj.status !== "approved" || (obj.status == "approved" && obj.serialNumber > 0)) {
+  //     return true;
+  //   }
+  //   else {
+  //     return false;
+  //   }
+  // }
   //next previous page
   pageIn = 0;
   public pIn: number = 0;
@@ -319,6 +346,9 @@ export class SummaryComponent implements OnInit {
     permissionDuration: new FormControl(''),
     permissionRequest: new FormControl(''),
     missionTypeCost: new FormControl(''),
+    serialNumber: new FormControl(''),
+    serialDateFrom: new FormControl(''),
+    serialDateTo: new FormControl(''),
   });
   openAdvancedSearchPanel() {
     // this.panelOpenState = false;
@@ -445,7 +475,7 @@ export class SummaryComponent implements OnInit {
   }
 
   Ids = [];
-  exportIds=[];
+  exportIds = [];
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows() {
     if (this.isAllSelected()) {
@@ -463,92 +493,77 @@ export class SummaryComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1
       }`;
   }
-  ExportExcel()
-  {
-    this.exportIds=[];
+  ExportExcel() {
+    this.exportIds = [];
     //select all when click in all checkbox or
     // not choose any row or all but click export //button or
     // search but not choose all or any row
-    if (this.isAllSelected()||this.selection.selected.length == 0) {
-      console.log("if");
+    if (this.isAllSelected() || this.selection.selected.length == 0) {
       this.dataSource.data.forEach((element: any) => {
-          this.exportIds.push(element.id)
+        this.exportIds.push(element.id)
       })
     }//if
-      //choose specific rows 
-      //search and choose specific rows
-      else
-      {
-        console.log("else");
-        this.selection.selected.forEach((element: any) => {
-          this.exportIds.push(element.id)
-        })
-      }
-      this.missionService.ExportExcel(this.exportIds).subscribe(res=>
-        {
-          console.log("excel2");
-          const blob = new Blob([res], { type: 'application/vnd.ms.excel' });
-          const file = new File([blob], 'Supportrequestedit' + '.xlsx', { type: 'application/vnd.ms.excel' });
-          saveAs(file, 'cashManagement' + Date.now() + '.xlsx')
-        },err=>
-        {
-          this.toastr.warning("::failed");
-        }
-        )
-     
-    
+    //choose specific rows 
+    //search and choose specific rows
+    else {
+      this.selection.selected.forEach((element: any) => {
+        this.exportIds.push(element.id)
+      })
+    }
+    this.missionService.ExportExcel(this.exportIds).subscribe(res => {
+      const blob = new Blob([res], { type: 'application/vnd.ms.excel' });
+      const file = new File([blob], 'Supportrequestedit' + '.xlsx', { type: 'application/vnd.ms.excel' });
+      saveAs(file, 'cashManagement' + Date.now() + '.xlsx')
+    }, err => {
+      this.toastr.warning("::failed");
+    }
+    )
+
+
   }//excel
+  IgnoredIds = [];
   exportPdf() {
     this.Ids = [];
-    //without choose rows or select all and click on download
+    //without choose rows 
     if (this.selection.selected.length == 0) {
-      // this.toastr.warning('Please select approved row');
-      //   return
-      this.dataSource.data.forEach((element: any) => {
-        if (element.status == "approved") {
-          this.Ids.push(element.id)
-        }
-        this.missionService.CoverReportsIds = this.Ids;
-        this.router.navigateByUrl('/mission/cover');
-      })
+      this.toastr.warning('Please select Missions');
+      return
     }
 
     else {
       // when select all
       if (this.isAllSelected()) {
         this.dataSource.data.forEach((element: any) => {
-          if (element.status == "approved") {
+          if (element.status == "approved" && element.serialNumber == 0) {
             this.Ids.push(element.id)
-          }
+          }//if in side if
         })
         this.missionService.CoverReportsIds = this.Ids;
         this.router.navigateByUrl('/mission/cover');
-      }
+      }//first if inside else
       //select specific rows
       else {
         this.selection.selected.forEach((element: any) => {
-          if (element.status == "approved") {
+          //if condition ok push it in ids array and redirect to coverletter page
+          //if not push it in ignoredids to print that in toastr the missions with the problem 
+          if (element.status == "approved" && element.serialNumber == 0) {
             this.Ids.push(element.id)
-            this.Isnotapprove = false;
-            this.warning = false;
           }
           else {
-            this.Isnotapprove = true;
-            this.warning = true;
+            this.IgnoredIds.push(element.id);
           }
-
-        })
-
-        if (this.Isnotapprove && this.warning) {
-          this.toastr.warning(`some rows is not approved`, 'PLease select approved row');
-          return
-        }
-        else {
+        })//foreach
+        if (this.IgnoredIds.length == 0) {
           this.missionService.CoverReportsIds = this.Ids;
           this.router.navigateByUrl('/mission/cover');
         }
-      }
-    }
+        else{
+          this.toastr.warning(this.IgnoredIds+ ' ' + "this missions not approved or printed before");
+          this.IgnoredIds=[]
+        }
+
+      }// else 
+    }//large else
 
     this.Ids = [];
   }
@@ -556,11 +571,11 @@ export class SummaryComponent implements OnInit {
     this.missionService.missionForm = element;
     this.router.navigateByUrl('/mission/missionform')
   }
-  exportExpensesPdf() {   
+  exportExpensesPdf() {
     this.router.navigateByUrl('/mission/expenses');
   }
-  exportExpensesPdfRow(element) {   
-    this.missionService.missionId=element.id;
+  exportExpensesPdfRow(element) {
+    this.missionService.missionId = element.id;
     this.router.navigateByUrl('/mission/expenses');
   }
 

@@ -12,6 +12,8 @@ export class CoverLetterComponent implements OnInit {
 
   constructor(private missionServices:MissionService) { }
   missionApproved:any[]=[];
+  serialNumber:number;
+  serialDate:Date;
   TotalStay:number=0;
   TotalMealsAndIncidentals:number=0;
   TotalMissionTypeCost:number=0;
@@ -20,6 +22,8 @@ export class CoverLetterComponent implements OnInit {
     this.missionServices.CoverReport(this.missionServices.CoverReportsIds).subscribe(res=>
       {
         this.missionApproved=res.missions;
+        this.serialNumber=res.serialNumber;
+        this.serialDate=res.serialDate;
         this.missionApproved.forEach( (element:any) => {
          this.TotalStay+=element.stay;
          this.TotalMealsAndIncidentals+=element.mealsAndIncidentals;
@@ -51,13 +55,20 @@ export class CoverLetterComponent implements OnInit {
       const imgProps = (<any>doc).getImageProperties(img);
       const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-      console.log(pdfHeight + " / "+pdfWidth)
+    //  console.log(pdfHeight + " / "+pdfWidth)
       doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, 220, undefined, 'FAST');
 
       return doc;
     }).then((doc) => {
 
       doc.save(`Cover-Letter${Date.now()}.pdf`);
+      var serialToMissions={
+        SerialNumber:0,
+        Ids:[]
+      }
+      serialToMissions.Ids=this.missionServices.CoverReportsIds;
+      serialToMissions.SerialNumber=this.serialNumber;
+       this.missionServices.AddSerialNumberToMissions(serialToMissions).subscribe(res=>{console.log(res.status)})
 
     });
 

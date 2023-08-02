@@ -40,6 +40,8 @@ export class MissionFormService {
     userName:new FormControl(null),
     teamName:new FormControl(null),
 
+    serialNumber:new FormControl(0),
+    
   });
 
 
@@ -76,7 +78,9 @@ export class MissionFormService {
       missionTypeId:0,
       userId:0,
       userName:'',
-      teamName:''
+      teamName:'',
+      serialNumber:0,
+     
 
     })
 

@@ -81,6 +81,8 @@ export class AddMissionComponent implements OnInit {
       statusId: this.service.form.value.statusId,
       missionTypeId: this.service.form.value.missionTypeId,
       userId: this.service.form.value.userId,
+      serialNumber:this.service.form.value.serialNumber,
+    
     }; //end of mission
 var extensitin=this.fileName.split(".")[1];
 
