@@ -20,22 +20,25 @@ export class ExpensesFormComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("this.missionService.missionId",this.missionService.missionId)
-    if(this.missionService.missionId !=0)
+    // if(this.missionService.missionId !=0)
+    if(localStorage.getItem('expenseId')!='0')
     {
       this.appear=true;
-      this.search(0,this.missionService.missionId);
+
+      // this.search(0,this.missionService.missionId);
+      this.search(0,localStorage.getItem('expenseId'));
       this.missionService.missionId=0
     }
     else{
       this.appear=false;
     }
-   
+
   }
 
 
 /////check userId
 search(jobNumber:any,missionId:any){
-  
+
    this.missionService.ExpensesFormReport(jobNumber,missionId).subscribe(res=>{
 if(res.status)
 {

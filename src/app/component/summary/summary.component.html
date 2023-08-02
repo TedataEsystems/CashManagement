@@ -33,7 +33,7 @@
                   <!---->
                   <mat-form-field appearance="fill" class="serch  w-100">
                     <mat-label>المسلسل </mat-label>
-                    <input matInput type="number" formControlName="serialNumber" />
+                    <input matInput type="text" formControlName="serialNumber" />
                   </mat-form-field>
 
                   <div class="w-100 d-flex" >
@@ -57,10 +57,16 @@
 
                   
                   <div class="w-100 d-flex" >
+
                   <mat-form-field appearance="fill" class="serch  w-50">
-                    <mat-label> المجموعة</mat-label>
-                    <input matInput formControlName="userName"/>
+                     <mat-select formControlName="team" placeholder="*المجموعه(--اختر--)">
+                      <mat-option>-- Please select --</mat-option>
+                      <mat-option  *ngFor="let team of teamList"   [value]="team.id">
+                        {{team.name}}
+                      </mat-option>
+                    </mat-select>
                   </mat-form-field>
+
                   <mat-form-field appearance="fill" class="serch  w-50" style="border-right:5px solid #fff">
                     <mat-select formControlName="jobDegreeId" placeholder="*الحالة الوظيفيه(--اختر--)">
                       <mat-option>-- Please select --</mat-option>
@@ -286,14 +292,14 @@
       </button>
       <button mat-menu-item class="opt text-right" (click)="ExportExcel()" >
 
-        <span class=" mr-1"> تنزيل مصروفات السفر عن المأموريات </span>
+        <span class=" mr-1"> تنزيل  المأموريات </span>
         <span class="txt "> <img src="../../../assets/image/ex.png"   height="30px" width="30px"></span>
       </button>
-      <button mat-menu-item class="opt text-right" (click)="exportExpensesPdf()">
+      <!-- <button mat-menu-item class="opt text-right" (click)="exportExpensesPdf()">
 
         <span class="mr-1"> تنزيل نموذج المصروفات </span>
         <span class="txt "> <img src="../../../assets/image/pdf.png"   height="30px" width="30px"></span>
-      </button>
+      </button> -->
 
 
 
@@ -323,7 +329,6 @@
       </button>
     </mat-form-field>
 
-    <!-- <img src="../../../assets/image/ex.png"  (click)="exportExcel()" class="shadow float-left"  height="40px" width="40px"> -->
   </div>
 
   <div class="example-container mat-elevation-z8">
@@ -613,12 +618,13 @@
 
       <ng-container matColumnDef="exportmission"  >
         <!-- *ngIf="IsAdmin&& row.status == 'approved' " -->
+        <!-- *ngIf="!IsAdmin && element.status == 'pending' || IsAdmin" -->
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header >
           نموذج المأمورية</mat-header-cell >
         <mat-cell *matCellDef="let element; let row"  >
           <button
-
-           *ngIf="row.status == 'pending' "
+           
+           *ngIf="(!IsAdmin && row.status == 'pending' || IsAdmin)&&(row.missionType=='بدل سفر'||row.missionType=='بدل انتقالات وبدل سفر')"
             mat-stroked-button
             class="mx-1"
             (click)="exportMissionFormPdf(element)"
@@ -635,8 +641,9 @@
         >
         <mat-cell *matCellDef="let element">
           <button
-          *ngIf="element.status == 'pending' "
-           mat-stroked-button class="mx-1"
+          *ngIf="(!IsAdmin && element.status == 'pending' || IsAdmin)&&(element.missionType=='بدل انتقالات'||element.missionType=='بدل انتقالات وبدل سفر')"
+          
+           mat-stroked-button class="mx-1" 
           (click)="exportExpensesPdfRow(element)">
           <img src="../../../assets/image/pdf.png"   height="30px" width="30px">
           </button>

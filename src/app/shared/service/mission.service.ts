@@ -55,8 +55,8 @@ export class MissionService {
   checkSameTeam(id: number): Observable<any> {
     return this.httpClient.get<any>(`${this.url}/CheckSameTeam/` + id);
   }
-  CoverReportsIds: number[];
-  CoverReport(CoverReportsIds): Observable<any> {
+  //CoverReportsIds: number[];
+  CoverReport(CoverReportsIds:number[]): Observable<any> {
     return this.httpClient.post<any>(`${this.url}/CoverReport`, CoverReportsIds);
   }
   AddSerialNumberToMissions(model:any)

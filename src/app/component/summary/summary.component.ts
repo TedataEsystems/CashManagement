@@ -21,7 +21,7 @@ import { AdvancedSearch } from 'src/app/model/advanced-search';
 import * as fileSaver from 'file-saver';
 import { saveAs } from 'file-saver';
 import { LoadingService } from 'src/app/shared/service/loading.service';
-import { element } from 'protractor';
+import { Team } from 'src/app/model/team';
 var mimetype = [
   { ext: "txt", fileType: "text/plain" },
   { ext: "pdf", fileType: "application/pdf" },
@@ -48,6 +48,7 @@ export class SummaryComponent implements OnInit {
   missionTypeList: MissionType[] = [];
   statusList: Status[] = [];
   jobDegreeList: JobDegree[] = [];
+  teamList:Team[]=[];
 
   searchKey: string = '';
   IsAdmin: boolean = true;
@@ -349,6 +350,7 @@ export class SummaryComponent implements OnInit {
     serialNumber: new FormControl(''),
     serialDateFrom: new FormControl(''),
     serialDateTo: new FormControl(''),
+    team:new FormControl('')
   });
   openAdvancedSearchPanel() {
     // this.panelOpenState = false;
@@ -361,6 +363,7 @@ export class SummaryComponent implements OnInit {
     this.userService.getUserlists().subscribe((res) => {
       if (res.status) {
         this.jobDegreeList = res.data.jobDegrees;
+        this.teamList=res.data.teams;
       }
     });
   }
@@ -409,25 +412,22 @@ export class SummaryComponent implements OnInit {
     this.advSearchMission.missionPurpose = this.form.value.missionPurpose;
     this.advSearchMission.jobNumber = Number(this.form.value.jobNumber);
     this.advSearchMission.noOfNights = Number(this.form.value.noOfNights);
-    this.advSearchMission.missionTypeCost = Number(
-      this.form.value.missionTypeCost
-    );
+    this.advSearchMission.missionTypeCost = Number(this.form.value.missionTypeCost);
     this.advSearchMission.comment = this.form.value.comment;
-
     this.advSearchMission.id = Number(this.form.value.id);
     this.advSearchMission.companyType = this.form.value.companyType;
     this.advSearchMission.userName = this.form.value.userName;
     this.advSearchMission.missionPlace = this.form.value.missionPlace;
-    this.advSearchMission.mealsAndIncidentals = Number(
-      this.form.value.mealsAndIncidentals
-    );
-    this.advSearchMission.permissionDuration =
-      this.form.value.permissionDuration;
+    this.advSearchMission.mealsAndIncidentals = Number( this.form.value.mealsAndIncidentals);
+    this.advSearchMission.permissionDuration = this.form.value.permissionDuration;
     this.advSearchMission.permissionRequest = this.form.value.permissionRequest;
     this.advSearchMission.statusId = Number(this.form.value.statusId);
     this.advSearchMission.missionTypeId = Number(this.form.value.missionTypeId);
     this.advSearchMission.jobDegreeId = Number(this.form.value.jobDegreeId);
-
+    this.advSearchMission.teamId = Number(this.form.value.team);
+    this.advSearchMission.serialNumber = this.form.value.serialNumber;
+    this.advSearchMission.serialDateFrom = this.form.value.serialDateFrom;
+    this.advSearchMission.serialDateTo = this.form.value.serialDateTo;
     this.missionService
       .AdvancedSearch(this.advSearchMission)
       .subscribe((res) => {
@@ -523,6 +523,7 @@ export class SummaryComponent implements OnInit {
   }//excel
   IgnoredIds = [];
   exportPdf() {
+    localStorage.removeItem('coverId')
     this.Ids = [];
     //without choose rows 
     if (this.selection.selected.length == 0) {
@@ -538,8 +539,14 @@ export class SummaryComponent implements OnInit {
             this.Ids.push(element.id)
           }//if in side if
         })
-        this.missionService.CoverReportsIds = this.Ids;
-        this.router.navigateByUrl('/mission/cover');
+        if(this.Ids.length==0){ 
+          this.toastr.warning(this.IgnoredIds+ ' ' + "this missions not approved or printed before");
+        }
+      //  this.missionService.CoverReportsIds = this.Ids;
+      else{ 
+        localStorage.setItem('coverId',JSON.stringify(this.Ids))
+      this.router.navigateByUrl('/mission/cover');}
+       
       }//first if inside else
       //select specific rows
       else {
@@ -554,10 +561,11 @@ export class SummaryComponent implements OnInit {
           }
         })//foreach
         if (this.IgnoredIds.length == 0) {
-          this.missionService.CoverReportsIds = this.Ids;
+        //  this.missionService.CoverReportsIds = this.Ids;
+          localStorage.setItem('coverId',JSON.stringify(this.Ids))
           this.router.navigateByUrl('/mission/cover');
         }
-        else{
+        else {
           this.toastr.warning(this.IgnoredIds+ ' ' + "this missions not approved or printed before");
           this.IgnoredIds=[]
         }
@@ -568,14 +576,20 @@ export class SummaryComponent implements OnInit {
     this.Ids = [];
   }
   exportMissionFormPdf(element) {
+    localStorage.removeItem('missionId')
     this.missionService.missionForm = element;
+    localStorage.setItem('missionId',JSON.stringify(element))
     this.router.navigateByUrl('/mission/missionform')
   }
   exportExpensesPdf() {
+    localStorage.removeItem('expenseId')
+    localStorage.setItem('expenseId','0')
     this.router.navigateByUrl('/mission/expenses');
   }
   exportExpensesPdfRow(element) {
-    this.missionService.missionId = element.id;
+    localStorage.removeItem('expenseId')
+    this.missionService.missionId=element.id;
+    localStorage.setItem('expenseId',element.id)
     this.router.navigateByUrl('/mission/expenses');
   }
 

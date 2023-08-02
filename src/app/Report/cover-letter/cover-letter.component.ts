@@ -19,7 +19,10 @@ export class CoverLetterComponent implements OnInit {
   TotalMissionTypeCost:number=0;
 
   ngOnInit(): void {
-    this.missionServices.CoverReport(this.missionServices.CoverReportsIds).subscribe(res=>
+
+
+    // this.missionServices.CoverReport(this.missionServices.CoverReportsIds).subscribe(res=>
+    this.missionServices.CoverReport(JSON.parse(localStorage.getItem('coverId')|| '[]')).subscribe(res=>
       {
         this.missionApproved=res.missions;
         this.serialNumber=res.serialNumber;
@@ -66,7 +69,7 @@ export class CoverLetterComponent implements OnInit {
         SerialNumber:0,
         Ids:[]
       }
-      serialToMissions.Ids=this.missionServices.CoverReportsIds;
+      serialToMissions.Ids=JSON.parse(localStorage.getItem('coverId')|| '[]');
       serialToMissions.SerialNumber=this.serialNumber;
        this.missionServices.AddSerialNumberToMissions(serialToMissions).subscribe(res=>{console.log(res.status)})
 
