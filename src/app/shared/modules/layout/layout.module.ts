@@ -97,7 +97,7 @@ import { TeamComponent } from 'src/app/component/settings/team/team.component';
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut: 3000,
-      positionClass: 'toast-top-right',
+      positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }),
 
