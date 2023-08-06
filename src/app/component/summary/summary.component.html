@@ -29,11 +29,44 @@
                     <mat-label>اسم الموظف</mat-label>
                     <input matInput formControlName="userName"/>
                   </mat-form-field>
-                  <div class="w-100 d-flex" >
-                  <mat-form-field appearance="fill" class="serch  w-50">
-                    <mat-label> المجموعة</mat-label>
-                    <input matInput formControlName="userName"/>
+
+                  <!---->
+                  <mat-form-field appearance="fill" class="serch  w-100">
+                    <mat-label>المسلسل </mat-label>
+                    <input matInput type="text" formControlName="serialNumber" />
                   </mat-form-field>
+
+                  <div class="w-100 d-flex" >
+
+                    <mat-form-field appearance="fill" class="w-50 serch">
+                        <input formControlName="serialDateFrom" matInput [matDatepicker]="serialDateFrom" placeholder="بدايه تاريخ المسلسل">
+                        <mat-datepicker-toggle matSuffix [for]="serialDateFrom"></mat-datepicker-toggle>
+                        <mat-datepicker #serialDateFrom></mat-datepicker>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill" class="w-50  serch" style="border-right:5px solid #fff">
+                        <input formControlName="serialDateTo" matInput [matDatepicker]="serialDateTo" placeholder="نهايه تاريخ المسلسل" [min]="form.controls.serialDateFrom?.value">
+                        <mat-datepicker-toggle matSuffix [for]="serialDateTo"></mat-datepicker-toggle>
+                        <mat-datepicker #serialDateTo></mat-datepicker>
+                      </mat-form-field>
+    
+                    </div>
+    
+
+<!---->
+
+
+                  
+                  <div class="w-100 d-flex" >
+
+                  <mat-form-field appearance="fill" class="serch  w-50">
+                     <mat-select formControlName="team" placeholder="*المجموعه(--اختر--)">
+                      <mat-option>-- Please select --</mat-option>
+                      <mat-option  *ngFor="let team of teamList"   [value]="team.id">
+                        {{team.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
                   <mat-form-field appearance="fill" class="serch  w-50" style="border-right:5px solid #fff">
                     <mat-select formControlName="jobDegreeId" placeholder="*الحالة الوظيفيه(--اختر--)">
                       <mat-option>-- Please select --</mat-option>
@@ -88,7 +121,7 @@
                     <mat-datepicker #startDateMission></mat-datepicker>
                   </mat-form-field>
                 <mat-form-field appearance="fill" class="w-50  serch" style="border-right:5px solid #fff">
-                    <input formControlName="endDateMission" matInput [matDatepicker]="endDateMission" placeholder="نهاية المأمورية" [min]="form.controls.EndDateMission?.value">
+                    <input formControlName="endDateMission" matInput [matDatepicker]="endDateMission" placeholder="نهاية المأمورية" [min]="form.controls.startDateMission?.value">
                     <mat-datepicker-toggle matSuffix [for]="endDateMission"></mat-datepicker-toggle>
                     <mat-datepicker #endDateMission></mat-datepicker>
                   </mat-form-field>
@@ -247,7 +280,7 @@
       <mat-icon class="add-new ico">add</mat-icon>
       <span class="txt mr-1">اضافة مأمورية</span>
     </button>
-    <button *ngIf="IsAdmin" mat-button [matMenuTriggerFor]="menu" class="opt mr-1" >
+    <button *ngIf="IsAdmin" mat-button [matMenuTriggerFor]="menu" class="opt mr-1"  >
       <mat-icon class="">download</mat-icon>
       <span class="txt mr-1"> تنزيل ملف </span>
     </button>
@@ -257,16 +290,16 @@
         <span class=" mr-1"> تنزيل مصروفات السفر عن المأموريات </span>
         <span class="txt "> <img src="../../../assets/image/pdf.png"   height="30px" width="30px"></span>
       </button>
-      <button mat-menu-item class="opt text-right" (click)="exportExcel()" >
+      <button mat-menu-item class="opt text-right" (click)="ExportExcel()" >
 
-        <span class=" mr-1"> تنزيل مصروفات السفر عن المأموريات </span>
+        <span class=" mr-1"> تنزيل  المأموريات </span>
         <span class="txt "> <img src="../../../assets/image/ex.png"   height="30px" width="30px"></span>
       </button>
-      <button mat-menu-item class="opt text-right" (click)="exportExpensesPdf()">
+      <!-- <button mat-menu-item class="opt text-right" (click)="exportExpensesPdf()">
 
         <span class="mr-1"> تنزيل نموذج المصروفات </span>
         <span class="txt "> <img src="../../../assets/image/pdf.png"   height="30px" width="30px"></span>
-      </button>
+      </button> -->
 
 
 
@@ -311,6 +344,7 @@
       <ng-container matColumnDef="all">
         <mat-header-cell *matHeaderCellDef>
           <mat-checkbox
+         
             (change)="$event ? toggleAllRows() : null"
             [checked]="selection.hasValue() && isAllSelected()"
             [indeterminate]="selection.hasValue() && !isAllSelected()"
@@ -346,6 +380,24 @@
           {{ element.jobNumber }}
         </mat-cell>
       </ng-container>
+
+      <ng-container matColumnDef="serialNumber">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          الرقم المسلسل</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">
+          {{ element.serialNumber}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="serialDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+         تاريخ المسلسل</mat-header-cell
+        >
+        <mat-cell *matCellDef="let element">
+          {{ element.serialDate | date : "yyyy-MM-dd" }}
+        </mat-cell>
+      </ng-container>
+
 
       <ng-container matColumnDef="user">
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -566,12 +618,13 @@
 
       <ng-container matColumnDef="exportmission"  >
         <!-- *ngIf="IsAdmin&& row.status == 'approved' " -->
+        <!-- *ngIf="!IsAdmin && element.status == 'pending' || IsAdmin" -->
         <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header >
           نموذج المأمورية</mat-header-cell >
         <mat-cell *matCellDef="let element; let row"  >
           <button
-
-           *ngIf="row.status == 'pending' "
+           
+           *ngIf="(!IsAdmin && row.status == 'pending' || IsAdmin)&&(row.missionType=='بدل سفر'||row.missionType=='بدل انتقالات وبدل سفر')"
             mat-stroked-button
             class="mx-1"
             (click)="exportMissionFormPdf(element)"
@@ -588,8 +641,9 @@
         >
         <mat-cell *matCellDef="let element">
           <button
-          *ngIf="element.status == 'pending' "
-           mat-stroked-button class="mx-1"
+          *ngIf="(!IsAdmin && element.status == 'pending' || IsAdmin)&&(element.missionType=='بدل انتقالات'||element.missionType=='بدل انتقالات وبدل سفر')"
+          
+           mat-stroked-button class="mx-1" 
           (click)="exportExpensesPdfRow(element)">
           <img src="../../../assets/image/pdf.png"   height="30px" width="30px">
           </button>

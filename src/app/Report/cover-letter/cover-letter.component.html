@@ -11,7 +11,7 @@
       <div class="col-sm-6 text-right">
         <div class="col-12 mb-1">
           <span class="text">التاريخ&nbsp;: &nbsp;</span>
-          <span></span>
+          <span>{{serialDate | date : "yyyy-MM-dd" }}</span>
         </div>
         <div class="col-12 mb-2">
           <span class="text">مركز التكلفة (CC) &nbsp;:&nbsp; &nbsp; &nbsp; &nbsp;</span>
@@ -23,8 +23,8 @@
       </div>
 
       <div class="col-sm-6">
-        <span class="text"> &nbsp;:&nbsp; &nbsp;.Serial NO</span>
-        <span></span>
+        <span class="text"> &nbsp;&nbsp; &nbsp;Serial NO</span>
+        <span>  &nbsp;:&nbsp; &nbsp;{{serialNumber}}</span>
       </div>
     </div>
 

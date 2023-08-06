@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -10,82 +10,76 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class MissionService {
-private url:string=`${environment.apiUrl}Mission`;
-  constructor(private httpClient:HttpClient) { }
-  getAllMissions(PageNumber :number , PageSize :number , searchValue:string ,sortcolumn:string,sortcolumndir:string)
-  {
-    let params= new HttpParams();
-    if(PageNumber!==null&& PageSize!==null)
-    {
-       params =params.append('pageNumber',PageNumber.toString());
-       params=params.append('pageSize',PageSize.toString());
-       params=params.append('searchValue',searchValue.toString());
-       params=params.append('sortcolumn',sortcolumn.toString());
-       params=params.append('sortcolumndir',sortcolumndir.toString());
+  private url: string = `${environment.apiUrl}Mission`;
+  private headers = new HttpHeaders({  'Accept': 'application/json',
+  'zumo-api-version': '2.0.0',});
+  constructor(private httpClient: HttpClient) { 
+    this.headers = this.headers.set('Authorization', "Bearer " + localStorage.getItem("tokenNumber"));
+  }
+  getAllMissions(PageNumber: number, PageSize: number, searchValue: string, sortcolumn: string, sortcolumndir: string) {
+    let params = new HttpParams();
+    if (PageNumber !== null && PageSize !== null) {
+      params = params.append('pageNumber', PageNumber.toString());
+      params = params.append('pageSize', PageSize.toString());
+      params = params.append('searchValue', searchValue.toString());
+      params = params.append('sortcolumn', sortcolumn.toString());
+      params = params.append('sortcolumndir', sortcolumndir.toString());
     }
-    
-    return this.httpClient.get<any>(`${this.url}/GetMissions`,{observe:'response' , params}).pipe(
-      map(response=>
-        {
-          return response.body;
-        })
+
+    return this.httpClient.get<any>(`${this.url}/GetMissions`, { observe: 'response', params }).pipe(
+      map(response => {
+        return response.body;
+      })
     )
   }
-  upload(file:any,id:Number):Observable<any>
-  {
+  upload(file: any, id: Number): Observable<any> {
     const formData = new FormData();
-    console.log(file);
-    formData.append('file',file,file.name);
-   return this.httpClient.post<any>(`${this.url}/UploadedFile/`+id,formData);
+    formData.append('file', file, file.name);
+    return this.httpClient.post<any>(`${this.url}/UploadedFile/` + id, formData);
   }
-  addMission(mission:any):Observable<any>
-  {
-     return this.httpClient.post<any>(`${this.url}/AddMission`,mission);
+  addMission(mission: any): Observable<any> {
+    return this.httpClient.post<any>(`${this.url}/AddMission`, mission);
   }
-  updateMission(mission:any):Observable<any>
-  {
-    console.log(mission,"pppp")
-     return this.httpClient.post<any>(`${this.url}/EditMission`,mission);
+  updateMission(mission: any): Observable<any> {
+    return this.httpClient.post<any>(`${this.url}/EditMission`, mission);
   }
-  deleteMission(id:number):Observable<any>
-  {
-     return this.httpClient.delete<any>(`${this.url}/DeleteMission/`+id);
+  deleteMission(id: number): Observable<any> {
+    return this.httpClient.delete<any>(`${this.url}/DeleteMission/` + id);
   }
-  getLists():Observable<any>
-  {
-return this.httpClient.get<any>(`${this.url}/GetLists`);
+  getLists(): Observable<any> {
+    return this.httpClient.get<any>(`${this.url}/GetLists`);
   }
-  AdvancedSearch(searchModel:any):Observable<any>
-  {
+  AdvancedSearch(searchModel: any): Observable<any> {
     return this.httpClient.post<any>(`${this.url}/AdvancedSearch`, searchModel);
   }
-  checkSameTeam(id:number):Observable<any>
-  {
-     return this.httpClient.get<any>(`${this.url}/CheckSameTeam/`+id);
+  checkSameTeam(id: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.url}/CheckSameTeam/` + id);
   }
-  CoverReportsIds:number[];
-  CoverReport(CoverReportsIds):Observable<any>
-  {
-    console.log(this.CoverReportsIds)
-   return this.httpClient.post<any>(`${this.url}/CoverReport`,CoverReportsIds);
+  //CoverReportsIds: number[];
+  CoverReport(CoverReportsIds:number[]): Observable<any> {
+    return this.httpClient.post<any>(`${this.url}/CoverReport`, CoverReportsIds);
   }
-  ExpensesFormReport(id:number,missionId:any):Observable<any>
+  AddSerialNumberToMissions(model:any)
   {
-    console.log("ExpensesFormReport",id)
-     return this.httpClient.get<any>(`${this.url}/ExpensesFormReport/`+id+`/`+missionId);
+    return this.httpClient.post<any>(`${this.url}/AddSerialNumberToMissions`,model)
   }
-  DownloadAttach(id:number):Observable<any>
-  {
-    let x=this.httpClient.get(`${this.url}/DownloadFile/`+id);
-    console.log(x,"this is responce");
-   return this.httpClient.get(`${this.url}/DownloadFile/`+id);
-  //  {responseType: 'blob'});
+  ExpensesFormReport(id: number, missionId: any): Observable<any> {
+    return this.httpClient.get<any>(`${this.url}/ExpensesFormReport/` + id + `/` + missionId);
   }
-  DeleteAttachFile(id:number):Observable<any>
-  {
-    return this.httpClient.delete<any>(`${this.url}/DeleteFile/`+id);
-    }
-    missionForm:MissionList;
-    missionId:any;
+  DownloadAttach(id: number): Observable<any> {
+    let x = this.httpClient.get(`${this.url}/DownloadFile/` + id);
+    return this.httpClient.get(`${this.url}/DownloadFile/` + id);
+    //  {responseType: 'blob'});
+  }
+  DeleteAttachFile(id: number): Observable<any> {
+    return this.httpClient.delete<any>(`${this.url}/DeleteFile/` + id);
+  }
+
+  missionForm: MissionList;
+  missionId: any;
+  ExportExcel(ids: number[]): Observable<Blob> {
+    console.log("ids",ids);
+    return this.httpClient.post(`${this.url}/ExportExcel`, ids, { responseType: 'blob',headers: this.headers});
+  }
 }//end of service
 

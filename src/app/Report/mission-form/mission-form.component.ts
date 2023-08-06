@@ -13,9 +13,13 @@ export class MissionFormComponent implements OnInit {
   misionDurationEn: any;
   misionDurationAr: any;
   ngOnInit(): void {
-    this.mision = this.missionService.missionForm;
-    let startDateMission = new Date(this.missionService.missionForm.startDateMission);
-    let endDateMission = new Date(this.missionService.missionForm.endDateMission)
+    //this.mision = this.missionService.missionForm;
+    this.mision = localStorage.getItem('missionId');
+    this.mision= JSON.parse(this.mision);
+    let startDateMission = new Date(this.mision.startDateMission);
+    let endDateMission = new Date(this.mision.endDateMission)
+    // let startDateMission = new Date(this.missionService.missionForm.startDateMission);
+    // let endDateMission = new Date(this.missionService.missionForm.endDateMission)
     var time = (endDateMission.getTime() - startDateMission.getTime()) / (1000 * 3600 * 24);
     this.misionDurationEn = " " + time + "  Days ";
     this.misionDurationAr = time + " يوم"

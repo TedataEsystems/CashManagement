@@ -134,6 +134,8 @@ export class EditComponent implements OnInit {
         this.service.form.controls['userId'].setValue(this.data.userId);
         this.service.form.controls['attachFile'].setValue(this.data.attachFilename);
         this.service.form.controls['teamName'].setValue(this.data.teamName);
+        this.service.form.controls['serialNumber'].setValue(this.data.serialNumber);
+       // this.service.form.controls['serialDate'].setValue(this.data.serialDate);
         //this.service.form.controls['attachFileId'].setValue(this.data.attachFileId);
       }//end of if data
     })//end of subscribe
@@ -176,7 +178,9 @@ export class EditComponent implements OnInit {
       updatedBy: localStorage.getItem('userName') || '',
       statusId: this.service.form.value.statusId,
       missionTypeId: this.service.form.value.missionTypeId,
-      userId: this.service.form.value.userId
+      userId: this.service.form.value.userId,
+      serialNumber:this.service.form.value.serialNumber,
+    //  serialDate:this.service.form.value.serialDate
     }//end of object
     let comment = {
       missionId: this.service.form.value.id,
