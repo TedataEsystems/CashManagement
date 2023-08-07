@@ -48,14 +48,14 @@
                         <mat-datepicker-toggle matSuffix [for]="serialDateTo"></mat-datepicker-toggle>
                         <mat-datepicker #serialDateTo></mat-datepicker>
                       </mat-form-field>
-    
+
                     </div>
-    
+
 
 <!---->
 
 
-                  
+
                   <div class="w-100 d-flex" >
 
                   <mat-form-field appearance="fill" class="serch  w-50">
@@ -287,7 +287,7 @@
     <mat-menu #menu="matMenu">
       <button mat-menu-item  class="opt text-right" (click)="exportPdf()">
 
-        <span class=" mr-1"> تنزيل مصروفات السفر عن المأموريات </span>
+        <span class=" mr-1"> Cover Letter</span>
         <span class="txt "> <img src="../../../assets/image/pdf.png"   height="30px" width="30px"></span>
       </button>
       <button mat-menu-item class="opt text-right" (click)="ExportExcel()" >
@@ -344,7 +344,7 @@
       <ng-container matColumnDef="all">
         <mat-header-cell *matHeaderCellDef>
           <mat-checkbox
-         
+
             (change)="$event ? toggleAllRows() : null"
             [checked]="selection.hasValue() && isAllSelected()"
             [indeterminate]="selection.hasValue() && !isAllSelected()"
@@ -623,7 +623,7 @@
           نموذج المأمورية</mat-header-cell >
         <mat-cell *matCellDef="let element; let row"  >
           <button
-           
+
            *ngIf="(!IsAdmin && row.status == 'pending' || IsAdmin)&&(row.missionType=='بدل سفر'||row.missionType=='بدل انتقالات وبدل سفر')"
             mat-stroked-button
             class="mx-1"
@@ -642,8 +642,8 @@
         <mat-cell *matCellDef="let element">
           <button
           *ngIf="(!IsAdmin && element.status == 'pending' || IsAdmin)&&(element.missionType=='بدل انتقالات'||element.missionType=='بدل انتقالات وبدل سفر')"
-          
-           mat-stroked-button class="mx-1" 
+
+           mat-stroked-button class="mx-1"
           (click)="exportExpensesPdfRow(element)">
           <img src="../../../assets/image/pdf.png"   height="30px" width="30px">
           </button>

@@ -313,10 +313,15 @@ export class SummaryComponent implements OnInit {
       .afterClosed()
       .subscribe((result) => {
         if (this.form.value == '') {
+          console.log('inside subscribe')
           this.getMisssions(1, 100, '', this.sortColumnDef, this.SortDirDef);
+          this.selection.clear();
+
         }
         else {
+          console.log('inside advancedsearch ',this.form.value)
           this.AdvancedSearchSubmit();
+          this.selection.clear();
         }
       });
   }
@@ -503,7 +508,7 @@ export class SummaryComponent implements OnInit {
         this.exportIds.push(element.id)
       })
     }//if
-    //choose specific rows 
+    //choose specific rows
     //search and choose specific rows
     else {
       this.selection.selected.forEach((element: any) => {
@@ -522,10 +527,11 @@ export class SummaryComponent implements OnInit {
 
   }//excel
   IgnoredIds = [];
+  PrintedIds = [];
   exportPdf() {
     localStorage.removeItem('coverId')
     this.Ids = [];
-    //without choose rows 
+    //without choose rows
     if (this.selection.selected.length == 0) {
       this.toastr.warning('Please select Missions');
       return
@@ -538,42 +544,74 @@ export class SummaryComponent implements OnInit {
           if (element.status == "approved" && element.serialNumber == 0) {
             this.Ids.push(element.id)
           }//if in side if
+          else if(element.status!="approved")
+          {
+            this.IgnoredIds.push(element.id)
+          }
+          else if(element.serialNumber!=0)
+          {
+            this.PrintedIds.push(element.id)
+          }
         })
-        if(this.Ids.length==0){ 
-          this.toastr.warning(this.IgnoredIds+ ' ' + "this missions not approved or printed before");
+        if(this.Ids.length==0&&this.IgnoredIds.length!=0&&this.PrintedIds.length==0){
+          this.toastr.warning(this.IgnoredIds+ ' ' + "missions are not approved ");
+        }
+        else if(this.Ids.length==0&&this.PrintedIds.length!=0&&this.IgnoredIds.length==0){
+          this.toastr.warning(this.PrintedIds+ ' ' + " missions are already printed ");
+        }
+        else if(this.IgnoredIds.length!=0&&this.PrintedIds.length!=0)
+        {
+          this.toastr.warning("missions number "+this.PrintedIds+ ' ' + "  are already printed ,and missions number "+this.IgnoredIds+ ' ' + " are not approved " );
+
         }
       //  this.missionService.CoverReportsIds = this.Ids;
-      else{ 
+      else{
         localStorage.setItem('coverId',JSON.stringify(this.Ids))
       this.router.navigateByUrl('/mission/cover');}
-       
+
       }//first if inside else
       //select specific rows
       else {
         this.selection.selected.forEach((element: any) => {
           //if condition ok push it in ids array and redirect to coverletter page
-          //if not push it in ignoredids to print that in toastr the missions with the problem 
+          //if not push it in ignoredids to print that in toastr the missions with the problem
           if (element.status == "approved" && element.serialNumber == 0) {
+            console.log("pushedids",element.id)
             this.Ids.push(element.id)
           }
-          else {
-            this.IgnoredIds.push(element.id);
+          else if(element.status!="approved")
+          {
+            this.IgnoredIds.push(element.id)
+          }
+          else if(element.serialNumber!=0)
+          {
+            this.PrintedIds.push(element.id)
           }
         })//foreach
-        if (this.IgnoredIds.length == 0) {
+        if (this.IgnoredIds.length == 0&&this.PrintedIds.length==0) {
         //  this.missionService.CoverReportsIds = this.Ids;
           localStorage.setItem('coverId',JSON.stringify(this.Ids))
           this.router.navigateByUrl('/mission/cover');
         }
-        else {
-          this.toastr.warning(this.IgnoredIds+ ' ' + "this missions not approved or printed before");
-          this.IgnoredIds=[]
+        if(this.IgnoredIds.length!=0&&this.PrintedIds.length==0){
+          this.toastr.warning("missions number "+this.IgnoredIds+ ' ' + " are not approved ");
+
+        }
+        else if(this.PrintedIds.length!=0&&this.IgnoredIds.length==0){
+          this.toastr.warning("missions number "+this.PrintedIds+ ' ' + " are already printed ");
+        }
+        else if(this.IgnoredIds.length!=0&&this.PrintedIds.length!=0)
+        {
+          this.toastr.warning("missions number "+this.PrintedIds+ ' ' + "  are already printed ,and missions number "+this.IgnoredIds+ ' ' + " are not approved " );
+
         }
 
-      }// else 
+      }// else
     }//large else
 
     this.Ids = [];
+    this.IgnoredIds=[];
+    this.PrintedIds=[];
   }
   exportMissionFormPdf(element) {
     localStorage.removeItem('missionId')
